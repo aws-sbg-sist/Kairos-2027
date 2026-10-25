@@ -97,16 +97,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 </a>
               </li>
               <li>
-                <a
-                  href="/docs/KAIROS_2027_Grand_Edition_Proposal.pdf"
-                  download
-                  className="hover:text-white transition-colors flex items-center gap-1.5"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Management Proposal</span>
-                </a>
-              </li>
-              <li>
                 <button
                   onClick={onOpenTerms}
                   className="hover:text-white transition-colors text-left"

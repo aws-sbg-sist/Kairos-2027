@@ -20,8 +20,7 @@ const requiredAssets = [
   'public/assets/kairos-wordmark.png',
   'public/assets/kairos-hourglass.png',
   'public/assets/aws-sbg-logo.png',
-  'public/docs/KAIROS_2027_Sponsorship_Prospectus.pdf',
-  'public/docs/KAIROS_2027_Grand_Edition_Proposal.pdf'
+  'public/docs/KAIROS_2027_Sponsorship_Prospectus.pdf'
 ];
 
 for (const asset of requiredAssets) {
