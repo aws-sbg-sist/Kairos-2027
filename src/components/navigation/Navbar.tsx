@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, X, ArrowUpRight, Shield, Sparkles, Clock, Calendar } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Shield, Sparkles, Clock, Calendar, Volume2, VolumeX, Radio } from 'lucide-react';
+import { sound } from '@/lib/audio';
 
 interface NavbarProps {
   onOpenWaitlist: () => void;
@@ -12,18 +13,30 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    if (sound) {
+      setSoundEnabled(sound.isEnabled());
+      const unsub = sound.subscribe((en) => setSoundEnabled(en));
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        unsub();
+      };
+    }
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
     { label: 'Tracks', href: '#tracks' },
     { label: '48h Schedule', href: '#schedule' },
+    { label: 'Squad Radar', href: '#radar' },
     { label: 'Judging', href: '#judging' },
     { label: 'Awards', href: '#awards' },
     { label: 'Sponsorship', href: '#sponsors' },
@@ -70,6 +83,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               <a
                 key={link.label}
                 href={link.href}
+                onMouseEnter={() => sound?.playHover()}
+                onClick={() => sound?.playClick()}
                 className="px-3 py-1.5 rounded-md hover:text-white hover:bg-purple-500/10 transition-colors"
               >
                 {link.label}
@@ -79,8 +94,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
 
           {/* Desktop Action Buttons */}
           <div className="hidden sm:flex items-center gap-2.5">
+            {/* Audio FX Toggle Button */}
+            <button
+              onClick={() => sound?.toggle()}
+              onMouseEnter={() => sound?.playHover()}
+              className="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 text-xs font-mono"
+              title={soundEnabled ? "Mute Ambient Sound FX" : "Enable Ambient Sound FX"}
+              aria-label={soundEnabled ? "Mute sound" : "Enable sound"}
+            >
+              {soundEnabled ? (
+                <>
+                  <Volume2 className="w-4 h-4 text-emerald-400 animate-pulse" />
+                  <span className="hidden xl:inline text-[10px] font-semibold text-emerald-400">AUDIO ON</span>
+                </>
+              ) : (
+                <>
+                  <VolumeX className="w-4 h-4 text-slate-500" />
+                  <span className="hidden xl:inline text-[10px] text-slate-500">AUDIO OFF</span>
+                </>
+              )}
+            </button>
+
             <Link
               href="/admin/login"
+              onMouseEnter={() => sound?.playHover()}
+              onClick={() => sound?.playClick()}
               className="text-xs text-slate-400 hover:text-purple-300 px-2.5 py-1.5 rounded border border-transparent hover:border-purple-500/20 transition-all flex items-center gap-1"
               title="Organizing Committee Portal"
             >
@@ -89,7 +127,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
             </Link>
 
             <button
-              onClick={onOpenWaitlist}
+              onClick={() => { sound?.playModalOpen(); onOpenWaitlist(); }}
+              onMouseEnter={() => sound?.playHover()}
               className="relative group px-4 py-2 rounded-lg text-sm font-semibold text-white overflow-hidden shadow-md shadow-purple-950/40 transition-all duration-300 hover:shadow-purple-700/30 active:scale-95"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-500 group-hover:opacity-90 transition-opacity" />
@@ -103,13 +142,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-2">
             <button
-              onClick={onOpenWaitlist}
+              onClick={() => sound?.toggle()}
+              className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300"
+              aria-label="Toggle sound"
+            >
+              {soundEnabled ? <Volume2 className="w-4 h-4 text-emerald-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
+            </button>
+            <button
+              onClick={() => { sound?.playModalOpen(); onOpenWaitlist(); }}
               className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-sm"
             >
               Waitlist
             </button>
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => { sound?.playClick(); setMobileMenuOpen(!mobileMenuOpen); }}
               className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 focus:outline-none"
               aria-label="Toggle navigation menu"
             >
@@ -125,7 +171,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => { sound?.playClick(); setMobileMenuOpen(false); }}
                 className="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-purple-600/20"
               >
                 {link.label}

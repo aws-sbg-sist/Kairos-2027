@@ -22,7 +22,8 @@
       "preferredTrack": "Cloud-Native Distributed Systems",
       "portfolioUrl": "https://github.com/pooja-v",
       "motivation": "Exploring high-throughput distributed transaction settlement with event-driven consensus.",
-      "createdAt": "2026-10-24T14:30:00.000Z"
+      "createdAt": "2026-10-24T14:30:00.000Z",
+      "status": "shortlisted"
     }
   ],
   "sponsors": [
@@ -46,6 +47,20 @@
     "registrationDeadline": "2027-01-06T23:59:59+05:30"
   },
   "auditLogs": [
+    {
+      "id": "log-1792934893046",
+      "timestamp": "2026-10-25T13:28:13.046Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Changed candidate [Pooja Venkatesh] status to shortlisted"
+    },
+    {
+      "id": "log-1792934842921",
+      "timestamp": "2026-10-25T13:27:22.921Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Head of Safety, Hospitality & Governance"
+    },
     {
       "id": "log-1",
       "timestamp": "2026-10-25T09:00:00.000Z",

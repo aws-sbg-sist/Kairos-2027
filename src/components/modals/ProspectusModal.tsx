@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { X, Download, Briefcase, Printer, CheckCircle, ShieldAlert } from 'lucide-react';
 import { PROPOSED_SPONSOR_TIERS, EVENT_CONFIG } from '@/lib/config';
+import { sound } from '@/lib/audio';
 
 interface ProspectusModalProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export const ProspectusModal: React.FC<ProspectusModalProps> = ({ isOpen, onClos
   const currentTier = PROPOSED_SPONSOR_TIERS.find(t => t.id === selectedTierId) || PROPOSED_SPONSOR_TIERS[0];
 
   const handlePrint = () => {
+    sound?.playClick();
     window.print();
   };
 

@@ -8,8 +8,21 @@ export interface WaitlistEntry {
   preferredTrack: string;
   portfolioUrl?: string;
   motivation?: string;
+  status?: 'pending' | 'reviewed' | 'shortlisted' | 'waitlisted' | 'rejected';
   ipAddress?: string;
   userAgent?: string;
+  createdAt: string;
+}
+
+export interface TeamRadarSignal {
+  id: string;
+  builderName: string;
+  role: 'AI / ML Specialist' | 'Fullstack Engineer' | 'Systems & DevOps' | 'Web3 & Security' | 'UI/UX & Frontend';
+  trackId: string;
+  skills: string[];
+  college: string;
+  seeking: string;
+  contactUrl: string;
   createdAt: string;
 }
 

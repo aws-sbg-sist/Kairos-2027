@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { X, Sparkles, Send, CheckCircle2, User, Mail, School, BookOpen, Layers } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
+import { sound } from '@/lib/audio';
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -32,6 +33,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
     e.preventDefault();
     setSubmitting(true);
     setErrorMessage('');
+    sound?.playClick();
 
     try {
       const res = await fetch('/api/waitlist', {
@@ -45,6 +47,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
         throw new Error(data.error || 'Failed to submit registration.');
       }
 
+      sound?.playSuccess();
       setSubmitted(true);
     } catch (err: any) {
       setErrorMessage(err.message || 'Error occurred. Please try again.');

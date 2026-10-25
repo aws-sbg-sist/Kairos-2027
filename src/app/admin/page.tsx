@@ -100,6 +100,39 @@ export default function AdminDashboardPage() {
     setTimeout(() => setStatusMessage(''), 3000);
   };
 
+  const handleUpdateWaitlistStatus = async (id: string, newStatus: NonNullable<WaitlistEntry['status']>) => {
+    try {
+      const res = await fetch('/api/admin/waitlist/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status: newStatus }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setWaitlist(prev => prev.map(w => w.id === id ? { ...w, status: newStatus } : w));
+        setStatusMessage(`Candidate status updated to "${newStatus.toUpperCase()}".`);
+        setTimeout(() => setStatusMessage(''), 3000);
+      } else {
+        alert(data.error || 'Failed to update candidate status');
+      }
+    } catch {
+      alert('Network error updating status');
+    }
+  };
+
+  // Compute live analytics
+  const trackCounts: Record<string, number> = {};
+  TECHNICAL_TRACKS.forEach(t => { trackCounts[t.title] = 0; });
+  const uniqueInstitutions = new Set<string>();
+  const statusTallies = { pending: 0, reviewed: 0, shortlisted: 0, waitlisted: 0, rejected: 0 };
+
+  waitlist.forEach(w => {
+    trackCounts[w.preferredTrack] = (trackCounts[w.preferredTrack] || 0) + 1;
+    if (w.institution) uniqueInstitutions.add(w.institution.trim().toLowerCase());
+    const st = (w.status || 'pending') as keyof typeof statusTallies;
+    if (statusTallies[st] !== undefined) statusTallies[st]++;
+  });
+
   // Filtered waitlist
   const filteredWaitlist = waitlist.filter(item => {
     const matchesSearch =
@@ -173,9 +206,9 @@ export default function AdminDashboardPage() {
           </div>
 
           <div className="p-4 rounded-2xl glass-panel border border-purple-500/20">
-            <span className="text-xs font-mono text-sky-300 block mb-1">SPONSOR INQUIRIES</span>
-            <span className="text-3xl font-display font-extrabold text-white block">{sponsors.length}</span>
-            <span className="text-[11px] text-slate-400 block mt-1">Corporate partnership leads</span>
+            <span className="text-xs font-mono text-sky-300 block mb-1">COLLEGES REPRESENTED</span>
+            <span className="text-3xl font-display font-extrabold text-white block">{uniqueInstitutions.size}</span>
+            <span className="text-[11px] text-slate-400 block mt-1">Institutions nationwide</span>
           </div>
 
           <div className="p-4 rounded-2xl glass-panel border border-purple-500/20">
@@ -192,6 +225,57 @@ export default function AdminDashboardPage() {
               {flags.prizePoolConfirmed ? '✓ Published Confirmed' : '⏳ Draft / Hidden'}
             </span>
             <span className="text-[11px] text-slate-400 block mt-0.5">Publication rule compliant</span>
+          </div>
+        </div>
+
+        {/* Real-time Track Distribution & Status Intelligence Bar */}
+        <div className="p-5 rounded-2xl glass-panel border border-purple-500/20 space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-purple-500/15 pb-3">
+            <div>
+              <h3 className="text-sm font-bold text-white font-heading flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-purple-400" />
+                <span>Track Distribution & Candidate Pipeline Intelligence</span>
+              </h3>
+              <p className="text-xs text-slate-400">Live demand across 5 technical disciplines and review status pipeline.</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-yellow-500/20 border border-yellow-500/30 text-yellow-300">
+                {statusTallies.pending} Pending
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-sky-500/20 border border-sky-500/30 text-sky-300">
+                {statusTallies.reviewed} Reviewed
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 border border-emerald-500/30 text-emerald-300">
+                {statusTallies.shortlisted} Shortlisted
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-amber-500/20 border border-amber-500/30 text-amber-300">
+                {statusTallies.waitlisted} Waitlisted
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            {TECHNICAL_TRACKS.map(t => {
+              const count = trackCounts[t.title] || 0;
+              const pct = waitlist.length > 0 ? Math.round((count / waitlist.length) * 100) : 0;
+              return (
+                <div key={t.id} className="p-3 rounded-xl bg-slate-950/60 border border-purple-500/15 flex flex-col justify-between">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-mono text-purple-300 font-bold truncate" title={t.title}>
+                      {t.title.split('&')[0]}
+                    </span>
+                    <span className="text-xs font-bold text-white font-mono">{count}</span>
+                  </div>
+                  <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                    <div
+                      className="bg-gradient-to-r from-purple-500 to-indigo-400 h-full rounded-full transition-all duration-500"
+                      style={{ width: `${Math.max(pct, count > 0 ? 8 : 0)}%` }}
+                    />
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-mono mt-1 text-right">{pct}% of pool</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -283,13 +367,15 @@ export default function AdminDashboardPage() {
                       <th className="p-3.5">Institution & Year</th>
                       <th className="p-3.5">Preferred Track</th>
                       <th className="p-3.5">Motivation / Abstract Note</th>
+                      <th className="p-3.5">Status</th>
+                      <th className="p-3.5">Decision Action</th>
                       <th className="p-3.5">Timestamp</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-purple-500/10">
                     {filteredWaitlist.length === 0 ? (
                       <tr>
-                        <td colSpan={5} className="p-8 text-center text-slate-400">
+                        <td colSpan={7} className="p-8 text-center text-slate-400">
                           No waitlist submissions match your search criteria.
                         </td>
                       </tr>
@@ -321,6 +407,50 @@ export default function AdminDashboardPage() {
                           </td>
                           <td className="p-3.5 max-w-xs text-slate-300 truncate">
                             {w.motivation || '—'}
+                          </td>
+                          <td className="p-3.5 whitespace-nowrap">
+                            {w.status === 'shortlisted' ? (
+                              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-semibold">
+                                ✓ Shortlisted
+                              </span>
+                            ) : w.status === 'reviewed' ? (
+                              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-sky-500/20 border border-sky-500/30 text-sky-300 font-semibold">
+                                Reviewed
+                              </span>
+                            ) : w.status === 'waitlisted' ? (
+                              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-amber-500/20 border border-amber-500/30 text-amber-300 font-semibold">
+                                Waitlisted
+                              </span>
+                            ) : (
+                              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-yellow-500/20 border border-yellow-500/30 text-yellow-300 font-semibold">
+                                Pending
+                              </span>
+                            )}
+                          </td>
+                          <td className="p-3.5 whitespace-nowrap">
+                            <div className="flex items-center gap-1.5">
+                              <button
+                                onClick={() => handleUpdateWaitlistStatus(w.id, 'shortlisted')}
+                                className="px-2 py-1 rounded bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-[10px] font-semibold transition-all"
+                                title="Shortlist for 75-team arena"
+                              >
+                                Shortlist
+                              </button>
+                              <button
+                                onClick={() => handleUpdateWaitlistStatus(w.id, 'reviewed')}
+                                className="px-2 py-1 rounded bg-sky-600/30 hover:bg-sky-600 text-sky-300 hover:text-white border border-sky-500/30 text-[10px] font-semibold transition-all"
+                                title="Mark candidate as reviewed"
+                              >
+                                Review
+                              </button>
+                              <button
+                                onClick={() => handleUpdateWaitlistStatus(w.id, 'waitlisted')}
+                                className="px-2 py-1 rounded bg-amber-600/30 hover:bg-amber-600 text-amber-300 hover:text-white border border-amber-500/30 text-[10px] font-semibold transition-all"
+                                title="Place on secondary waitlist"
+                              >
+                                Waitlist
+                              </button>
+                            </div>
                           </td>
                           <td className="p-3.5 font-mono text-slate-400 text-[10px] whitespace-nowrap">
                             {new Date(w.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
@@ -493,24 +623,38 @@ export default function AdminDashboardPage() {
                 </button>
               </div>
 
-              {/* Flag 4: Announcement Banner */}
-              <div className="space-y-2 pt-2">
-                <label className="text-xs font-mono text-purple-300">
+              {/* Flag 4: Announcement Banner with Live Preview */}
+              <div className="space-y-3 pt-2">
+                <label className="text-xs font-mono text-purple-300 block">
                   Global Hero Announcement Banner Message
                 </label>
-                <input
-                  type="text"
-                  value={flags.announcementBanner}
-                  onChange={(e) => setFlags({ ...flags, announcementBanner: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs"
-                />
-                <button
-                  onClick={() => handleUpdateFlags({ announcementBanner: flags.announcementBanner })}
-                  disabled={savingFlags}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-all"
-                >
-                  Save Banner Notice
-                </button>
+                
+                {/* Live Preview Bar */}
+                <div className="p-3 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center gap-2 shadow-inner">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/40 text-purple-200 uppercase font-bold shrink-0">
+                    PUBLIC PREVIEW
+                  </span>
+                  <span className="text-xs text-purple-100 font-medium truncate">
+                    {flags.announcementBanner || 'No active announcement banner'}
+                  </span>
+                </div>
+
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={flags.announcementBanner}
+                    onChange={(e) => setFlags({ ...flags, announcementBanner: e.target.value })}
+                    placeholder="Enter announcement banner text..."
+                    className="flex-grow px-3.5 py-2.5 rounded-xl glass-input text-xs"
+                  />
+                  <button
+                    onClick={() => handleUpdateFlags({ announcementBanner: flags.announcementBanner })}
+                    disabled={savingFlags}
+                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-all shrink-0 shadow-md"
+                  >
+                    Save Banner
+                  </button>
+                </div>
               </div>
             </div>
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { WaitlistEntry, SponsorInquiry, FeatureFlags, AuditLog, ParticipantTeam } from '@/types';
+import { WaitlistEntry, SponsorInquiry, FeatureFlags, AuditLog, ParticipantTeam, TeamRadarSignal } from '@/types';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'kairos_store.json');
@@ -11,6 +11,7 @@ interface StoreSchema {
   featureFlags: FeatureFlags;
   auditLogs: AuditLog[];
   teams: ParticipantTeam[];
+  radarSignals?: TeamRadarSignal[];
 }
 
 const DEFAULT_STORE: StoreSchema = {
@@ -87,6 +88,52 @@ const DEFAULT_STORE: StoreSchema = {
       projectAbstract: 'A fault-tolerant stream processing engine handling 100k events/sec with distributed consensus and zero data loss.',
       githubUrl: 'https://github.com/kairos2027/chronos-stream',
       createdAt: '2026-10-25T08:00:00.000Z'
+    }
+  ],
+  radarSignals: [
+    {
+      id: 'sig-1',
+      builderName: 'Vikram Sundaram',
+      role: 'AI / ML Specialist',
+      trackId: 'agentic-ai',
+      skills: ['LangGraph', 'Llama 3.3', 'FastAPI', 'Vector Search'],
+      college: 'Sathyabama Institute of Science and Technology',
+      seeking: 'Looking for a solid Frontend/Web engineer and DevOps builder to form a 4-person team for multi-agent autonomous consensus.',
+      contactUrl: 'https://github.com/vikram-sundaram',
+      createdAt: '2026-10-25T07:30:00.000Z'
+    },
+    {
+      id: 'sig-2',
+      builderName: 'Ananya Deshmukh',
+      role: 'Systems & DevOps',
+      trackId: 'cloud-native',
+      skills: ['Rust', 'gRPC', 'Kubernetes', 'Apache Kafka'],
+      college: 'IIT Madras',
+      seeking: 'Distributed systems engineer looking for a backend architect and UI builder to tackle sub-millisecond event streaming.',
+      contactUrl: 'https://github.com/ananya-desh',
+      createdAt: '2026-10-25T08:15:00.000Z'
+    },
+    {
+      id: 'sig-3',
+      builderName: 'Rohan Iyer',
+      role: 'Web3 & Security',
+      trackId: 'web3-security',
+      skills: ['Solidity', 'Foundry', 'Zero-Knowledge Proofs', 'EVM'],
+      college: 'Anna University, CEG',
+      seeking: 'Smart contract security researcher seeking frontend engineer (Next.js/Wagmi) for verifiable decentralized credential escrow.',
+      contactUrl: 'https://github.com/rohan-iyer',
+      createdAt: '2026-10-25T09:00:00.000Z'
+    },
+    {
+      id: 'sig-4',
+      builderName: 'Sneha Patel',
+      role: 'UI/UX & Frontend',
+      trackId: 'fintech-trust',
+      skills: ['React', 'Three.js', 'Tailwind', 'Design Systems'],
+      college: 'Sathyabama Institute of Science and Technology',
+      seeking: 'Frontend & motion designer looking for Python/FastAPI builders to craft a high-fidelity fraud surveillance dashboard.',
+      contactUrl: 'https://github.com/sneha-patel',
+      createdAt: '2026-10-25T09:45:00.000Z'
     }
   ]
 };
@@ -247,5 +294,78 @@ export const db = {
     store.teams.push(newTeam);
     writeStore(store);
     return newTeam;
+  },
+
+  // Waitlist Status Update
+  updateWaitlistStatus(id: string, status: NonNullable<WaitlistEntry['status']>, organizer: string): boolean {
+    const store = readStore();
+    const entry = store.waitlist.find(w => w.id === id);
+    if (!entry) return false;
+    entry.status = status;
+    store.auditLogs.unshift({
+      id: `log-${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      organizerName: organizer,
+      action: 'UPDATE_WAITLIST_STATUS',
+      details: `Changed candidate [${entry.fullName}] status to ${status}`
+    });
+    writeStore(store);
+    return true;
+  },
+
+  // Team Radar Signals
+  getRadarSignals(): TeamRadarSignal[] {
+    const store = readStore();
+    const signals = store.radarSignals || DEFAULT_STORE.radarSignals || [];
+    return [...signals].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  },
+
+  addRadarSignal(signal: Omit<TeamRadarSignal, 'id' | 'createdAt'>): TeamRadarSignal {
+    const store = readStore();
+    if (!store.radarSignals) {
+      store.radarSignals = [...(DEFAULT_STORE.radarSignals || [])];
+    }
+    const newSignal: TeamRadarSignal = {
+      ...signal,
+      id: `sig-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      createdAt: new Date().toISOString(),
+    };
+    store.radarSignals.unshift(newSignal);
+    writeStore(store);
+    return newSignal;
+  },
+
+  // Real-time Analytics Metrics
+  getMetrics() {
+    const store = readStore();
+    const waitlist = store.waitlist;
+    const sponsors = store.sponsors;
+    const radar = store.radarSignals || DEFAULT_STORE.radarSignals || [];
+
+    const tracksDistribution: Record<string, number> = {};
+    const statusCounts: Record<string, number> = {
+      pending: 0,
+      reviewed: 0,
+      shortlisted: 0,
+      waitlisted: 0,
+      rejected: 0,
+    };
+    const institutions = new Set<string>();
+
+    waitlist.forEach(w => {
+      tracksDistribution[w.preferredTrack] = (tracksDistribution[w.preferredTrack] || 0) + 1;
+      const st = w.status || 'pending';
+      statusCounts[st] = (statusCounts[st] || 0) + 1;
+      if (w.institution) institutions.add(w.institution.trim().toLowerCase());
+    });
+
+    return {
+      totalWaitlist: waitlist.length,
+      totalSponsors: sponsors.length,
+      totalRadarSignals: radar.length,
+      uniqueColleges: institutions.size,
+      tracksDistribution,
+      statusCounts,
+    };
   }
 };

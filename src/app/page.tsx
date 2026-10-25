@@ -8,6 +8,7 @@ import { FactsStrip } from '@/components/sections/FactsStrip';
 import { MissionSection } from '@/components/sections/MissionSection';
 import { TracksSection } from '@/components/sections/TracksSection';
 import { ScheduleSection } from '@/components/sections/ScheduleSection';
+import { TeamRadarSection } from '@/components/sections/TeamRadarSection';
 import { JudgingSection } from '@/components/sections/JudgingSection';
 import { AwardsSection } from '@/components/sections/AwardsSection';
 import { PathwaySection } from '@/components/sections/PathwaySection';
@@ -80,6 +81,9 @@ export default function HomePage() {
 
         {/* 48-Hour Experience & Timetable */}
         <ScheduleSection />
+
+        {/* Builder Squad Radar & Live Matching */}
+        <TeamRadarSection />
 
         {/* 100-Point Judging Criteria */}
         <JudgingSection />

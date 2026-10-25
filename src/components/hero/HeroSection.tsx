@@ -6,6 +6,7 @@ import { Sparkles, ArrowRight, Calendar, MapPin, Download, ShieldCheck, Play, Ey
 import { EVENT_CONFIG } from '@/lib/config';
 import { Hourglass3D } from './Hourglass3D';
 import { HourglassFallback } from './HourglassFallback';
+import { sound } from '@/lib/audio';
 
 interface HeroSectionProps {
   onOpenWaitlist: () => void;
@@ -184,7 +185,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
               <button
-                onClick={onOpenWaitlist}
+                onClick={() => { sound?.playModalOpen(); onOpenWaitlist(); }}
+                onMouseEnter={() => sound?.playHover()}
                 className="px-6 py-3.5 rounded-xl text-base font-bold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-500 hover:from-purple-500 hover:to-sky-400 shadow-lg shadow-purple-900/40 hover:shadow-purple-700/50 transition-all flex items-center gap-2 group active:scale-95"
               >
                 <span>Join Early-Interest Waitlist</span>
@@ -193,13 +195,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
               <a
                 href="#tracks"
+                onClick={() => sound?.playClick()}
+                onMouseEnter={() => sound?.playHover()}
                 className="px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-purple-500/25 hover:border-purple-500/50 transition-all flex items-center gap-2"
               >
                 <span>Explore 5 Tracks</span>
               </a>
 
               <button
-                onClick={onOpenProspectus}
+                onClick={() => { sound?.playModalOpen(); onOpenProspectus(); }}
+                onMouseEnter={() => sound?.playHover()}
                 className="px-4 py-3.5 rounded-xl text-xs font-semibold text-purple-300 hover:text-white border border-purple-500/20 hover:border-purple-500/40 transition-all flex items-center gap-1.5"
                 title="Download or preview partnership prospectus"
               >

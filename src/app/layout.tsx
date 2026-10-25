@@ -73,6 +73,53 @@ export const metadata: Metadata = {
   },
 };
 
+import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Hackathon',
+  name: 'KAIROS 2027 | Grand Edition',
+  description: 'Where Innovation Meets Its Moment. 48-Hour National Technical Hackathon at Sathyabama Indoor Stadium, Chennai.',
+  startDate: '2027-01-22T11:30:00+05:30',
+  endDate: '2027-01-24T11:30:00+05:30',
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: {
+    '@type': 'Place',
+    name: 'Sathyabama Indoor Stadium',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR)',
+      addressLocality: 'Chennai',
+      addressRegion: 'Tamil Nadu',
+      postalCode: '600119',
+      addressCountry: 'IN'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 12.8731,
+      longitude: 80.2209
+    }
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'INR',
+    availability: 'https://schema.org/InStock',
+    validFrom: '2026-10-25T00:00:00+05:30',
+    description: 'Zero registration fee. 100% free merit-based qualification.'
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'AWS Student Builder Group - SIST Chapter',
+    url: 'https://kairos2027.in',
+    parentOrganization: {
+      '@type': 'EducationalOrganization',
+      name: 'Sathyabama Institute of Science and Technology'
+    }
+  }
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -80,7 +127,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} dark`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="bg-kairos-bg text-slate-100 font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-purple-600 selection:text-white">
+        <MagneticGlowCursor />
         {children}
       </body>
     </html>
