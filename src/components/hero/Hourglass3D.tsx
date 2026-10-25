@@ -12,15 +12,17 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    if (!mountRef.current) return;
+    const container = mountRef.current;
+    if (!container) return;
 
     let scene: THREE.Scene;
     let camera: THREE.PerspectiveCamera;
     let renderer: THREE.WebGLRenderer;
     let animationFrameId: number;
+    let isVisible = true;
 
-    const width = mountRef.current.clientWidth || 400;
-    const height = mountRef.current.clientHeight || 400;
+    const width = container.clientWidth || 400;
+    const height = container.clientHeight || 400;
 
     try {
       scene = new THREE.Scene();
@@ -30,11 +32,11 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
       renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true,
-        powerPreference: 'high-performance'
+        powerPreference: 'default',
       });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      mountRef.current.appendChild(renderer.domElement);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+      container.appendChild(renderer.domElement);
     } catch (e) {
       console.warn('[Hourglass3D] WebGL initialization failed, switching to SVG fallback:', e);
       setHasError(true);
@@ -42,15 +44,24 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
       return;
     }
 
+    // WebGL Context Loss Handler to prevent browser crash/reload
+    const handleContextLost = (event: Event) => {
+      event.preventDefault();
+      cancelAnimationFrame(animationFrameId);
+      setHasError(true);
+      onFallback?.();
+    };
+    renderer.domElement.addEventListener('webglcontextlost', handleContextLost, false);
+
     // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambientLight);
 
-    const purplePoint = new THREE.PointLight(0xa855f7, 2.5, 20);
+    const purplePoint = new THREE.PointLight(0xa855f7, 2.0, 15);
     purplePoint.position.set(2, 3, 4);
     scene.add(purplePoint);
 
-    const cyanPoint = new THREE.PointLight(0x38bdf8, 2.0, 20);
+    const cyanPoint = new THREE.PointLight(0x38bdf8, 1.5, 15);
     cyanPoint.position.set(-3, -2, 3);
     scene.add(cyanPoint);
 
@@ -58,16 +69,15 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
     const hourglassGroup = new THREE.Group();
     scene.add(hourglassGroup);
 
-    // Glass Material with violet/cyan iridescence
-    const glassMat = new THREE.MeshPhysicalMaterial({
+    // High-performance translucent PBR material
+    const glassMat = new THREE.MeshStandardMaterial({
       color: 0xe0e7ff,
-      metalness: 0.1,
-      roughness: 0.1,
-      transmission: 0.9,
+      metalness: 0.15,
+      roughness: 0.15,
       transparent: true,
-      opacity: 0.55,
-      ior: 1.5,
-      reflectivity: 0.8,
+      opacity: 0.65,
+      emissive: 0x4c1d95,
+      emissiveIntensity: 0.25,
     });
 
     const glowRimMat = new THREE.MeshBasicMaterial({
@@ -78,7 +88,7 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
     });
 
     // Top & Bottom End Caps
-    const capGeom = new THREE.CylinderGeometry(1.6, 1.6, 0.14, 32);
+    const capGeom = new THREE.CylinderGeometry(1.6, 1.6, 0.14, 24);
     const capMat = new THREE.MeshStandardMaterial({
       color: 0x2e1065,
       metalness: 0.8,
@@ -96,7 +106,7 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
     hourglassGroup.add(bottomCap);
 
     // Upper Cone
-    const coneGeom = new THREE.ConeGeometry(1.5, 1.9, 32, 1, true);
+    const coneGeom = new THREE.ConeGeometry(1.5, 1.9, 24, 1, true);
     const upperCone = new THREE.Mesh(coneGeom, glassMat);
     upperCone.rotation.x = Math.PI;
     upperCone.position.y = 0.98;
@@ -117,14 +127,14 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
     hourglassGroup.add(lowerConeWire);
 
     // Central Constriction Portal / Ring
-    const centerRingGeom = new THREE.TorusGeometry(0.22, 0.05, 16, 32);
+    const centerRingGeom = new THREE.TorusGeometry(0.22, 0.05, 12, 24);
     const ringMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
     const centerRing = new THREE.Mesh(centerRingGeom, ringMat);
     centerRing.rotation.x = Math.PI / 2;
     hourglassGroup.add(centerRing);
 
-    // Outer Celestial Orbit Ring (Iconic KAIROS motif)
-    const orbitGeom = new THREE.TorusGeometry(2.35, 0.04, 16, 64);
+    // Outer Celestial Orbit Ring
+    const orbitGeom = new THREE.TorusGeometry(2.35, 0.04, 12, 48);
     const orbitMat = new THREE.MeshStandardMaterial({
       color: 0xa855f7,
       emissive: 0x9333ea,
@@ -138,23 +148,22 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
     scene.add(orbitRing);
 
     // Satellite Spheres on Orbit Ring
-    const satGeom = new THREE.SphereGeometry(0.12, 16, 16);
+    const satGeom = new THREE.SphereGeometry(0.12, 12, 12);
     const satMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
     const sat1 = new THREE.Mesh(satGeom, satMat);
     const sat2 = new THREE.Mesh(satGeom, new THREE.MeshBasicMaterial({ color: 0xc084fc }));
     scene.add(sat1);
     scene.add(sat2);
 
-    // Falling Cosmic Particles (Time Sand)
-    const particleCount = 280;
+    // Falling Cosmic Particles (Time Sand) - Optimized count
+    const particleCount = 80;
     const particleGeom = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
     const particleVelocities = new Float32Array(particleCount);
 
     for (let i = 0; i < particleCount; i++) {
-      // Particles starting in top bulb or falling through neck
       particlePositions[i * 3] = (Math.random() - 0.5) * 0.8;
-      particlePositions[i * 3 + 1] = Math.random() * 2.8 - 1.4; // Y between -1.4 and 1.4
+      particlePositions[i * 3 + 1] = Math.random() * 2.8 - 1.4;
       particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.8;
       particleVelocities[i] = 0.015 + Math.random() * 0.025;
     }
@@ -172,14 +181,14 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
     const particles = new THREE.Points(particleGeom, particleMat);
     hourglassGroup.add(particles);
 
-    // Ambient Starfield Particles
-    const starCount = 350;
+    // Ambient Starfield Particles - Optimized count
+    const starCount = 80;
     const starGeom = new THREE.BufferGeometry();
     const starPositions = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
-      starPositions[i * 3] = (Math.random() - 0.5) * 16;
-      starPositions[i * 3 + 1] = (Math.random() - 0.5) * 16;
-      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 10 - 2;
+      starPositions[i * 3] = (Math.random() - 0.5) * 14;
+      starPositions[i * 3 + 1] = (Math.random() - 0.5) * 14;
+      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 8 - 2;
     }
     starGeom.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
     const starMat = new THREE.PointsMaterial({
@@ -198,32 +207,47 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
     let targetY = 0;
 
     const handleMouseMove = (event: MouseEvent) => {
-      const rect = mountRef.current?.getBoundingClientRect();
-      if (!rect) return;
+      if (!isVisible) return;
+      const rect = container.getBoundingClientRect();
       const x = event.clientX - rect.left - rect.width / 2;
       const y = event.clientY - rect.top - rect.height / 2;
       mouseX = (x / rect.width) * 0.8;
       mouseY = (y / rect.height) * 0.8;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     // Resize handler
     const handleResize = () => {
-      if (!mountRef.current) return;
-      const w = mountRef.current.clientWidth;
-      const h = mountRef.current.clientHeight;
+      if (!container) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (w === 0 || h === 0) return;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     };
     window.addEventListener('resize', handleResize);
 
+    // Intersection Observer: Pause RAF when not in viewport to save 100% GPU/CPU
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(container);
+
     // Animation Loop
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
+
+      // Skip GPU rendering completely when scrolled out of view!
+      if (!isVisible) return;
+
       const elapsedTime = clock.getElapsedTime();
 
       // Smooth mouse follow
@@ -253,14 +277,12 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
       for (let i = 0; i < particleCount; i++) {
         positions[i * 3 + 1] -= particleVelocities[i];
         
-        // As particles fall through the neck (y ~ 0), constrict them
         const y = positions[i * 3 + 1];
         if (Math.abs(y) < 0.3) {
           positions[i * 3] *= 0.95;
           positions[i * 3 + 2] *= 0.95;
         }
 
-        // Reset particle to top cone when it hits bottom cap
         if (positions[i * 3 + 1] < -1.8) {
           positions[i * 3 + 1] = 1.8;
           positions[i * 3] = (Math.random() - 0.5) * 1.1;
@@ -279,11 +301,31 @@ export const Hourglass3D: React.FC<Hourglass3DProps> = ({ onFallback }) => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
-      if (mountRef.current && renderer.domElement) {
-        mountRef.current.removeChild(renderer.domElement);
+      if (renderer.domElement) {
+        renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
       }
+      if (container && renderer.domElement && container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
+      // Dispose Three.js objects
+      capGeom.dispose();
+      coneGeom.dispose();
+      centerRingGeom.dispose();
+      orbitGeom.dispose();
+      satGeom.dispose();
+      particleGeom.dispose();
+      starGeom.dispose();
+      glassMat.dispose();
+      glowRimMat.dispose();
+      capMat.dispose();
+      ringMat.dispose();
+      orbitMat.dispose();
+      satMat.dispose();
+      particleMat.dispose();
+      starMat.dispose();
       renderer.dispose();
     };
   }, [onFallback]);

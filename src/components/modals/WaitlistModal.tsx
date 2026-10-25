@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Sparkles, Send, CheckCircle2, User, Mail, School, BookOpen, Layers } from 'lucide-react';
+import { X, Send, CheckCircle2, User, Mail, School, BookOpen, Layers } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { sound } from '@/lib/audio';
 
@@ -72,7 +72,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
         {/* Modal Header */}
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono text-purple-300 bg-purple-950/80 border border-purple-500/30 mb-2">
-            <Sparkles className="w-3 h-3 text-purple-400" />
+            <Send className="w-3 h-3 text-purple-400" />
             <span>Early-Interest Priority</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-display font-bold text-white">

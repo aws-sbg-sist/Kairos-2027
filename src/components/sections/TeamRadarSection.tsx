@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Radio, Users, Filter, Sparkles, ExternalLink, ArrowRight, ShieldCheck, MapPin } from 'lucide-react';
+import { Radio, Users, Filter, ExternalLink, ArrowRight, ShieldCheck, MapPin } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { TeamRadarSignal } from '@/types';
 import { BroadcastRadarModal } from '@/components/modals/BroadcastRadarModal';
@@ -76,7 +76,7 @@ export function TeamRadarSection() {
               onMouseEnter={() => sound?.playHover()}
               className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-celestial to-violet-600 hover:from-celestial-light hover:to-violet-500 shadow-lg shadow-celestial/25 hover:shadow-celestial/40 transition-all flex items-center gap-2 group text-sm"
             >
-              <Radio className="w-4 h-4 text-white animate-pulse" />
+              <Radio className="w-4 h-4 text-white" />
               <span>Broadcast Your Beacon</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
@@ -221,7 +221,7 @@ export function TeamRadarSection() {
 
         {filteredSignals.length === 0 && (
           <div className="text-center py-16 bg-white/[0.02] border border-dashed border-white/10 rounded-2xl">
-            <Radio className="w-10 h-10 text-slate-600 mx-auto mb-3 animate-pulse" />
+            <Radio className="w-10 h-10 text-slate-600 mx-auto mb-3" />
             <h4 className="text-base font-semibold text-white mb-1">No Beacons in This Filter</h4>
             <p className="text-xs text-slate-400 max-w-sm mx-auto mb-4">
               Be the first builder to transmit a beacon for this track and role!

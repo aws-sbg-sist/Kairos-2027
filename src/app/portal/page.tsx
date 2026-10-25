@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Users, QrCode, ShieldCheck, ArrowLeft, CheckCircle2,
-  AlertCircle, Copy, Check, Sparkles, ExternalLink, Github, Globe
+  AlertCircle, Copy, Check, ExternalLink, Github, Globe
 } from 'lucide-react';
 import { ParticipantTeam } from '@/types';
 import { TECHNICAL_TRACKS, EVENT_CONFIG } from '@/lib/config';

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Radio, CheckCircle2, AlertCircle, Sparkles, Send } from 'lucide-react';
+import { X, Radio, CheckCircle2, AlertCircle, Send } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { TeamRadarSignal } from '@/types';
 import { sound } from '@/lib/audio';
@@ -90,7 +90,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
           <>
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2.5 rounded-xl bg-celestial/20 border border-celestial/40 text-celestial-light">
-                <Radio className="w-6 h-6 animate-pulse" />
+                <Radio className="w-6 h-6" />
               </div>
               <div>
                 <h3 className="text-xl sm:text-2xl font-bold text-white font-heading">
@@ -223,7 +223,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 animate-spin" /> Broadcasting...
+                      <Radio className="w-4 h-4 animate-pulse" /> Broadcasting...
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">

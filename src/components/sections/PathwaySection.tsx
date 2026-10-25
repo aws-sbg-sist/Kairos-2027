@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, CheckCircle2, ArrowRight, ShieldCheck, Send, User, Mail, School, BookOpen, Layers, ExternalLink } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ShieldCheck, Send, User, Mail, School, BookOpen, Layers, ExternalLink } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 
 interface PathwaySectionProps {
@@ -70,7 +70,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30">
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+            <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
             <span>The Builder Journey</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight">
@@ -96,7 +96,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-purple-400">STEP {st.number}</span>
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
-                    st.current ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40 animate-pulse' : 'bg-slate-900 text-slate-400'
+                    st.current ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.2)]' : 'bg-slate-900 text-slate-400'
                   }`}>
                     {st.status}
                   </span>

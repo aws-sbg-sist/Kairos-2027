@@ -124,3 +124,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   outline: 2px solid #8b5cf6;
   outline-offset: 2px;
 }
+
+/* GPU Compositor acceleration */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+

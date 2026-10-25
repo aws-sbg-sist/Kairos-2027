@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ORGANIZING_ROSTER, FACULTY_LEADERSHIP } from '@/lib/config';
-import { Users, GraduationCap, ShieldCheck, Clock, Sparkles } from 'lucide-react';
+import { Users, GraduationCap, ShieldCheck, Clock } from 'lucide-react';
 
 export const CommitteeSection: React.FC = () => {
   return (
@@ -92,7 +92,7 @@ export const CommitteeSection: React.FC = () => {
         {/* Industry Mentors & Judges Announcement State (Complying with Master Prompt Rule) */}
         <div className="mt-16 max-w-4xl mx-auto p-8 rounded-3xl glass-panel-glow border border-purple-500/25 text-center space-y-4">
           <div className="w-12 h-12 rounded-2xl bg-purple-900/40 text-purple-300 mx-auto flex items-center justify-center border border-purple-500/30">
-            <Clock className="w-6 h-6 text-purple-400 animate-pulse" />
+            <Clock className="w-6 h-6 text-purple-400" />
           </div>
           <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
             Grand Jury & Industry Mentors
@@ -102,7 +102,7 @@ export const CommitteeSection: React.FC = () => {
           </p>
           <div className="pt-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-purple-950/80 text-purple-300 border border-purple-500/30">
-              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+              <GraduationCap className="w-3.5 h-3.5 text-purple-400" />
               <span>Jury Panel Announcements Coming Soon</span>
             </span>
           </div>

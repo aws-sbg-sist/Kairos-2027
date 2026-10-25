@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import {
   ShieldCheck, Users, Briefcase, Sliders, FileText, Download,
   Search, RefreshCw, LogOut, CheckCircle, AlertCircle, ArrowLeft,
-  Lock, Eye, Trophy, Calendar, Sparkles
+  Lock, Eye, Trophy, Calendar, Activity
 } from 'lucide-react';
 import { WaitlistEntry, SponsorInquiry, FeatureFlags, AuditLog } from '@/types';
 import { TECHNICAL_TRACKS } from '@/lib/config';
@@ -233,7 +233,7 @@ export default function AdminDashboardPage() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-purple-500/15 pb-3">
             <div>
               <h3 className="text-sm font-bold text-white font-heading flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-purple-400" />
+                <Activity className="w-4 h-4 text-purple-400" />
                 <span>Track Distribution & Candidate Pipeline Intelligence</span>
               </h3>
               <p className="text-xs text-slate-400">Live demand across 5 technical disciplines and review status pipeline.</p>

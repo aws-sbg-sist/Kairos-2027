@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import QRCode from 'qrcode';
-import { ArrowLeft, Printer, Download, ShieldCheck, Sparkles, MapPin, Calendar, Clock } from 'lucide-react';
+import { ArrowLeft, Printer, Download, ShieldCheck, MapPin, Calendar, Clock } from 'lucide-react';
 import { EVENT_CONFIG } from '@/lib/config';
 
 export default function ParticipantPassPage() {

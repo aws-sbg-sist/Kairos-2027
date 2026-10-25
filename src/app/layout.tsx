@@ -73,8 +73,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
-
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Hackathon',
@@ -134,7 +132,6 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-kairos-bg text-slate-100 font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-purple-600 selection:text-white">
-        <MagneticGlowCursor />
         {children}
       </body>
     </html>

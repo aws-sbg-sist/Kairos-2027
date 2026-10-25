@@ -44,19 +44,25 @@ module.exports = {
         'pulse-glow': 'pulseGlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'orbit-spin': 'orbitSpin 20s linear infinite',
         'float-slow': 'floatSlow 6s ease-in-out infinite',
+        'fadeIn': 'fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'fade-in': 'fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
       keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translate3d(0, 6px, 0)' },
+          '100%': { opacity: '1', transform: 'translate3d(0, 0, 0)' },
+        },
         pulseGlow: {
-          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
-          '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+          '0%, 100%': { opacity: '0.35' },
+          '50%': { opacity: '0.75' },
         },
         orbitSpin: {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
         floatSlow: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-8px)' },
+          '0%, 100%': { transform: 'translate3d(0, 0px, 0)' },
+          '50%': { transform: 'translate3d(0, -6px, 0)' },
         }
       },
       boxShadow: {

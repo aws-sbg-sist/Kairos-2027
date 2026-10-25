@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { PROPOSED_AWARD_CATEGORIES } from '@/lib/config';
-import { Trophy, Award, Sparkles, Shield, Clock, Lock } from 'lucide-react';
+import { Trophy, Award, Shield, Clock, Lock } from 'lucide-react';
 
 interface AwardsSectionProps {
   prizePoolConfirmed?: boolean;
@@ -33,14 +33,14 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
           {/* Publication Rule Compliance Banner */}
           {!prizePoolConfirmed ? (
             <div className="p-4 rounded-xl bg-purple-950/40 border border-purple-500/30 max-w-2xl mx-auto flex items-center justify-center gap-3 text-xs sm:text-sm text-purple-200">
-              <Clock className="w-4 h-4 text-purple-400 flex-shrink-0 animate-pulse" />
+              <Clock className="w-4 h-4 text-purple-400 flex-shrink-0" />
               <span>
                 <strong>Official Notice:</strong> Specific prize pool valuations, corporate bounties, and trophy allocations will be released following institutional sponsor finalization.
               </span>
             </div>
           ) : (
             <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30 max-w-2xl mx-auto flex items-center justify-center gap-3 text-xs sm:text-sm text-emerald-200">
-              <Sparkles className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+              <Trophy className="w-4 h-4 text-emerald-400 flex-shrink-0" />
               <span>
                 <strong>Confirmed Prize Pool:</strong> Verified ₹1,75,000 national cash prizes unlocked!
               </span>

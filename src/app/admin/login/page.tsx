@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ShieldCheck, KeyRound, User, ArrowLeft, AlertCircle, Sparkles } from 'lucide-react';
+import { ShieldCheck, KeyRound, User, ArrowLeft, AlertCircle } from 'lucide-react';
 import { ORGANIZING_ROSTER } from '@/lib/config';
 
 export default function AdminLoginPage() {

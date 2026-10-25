@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Sparkles, ArrowRight, Calendar, MapPin, Download, ShieldCheck, Play, Eye, EyeOff } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Download, ShieldCheck, Play, Eye, EyeOff } from 'lucide-react';
 import { EVENT_CONFIG } from '@/lib/config';
 import { Hourglass3D } from './Hourglass3D';
 import { HourglassFallback } from './HourglassFallback';
@@ -74,7 +74,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-6 relative z-20">
           <div className="glass-panel py-2 px-4 rounded-xl flex items-center justify-between gap-3 text-xs sm:text-sm border border-purple-500/30">
             <div className="flex items-center gap-2 text-purple-200">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
               <span className="font-semibold text-white">Official Announcement:</span>
               <span className="text-slate-300 hidden md:inline">
                 KAIROS 2027 is an approved National Technical Hackathon by AWS SBG (SIST Chapter). Early-Interest Waitlist is open!
@@ -102,7 +102,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
             
             {/* Event Category Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-mono shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
+              <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
               <span>National Technical Hackathon · 48 Hours Offline</span>
             </div>
 

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, X, ArrowUpRight, Shield, Sparkles, Clock, Calendar, Volume2, VolumeX, Radio } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Shield, Clock, Calendar, Volume2, VolumeX, Radio } from 'lucide-react';
 import { sound } from '@/lib/audio';
 
 interface NavbarProps {
@@ -104,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
             >
               {soundEnabled ? (
                 <>
-                  <Volume2 className="w-4 h-4 text-emerald-400 animate-pulse" />
+                  <Volume2 className="w-4 h-4 text-emerald-400" />
                   <span className="hidden xl:inline text-[10px] font-semibold text-emerald-400">AUDIO ON</span>
                 </>
               ) : (
@@ -133,7 +133,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-500 group-hover:opacity-90 transition-opacity" />
               <div className="relative flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-purple-200 animate-pulse" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-purple-200 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 <span>Join Waitlist</span>
               </div>
             </button>

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Target, Zap, Shield, Sparkles, HeartPulse, Compass } from 'lucide-react';
+import { Target, Zap, Shield, HeartPulse, Compass } from 'lucide-react';
 import { EVENT_CONFIG } from '@/lib/config';
 
 export const MissionSection: React.FC = () => {

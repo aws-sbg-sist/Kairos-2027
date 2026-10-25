@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { EVENT_SCHEDULE } from '@/lib/config';
-import { Calendar, Clock, Download, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
+import { Calendar, Clock, Download, CheckCircle, AlertCircle } from 'lucide-react';
 
 export const ScheduleSection: React.FC = () => {
   const [selectedDayIdx, setSelectedDayIdx] = useState(1); // Default to Day 1 (Friday kickoff)
