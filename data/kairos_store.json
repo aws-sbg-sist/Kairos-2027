@@ -1,0 +1,105 @@
+{
+  "waitlist": [
+    {
+      "id": "demo-w1",
+      "fullName": "Aarav Sharma",
+      "email": "aarav.sharma@example.edu",
+      "institution": "IIT Madras",
+      "yearOfStudy": "3rd Year",
+      "department": "Computer Science & Engineering",
+      "preferredTrack": "Agentic AI & Generative Workflows",
+      "portfolioUrl": "https://github.com/aarav",
+      "motivation": "Building autonomous distributed agent systems for verifiable research synthesis.",
+      "createdAt": "2026-10-24T10:15:00.000Z"
+    },
+    {
+      "id": "demo-w2",
+      "fullName": "Pooja Venkatesh",
+      "email": "pooja.v@example.edu",
+      "institution": "Sathyabama Institute of Science and Technology",
+      "yearOfStudy": "4th Year",
+      "department": "School of Computing",
+      "preferredTrack": "Cloud-Native Distributed Systems",
+      "portfolioUrl": "https://github.com/pooja-v",
+      "motivation": "Exploring high-throughput distributed transaction settlement with event-driven consensus.",
+      "createdAt": "2026-10-24T14:30:00.000Z"
+    }
+  ],
+  "sponsors": [
+    {
+      "id": "sp-1",
+      "companyName": "Aether Cloud Systems",
+      "contactPerson": "Karan Mehra",
+      "contactEmail": "partnerships@aethercloud.io",
+      "contactPhone": "+91 98765 43210",
+      "interestedTier": "powered_by",
+      "customRequirements": "Interested in hosting a 10-minute technical masterclass on distributed vector indexing.",
+      "status": "contacted",
+      "createdAt": "2026-10-23T11:00:00.000Z"
+    }
+  ],
+  "featureFlags": {
+    "registrationOpen": true,
+    "prizePoolConfirmed": false,
+    "demoSandboxMode": true,
+    "announcementBanner": "KAIROS 2027 Early-Interest Waitlist is now live! Reserve your team priority.",
+    "registrationDeadline": "2027-01-06T23:59:59+05:30"
+  },
+  "auditLogs": [
+    {
+      "id": "log-1",
+      "timestamp": "2026-10-25T09:00:00.000Z",
+      "organizerName": "System Bootstrap",
+      "action": "INIT_STORE",
+      "details": "Initialized KAIROS 2027 persistent store with verified organizer roster and proposed tiers."
+    }
+  ],
+  "teams": [
+    {
+      "id": "team-k75-01",
+      "teamName": "Chronos Distributed",
+      "inviteCode": "KAIROS-7721",
+      "trackId": "cloud-native",
+      "leaderEmail": "pooja.v@example.edu",
+      "status": "shortlisted",
+      "members": [
+        {
+          "id": "m1",
+          "name": "Pooja Venkatesh",
+          "email": "pooja.v@example.edu",
+          "role": "Leader",
+          "college": "SIST",
+          "confirmed": true
+        },
+        {
+          "id": "m2",
+          "name": "Rohan Gupta",
+          "email": "rohan.g@example.edu",
+          "role": "Backend",
+          "college": "SIST",
+          "confirmed": true
+        },
+        {
+          "id": "m3",
+          "name": "Swetha K",
+          "email": "swetha.k@example.edu",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "confirmed": true
+        },
+        {
+          "id": "m4",
+          "name": "Aditya Nair",
+          "email": "aditya.n@example.edu",
+          "role": "UI/UX",
+          "college": "SIST",
+          "confirmed": true
+        }
+      ],
+      "projectTitle": "Chronos Stream: Sub-millisecond Event Mesh for Urban Telemetry",
+      "projectAbstract": "A fault-tolerant stream processing engine handling 100k events/sec with distributed consensus and zero data loss.",
+      "githubUrl": "https://github.com/kairos2027/chronos-stream",
+      "createdAt": "2026-10-25T08:00:00.000Z"
+    }
+  ]
+}
