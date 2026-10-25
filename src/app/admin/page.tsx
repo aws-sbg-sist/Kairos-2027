@@ -138,7 +138,7 @@ export default function AdminDashboardPage() {
     const matchesSearch =
       item.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.institution.toLowerCase().includes(searchQuery.toLowerCase());
+      (item.institution || item.college || '').toLowerCase().includes(searchQuery.toLowerCase());
     const matchesTrack = trackFilter === 'ALL' || item.preferredTrack === trackFilter;
     return matchesSearch && matchesTrack;
   });

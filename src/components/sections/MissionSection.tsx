@@ -27,54 +27,129 @@ export const MissionSection: React.FC = () => {
           </p>
         </div>
 
-        {/* 3 Pillars Grid */}
+        {/* 3 Pillars Grid with Visual Assets */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          {/* Pillar 1 */}
-          <div className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/40 transition-all space-y-4 group">
-            <div className="w-12 h-12 rounded-xl bg-purple-900/40 text-purple-300 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Zap className="w-6 h-6 text-purple-400" />
+          {/* Pillar 1: Applied Engineering (innov.png) */}
+          <div className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/40 transition-all space-y-4 group flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="w-12 h-12 rounded-xl bg-purple-900/40 text-purple-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Zap className="w-6 h-6 text-purple-400" />
+                </div>
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-slate-950/80 border border-purple-500/30 p-1.5 shadow-md">
+                  <Image
+                    src="/assets/innov.png"
+                    alt="Applied Engineering Innovation"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <h3 className="text-xl font-display font-bold text-white">
+                End-to-End Applied Engineering
+              </h3>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                We move far beyond superficial AI wrappers and trivial mockups. KAIROS challenges teams to design scalable distributed architectures, verify security primitives, and defend live working prototypes before industry juries.
+              </p>
             </div>
-            <h3 className="text-xl font-display font-bold text-white">
-              End-to-End Applied Engineering
-            </h3>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              We move far beyond superficial AI wrappers and trivial mockups. KAIROS challenges teams to design scalable distributed architectures, verify security primitives, and defend live working prototypes before industry juries.
-            </p>
-            <div className="pt-2 text-xs font-mono text-purple-400 flex items-center gap-1.5">
+            <div className="pt-2 text-xs font-mono text-purple-400 flex items-center gap-1.5 border-t border-purple-500/20">
               <span>Verified Repositories & Working Code</span>
             </div>
           </div>
 
-          {/* Pillar 2 */}
-          <div className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/40 transition-all space-y-4 group">
-            <div className="w-12 h-12 rounded-xl bg-sky-900/40 text-sky-300 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <HeartPulse className="w-6 h-6 text-sky-400" />
+          {/* Pillar 2: Builder Welfare & Collaboration (collaborate.png) */}
+          <div className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/40 transition-all space-y-4 group flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="w-12 h-12 rounded-xl bg-sky-900/40 text-sky-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <HeartPulse className="w-6 h-6 text-sky-400" />
+                </div>
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-slate-950/80 border border-sky-500/30 p-1.5 shadow-md">
+                  <Image
+                    src="/assets/collaborate.png"
+                    alt="Builder Collaboration"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <h3 className="text-xl font-display font-bold text-white">
+                Builder Welfare & Respect
+              </h3>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                We do not glorify sleep deprivation or reckless exhaustion. 48 hours of continuous operation is supported through structured team rest rotations, quiet relaxation zones, 7 principal meals, medical oversight, and continuous hydration.
+              </p>
             </div>
-            <h3 className="text-xl font-display font-bold text-white">
-              Builder Welfare & Respect
-            </h3>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              We do not glorify sleep deprivation or reckless exhaustion. 48 hours of continuous operation is supported through structured team rest rotations, quiet relaxation zones, 7 principal meals, medical oversight, and continuous hydration.
-            </p>
-            <div className="pt-2 text-xs font-mono text-sky-400 flex items-center gap-1.5">
+            <div className="pt-2 text-xs font-mono text-sky-400 flex items-center gap-1.5 border-t border-sky-500/20">
               <span>Voluntary Rest Rotations & Medical Care</span>
             </div>
           </div>
 
-          {/* Pillar 3 */}
-          <div className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/40 transition-all space-y-4 group">
-            <div className="w-12 h-12 rounded-xl bg-indigo-900/40 text-indigo-300 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Shield className="w-6 h-6 text-indigo-400" />
+          {/* Pillar 3: Transparent Merit & Build (build.png) */}
+          <div className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/40 transition-all space-y-4 group flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="w-12 h-12 rounded-xl bg-indigo-900/40 text-indigo-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Shield className="w-6 h-6 text-indigo-400" />
+                </div>
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-slate-950/80 border border-indigo-500/30 p-1.5 shadow-md">
+                  <Image
+                    src="/assets/build.png"
+                    alt="Transparent Merit & Build"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <h3 className="text-xl font-display font-bold text-white">
+                Transparent & Ethical Competition
+              </h3>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                Zero participation fees. 100-point transparent scoring rubrics. No unannounced judging biases. Pre-event rules confirm that all code must be authored inside the 48-hour window, evaluated through rigorous checkpoints and human jury defense.
+              </p>
             </div>
-            <h3 className="text-xl font-display font-bold text-white">
-              Transparent & Ethical Competition
-            </h3>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              Zero participation fees. 100-point transparent scoring rubrics. No unannounced judging biases. Pre-event rules confirm that all code must be authored inside the 48-hour window, evaluated through rigorous checkpoints and human jury defense.
-            </p>
-            <div className="pt-2 text-xs font-mono text-indigo-400 flex items-center gap-1.5">
+            <div className="pt-2 text-xs font-mono text-indigo-400 flex items-center gap-1.5 border-t border-indigo-500/20">
               <span>100% Merit-Based Selection</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Builder Craftsmanship Dual Showcase (ideas.png & challenges.png) */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-700/60 flex items-center gap-5 hover:border-aws-orange/40 transition-all">
+            <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-slate-950 border border-aws-orange/30 p-2 shrink-0">
+              <Image
+                src="/assets/ideas.png"
+                alt="Architectural Ideation"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div className="space-y-1">
+              <span className="text-xs font-mono text-aws-orange font-bold uppercase">Ideation to Architecture</span>
+              <h4 className="text-base font-bold text-white">Original Problem Formulations</h4>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Teams transform open-ended prompts into formal architectural design documents, event topologies, and failure mode analyses.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-700/60 flex items-center gap-5 hover:border-aws-orange/40 transition-all">
+            <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-slate-950 border border-sky-500/30 p-2 shrink-0">
+              <Image
+                src="/assets/challenges.png"
+                alt="Production Stress Challenges"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div className="space-y-1">
+              <span className="text-xs font-mono text-sky-400 font-bold uppercase">Hardened Under Chaos</span>
+              <h4 className="text-base font-bold text-white">Live Chaos Injections</h4>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Table-side jury checkpoints introduce network latency, adversarial edge cases, and load spikes to test system resilience.
+              </p>
             </div>
           </div>
         </div>

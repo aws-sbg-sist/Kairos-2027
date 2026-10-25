@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { FAQS } from '@/lib/config';
 import { HelpCircle, ChevronDown, Search } from 'lucide-react';
 
@@ -22,9 +23,16 @@ export const FAQSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30">
-            <HelpCircle className="w-3.5 h-3.5 text-purple-400" />
-            <span>Answers for Builders</span>
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md">
+            <div className="relative w-4 h-4 rounded overflow-hidden">
+              <Image
+                src="/assets/FAQ.png"
+                alt="FAQ"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <span>Answers for Builders • 24/7 Support</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight">
             Frequently Asked <span className="gradient-text-kairos">Questions</span>

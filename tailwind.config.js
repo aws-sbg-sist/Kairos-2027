@@ -9,14 +9,35 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        aws: {
+          orange: '#FF9900', // AWS Smile Orange
+          squidInk: '#232F3E', // Deep Navy / Squid Ink
+          blue: '#0073BB', // Amazon Blue
+          canvas: '#0B0F19', // Obsidian Night Dark Canvas
+          card: '#161E2E', // Surface Card Dark
+          cardHover: '#1E293B',
+          success: '#10B981', // Matrix Green
+          snow: '#F8FAFC', // Pure Snow Light
+        },
         kairos: {
           darkest: '#030308',
-          bg: '#070712',
-          surface: '#0d0d21',
-          card: '#12122b',
-          cardHover: '#181838',
-          border: 'rgba(139, 92, 246, 0.18)',
-          borderGlow: 'rgba(168, 85, 247, 0.45)',
+          bg: '#0B0F19', // Obsidian canvas
+          surface: '#161E2E', // Surface card
+          card: '#161E2E',
+          cardHover: '#20293D',
+          border: 'rgba(255, 153, 0, 0.2)',
+          borderGlow: 'rgba(255, 153, 0, 0.45)',
+          orange: {
+            DEFAULT: '#FF9900',
+            light: '#FFAC33',
+            glow: '#FFA41C',
+            subtle: 'rgba(255, 153, 0, 0.15)',
+          },
+          navy: {
+            DEFAULT: '#232F3E',
+            deep: '#131A22',
+            light: '#37475A',
+          },
           purple: {
             DEFAULT: '#8b5cf6',
             light: '#a855f7',
@@ -25,9 +46,10 @@ module.exports = {
             subtle: '#2e1065',
           },
           blue: {
-            DEFAULT: '#38bdf8',
+            DEFAULT: '#0073BB',
+            sky: '#38bdf8',
             cyan: '#06b6d4',
-            glow: 'rgba(56, 189, 248, 0.35)',
+            glow: 'rgba(0, 115, 187, 0.35)',
           },
           gold: {
             DEFAULT: '#f59e0b',
@@ -36,9 +58,10 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'sans-serif'],
-        display: ['var(--font-outfit)', 'sans-serif'],
-        mono: ['var(--font-mono)', 'monospace'],
+        sans: ['Amazon Ember', 'var(--font-inter)', 'sans-serif'],
+        display: ['Amazon Ember Display', 'var(--font-outfit)', 'Space Grotesk', 'sans-serif'],
+        mono: ['Amazon Ember Mono', 'var(--font-mono)', 'monospace'],
+        duo: ['Amazon Ember Duospace', 'var(--font-mono)', 'monospace'],
       },
       animation: {
         'pulse-glow': 'pulseGlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -66,9 +89,10 @@ module.exports = {
         }
       },
       boxShadow: {
+        'glow-orange': '0 0 35px -5px rgba(255, 153, 0, 0.35)',
         'glow-purple': '0 0 35px -5px rgba(139, 92, 246, 0.35)',
         'glow-cyan': '0 0 35px -5px rgba(56, 189, 248, 0.3)',
-        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.45)',
       }
     },
   },

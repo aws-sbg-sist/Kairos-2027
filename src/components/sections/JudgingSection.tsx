@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { JUDGING_CRITERIA } from '@/lib/config';
 import { Award, ShieldCheck, Scale, CheckSquare, Eye, Users } from 'lucide-react';
 
@@ -15,9 +16,16 @@ export const JudgingSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30">
-            <Scale className="w-3.5 h-3.5 text-purple-400" />
-            <span>Merit-Driven Evaluation</span>
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md">
+            <div className="relative w-5 h-5 rounded overflow-hidden">
+              <Image
+                src="/assets/judges.png"
+                alt="Jury Evaluation"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <span>Merit-Driven Evaluation • 100-Point Scoring</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight">
             100-Point <span className="gradient-text-kairos">Judging Rubric</span>

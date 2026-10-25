@@ -110,7 +110,7 @@ export default function ParticipantPortalPage() {
                   TEAM ROSTER (4–6 BUILDERS)
                 </span>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-900/60 text-purple-200">
-                  {team.status.toUpperCase()}
+                  {(team.status || team.selectionStage || 'confirmed').toUpperCase()}
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-white">

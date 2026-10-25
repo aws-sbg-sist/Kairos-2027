@@ -4,8 +4,13 @@
 
 :root {
   --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-outfit: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-outfit: 'Outfit', 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --aws-orange: #FF9900;
+  --aws-squid-ink: #232F3E;
+  --aws-obsidian: #0B0F19;
+  --aws-surface: #161E2E;
+  --aws-blue: #0073BB;
 }
 
 * {
@@ -20,17 +25,15 @@ html {
 }
 
 body {
-  background-color: #05050a;
-  color: #f1f5f9;
-  font-family: var(--font-inter);
+  background-color: #0B0F19;
+  color: #F8FAFC;
+  font-family: 'Amazon Ember', var(--font-inter), sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
-  selection-background-color: #8b5cf6;
-  selection-color: #ffffff;
 }
 
 ::selection {
-  background: rgba(139, 92, 246, 0.4);
+  background: rgba(255, 153, 0, 0.4);
   color: #ffffff;
 }
 
@@ -39,54 +42,60 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #070712;
+  background: #0B0F19;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1f1f3d;
+  background: #232F3E;
   border-radius: 4px;
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(255, 153, 0, 0.2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b2d6e;
+  background: #FF9900;
 }
 
 /* Glassmorphism primitives */
 .glass-panel {
-  background: rgba(13, 13, 33, 0.7);
+  background: rgba(22, 30, 46, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(139, 92, 246, 0.16);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(255, 153, 0, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
 }
 
 .glass-panel:hover {
-  border-color: rgba(168, 85, 247, 0.35);
+  border-color: rgba(255, 153, 0, 0.35);
 }
 
 .glass-panel-glow {
-  background: rgba(18, 18, 43, 0.75);
+  background: rgba(22, 30, 46, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  box-shadow: 0 0 30px -5px rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(255, 153, 0, 0.3);
+  box-shadow: 0 0 35px -5px rgba(255, 153, 0, 0.25);
 }
 
 .glass-input {
-  background: rgba(10, 10, 24, 0.8);
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  background: rgba(11, 15, 25, 0.85);
+  border: 1px solid rgba(255, 153, 0, 0.25);
   color: #f8fafc;
   outline: none;
   transition: all 0.2s ease;
 }
 
 .glass-input:focus {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 15px -2px rgba(139, 92, 246, 0.4);
+  border-color: #FF9900;
+  box-shadow: 0 0 15px -2px rgba(255, 153, 0, 0.4);
 }
 
 /* Glowing text gradients */
 .gradient-text-kairos {
-  background: linear-gradient(135deg, #ffffff 0%, #d8b4fe 40%, #a855f7 70%, #38bdf8 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #fed7aa 30%, #FF9900 70%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-orange {
+  background: linear-gradient(135deg, #FFAC33 0%, #FF9900 60%, #E68A00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -103,25 +112,25 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Subtle Starfield & Ambient Glow Background */
+/* Starfield & Ambient Glow Background */
 .ambient-cosmic-bg {
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
-    radial-gradient(circle at 10% 40%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 90% 70%, rgba(168, 85, 247, 0.1) 0%, transparent 55%);
+    radial-gradient(circle at 50% 0%, rgba(255, 153, 0, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(0, 115, 187, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 90% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 55%);
 }
 
-/* Grid overlay background */
+/* Tech Grid Pattern */
 .tech-grid-pattern {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(139, 92, 246, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(139, 92, 246, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 153, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 153, 0, 0.04) 1px, transparent 1px);
 }
 
 /* Accessible focus ring */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 2px solid #8b5cf6;
+  outline: 2px solid #FF9900;
   outline-offset: 2px;
 }
 
@@ -131,4 +140,3 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   backface-visibility: hidden;
   will-change: transform;
 }
-

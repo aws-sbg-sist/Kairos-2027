@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Radio, Users, Filter, ExternalLink, ArrowRight, ShieldCheck, MapPin } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { TeamRadarSignal } from '@/types';
@@ -54,11 +55,15 @@ export function TeamRadarSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-celestial/15 border border-celestial/30 text-celestial-light text-xs font-mono mb-4">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-celestial opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-celestial"></span>
-            </span>
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-celestial/15 border border-celestial/30 text-celestial-light text-xs font-mono mb-4 shadow-md">
+            <div className="relative w-5 h-5 rounded overflow-hidden">
+              <Image
+                src="/assets/teams.png"
+                alt="Teams Formation"
+                fill
+                className="object-contain"
+              />
+            </div>
             <span>BUILDER RADAR & MATCHING</span>
           </div>
 

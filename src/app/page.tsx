@@ -5,6 +5,7 @@ import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { HeroSection } from '@/components/hero/HeroSection';
 import { FactsStrip } from '@/components/sections/FactsStrip';
+import { DualPhasePipelineVisualizer } from '@/components/sections/DualPhasePipelineVisualizer';
 import { MissionSection } from '@/components/sections/MissionSection';
 import { TracksSection } from '@/components/sections/TracksSection';
 import { ScheduleSection } from '@/components/sections/ScheduleSection';
@@ -15,6 +16,7 @@ import { PathwaySection } from '@/components/sections/PathwaySection';
 import { SponsorshipSection } from '@/components/sections/SponsorshipSection';
 import { CommitteeSection } from '@/components/sections/CommitteeSection';
 import { FAQSection } from '@/components/sections/FAQSection';
+import { EntranceVideoReveal } from '@/components/animation/EntranceVideoReveal';
 import { WaitlistModal } from '@/components/modals/WaitlistModal';
 import { ProspectusModal } from '@/components/modals/ProspectusModal';
 import { TermsModal } from '@/components/modals/TermsModal';
@@ -32,14 +34,13 @@ export default function HomePage() {
     demoSandboxMode: boolean;
     announcementBanner: string;
   }>({
-    registrationOpen: false,
-    prizePoolConfirmed: false,
+    registrationOpen: true,
+    prizePoolConfirmed: true,
     demoSandboxMode: true,
-    announcementBanner: 'Early-Interest Waitlist is active for KAIROS 2027!',
+    announcementBanner: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 PURE CASH PRIZE POOL',
   });
 
   useEffect(() => {
-    // Fetch live feature flags from API
     fetch('/api/admin/flags')
       .then(res => res.json())
       .then(data => {
@@ -56,7 +57,9 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-kairos-bg text-slate-100">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+      {/* Site Entrance Animation (KAIROS Logo Reveal) */}
+      <EntranceVideoReveal />
       
       {/* Sticky Navigation Bar */}
       <Navbar onOpenWaitlist={() => setWaitlistModalOpen(true)} />
@@ -73,6 +76,9 @@ export default function HomePage() {
         {/* Facts Strip */}
         <FactsStrip />
 
+        {/* Dual-Phase Merit Pipeline Visualizer */}
+        <DualPhasePipelineVisualizer />
+
         {/* Why KAIROS / Mission */}
         <MissionSection />
 
@@ -88,10 +94,10 @@ export default function HomePage() {
         {/* 100-Point Judging Criteria */}
         <JudgingSection />
 
-        {/* Awards & Honors (Publication Rule Compliant) */}
+        {/* Awards & Honors (₹1,75,000 Pure Cash Pool) */}
         <AwardsSection prizePoolConfirmed={flags.prizePoolConfirmed} />
 
-        {/* Builder Journey & Early-Interest Waitlist Form */}
+        {/* Builder Journey & Early-Interest Registration Form */}
         <PathwaySection
           initialTrack={selectedTrackForWaitlist}
           registrationOpen={flags.registrationOpen}

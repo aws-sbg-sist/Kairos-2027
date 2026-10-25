@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { CheckCircle2, ArrowRight, ShieldCheck, Send, User, Mail, School, BookOpen, Layers, ExternalLink } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 
@@ -111,7 +112,15 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
         {/* Inline Early-Interest Waitlist Card (Interactive) */}
         <div id="waitlist" className="max-w-3xl mx-auto p-6 sm:p-10 rounded-3xl glass-panel-glow border border-purple-500/30 relative">
           
-          <div className="text-center max-w-xl mx-auto mb-8 space-y-2">
+          <div className="text-center max-w-xl mx-auto mb-8 space-y-3">
+            <div className="relative w-12 h-12 mx-auto rounded-2xl overflow-hidden bg-slate-950 border border-purple-500/40 p-2 shadow-lg shadow-purple-900/30">
+              <Image
+                src="/assets/register.png"
+                alt="Registration Priority"
+                fill
+                className="object-contain"
+              />
+            </div>
             <h3 className="text-2xl sm:text-3xl font-display font-bold text-white">
               Reserve Your Early-Interest Priority
             </h3>

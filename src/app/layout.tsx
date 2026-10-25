@@ -21,15 +21,15 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#070712',
+  themeColor: '#0B0F19',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
 };
 
 export const metadata: Metadata = {
-  title: 'KAIROS 2027 | Grand Edition — National Technical Hackathon',
-  description: 'Where Innovation Meets Its Moment. 48-Hour National Technical Hackathon at Sathyabama Indoor Stadium, Chennai (22–24 January 2027). Organized by AWS Student Builder Group (SIST Chapter). Free ₹0 registration, 75 elite teams, 5 technical tracks.',
+  title: 'KAIROS 2027 — National Flagship 48-Hour Hackathon | AWS Student Builder Group SIST',
+  description: 'Join 400–600 elite developers (teams of 4–6) at Sathyabama for KAIROS 2027. 48 hours continuous non-stop hacking on AWS Cloud. 100% Free - Zero Entry Fee. ₹1,75,000 pure cash prizes, two-tier technical screening, and tier-1 corporate sponsors. Register for free now!',
   keywords: [
     'KAIROS 2027',
     'KAIROS Hackathon',
@@ -38,23 +38,25 @@ export const metadata: Metadata = {
     'Chennai Hackathon 2027',
     'National Technical Hackathon',
     'Agentic AI Hackathon',
+    'Amazon Bedrock',
     'Distributed Systems',
-    'Web3 Security',
+    'Cloud-Native AWS',
+    'Edge IoT Hackathon',
     'FinTech Hackathon'
   ],
-  authors: [{ name: 'AWS Student Builder Group - SIST Chapter' }],
-  metadataBase: new URL('https://kairos2027.in'),
+  authors: [{ name: 'AWS Student Builder Group — SIST Chapter' }],
+  metadataBase: new URL('https://kairos.sathyabama.ac.in'),
   openGraph: {
-    title: 'KAIROS 2027 | Grand Edition — National Technical Hackathon',
-    description: '48 Hours. 75 Elite Teams. Where Innovation Meets Its Moment. 22–24 January 2027 · Sathyabama Indoor Stadium, Chennai.',
-    url: 'https://kairos2027.in',
-    siteName: 'KAIROS 2027',
+    title: 'KAIROS 2027 | The Defining Moment to Build on AWS Cloud',
+    description: '48 Hours Non-Stop • ₹1,75,000 Pure Cash Prize Pool • 100 Elite Teams • Sathyabama Institute of Science and Technology, Chennai.',
+    url: 'https://kairos.sathyabama.ac.in',
+    siteName: 'Kairos 2027 Hackathon',
     images: [
       {
         url: '/assets/kairos-wordmark.png',
         width: 1200,
         height: 630,
-        alt: 'KAIROS 2027 Grand Edition Hackathon Banner',
+        alt: 'Kairos 2027 Grand Edition Banner',
       },
     ],
     locale: 'en_IN',
@@ -62,9 +64,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'KAIROS 2027 | Grand Edition — National Technical Hackathon',
-    description: 'Where Innovation Meets Its Moment. 48 Hours to Build What Comes Next. 22–24 Jan 2027 · Chennai.',
-    images: ['/assets/kairos-wordmark.png'],
+    title: 'KAIROS 2027 — Build the Future in 48 Hours',
+    description: '100% Free National Hackathon. ₹1,75,000 Pure Cash. Free Meals, Swag, and Travel Support.',
+    creator: '@awssbg_sist',
   },
   icons: {
     icon: '/assets/kairos-hourglass.png',
@@ -77,14 +79,14 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Hackathon',
   name: 'KAIROS 2027 | Grand Edition',
-  description: 'Where Innovation Meets Its Moment. 48-Hour National Technical Hackathon at Sathyabama Indoor Stadium, Chennai.',
-  startDate: '2027-01-22T11:30:00+05:30',
-  endDate: '2027-01-24T11:30:00+05:30',
+  description: 'Where Architecture Meets Execution. 48-Hour National Technical Hackathon at Sathyabama Institute of Science and Technology, Chennai.',
+  startDate: '2027-01-22T09:30:00+05:30',
+  endDate: '2027-01-24T17:00:00+05:30',
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   location: {
     '@type': 'Place',
-    name: 'Sathyabama Indoor Stadium',
+    name: 'Central Library & Campus Bays, Sathyabama Institute of Science and Technology',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR)',
@@ -109,8 +111,8 @@ const jsonLd = {
   },
   organizer: {
     '@type': 'Organization',
-    name: 'AWS Student Builder Group - SIST Chapter',
-    url: 'https://kairos2027.in',
+    name: 'AWS Student Builder Group — SIST Chapter',
+    url: 'https://kairos.sathyabama.ac.in',
     parentOrganization: {
       '@type': 'EducationalOrganization',
       name: 'Sathyabama Institute of Science and Technology'
@@ -131,7 +133,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-kairos-bg text-slate-100 font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-purple-600 selection:text-white">
+      <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-aws-orange selection:text-white">
         {children}
       </body>
     </html>
