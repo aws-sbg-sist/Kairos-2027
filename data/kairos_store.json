@@ -48,6 +48,34 @@
   },
   "auditLogs": [
     {
+      "id": "log-1792936952854",
+      "timestamp": "2026-10-25T14:02:32.854Z",
+      "organizerName": "Rikish B",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Head of Design & Branding"
+    },
+    {
+      "id": "log-1792936939202",
+      "timestamp": "2026-10-25T14:02:19.202Z",
+      "organizerName": "Nangaiyar M",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Head of Sponsorship & Finance"
+    },
+    {
+      "id": "log-1792936877123",
+      "timestamp": "2026-10-25T14:01:17.123Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader"
+    },
+    {
+      "id": "log-1792936425142",
+      "timestamp": "2026-10-25T13:53:45.142Z",
+      "organizerName": "Failed Login Attempt",
+      "action": "AUTH_FAILURE",
+      "details": "Invalid passkey attempted for identity [Thenappan T]"
+    },
+    {
       "id": "log-1792934893046",
       "timestamp": "2026-10-25T13:28:13.046Z",
       "organizerName": "Hemavarshine S",
