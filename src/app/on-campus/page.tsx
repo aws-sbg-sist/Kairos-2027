@@ -109,8 +109,8 @@ export default function OnCampusGuidePage() {
           
           {/* Header */}
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk border border-aws-orange/30">
-              <MapPin className="w-3.5 h-3.5 text-aws-orange" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk border border-purple-500/30">
+              <MapPin className="w-3.5 h-3.5 text-purple-400" />
               <span>Round 2: Top 100 Teams Finalist Guide • Jan 22–24, 2027</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
@@ -125,7 +125,7 @@ export default function OnCampusGuidePage() {
           <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
               <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-slate-950 border border-aws-orange/40 p-1.5 shrink-0 shadow-md">
+                <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-slate-950 border border-purple-500/40 p-1.5 shrink-0 shadow-md">
                   <Image
                     src="/assets/venue.png"
                     alt="Venue Symbol"
@@ -134,7 +134,7 @@ export default function OnCampusGuidePage() {
                   />
                 </div>
                 <div>
-                  <span className="text-xs font-mono text-aws-orange font-bold uppercase">VENUE LAYOUT</span>
+                  <span className="text-xs font-mono text-purple-400 font-bold uppercase">VENUE LAYOUT</span>
                   <h2 className="text-xl sm:text-2xl font-display font-black text-white">
                     Sathyabama Central Library Complex
                   </h2>
@@ -146,7 +146,7 @@ export default function OnCampusGuidePage() {
             </div>
 
             {/* Campus Architectural Panorama Illustration */}
-            <div className="relative rounded-2xl overflow-hidden border border-aws-orange/30 bg-slate-950/80 aspect-[21/9] max-h-[320px] w-full flex items-center justify-center group shadow-xl">
+            <div className="relative rounded-2xl overflow-hidden border border-purple-500/30 bg-slate-950/80 aspect-[21/9] max-h-[320px] w-full flex items-center justify-center group shadow-xl">
               <Image
                 src="/assets/venue-illustration.png"
                 alt="Sathyabama Central Library Arena Architectural Illustration"
@@ -158,7 +158,7 @@ export default function OnCampusGuidePage() {
                 <span className="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700/60 backdrop-blur-md">
                   Central Library Arena · 100 Hacking Bays & 24/7 Operations Hub
                 </span>
-                <span className="hidden sm:inline-block bg-aws-orange/90 text-slate-950 font-bold px-3 py-1 rounded-lg shadow-md">
+                <span className="hidden sm:inline-block bg-gradient-to-r from-purple-600 to-indigo-600/90 text-slate-950 font-bold px-3 py-1 rounded-lg shadow-md">
                   100 Elite National Teams
                 </span>
               </div>
@@ -172,7 +172,7 @@ export default function OnCampusGuidePage() {
                   onClick={() => setSelectedFloor(floor)}
                   className={`p-3 rounded-xl text-xs font-bold font-mono transition-all uppercase ${
                     selectedFloor === floor
-                      ? 'bg-aws-orange text-slate-950 shadow-md'
+                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md'
                       : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
                   }`}
                 >
@@ -182,7 +182,7 @@ export default function OnCampusGuidePage() {
             </div>
 
             {/* Active Floor Plan Details with Coding Workspace Visual */}
-            <div className="p-6 rounded-2xl bg-aws-squidInk border border-aws-orange/30 space-y-6">
+            <div className="p-6 rounded-2xl bg-aws-squidInk border border-purple-500/30 space-y-6">
               <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                 <h3 className="text-lg font-bold text-white font-display">
                   {currentFloor.title}
@@ -197,7 +197,7 @@ export default function OnCampusGuidePage() {
                 <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {currentFloor.facilities.map((fac, idx) => (
                     <div key={idx} className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-2.5 text-xs text-slate-200">
-                      <CheckCircle2 className="w-4 h-4 text-aws-orange flex-shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
                       <span>{fac}</span>
                     </div>
                   ))}
@@ -211,7 +211,7 @@ export default function OnCampusGuidePage() {
                     fill
                     className="object-contain p-2 group-hover:scale-105 transition-transform"
                   />
-                  <div className="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-amber-300 border border-slate-800">
+                  <div className="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-purple-300 border border-slate-800">
                     {selectedFloor === 'first' || selectedFloor === 'second' ? 'Hacking Bay Workstation Layout' : 'Complex Arena Hub'}
                   </div>
                 </div>
@@ -270,7 +270,7 @@ export default function OnCampusGuidePage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                  <span className="font-mono text-amber-300 font-bold block">Boarding Landmark</span>
+                  <span className="font-mono text-purple-300 font-bold block">Boarding Landmark</span>
                   <span className="text-slate-200">{currentBus.boardingPoint}</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
@@ -339,9 +339,9 @@ export default function OnCampusGuidePage() {
           </div>
 
           {/* Section 4: Complimentary Builder Streetwear Kit */}
-          <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-aws-squidInk to-slate-950 border border-aws-orange/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-aws-squidInk to-slate-950 border border-purple-500/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-2 text-center md:text-left">
-              <span className="text-xs font-mono text-aws-orange font-bold uppercase">FINALIST MERCH CRATE</span>
+              <span className="text-xs font-mono text-purple-400 font-bold uppercase">FINALIST MERCH CRATE</span>
               <h3 className="text-2xl font-bold text-white font-display">
                 Complimentary Streetwear Builder Kit
               </h3>
@@ -351,7 +351,7 @@ export default function OnCampusGuidePage() {
             </div>
             <Link
               href="/register"
-              className="px-6 py-3 rounded-xl font-bold text-xs bg-aws-orange text-slate-950 hover:bg-amber-400 transition-colors shadow-md flex-shrink-0"
+              className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md flex-shrink-0"
             >
               Verify Your Tee Size in Registration
             </Link>

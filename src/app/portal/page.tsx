@@ -83,10 +83,7 @@ export default function ParticipantPortalPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-emerald-400 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>Sandbox Demo Mode Active</span>
-            </span>
+            
             <Link
               href="/portal/pass"
               className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-all flex items-center gap-1.5 shadow-sm"

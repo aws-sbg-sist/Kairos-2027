@@ -24,7 +24,7 @@ export default function RulesPage() {
     <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
       {/* Background Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[500px] bg-gradient-to-b from-[#0073BB]/10 via-[#FF9900]/5 to-transparent blur-[140px]" />
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -33,12 +33,12 @@ export default function RulesPage() {
         <div className="flex items-center gap-2 mb-6 text-xs text-slate-400">
           <Link href="/" className="hover:text-slate-200">Home</Link>
           <span>/</span>
-          <span className="text-[#FF9900] font-mono">Rules & Governance</span>
+          <span className="text-purple-400 font-mono">Rules & Governance</span>
         </div>
 
         {/* Header */}
         <div className="max-w-4xl mb-16">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#FF9900]/10 border border-[#FF9900]/30 text-[#FF9900] text-xs font-mono font-bold tracking-wider uppercase mb-5 shadow-md">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-400 text-xs font-mono font-bold tracking-wider uppercase mb-5 shadow-md">
             <div className="relative w-4 h-4 rounded overflow-hidden">
               <Image
                 src="/assets/rules.png"
@@ -51,7 +51,7 @@ export default function RulesPage() {
           </div>
           <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white mb-6">
             Hackathon Rules, Code Integrity & <br />
-            <span className="bg-gradient-to-r from-[#FF9900] via-amber-300 to-[#0073BB] bg-clip-text text-transparent">
+            <span className="gradient-text-kairos bg-clip-text text-transparent">
               100% Student IP Ownership
             </span>
           </h1>
@@ -61,10 +61,10 @@ export default function RulesPage() {
         </div>
 
         {/* 100% IP Ownership Highlight Callout */}
-        <div className="mb-16 p-8 rounded-3xl bg-gradient-to-r from-amber-500/10 via-slate-900 to-emerald-500/10 border-2 border-[#FF9900]/40 shadow-2xl backdrop-blur-md">
+        <div className="mb-16 p-8 rounded-3xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/30 border-2 border-purple-500/40 shadow-2xl backdrop-blur-md">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-start gap-5">
-              <div className="p-3 rounded-2xl bg-[#FF9900]/20 text-[#FF9900] border border-[#FF9900]/40 shrink-0 relative w-16 h-16 flex items-center justify-center">
+              <div className="p-3 rounded-2xl bg-purple-950/80 text-purple-400 border border-purple-500/40 shrink-0 relative w-16 h-16 flex items-center justify-center">
                 <Image
                   src="/assets/rules.png"
                   alt="Student IP Protection Charter"
@@ -73,7 +73,7 @@ export default function RulesPage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-[#FF9900]/20 text-[#FF9900] uppercase tracking-wider">
+                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-purple-950/80 text-purple-400 uppercase tracking-wider">
                   Universal IP Guarantee
                 </span>
                 <h3 className="text-2xl font-black text-white mt-2 mb-2">
@@ -144,7 +144,7 @@ export default function RulesPage() {
           {/* Rule 2: Eligibility & Dual Registration */}
           <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 rounded-xl bg-[#FF9900]/15 text-[#FF9900]">
+              <div className="p-3 rounded-xl bg-purple-950/60 text-purple-400">
                 <Users className="w-6 h-6" />
               </div>
               <div>
@@ -167,7 +167,7 @@ export default function RulesPage() {
                 </div>
                 <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
                   <div className="text-xs text-slate-400 font-mono">AWS Verification</div>
-                  <div className="text-lg font-bold text-[#FF9900]">Meetup RSVP</div>
+                  <div className="text-lg font-bold text-purple-400">Meetup RSVP</div>
                   <div className="text-[11px] text-slate-400 mt-1">SIST chapter verification mandatory</div>
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function RulesPage() {
                 <strong>College Identification:</strong> Every team member must present a valid physical college ID card issued by their accredited institution during red-carpet check-in on Friday, January 22, 2027.
               </p>
               <p>
-                <strong>Dual Registration Protocol:</strong> Every team leader and member must RSVP on the official <Link href="https://meetup.com/aws-student-builder-group-sist" target="_blank" className="text-[#FF9900] underline font-semibold">AWS Student Builder Group SIST Meetup</Link> page. This ensures compliance with global AWS Student Builder Group community tracking standards.
+                <strong>Dual Registration Protocol:</strong> Every team leader and member must RSVP on the official <Link href="https://meetup.com/aws-student-builder-group-sist" target="_blank" className="text-purple-400 underline font-semibold">AWS Student Builder Group SIST Meetup</Link> page. This ensures compliance with global AWS Student Builder Group community tracking standards.
               </p>
             </div>
           </div>
@@ -223,9 +223,9 @@ export default function RulesPage() {
                 <strong>Multi-Checkpoint Rubric:</strong> Evaluation is conducted across 3 rigorous gates:
               </p>
               <ul className="list-disc list-inside space-y-1 text-slate-400 text-xs">
-                <li>Checkpoint 1: Architecture & Feasibility Gate (Friday 04:00 PM – 25 Pts)</li>
-                <li>Checkpoint 2: Mid-Point Prototype & Security Audit (Saturday 11:30 AM – 35 Pts)</li>
-                <li>Checkpoint 3: Final Code Review & Working Demo (Saturday 09:30 PM – 40 Pts)</li>
+                <li>Checkpoint 1: Architecture & Feasibility Gate (Friday 04:00 PM – Weight Sealed)</li>
+                <li>Checkpoint 2: Mid-Point Prototype & Security Audit (Saturday 11:30 AM – Weight Sealed)</li>
+                <li>Checkpoint 3: Final Code Review & Working Demo (Saturday 09:30 PM – Weight Sealed)</li>
               </ul>
               <p>
                 <strong>Gaussian Normalization:</strong> Scores across all 25+ industry evaluators are normalized using standard Gaussian Z-scores (<span className="font-mono text-white">Z = (X - μ) / σ</span>) to eliminate deviations between lenient and strict judges.
@@ -266,7 +266,7 @@ export default function RulesPage() {
         {/* Committee Contact Note */}
         <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 text-center max-w-3xl mx-auto">
           <p className="text-xs text-slate-400 leading-relaxed mb-2">
-            Have questions regarding rule interpretations or accommodations? Contact Lead Organizer <strong>Thenappan T (Register No: 44110855)</strong> at <a href="mailto:sistawscc@gmail.com" className="text-[#FF9900] underline">sistawscc@gmail.com</a> or phone +91 6381801640.
+            Have questions regarding rule interpretations or accommodations? Contact Lead Organizer <strong>Thenappan T</strong> at <a href="mailto:sistawscc@gmail.com" className="text-purple-400 underline">sistawscc@gmail.com</a> or phone +91 6381801640.
           </p>
           <div className="text-[11px] text-slate-400">
             {EVENT_CONFIG.disclaimer.aws}

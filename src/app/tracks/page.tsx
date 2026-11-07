@@ -107,7 +107,7 @@ export default function TracksPage() {
       <main className="flex-grow pt-32 pb-24">
         {/* Header Hero */}
         <section className="relative px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-16 text-center">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk border border-aws-orange/30 mb-4 shadow-md">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk border border-purple-500/30 mb-4 shadow-md">
             <div className="relative w-5 h-5 rounded overflow-hidden">
               <Image
                 src="/assets/tracks.png"
@@ -116,7 +116,7 @@ export default function TracksPage() {
                 className="object-contain"
               />
             </div>
-            <span>₹7,000 Pure Cash Bounty per Track • Total ₹35,000</span>
+            <span>5 Enterprise Problem Formulations • Scalable Cloud Architectures</span>
           </div>
           <h1 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight">
             Enterprise Tracks & <span className="gradient-text-kairos">Cloud Blueprints</span>
@@ -138,19 +138,19 @@ export default function TracksPage() {
                   onClick={() => setSelectedTrack(t)}
                   className={`p-4 rounded-2xl text-left transition-all ${
                     isSelected
-                      ? 'bg-aws-squidInk border-2 border-aws-orange shadow-lg shadow-aws-orange/20 scale-[1.02]'
+                      ? 'bg-aws-squidInk border-2 border-purple-500 shadow-lg shadow-purple-900/30 scale-[1.02]'
                       : 'bg-aws-card border border-slate-700/60 hover:bg-slate-900/80'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-mono text-aws-orange font-bold uppercase">
+                    <span className="text-[10px] font-mono text-purple-400 font-bold uppercase">
                       TRACK {t.number}
                     </span>
                     <span className="text-[9px] font-mono text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
                       ₹7K
                     </span>
                   </div>
-                  <Icon className="w-5 h-5 text-amber-300 mb-2" />
+                  <Icon className="w-5 h-5 text-purple-300 mb-2" />
                   <h3 className="text-sm font-bold text-white line-clamp-2">
                     {t.title}
                   </h3>
@@ -168,11 +168,11 @@ export default function TracksPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/10">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-aws-orange text-slate-950">
+                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950">
                     TRACK {selectedTrack.number}
                   </span>
                   <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    Dedicated Bounty: ₹7,000 Pure Cash
+                    Enterprise Challenge Track
                   </span>
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-white">
@@ -186,7 +186,7 @@ export default function TracksPage() {
               <div className="flex-shrink-0">
                 <Link
                   href={`/team/create?track=${selectedTrack.id}`}
-                  className="px-6 py-3.5 rounded-xl font-bold text-sm text-slate-950 bg-gradient-to-r from-aws-orange via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-aws-orange shadow-lg shadow-aws-orange/30 transition-all flex items-center gap-2"
+                  className="px-6 py-3.5 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center gap-2"
                 >
                   <span>Submit Abstract for Track {selectedTrack.number}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -197,7 +197,7 @@ export default function TracksPage() {
             {/* Architectural Blueprint Card */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <Cloud className="w-5 h-5 text-aws-orange" />
+                <Cloud className="w-5 h-5 text-purple-400" />
                 <h3 className="text-lg font-bold text-white font-display">
                   Recommended AWS Cloud Reference Blueprint
                 </h3>
@@ -209,7 +209,7 @@ export default function TracksPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {blueprint.components.map((comp, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-slate-900/90 border border-slate-700/60 space-y-2">
-                    <span className="text-[10px] font-mono text-aws-orange uppercase font-bold block">
+                    <span className="text-[10px] font-mono text-purple-400 uppercase font-bold block">
                       Component {idx + 1}
                     </span>
                     <h4 className="text-sm font-bold text-white">
@@ -224,9 +224,9 @@ export default function TracksPage() {
             </div>
 
             {/* Sample Challenge Problem Statement */}
-            <div className="p-6 rounded-2xl bg-aws-squidInk border border-aws-orange/30 space-y-3">
-              <div className="flex items-center gap-2 text-amber-300 text-xs font-mono uppercase tracking-wider font-bold">
-                <Terminal className="w-4 h-4 text-aws-orange" />
+            <div className="p-6 rounded-2xl bg-aws-squidInk border border-purple-500/30 space-y-3">
+              <div className="flex items-center gap-2 text-purple-300 text-xs font-mono uppercase tracking-wider font-bold">
+                <Terminal className="w-4 h-4 text-purple-400" />
                 <span>Sample Challenge Problem Statement</span>
               </div>
               <p className="text-sm sm:text-base text-white leading-relaxed font-medium">
@@ -238,13 +238,13 @@ export default function TracksPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Focus Themes */}
               <div className="space-y-4">
-                <h4 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
                   Core Evaluation Focus Themes
                 </h4>
                 <div className="space-y-2">
                   {selectedTrack.themes.map((theme, i) => (
                     <div key={i} className="p-3 rounded-xl bg-slate-900/80 border border-slate-700/60 flex items-start gap-2.5 text-xs sm:text-sm text-slate-200">
-                      <CheckCircle2 className="w-4 h-4 text-aws-orange flex-shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
                       <span>{theme}</span>
                     </div>
                   ))}
@@ -287,7 +287,7 @@ export default function TracksPage() {
               <div className="flex items-center gap-3">
                 <Link
                   href="/register"
-                  className="px-6 py-2.5 rounded-xl font-bold text-xs bg-aws-orange text-slate-950 hover:bg-amber-400 transition-colors"
+                  className="px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors"
                 >
                   Register Team Free →
                 </Link>

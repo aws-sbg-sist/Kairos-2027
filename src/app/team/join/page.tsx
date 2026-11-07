@@ -119,8 +119,8 @@ function JoinTeamContent() {
           
           {/* Header */}
           <div className="text-center space-y-3 mb-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk border border-aws-orange/30">
-              <Users className="w-3.5 h-3.5 text-aws-orange" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk border border-purple-500/30">
+              <Users className="w-3.5 h-3.5 text-purple-400" />
               <span>Teammate Verification & Roster Confirmation</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
@@ -136,7 +136,7 @@ function JoinTeamContent() {
               
               {/* Step A: Team Code Lookup */}
               <div className="space-y-3">
-                <label className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold block">
+                <label className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold block">
                   1. Enter Team Code (Provided by Team Lead)
                 </label>
                 <div className="flex gap-2">
@@ -145,13 +145,13 @@ function JoinTeamContent() {
                     value={teamCode}
                     onChange={e => setTeamCode(e.target.value.toUpperCase())}
                     placeholder="e.g. KAIROS-T001"
-                    className="flex-grow px-4 py-3 rounded-xl glass-input font-mono font-bold text-base sm:text-lg tracking-wider text-aws-orange uppercase"
+                    className="flex-grow px-4 py-3 rounded-xl glass-input font-mono font-bold text-base sm:text-lg tracking-wider text-purple-400 uppercase"
                   />
                   <button
                     type="button"
                     onClick={() => handleLookupTeam()}
                     disabled={searching}
-                    className="px-6 py-3 rounded-xl font-bold text-xs bg-aws-orange text-slate-950 hover:bg-amber-400 transition-colors flex items-center gap-1.5 flex-shrink-0"
+                    className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors flex items-center gap-1.5 flex-shrink-0"
                   >
                     <Search className="w-4 h-4" />
                     <span>{searching ? 'Looking up...' : 'Verify Team'}</span>
@@ -168,9 +168,9 @@ function JoinTeamContent() {
 
               {/* Target Team Card Found */}
               {targetTeam && (
-                <div className="p-5 rounded-2xl bg-aws-squidInk border border-aws-orange/40 space-y-3 animate-fadeIn">
+                <div className="p-5 rounded-2xl bg-aws-squidInk border border-purple-500/40 space-y-3 animate-fadeIn">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-aws-orange text-slate-950">
+                    <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950">
                       {targetTeam.teamCode}
                     </span>
                     <span className="text-xs font-mono text-emerald-400">
@@ -183,7 +183,7 @@ function JoinTeamContent() {
                   <p className="text-xs text-slate-300 line-clamp-2">
                     <strong>Abstract:</strong> {targetTeam.problemTitle}
                   </p>
-                  <div className="pt-1 flex items-center gap-2 text-xs font-mono text-amber-300">
+                  <div className="pt-1 flex items-center gap-2 text-xs font-mono text-purple-300">
                     <span>Leader: {targetTeam.leaderEmail}</span>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ function JoinTeamContent() {
               {/* Step B: Member Registration Form */}
               {targetTeam && (
                 <form onSubmit={handleJoinSubmit} className="space-y-6 pt-4 border-t border-white/10 animate-fadeIn">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">
+                  <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
                     2. Confirm Your Member Details & Free Swag Sizing
                   </h3>
 
@@ -274,7 +274,7 @@ function JoinTeamContent() {
                     {/* Complimentary Swag Sizing */}
                     <div className="space-y-1">
                       <label className="text-xs font-mono text-slate-300 flex items-center gap-1">
-                        <Shirt className="w-3 h-3 text-aws-orange" />
+                        <Shirt className="w-3 h-3 text-purple-400" />
                         <span>Builder T-Shirt Size (Free)</span>
                       </label>
                       <select
@@ -312,7 +312,7 @@ function JoinTeamContent() {
                   <button
                     type="submit"
                     disabled={joining}
-                    className="w-full py-4 rounded-xl font-bold text-sm text-slate-950 bg-gradient-to-r from-aws-orange via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-aws-orange shadow-lg shadow-aws-orange/30 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2"
                   >
                     <span>{joining ? 'Joining Team Roster...' : `Join ${targetTeam.teamName} Roster (100% Free)`}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -343,7 +343,7 @@ function JoinTeamContent() {
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/dashboard"
-                  className="px-6 py-3 rounded-xl font-bold text-xs bg-aws-orange text-slate-950 hover:bg-amber-400 transition-colors shadow-md"
+                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md"
                 >
                   Go to Hacker Dashboard →
                 </Link>

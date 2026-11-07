@@ -98,7 +98,7 @@ export default function ReferSponsorPage() {
     <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
       {/* Background glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/3 w-[600px] h-[500px] bg-gradient-to-b from-[#10B981]/10 via-[#FF9900]/5 to-transparent blur-[130px]" />
+        <div className="absolute top-1/4 left-1/3 w-[600px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -120,12 +120,12 @@ export default function ReferSponsorPage() {
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-6">
             Refer a Corporate Sponsor. <br />
-            <span className="bg-gradient-to-r from-[#10B981] via-emerald-400 to-[#FF9900] bg-clip-text text-transparent">
-              Earn 10%–15% Pure Cash Commission.
+            <span className="bg-gradient-to-r gradient-text-kairos bg-clip-text text-transparent">
+              Earn 10%–15% Direct Referral Commission.
             </span>
           </h1>
           <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
-            Open to every student and builder in India. Connect us with decision-makers at corporate brands, tech firms, or startups. When the sponsorship agreement clears, receive up to <strong className="text-[#10B981]">₹30,000 pure cash</strong> transferred straight to your UPI ID.
+            Open to every student and builder in India. Connect us with decision-makers at corporate brands, tech firms, or startups. When the sponsorship agreement clears, receive up to <strong className="text-[#10B981]">₹30,000 direct payout</strong> transferred straight to your UPI ID.
           </p>
         </div>
 
@@ -174,7 +174,7 @@ export default function ReferSponsorPage() {
               </div>
 
               {/* Commission Earnings Highlight */}
-              <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-950 to-amber-950/30 border border-emerald-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-950 to-purple-950/30 border border-emerald-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                   <div className="text-xs uppercase tracking-wider font-mono text-slate-400 font-bold mb-1">
                     Your Guaranteed Cash Reward:
@@ -188,7 +188,7 @@ export default function ReferSponsorPage() {
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center shrink-0">
                   <div className="text-[11px] text-slate-400 font-mono">Honors Added:</div>
-                  <div className="text-xs font-bold text-[#FF9900]">Corporate Rainmaker Badge</div>
+                  <div className="text-xs font-bold text-purple-400">Corporate Rainmaker Badge</div>
                   <div className="text-[11px] text-slate-300">VIP Pass to Kairos 2027</div>
                 </div>
               </div>
@@ -203,7 +203,7 @@ export default function ReferSponsorPage() {
           {/* 21-Day Lock & Transparency Box (5 cols) */}
           <div className="lg:col-span-5 rounded-3xl bg-slate-900/90 border border-slate-800 p-8 sm:p-10 shadow-2xl flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-[#FF9900]/15 flex items-center justify-center text-[#FF9900] mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-purple-950/60 flex items-center justify-center text-purple-400 mb-6">
                 <Lock className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">The 21-Day Exclusive Lead Lock</h3>
@@ -241,7 +241,7 @@ export default function ReferSponsorPage() {
 
             <div className="mt-6 pt-6 border-t border-slate-800 flex items-center justify-between text-xs">
               <span className="text-slate-400">Need personal pitch collateral?</span>
-              <Link href="/sponsors" className="text-[#FF9900] hover:underline inline-flex items-center gap-1 font-semibold">
+              <Link href="/sponsors" className="text-purple-400 hover:underline inline-flex items-center gap-1 font-semibold">
                 View Sponsor Tiers <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -362,8 +362,8 @@ export default function ReferSponsorPage() {
 
               {/* Section 2: Target Corporate Sponsor Details */}
               <div className="pt-6 border-t border-slate-800">
-                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#FF9900] mb-4 flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-[#FF9900]/20 flex items-center justify-center text-[10px]">2</span>
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-purple-400 mb-4 flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-purple-950/80 flex items-center justify-center text-[10px]">2</span>
                   Target Corporate Sponsor & Decision-Maker Details
                 </h4>
 
@@ -376,7 +376,7 @@ export default function ReferSponsorPage() {
                       value={formData.companyName}
                       onChange={e => setFormData({ ...formData, companyName: e.target.value })}
                       placeholder="e.g. CloudScale Technologies"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#FF9900] text-sm text-white placeholder-slate-400 outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 text-sm text-white placeholder-slate-400 outline-none transition"
                     />
                   </div>
                   <div>
@@ -387,7 +387,7 @@ export default function ReferSponsorPage() {
                       value={formData.decisionMakerName}
                       onChange={e => setFormData({ ...formData, decisionMakerName: e.target.value })}
                       placeholder="e.g. Ananya Sen"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#FF9900] text-sm text-white placeholder-slate-400 outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 text-sm text-white placeholder-slate-400 outline-none transition"
                     />
                   </div>
                 </div>
@@ -401,7 +401,7 @@ export default function ReferSponsorPage() {
                       value={formData.decisionMakerEmail}
                       onChange={e => setFormData({ ...formData, decisionMakerEmail: e.target.value })}
                       placeholder="ananya@cloudscale.com"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#FF9900] text-sm text-white placeholder-slate-400 outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 text-sm text-white placeholder-slate-400 outline-none transition"
                     />
                   </div>
                   <div>
@@ -411,7 +411,7 @@ export default function ReferSponsorPage() {
                       value={formData.decisionMakerDesignation}
                       onChange={e => setFormData({ ...formData, decisionMakerDesignation: e.target.value })}
                       placeholder="e.g. VP of Engineering / Head of DevRel"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#FF9900] text-sm text-white placeholder-slate-400 outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 text-sm text-white placeholder-slate-400 outline-none transition"
                     />
                   </div>
                   <div>
@@ -419,13 +419,13 @@ export default function ReferSponsorPage() {
                     <select
                       value={formData.estimatedDealTier}
                       onChange={e => setFormData({ ...formData, estimatedDealTier: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#FF9900] text-sm text-white outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 text-sm text-white outline-none transition"
                     >
                       <option value="TITLE_200K">Title Partner (₹2,00,000) — ₹20k–₹30k Payout</option>
                       <option value="POWERED_100K">Co-Powered Partner (₹1,00,000) — ₹10k–₹12k Payout</option>
                       <option value="ASSOCIATE_50K">Associate / Gold (₹50,000) — ₹5,000 Payout</option>
-                      <option value="TRACK_25K">Track & Bounty (₹25,000) — ₹2,500 Payout</option>
-                      <option value="IN_KIND">In-Kind F&B / Cloud Bounties — ₹3,000–₹5,000</option>
+                      <option value="TRACK_25K">Technical Track Partner (₹25,000) — ₹2,500 Payout</option>
+                      <option value="IN_KIND">In-Kind F&B / Cloud Sponsorship — ₹3,000–₹5,000</option>
                     </select>
                   </div>
                 </div>
@@ -439,7 +439,7 @@ export default function ReferSponsorPage() {
                     value={formData.notes}
                     onChange={e => setFormData({ ...formData, notes: e.target.value })}
                     placeholder="e.g. Met at AWS Community Day Chennai; they are actively hiring 2027 grads for backend roles..."
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#FF9900] text-sm text-white placeholder-slate-400 outline-none transition"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 text-sm text-white placeholder-slate-400 outline-none transition"
                   />
                 </div>
               </div>
@@ -504,7 +504,7 @@ export default function ReferSponsorPage() {
                 <span className={`text-xs px-2.5 py-0.5 rounded-full font-mono font-bold ${
                   lookupResult.status === 'PAID_OUT' ? 'bg-emerald-500/20 text-emerald-400' :
                   lookupResult.status === 'CONTRACT_SIGNED' ? 'bg-blue-500/20 text-blue-400' :
-                  lookupResult.status === 'IN_DISCUSSIONS' ? 'bg-amber-500/20 text-amber-400' :
+                  lookupResult.status === 'IN_DISCUSSIONS' ? 'bg-purple-500/20 text-purple-300' :
                   'bg-slate-800 text-slate-300'
                 }`}>
                   {lookupResult.status}

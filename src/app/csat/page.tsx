@@ -106,7 +106,7 @@ export default function CSATPage() {
     <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
       {/* Background Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-[#10B981]/10 via-[#FF9900]/5 to-transparent blur-[140px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -137,7 +137,7 @@ export default function CSATPage() {
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white mb-4">
             Participant Experience & <br />
-            <span className="bg-gradient-to-r from-[#10B981] via-emerald-400 to-[#FF9900] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r gradient-text-kairos bg-clip-text text-transparent">
               Net Promoter Score (NPS)
             </span>
           </h1>
@@ -154,7 +154,7 @@ export default function CSATPage() {
               <div className="text-[11px] text-slate-400 uppercase font-mono mt-0.5">Net Promoter Score</div>
             </div>
             <div>
-              <div className="text-2xl font-black text-[#FF9900] font-mono">{stats.averageSatisfactionScore} / 5.0</div>
+              <div className="text-2xl font-black text-purple-400 font-mono">{stats.averageSatisfactionScore} / 5.0</div>
               <div className="text-[11px] text-slate-400 uppercase font-mono mt-0.5">Avg CSAT Rating</div>
             </div>
             <div>
@@ -182,7 +182,7 @@ export default function CSATPage() {
                 </Link>
                 <Link
                   href="/resources"
-                  className="px-6 py-2.5 rounded-xl bg-[#FF9900] text-slate-950 text-xs font-bold hover:bg-amber-400 transition"
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold hover:from-purple-500 hover:to-indigo-500 transition"
                 >
                   Explore AWS Cloud Quests →
                 </Link>
@@ -209,11 +209,11 @@ export default function CSATPage() {
                       onClick={() => setSatisfaction(star)}
                       className={`p-3 rounded-2xl border transition flex items-center gap-1.5 ${
                         satisfaction >= star
-                          ? 'bg-[#FF9900]/20 border-[#FF9900] text-[#FF9900]'
+                          ? 'bg-purple-950/80 border-purple-500 text-purple-400'
                           : 'bg-slate-950 border-slate-800 text-slate-600 hover:border-slate-700'
                       }`}
                     >
-                      <Star className={`w-6 h-6 ${satisfaction >= star ? 'fill-[#FF9900]' : ''}`} />
+                      <Star className={`w-6 h-6 ${satisfaction >= star ? 'fill-purple-400 text-purple-400' : ''}`} />
                       <span className="text-xs font-mono font-bold">{star}</span>
                     </button>
                   ))}
@@ -241,7 +241,7 @@ export default function CSATPage() {
                       className={`py-3 rounded-xl font-mono text-xs font-bold border transition ${
                         npsScore === num
                           ? num >= 9 ? 'bg-emerald-500 border-emerald-400 text-slate-950 scale-105' :
-                            num >= 7 ? 'bg-amber-500 border-amber-400 text-slate-950 scale-105' :
+                            num >= 7 ? 'bg-purple-600 border-purple-400 text-white scale-105' :
                             'bg-rose-500 border-rose-400 text-white scale-105'
                           : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
                       }`}
@@ -301,7 +301,7 @@ export default function CSATPage() {
                       onClick={() => setCertificationIntent(opt.val as any)}
                       className={`p-3 rounded-xl border text-xs font-mono font-semibold transition ${
                         certificationIntent === opt.val
-                          ? 'bg-[#FF9900]/20 border-[#FF9900] text-[#FF9900]'
+                          ? 'bg-purple-950/80 border-purple-500 text-purple-400'
                           : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
                       }`}
                     >

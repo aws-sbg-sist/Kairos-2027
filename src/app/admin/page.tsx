@@ -212,7 +212,7 @@ export default function AdminDashboardPage() {
           </div>
 
           <div className="p-4 rounded-2xl glass-panel border border-purple-500/20">
-            <span className="text-xs font-mono text-amber-300 block mb-1">REGISTRATION GATE</span>
+            <span className="text-xs font-mono text-purple-300 block mb-1">REGISTRATION GATE</span>
             <span className={`text-base font-bold block mt-2 ${flags.registrationOpen ? 'text-emerald-400' : 'text-purple-300'}`}>
               {flags.registrationOpen ? '🔓 Publicly Active' : '🔒 Early-Interest Only'}
             </span>
@@ -221,7 +221,7 @@ export default function AdminDashboardPage() {
 
           <div className="p-4 rounded-2xl glass-panel border border-purple-500/20">
             <span className="text-xs font-mono text-emerald-300 block mb-1">PRIZE POOL VISIBILITY</span>
-            <span className={`text-base font-bold block mt-2 ${flags.prizePoolConfirmed ? 'text-emerald-400' : 'text-amber-400'}`}>
+            <span className={`text-base font-bold block mt-2 ${flags.prizePoolConfirmed ? 'text-emerald-400' : 'text-purple-400'}`}>
               {flags.prizePoolConfirmed ? '✓ Published Confirmed' : '⏳ Draft / Hidden'}
             </span>
             <span className="text-[11px] text-slate-400 block mt-0.5">Publication rule compliant</span>
@@ -248,7 +248,7 @@ export default function AdminDashboardPage() {
               <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 border border-emerald-500/30 text-emerald-300">
                 {statusTallies.shortlisted} Shortlisted
               </span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-amber-500/20 border border-amber-500/30 text-amber-300">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-purple-950/60 border border-purple-500/30 text-purple-300">
                 {statusTallies.waitlisted} Waitlisted
               </span>
             </div>
@@ -313,7 +313,7 @@ export default function AdminDashboardPage() {
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
-            <Sliders className="w-4 h-4 text-amber-400" />
+            <Sliders className="w-4 h-4 text-purple-400" />
             <span>Content & Gating Flags</span>
           </button>
         </div>
@@ -418,7 +418,7 @@ export default function AdminDashboardPage() {
                                 Reviewed
                               </span>
                             ) : w.status === 'waitlisted' ? (
-                              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-amber-500/20 border border-amber-500/30 text-amber-300 font-semibold">
+                              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-purple-950/60 border border-purple-500/30 text-purple-300 font-semibold">
                                 Waitlisted
                               </span>
                             ) : (
@@ -445,7 +445,7 @@ export default function AdminDashboardPage() {
                               </button>
                               <button
                                 onClick={() => handleUpdateWaitlistStatus(w.id, 'waitlisted')}
-                                className="px-2 py-1 rounded bg-amber-600/30 hover:bg-amber-600 text-amber-300 hover:text-white border border-amber-500/30 text-[10px] font-semibold transition-all"
+                                className="px-2 py-1 rounded bg-purple-700/30 hover:bg-purple-700 text-purple-300 hover:text-white border border-purple-500/30 text-[10px] font-semibold transition-all"
                                 title="Place on secondary waitlist"
                               >
                                 Waitlist
@@ -594,7 +594,7 @@ export default function AdminDashboardPage() {
                   disabled={savingFlags}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                     flags.prizePoolConfirmed
-                      ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-md'
+                      ? 'bg-purple-700 hover:bg-purple-600 text-white shadow-md'
                       : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                   }`}
                 >

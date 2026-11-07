@@ -156,8 +156,8 @@ export default function LeaderboardPage() {
           
           {/* Header */}
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk border border-aws-orange/30">
-              <Trophy className="w-3.5 h-3.5 text-aws-orange" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk border border-purple-500/30">
+              <Trophy className="w-3.5 h-3.5 text-purple-400" />
               <span>Live Checkpoint Telemetry & Mathematical Normalization</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
@@ -169,10 +169,10 @@ export default function LeaderboardPage() {
           </div>
 
           {/* Mathematical Z-Score Explanation Box */}
-          <div className="p-6 rounded-3xl bg-aws-squidInk border border-aws-orange/30 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="p-6 rounded-3xl bg-aws-squidInk border border-purple-500/30 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-aws-orange" />
+                <ShieldCheck className="w-4 h-4 text-purple-400" />
                 <h3 className="text-sm font-bold text-white font-mono uppercase tracking-wider">
                   Algorithmic Fairness: The Z-Score Formula
                 </h3>
@@ -181,7 +181,7 @@ export default function LeaderboardPage() {
                 Because some judges grade strictly and others grade leniently, Kairos 2027 uses standard deviation normalization: Each team&apos;s raw score X from judge j is mathematically transformed to Z = (X - &mu;) / &sigma;. This guarantees every team competes on an exact, mathematically fair playing field.
               </p>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-950 font-mono text-sm text-aws-orange border border-slate-800 flex-shrink-0 text-center font-bold">
+            <div className="p-3.5 rounded-2xl bg-slate-950 font-mono text-sm text-purple-400 border border-slate-800 flex-shrink-0 text-center font-bold">
               Z = (Score - μ) / σ
             </div>
           </div>
@@ -194,7 +194,7 @@ export default function LeaderboardPage() {
                 onClick={() => setSelectedTrack('all')}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   selectedTrack === 'all'
-                    ? 'bg-aws-orange text-slate-950 font-bold'
+                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold'
                     : 'bg-aws-card text-slate-300 hover:text-white border border-slate-700/60'
                 }`}
               >
@@ -206,7 +206,7 @@ export default function LeaderboardPage() {
                   onClick={() => setSelectedTrack(t.id)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     selectedTrack === t.id
-                      ? 'bg-aws-orange text-slate-950 font-bold'
+                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold'
                       : 'bg-aws-card text-slate-300 hover:text-white border border-slate-700/60'
                   }`}
                 >
@@ -232,7 +232,7 @@ export default function LeaderboardPage() {
           <div className="p-6 sm:p-8 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/10 text-[11px] font-mono text-amber-300 uppercase">
+                <tr className="border-b border-white/10 text-[11px] font-mono text-purple-300 uppercase">
                   <th className="py-3 px-3">Rank</th>
                   <th className="py-3 px-3">Team Code</th>
                   <th className="py-3 px-3">Team & Institution</th>
@@ -252,18 +252,18 @@ export default function LeaderboardPage() {
                     <tr
                       key={r.teamCode}
                       className={`hover:bg-white/[0.02] transition-colors ${
-                        isTop3 ? 'bg-aws-orange/5' : ''
+                        isTop3 ? 'bg-purple-950/30' : ''
                       }`}
                     >
                       <td className="py-4 px-3 font-mono font-bold">
                         <div className="flex items-center gap-1.5">
-                          {r.rank === 1 && <span className="text-amber-400 font-black">🥇 1</span>}
+                          {r.rank === 1 && <span className="text-purple-400 font-black">🥇 1</span>}
                           {r.rank === 2 && <span className="text-slate-300 font-black">🥈 2</span>}
                           {r.rank === 3 && <span className="text-amber-600 font-black">🥉 3</span>}
                           {r.rank > 3 && <span className="text-slate-400">{r.rank}</span>}
                         </div>
                       </td>
-                      <td className="py-4 px-3 font-mono font-bold text-aws-orange">
+                      <td className="py-4 px-3 font-mono font-bold text-purple-400">
                         {r.teamCode}
                       </td>
                       <td className="py-4 px-3 space-y-0.5">
@@ -309,7 +309,7 @@ export default function LeaderboardPage() {
           <div className="text-center pt-2">
             <Link
               href="/stage"
-              className="inline-flex items-center gap-2 text-xs font-mono font-bold text-amber-300 hover:text-white px-5 py-2.5 rounded-xl bg-aws-squidInk border border-aws-orange/30 hover:border-aws-orange transition-all"
+              className="inline-flex items-center gap-2 text-xs font-mono font-bold text-purple-300 hover:text-white px-5 py-2.5 rounded-xl bg-aws-squidInk border border-purple-500/30 hover:border-purple-500 transition-all"
             >
               <span>Switch to Auditorium 20x10ft Stage Display Mode →</span>
             </Link>

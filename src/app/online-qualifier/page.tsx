@@ -83,10 +83,10 @@ export default function OnlineQualifierPage() {
           </div>
 
           {/* Assigned Google Meet Defense Slot Card */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-aws-squidInk border border-aws-orange/40 shadow-xl space-y-4">
+          <div className="p-6 sm:p-8 rounded-3xl bg-aws-squidInk border border-purple-500/40 shadow-xl space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <Video className="w-5 h-5 text-aws-orange" />
+                <Video className="w-5 h-5 text-purple-400" />
                 <h3 className="text-lg font-bold text-white font-display">
                   Your Assigned Google Meet Virtual Defense Slot
                 </h3>
@@ -103,7 +103,7 @@ export default function OnlineQualifierPage() {
               </div>
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-slate-400 block text-[10px] uppercase">TIME SLOT</span>
-                <span className="text-amber-300 font-bold block mt-0.5">{assignedSlot.time.split('(')[0]}</span>
+                <span className="text-purple-300 font-bold block mt-0.5">{assignedSlot.time.split('(')[0]}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-slate-400 block text-[10px] uppercase">VIRTUAL ROOM</span>
@@ -123,7 +123,7 @@ export default function OnlineQualifierPage() {
                 href={assignedSlot.meetUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-xl font-bold bg-aws-orange text-slate-950 hover:bg-amber-400 transition-colors flex items-center gap-1.5 flex-shrink-0"
+                className="px-4 py-2 rounded-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors flex items-center gap-1.5 flex-shrink-0"
               >
                 <span>Launch Google Meet Room ↗</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -142,7 +142,7 @@ export default function OnlineQualifierPage() {
                   Deadlines strictly enforce automated Git commit freeze. Zero extensions permitted.
                 </p>
               </div>
-              <span className="text-xs font-mono text-aws-orange font-bold">
+              <span className="text-xs font-mono text-purple-400 font-bold">
                 Team Code: {teamCode}
               </span>
             </div>
@@ -216,7 +216,7 @@ export default function OnlineQualifierPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full py-3.5 rounded-xl font-bold text-sm text-slate-950 bg-gradient-to-r from-aws-orange via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-aws-orange shadow-lg shadow-aws-orange/30 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2"
                   >
                     <span>{submitting ? 'Submitting Deliverables...' : 'Lock Round 1 Qualifier Submission'}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -228,7 +228,7 @@ export default function OnlineQualifierPage() {
 
           {/* Advancement Rule Card */}
           <div className="p-6 rounded-2xl bg-slate-900 border border-slate-700/60 text-xs text-slate-300 space-y-2">
-            <span className="font-bold text-white block font-mono uppercase text-amber-300">
+            <span className="font-bold text-white block font-mono uppercase text-purple-300">
               Advancement to On-Campus Grand Finale (Round 2)
             </span>
             <p className="leading-relaxed">

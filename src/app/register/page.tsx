@@ -130,9 +130,9 @@ export default function RegisterPage() {
           </div>
 
           {/* Zero Fee Guarantee Card */}
-          <div className="p-4 rounded-2xl bg-aws-squidInk border border-aws-orange/30 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="p-4 rounded-2xl bg-aws-squidInk border border-purple-500/30 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-aws-orange/20 text-aws-orange flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-purple-950/60 text-purple-400 flex items-center justify-center font-bold">
                 ₹0
               </div>
               <div className="text-xs">
@@ -153,7 +153,7 @@ export default function RegisterPage() {
                 
                 {/* Step 1: Personal & College Details */}
                 <div className="space-y-4">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold border-b border-white/10 pb-2">
+                  <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold border-b border-white/10 pb-2">
                     Step 1: Student Information
                   </h3>
 
@@ -274,7 +274,7 @@ export default function RegisterPage() {
                 {/* Step 2: Mandatory Meetup RSVP Verification */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <h3 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">
+                    <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
                       Step 2: Official AWS SBG Meetup RSVP (Mandatory)
                     </h3>
                     <a
@@ -312,7 +312,7 @@ export default function RegisterPage() {
                           type="button"
                           onClick={handleVerifyMeetup}
                           disabled={verifyingMeetup}
-                          className="px-4 py-2.5 rounded-xl text-xs font-bold bg-aws-squidInk hover:bg-slate-800 border border-aws-orange/40 text-amber-300 flex items-center justify-center gap-1.5 transition-all flex-shrink-0"
+                          className="px-4 py-2.5 rounded-xl text-xs font-bold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/40 text-purple-300 flex items-center justify-center gap-1.5 transition-all flex-shrink-0"
                         >
                           {verifyingMeetup ? 'Verifying...' : 'Verify Meetup RSVP'}
                         </button>
@@ -337,7 +337,7 @@ export default function RegisterPage() {
 
                 {/* Step 3: AWS Builder Center Profile */}
                 <div className="space-y-3 pt-4 border-t border-white/10">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">
+                  <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
                     Step 3: AWS Builder Center Profile (Optional but Recommended)
                   </h3>
                   <p className="text-xs text-slate-300">
@@ -357,7 +357,7 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={loading || !meetupVerified}
-                    className="w-full py-4 rounded-xl font-bold text-sm text-slate-950 bg-gradient-to-r from-aws-orange via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-aws-orange shadow-lg shadow-aws-orange/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span>Save Profile & Proceed to Team Formation</span>
                     <ArrowRight className="w-4 h-4" />
@@ -373,7 +373,7 @@ export default function RegisterPage() {
             </div>
           ) : (
             /* Branching Step: Create vs Join Team */
-            <div className="p-8 sm:p-12 rounded-3xl bg-aws-card border border-aws-orange/40 shadow-2xl space-y-8 animate-fadeIn text-center">
+            <div className="p-8 sm:p-12 rounded-3xl bg-aws-card border border-purple-500/40 shadow-2xl space-y-8 animate-fadeIn text-center">
               <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center border border-emerald-500/40">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
@@ -392,18 +392,18 @@ export default function RegisterPage() {
                 {/* Create Team Card */}
                 <Link
                   href={`/team/create?name=${encodeURIComponent(formData.fullName)}&email=${encodeURIComponent(formData.email)}&college=${encodeURIComponent(formData.institution)}&meetup=${encodeURIComponent(formData.meetupProfileUrl)}`}
-                  className="p-6 rounded-2xl bg-aws-squidInk border-2 border-aws-orange hover:bg-slate-800 transition-all text-left space-y-3 group"
+                  className="p-6 rounded-2xl bg-aws-squidInk border-2 border-purple-500 hover:bg-slate-800 transition-all text-left space-y-3 group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-aws-orange text-slate-950 flex items-center justify-center font-bold">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 flex items-center justify-center font-bold">
                     <UserPlus className="w-5 h-5" />
                   </div>
-                  <h3 className="text-lg font-bold text-white group-hover:text-aws-orange transition-colors">
+                  <h3 className="text-lg font-bold text-white group-hover:text-purple-400 transition-colors">
                     Create a New Team
                   </h3>
                   <p className="text-xs text-slate-300 leading-relaxed">
                     You become the <strong>Team Lead</strong>. Submit your Round 0 project abstract, select your track, and generate an invite link for 3–5 teammates.
                   </p>
-                  <div className="pt-2 flex items-center gap-1.5 text-xs font-bold text-amber-300">
+                  <div className="pt-2 flex items-center gap-1.5 text-xs font-bold text-purple-300">
                     <span>Launch Team Creator</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -412,12 +412,12 @@ export default function RegisterPage() {
                 {/* Join Team Card */}
                 <Link
                   href={`/team/join?name=${encodeURIComponent(formData.fullName)}&email=${encodeURIComponent(formData.email)}&college=${encodeURIComponent(formData.institution)}&meetup=${encodeURIComponent(formData.meetupProfileUrl)}`}
-                  className="p-6 rounded-2xl bg-slate-900 border border-slate-700 hover:border-aws-orange/40 hover:bg-slate-800 transition-all text-left space-y-3 group"
+                  className="p-6 rounded-2xl bg-slate-900 border border-slate-700 hover:border-purple-500/40 hover:bg-slate-800 transition-all text-left space-y-3 group"
                 >
                   <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold">
                     <Users className="w-5 h-5" />
                   </div>
-                  <h3 className="text-lg font-bold text-white group-hover:text-aws-orange transition-colors">
+                  <h3 className="text-lg font-bold text-white group-hover:text-purple-400 transition-colors">
                     Join an Existing Team
                   </h3>
                   <p className="text-xs text-slate-300 leading-relaxed">

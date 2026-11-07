@@ -98,8 +98,8 @@ function CreateTeamContent() {
           
           {/* Header */}
           <div className="text-center space-y-3 mb-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk border border-aws-orange/30">
-              <Users className="w-3.5 h-3.5 text-aws-orange" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk border border-purple-500/30">
+              <Users className="w-3.5 h-3.5 text-purple-400" />
               <span>Team Leader Portal • Round 0 Submission</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
@@ -123,7 +123,7 @@ function CreateTeamContent() {
                 
                 {/* Team Details */}
                 <div className="space-y-4">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold border-b border-white/10 pb-2">
+                  <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold border-b border-white/10 pb-2">
                     1. Squad Identity & Primary Track
                   </h3>
 
@@ -195,7 +195,7 @@ function CreateTeamContent() {
 
                 {/* Team Leader Verification Confirmation */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold border-b border-white/10 pb-2">
+                  <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold border-b border-white/10 pb-2">
                     2. Team Leader Confirmation
                   </h3>
 
@@ -241,7 +241,7 @@ function CreateTeamContent() {
                 {/* Round 0 Abstract & Problem Statement */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold">
+                    <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
                       3. Round 0 Project Abstract
                     </h3>
                     <span className={`text-xs font-mono ${wordCount > 250 ? 'text-rose-400 font-bold' : 'text-slate-400'}`}>
@@ -303,7 +303,7 @@ function CreateTeamContent() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 rounded-xl font-bold text-sm text-slate-950 bg-gradient-to-r from-aws-orange via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-aws-orange shadow-lg shadow-aws-orange/30 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2"
                   >
                     <span>{loading ? 'Creating Team...' : 'Create Team & Generate Invite Code (100% Free)'}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -314,8 +314,8 @@ function CreateTeamContent() {
             </div>
           ) : (
             /* Success Screen with Team Code & Invite Link */
-            <div className="p-8 sm:p-12 rounded-3xl bg-aws-card border-2 border-aws-orange shadow-2xl space-y-8 animate-fadeIn text-center">
-              <div className="w-16 h-16 rounded-2xl bg-aws-orange text-slate-950 mx-auto flex items-center justify-center font-bold shadow-lg shadow-aws-orange/30">
+            <div className="p-8 sm:p-12 rounded-3xl bg-aws-card border-2 border-purple-500 shadow-2xl space-y-8 animate-fadeIn text-center">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 mx-auto flex items-center justify-center font-bold shadow-lg shadow-purple-900/40">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
 
@@ -332,9 +332,9 @@ function CreateTeamContent() {
               </div>
 
               {/* Team Code Display Box */}
-              <div className="p-6 rounded-2xl bg-aws-squidInk border border-aws-orange/40 max-w-md mx-auto space-y-3">
+              <div className="p-6 rounded-2xl bg-aws-squidInk border border-purple-500/40 max-w-md mx-auto space-y-3">
                 <span className="text-xs font-mono text-slate-400 block uppercase">Your Official Team Code</span>
-                <div className="text-4xl font-mono font-black text-aws-orange tracking-widest selection:bg-white">
+                <div className="text-4xl font-mono font-black text-purple-400 tracking-widest selection:bg-white">
                   {createdTeam.teamCode}
                 </div>
                 <div className="pt-2 flex items-center justify-center gap-2">
@@ -352,7 +352,7 @@ function CreateTeamContent() {
               <div className="max-w-md mx-auto p-4 rounded-xl bg-slate-900 border border-slate-700/60 text-left space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono text-slate-400">
                   <span>Current Roster (1 / 6 builders):</span>
-                  <span className="text-amber-300">Min 4 Required</span>
+                  <span className="text-purple-300">Min 4 Required</span>
                 </div>
                 <div className="p-2.5 rounded-lg bg-slate-950 flex items-center justify-between text-xs">
                   <span className="font-bold text-white">{formData.leaderName} (Team Leader)</span>
@@ -363,7 +363,7 @@ function CreateTeamContent() {
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/dashboard"
-                  className="px-6 py-3 rounded-xl font-bold text-xs bg-aws-orange text-slate-950 hover:bg-amber-400 transition-colors shadow-md"
+                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md"
                 >
                   Enter Hacker Dashboard →
                 </Link>
@@ -371,7 +371,7 @@ function CreateTeamContent() {
                   href={`/team/join?code=${createdTeam.teamCode}`}
                   className="px-6 py-3 rounded-xl font-semibold text-xs bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors"
                 >
-                  Test Join Page with this Code
+                  Preview Join Page
                 </Link>
               </div>
 

@@ -122,8 +122,8 @@ export default function JudgingPortalPage() {
           
           {/* Header */}
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk border border-aws-orange/30">
-              <ShieldCheck className="w-3.5 h-3.5 text-aws-orange" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk border border-purple-500/30">
+              <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
               <span>PIN-Protected Digital Jury Scoring Terminal</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
@@ -137,7 +137,7 @@ export default function JudgingPortalPage() {
           {!authenticatedJudge ? (
             /* PIN Gate */
             <div className="max-w-md mx-auto p-8 rounded-3xl bg-aws-card border border-slate-700/60 shadow-2xl space-y-6 text-center">
-              <div className="w-14 h-14 rounded-2xl bg-aws-squidInk text-aws-orange mx-auto flex items-center justify-center border border-aws-orange/40">
+              <div className="w-14 h-14 rounded-2xl bg-aws-squidInk text-purple-400 mx-auto flex items-center justify-center border border-purple-500/40">
                 <Lock className="w-6 h-6" />
               </div>
 
@@ -161,18 +161,18 @@ export default function JudgingPortalPage() {
                   value={pin}
                   onChange={e => setPin(e.target.value)}
                   placeholder="••••••"
-                  className="w-full text-center tracking-[0.5em] font-mono text-2xl px-4 py-3 rounded-xl glass-input text-aws-orange font-bold"
+                  className="w-full text-center tracking-[0.5em] font-mono text-2xl px-4 py-3 rounded-xl glass-input text-purple-400 font-bold"
                   autoFocus
                 />
 
                 <div className="text-[11px] font-mono text-slate-400">
-                  Quick Demo Evaluator PIN: <code className="text-amber-300 font-bold">202701</code>
+                  Quick Demo Evaluator PIN: <code className="text-purple-300 font-bold">202701</code>
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading || pin.length < 4}
-                  className="w-full py-3.5 rounded-xl font-bold text-xs bg-aws-orange text-slate-950 hover:bg-amber-400 transition-colors shadow-md disabled:opacity-50"
+                  className="w-full py-3.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md disabled:opacity-50"
                 >
                   {loading ? 'Authenticating...' : 'Unlock Evaluation Terminal →'}
                 </button>
@@ -183,7 +183,7 @@ export default function JudgingPortalPage() {
             <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-8 animate-fadeIn">
               
               {/* Evaluator Welcome Banner */}
-              <div className="p-4 rounded-2xl bg-aws-squidInk border border-aws-orange/40 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div className="p-4 rounded-2xl bg-aws-squidInk border border-purple-500/40 flex flex-wrap items-center justify-between gap-3 text-xs">
                 <div className="flex items-center gap-2.5">
                   <UserCheck className="w-5 h-5 text-emerald-400" />
                   <div>
@@ -220,7 +220,7 @@ export default function JudgingPortalPage() {
                   <div className="pt-2 flex items-center justify-center gap-3">
                     <button
                       onClick={() => { setSubmittedScore(null); setFeedback(''); }}
-                      className="px-5 py-2.5 rounded-xl font-bold text-xs bg-aws-orange text-slate-950 hover:bg-amber-400 transition-colors"
+                      className="px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors"
                     >
                       Evaluate Next Team
                     </button>
@@ -244,7 +244,7 @@ export default function JudgingPortalPage() {
                         value={teamCode}
                         onChange={e => setTeamCode(e.target.value.toUpperCase())}
                         placeholder="e.g. KAIROS-T001"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono font-bold text-aws-orange uppercase"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono font-bold text-purple-400 uppercase"
                       />
                     </div>
 
@@ -264,7 +264,7 @@ export default function JudgingPortalPage() {
 
                   {/* 4 Rubric Criteria Sliders */}
                   <div className="space-y-5 pt-2">
-                    <h3 className="text-xs font-mono uppercase tracking-wider text-amber-300 font-bold border-b border-white/10 pb-2">
+                    <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold border-b border-white/10 pb-2">
                       100-Point Evaluation Rubric
                     </h3>
 
@@ -272,7 +272,7 @@ export default function JudgingPortalPage() {
                     <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-bold text-white">1. Technical Architecture, Reliability & Scalability</span>
-                        <span className="font-mono text-amber-300 font-bold text-sm">{scores.criterion1} / 30 Pts</span>
+                        <span className="font-mono text-purple-300 font-bold text-sm">{scores.criterion1} / 30 Pts</span>
                       </div>
                       <p className="text-[11px] text-slate-400">
                         Modularity, clean code practices, security considerations, appropriate database/cloud selection, error resilience, and capacity to handle scale.
@@ -292,7 +292,7 @@ export default function JudgingPortalPage() {
                     <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-bold text-white">2. Originality & Quality of Problem-Solving</span>
-                        <span className="font-mono text-amber-300 font-bold text-sm">{scores.criterion2} / 25 Pts</span>
+                        <span className="font-mono text-purple-300 font-bold text-sm">{scores.criterion2} / 25 Pts</span>
                       </div>
                       <p className="text-[11px] text-slate-400">
                         Depth of domain understanding, freshness of perspective, non-trivial engineering insights, and avoidance of shallow AI wrappers.
@@ -312,7 +312,7 @@ export default function JudgingPortalPage() {
                     <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-bold text-white">3. Working Prototype & User Experience</span>
-                        <span className="font-mono text-amber-300 font-bold text-sm">{scores.criterion3} / 25 Pts</span>
+                        <span className="font-mono text-purple-300 font-bold text-sm">{scores.criterion3} / 25 Pts</span>
                       </div>
                       <p className="text-[11px] text-slate-400">
                         A genuine, functional live implementation demonstrated during checkpoints; intuitive interface, responsive polish, and frictionless workflows.
@@ -332,7 +332,7 @@ export default function JudgingPortalPage() {
                     <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-bold text-white">4. Practical Value & Pitch Defense</span>
-                        <span className="font-mono text-amber-300 font-bold text-sm">{scores.criterion4} / 20 Pts</span>
+                        <span className="font-mono text-purple-300 font-bold text-sm">{scores.criterion4} / 20 Pts</span>
                       </div>
                       <p className="text-[11px] text-slate-400">
                         Viability in real-world deployment, clarity of the 48-hour presentation, technical rigor in answering tough jury questions, and team collaboration.
@@ -350,9 +350,9 @@ export default function JudgingPortalPage() {
                   </div>
 
                   {/* Score Tally Bar */}
-                  <div className="p-4 rounded-2xl bg-aws-squidInk border border-aws-orange/40 flex items-center justify-between font-mono">
+                  <div className="p-4 rounded-2xl bg-aws-squidInk border border-purple-500/40 flex items-center justify-between font-mono">
                     <span className="text-xs text-slate-300">Raw Cumulative Tally:</span>
-                    <span className="text-2xl font-black text-amber-300">{rawTotal} / 100 Pts</span>
+                    <span className="text-2xl font-black text-purple-300">{rawTotal} / 100 Pts</span>
                   </div>
 
                   {/* Qualitative Feedback */}
@@ -386,7 +386,7 @@ export default function JudgingPortalPage() {
                     <button
                       type="submit"
                       disabled={scoreSubmitting}
-                      className="w-full py-4 rounded-xl font-bold text-sm text-slate-950 bg-gradient-to-r from-aws-orange via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-aws-orange shadow-lg shadow-aws-orange/30 transition-all flex items-center justify-center gap-2"
+                      className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2"
                     >
                       <span>{scoreSubmitting ? 'Calculating Z-Score...' : 'Commit Evaluation Scores & Trigger Z-Score Service'}</span>
                       <ArrowRight className="w-4 h-4" />

@@ -24,7 +24,7 @@ export default function LeadershipPage() {
     <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[550px] bg-gradient-to-b from-[#FF9900]/15 via-[#0073BB]/5 to-transparent blur-[140px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[550px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -35,18 +35,18 @@ export default function LeadershipPage() {
           <span>/</span>
           <Link href="/members" className="hover:text-slate-200">Organizing Cadre</Link>
           <span>/</span>
-          <span className="text-[#FF9900] font-mono">Higher Management (Batch of 26–27)</span>
+          <span className="text-purple-400 font-mono">Higher Management (Batch of 26–27)</span>
         </div>
 
         {/* Header Title */}
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FF9900]/10 border border-[#FF9900]/30 text-[#FF9900] text-xs font-mono font-bold tracking-wider uppercase mb-5">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-400 text-xs font-mono font-bold tracking-wider uppercase mb-5">
             <Crown className="w-3.5 h-3.5" />
             Executive Directorate & Higher Management
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-6">
             Higher Management Roster <br />
-            <span className="bg-gradient-to-r from-[#FF9900] via-amber-300 to-[#0073BB] bg-clip-text text-transparent">
+            <span className="gradient-text-kairos bg-clip-text text-transparent">
               {HIGHER_MANAGEMENT.batchTitle}
             </span>
           </h1>
@@ -56,23 +56,23 @@ export default function LeadershipPage() {
         </div>
 
         {/* Apex Leader: President & SBGL Thenappan T */}
-        <div className="max-w-5xl mx-auto mb-20 rounded-3xl bg-gradient-to-br from-amber-500/15 via-slate-900 to-[#0073BB]/10 border-2 border-[#FF9900]/50 p-8 sm:p-12 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+        <div className="max-w-5xl mx-auto mb-20 rounded-3xl bg-gradient-to-br from-purple-950/40 via-slate-900 to-indigo-950/30 border-2 border-purple-500/50 p-8 sm:p-12 shadow-2xl backdrop-blur-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-            <Crown className="w-64 h-64 text-[#FF9900]" />
+            <Crown className="w-64 h-64 text-purple-400" />
           </div>
 
           <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 sm:gap-12 relative z-10">
             {/* Avatar Badge */}
             <div className="shrink-0 text-center">
-              <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-3xl bg-gradient-to-br from-[#FF9900] to-amber-600 p-1 shadow-2xl shadow-[#FF9900]/20">
+              <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-3xl bg-gradient-to-br from-purple-600 to-indigo-600 p-1 shadow-2xl shadow-purple-900/40">
                 <div className="w-full h-full rounded-[22px] bg-slate-950 flex flex-col items-center justify-center text-center p-4">
                   <div className="text-5xl font-black text-white font-mono mb-1">TT</div>
-                  <div className="text-[10px] font-mono text-[#FF9900] uppercase font-bold tracking-widest">
+                  <div className="text-[10px] font-mono text-purple-400 uppercase font-bold tracking-widest">
                     Apex Leader
                   </div>
                 </div>
               </div>
-              <div className="mt-4 inline-block px-3 py-1 rounded-full bg-[#FF9900]/20 border border-[#FF9900]/40 text-[#FF9900] text-xs font-mono font-bold">
+              <div className="mt-4 inline-block px-3 py-1 rounded-full bg-purple-950/80 border border-purple-500/40 text-purple-400 text-xs font-mono font-bold">
                 Reg: {apex.registerNo}
               </div>
             </div>
@@ -80,7 +80,7 @@ export default function LeadershipPage() {
             {/* Profile Info */}
             <div className="flex-1 text-center lg:text-left">
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-2">
-                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-[#FF9900] text-slate-950 uppercase">
+                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-gradient-to-r from-purple-600 to-indigo-600 text-white uppercase">
                   President & SBGL
                 </span>
                 <span className="text-xs font-mono text-slate-400">
@@ -106,7 +106,7 @@ export default function LeadershipPage() {
                   href={`mailto:${apex.contact.email}`}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition"
                 >
-                  <Mail className="w-3.5 h-3.5 text-[#FF9900]" />
+                  <Mail className="w-3.5 h-3.5 text-purple-400" />
                   {apex.contact.email}
                 </a>
                 <a
@@ -118,7 +118,7 @@ export default function LeadershipPage() {
                 </a>
                 <Link
                   href="/members/thenappan-t"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#FF9900] text-slate-950 text-xs font-bold hover:bg-amber-400 transition"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold hover:bg-purple-600 transition"
                 >
                   View Full Portfolio Dossier →
                 </Link>
@@ -188,7 +188,7 @@ export default function LeadershipPage() {
                   </div>
 
                   <h4 className="text-lg font-bold text-white mb-1">{head.title}</h4>
-                  <div className="text-sm font-semibold text-[#FF9900] mb-3">{head.leadName}</div>
+                  <div className="text-sm font-semibold text-purple-400 mb-3">{head.leadName}</div>
                   
                   <div className="text-xs font-mono text-slate-400 mb-3 pb-3 border-b border-slate-800">
                     {head.division}
@@ -204,7 +204,7 @@ export default function LeadershipPage() {
                   className="text-xs font-semibold text-slate-400 hover:text-white flex items-center justify-between pt-4 border-t border-slate-800/80 group"
                 >
                   <span>Explore Cadre Division</span>
-                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#FF9900] group-hover:translate-x-1 transition" />
+                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-400 group-hover:translate-x-1 transition" />
                 </Link>
               </div>
             ))}

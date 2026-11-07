@@ -27,8 +27,8 @@ export default function ResourcesPage() {
           
           {/* Header */}
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk border border-aws-orange/30">
-              <BookOpen className="w-3.5 h-3.5 text-aws-orange" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk border border-purple-500/30">
+              <BookOpen className="w-3.5 h-3.5 text-purple-400" />
               <span>Official AWS Student Builder Group Leader Library</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
@@ -44,11 +44,11 @@ export default function ResourcesPage() {
             {AWS_RESOURCE_LIBRARY.map((item) => (
               <div
                 key={item.id}
-                className="p-6 sm:p-7 rounded-3xl bg-aws-card border border-slate-700/60 flex flex-col justify-between hover:border-aws-orange/40 transition-all space-y-6 group"
+                className="p-6 sm:p-7 rounded-3xl bg-aws-card border border-slate-700/60 flex flex-col justify-between hover:border-purple-500/40 transition-all space-y-6 group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-aws-orange uppercase font-bold px-2 py-0.5 rounded bg-aws-orange/10 border border-aws-orange/20">
+                    <span className="text-[10px] font-mono text-purple-400 uppercase font-bold px-2 py-0.5 rounded bg-purple-950/40 border border-purple-500/20">
                       {item.category}
                     </span>
                     <span className="text-[10px] font-mono text-slate-400">
@@ -56,7 +56,7 @@ export default function ResourcesPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-display font-bold text-white group-hover:text-amber-200 transition-colors">
+                  <h3 className="text-xl font-display font-bold text-white group-hover:text-purple-200 transition-colors">
                     {item.title}
                   </h3>
 
@@ -65,13 +65,13 @@ export default function ResourcesPage() {
                   </p>
 
                   <div className="space-y-2 pt-2 border-t border-white/10">
-                    <span className="text-[11px] font-mono text-amber-300 uppercase font-semibold block">
+                    <span className="text-[11px] font-mono text-purple-300 uppercase font-semibold block">
                       Curriculum Highlights:
                     </span>
                     <ul className="space-y-1.5 text-xs text-slate-300">
                       {item.features.map((f, idx) => (
                         <li key={idx} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-aws-orange flex-shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-purple-400 flex-shrink-0 mt-0.5" />
                           <span>{f}</span>
                         </li>
                       ))}
@@ -85,7 +85,7 @@ export default function ResourcesPage() {
                       href={item.externalUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-aws-squidInk hover:bg-slate-800 text-amber-300 border border-aws-orange/30 flex items-center justify-center gap-1.5 transition-colors"
+                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-aws-squidInk hover:bg-slate-800 text-purple-300 border border-purple-500/30 flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <span>Launch Interactive Quest</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -103,7 +103,7 @@ export default function ResourcesPage() {
                   ) : (
                     <button
                       onClick={() => alert(`Starting download for ${item.title}... Module package will be saved.`)}
-                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-aws-orange text-slate-950 hover:bg-amber-400 flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 flex items-center justify-center gap-1.5 transition-colors shadow-sm"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Download Starter Assets (Zip)</span>
@@ -115,10 +115,10 @@ export default function ResourcesPage() {
           </div>
 
           {/* AWS Bedrock Code Snippet Preview */}
-          <div className="p-6 sm:p-10 rounded-3xl bg-aws-squidInk border border-aws-orange/30 space-y-4">
+          <div className="p-6 sm:p-10 rounded-3xl bg-aws-squidInk border border-purple-500/30 space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
               <div className="flex items-center gap-2">
-                <Code2 className="w-5 h-5 text-aws-orange" />
+                <Code2 className="w-5 h-5 text-purple-400" />
                 <h3 className="text-lg font-bold text-white font-display">
                   Quickstart: Invoking Claude 3.5 Sonnet on Amazon Bedrock (TypeScript / Python)
                 </h3>
@@ -157,7 +157,7 @@ export async function askKairosAgent(prompt: string) {
 }`}</pre>
             </div>
             <p className="text-xs text-slate-400">
-              Use your assigned AWS promotional credits voucher from the <Link href="/dashboard" className="text-amber-300 underline">Hacker Dashboard</Link> to run this starter code with zero infrastructure costs.
+              Use your assigned AWS promotional credits voucher from the <Link href="/dashboard" className="text-purple-300 underline">Hacker Dashboard</Link> to run this starter code with zero infrastructure costs.
             </p>
           </div>
 
