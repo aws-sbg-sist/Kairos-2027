@@ -9,14 +9,16 @@ import { DualPhasePipelineVisualizer } from '@/components/sections/DualPhasePipe
 import { MissionSection } from '@/components/sections/MissionSection';
 import { TracksSection } from '@/components/sections/TracksSection';
 import { ScheduleSection } from '@/components/sections/ScheduleSection';
-import { TeamRadarSection } from '@/components/sections/TeamRadarSection';
+import { GallerySection } from '@/components/sections/GallerySection';
 import { JudgingSection } from '@/components/sections/JudgingSection';
 import { AwardsSection } from '@/components/sections/AwardsSection';
 import { PathwaySection } from '@/components/sections/PathwaySection';
 import { SponsorshipSection } from '@/components/sections/SponsorshipSection';
 import { CommitteeSection } from '@/components/sections/CommitteeSection';
 import { FAQSection } from '@/components/sections/FAQSection';
+import { FinalCTASection } from '@/components/sections/FinalCTASection';
 import { EntranceVideoReveal } from '@/components/animation/EntranceVideoReveal';
+import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
 import { WaitlistModal } from '@/components/modals/WaitlistModal';
 import { ProspectusModal } from '@/components/modals/ProspectusModal';
 import { TermsModal } from '@/components/modals/TermsModal';
@@ -57,7 +59,10 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow relative overflow-x-hidden">
+      {/* Desktop Ambient Magnetic Glow Cursor */}
+      <MagneticGlowCursor />
+
       {/* Site Entrance Animation (KAIROS Logo Reveal) */}
       <EntranceVideoReveal />
       
@@ -65,7 +70,7 @@ export default function HomePage() {
       <Navbar onOpenWaitlist={() => setWaitlistModalOpen(true)} />
 
       {/* Main Single-Page Journey */}
-      <main className="flex-grow">
+      <main id="main-content" className="flex-grow">
         
         {/* Hero Section */}
         <HeroSection
@@ -79,17 +84,17 @@ export default function HomePage() {
         {/* Dual-Phase Merit Pipeline Visualizer */}
         <DualPhasePipelineVisualizer />
 
-        {/* Why KAIROS / Mission */}
+        {/* Why KAIROS / Mission (About) */}
         <MissionSection />
 
-        {/* Five Technical Tracks */}
+        {/* Five Technical Tracks (Interactive Bento Grid) */}
         <TracksSection onSelectTrack={handleOpenWaitlistWithTrack} />
 
-        {/* 48-Hour Experience & Timetable */}
+        {/* 48-Hour Experience & Timetable (Horizontal Timeline) */}
         <ScheduleSection />
 
-        {/* Builder Squad Radar & Live Matching */}
-        <TeamRadarSection />
+        {/* Atmosphere & Arena Preview Gallery (Masonry + Carousel + Lightbox) */}
+        <GallerySection />
 
         {/* 100-Point Judging Criteria */}
         <JudgingSection />
@@ -103,14 +108,17 @@ export default function HomePage() {
           registrationOpen={flags.registrationOpen}
         />
 
-        {/* Sponsorship & Partnerships Matrix */}
+        {/* Sponsorship & Partnerships Matrix (with Logo Marquee) */}
         <SponsorshipSection onOpenProspectusModal={() => setProspectusModalOpen(true)} />
 
         {/* Organizing Cadre & Leadership */}
         <CommitteeSection />
 
-        {/* FAQs */}
+        {/* FAQs (Categorized Tabs & Animated Accordion) */}
         <FAQSection />
+
+        {/* Final CTA (Distinctive Closing Section with Cosmic Hourglass) */}
+        <FinalCTASection />
       </main>
 
       {/* Footer */}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Volume2, VolumeX, X, Play, RotateCcw } from 'lucide-react';
 
 interface EntranceVideoRevealProps {
@@ -19,34 +19,57 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const dismissTimerRef = useRef<NodeJS.Timeout | null>(null);
 
+  const handleDismiss = useCallback(() => {
+    setIsFadingOut(true);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('kairos_logo_reveal_seen', 'true');
+      sessionStorage.setItem('kairos_logo_reveal_seen', 'true');
+    }
+    if (dismissTimerRef.current) {
+      clearTimeout(dismissTimerRef.current);
+    }
+    dismissTimerRef.current = setTimeout(() => {
+      setIsVisible(false);
+      setIsFadingOut(false);
+      if (onClose) onClose();
+      if (onComplete) onComplete();
+    }, 600);
+  }, [onClose, onComplete]);
+
+  // Only open when explicitly requested (e.g. clicking "Watch Logo Reveal" or forceOpen)
   useEffect(() => {
-    // Check if user has already seen the intro in this session
-    const hasSeen = typeof window !== 'undefined' ? sessionStorage.getItem('kairos_logo_reveal_seen') : null;
-
-    if (!hasSeen || forceOpen) {
+    if (forceOpen) {
       setIsVisible(true);
       setIsFadingOut(false);
       setProgress(0);
-
-      // Listen for custom trigger to replay reveal anywhere in the app
-      const handleReplay = () => {
-        setIsVisible(true);
-        setIsFadingOut(false);
-        setProgress(0);
-        if (videoRef.current) {
-          videoRef.current.currentTime = 0;
-          videoRef.current.play().catch(() => {});
-        }
-      };
-
-      window.addEventListener('kairos:replay-reveal', handleReplay);
-      return () => window.removeEventListener('kairos:replay-reveal', handleReplay);
     }
   }, [forceOpen]);
 
+  // Global replay listener: works on first visit and subsequent visits
   useEffect(() => {
-    // Keyboard listener for Escape or Space to skip
+    const handleReplay = () => {
+      setIsVisible(true);
+      setIsFadingOut(false);
+      setProgress(0);
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play().catch(() => {});
+      }
+    };
+
+    window.addEventListener('kairos:replay-reveal', handleReplay);
+    return () => {
+      window.removeEventListener('kairos:replay-reveal', handleReplay);
+      if (dismissTimerRef.current) {
+        clearTimeout(dismissTimerRef.current);
+      }
+    };
+  }, []);
+
+  // Keyboard listener: Esc to skip
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         handleDismiss();
@@ -56,20 +79,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isVisible]);
-
-  const handleDismiss = () => {
-    setIsFadingOut(true);
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('kairos_logo_reveal_seen', 'true');
-    }
-    setTimeout(() => {
-      setIsVisible(false);
-      setIsFadingOut(false);
-      if (onClose) onClose();
-      if (onComplete) onComplete();
-    }, 600);
-  };
+  }, [isVisible, handleDismiss]);
 
   const handleTimeUpdate = () => {
     if (videoRef.current && videoRef.current.duration) {
@@ -95,14 +105,14 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
     >
       {/* Background ambient lighting effects */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-r from-[#FF9900]/20 via-[#0073BB]/20 to-purple-600/20 blur-[140px] rounded-full animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-r from-aws-orange/25 via-aws-blue/20 to-aws-purple/20 blur-[140px] rounded-full animate-pulse" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#05070D_95%)]" />
       </div>
 
       {/* Top Header Bar inside reveal */}
       <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-20">
         <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/60 backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-[#FF9900] animate-ping" />
+          <span className="w-2 h-2 rounded-full bg-aws-orange animate-ping" />
           <span className="text-[11px] font-mono font-bold tracking-wider text-slate-300 uppercase">
             AWS SBGL · KAIROS 2027 Logo Reveal
           </span>
@@ -131,7 +141,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
           {/* Skip Intro Button */}
           <button
             onClick={handleDismiss}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#FF9900] hover:bg-amber-400 text-slate-950 text-xs font-bold font-mono transition shadow-lg shadow-[#FF9900]/20 group"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full btn-primary-themed text-slate-950 text-xs font-bold font-mono transition shadow-lg group"
           >
             <span>Skip Intro</span>
             <X className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform" />
@@ -141,7 +151,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
 
       {/* Central Video Frame */}
       <div className="relative z-10 w-full max-w-4xl px-4 sm:px-6 flex flex-col items-center">
-        <div className="relative rounded-3xl overflow-hidden border-2 border-[#FF9900]/40 shadow-[0_0_80px_rgba(255,153,0,0.25)] bg-slate-950/90 aspect-video w-full flex items-center justify-center">
+        <div className="relative rounded-3xl overflow-hidden border-2 border-aws-orange/40 shadow-[0_0_80px_var(--aws-orange-glow)] bg-slate-950/90 aspect-video w-full flex items-center justify-center">
           <video
             ref={videoRef}
             src="/assets/kairos-logo-reveal.mp4"
@@ -156,7 +166,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
           {/* Bottom subtle progress line */}
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-800">
             <div
-              className="h-full bg-gradient-to-r from-[#FF9900] via-amber-300 to-[#0073BB] transition-all duration-100 ease-linear"
+              className="h-full bg-gradient-to-r from-aws-orange via-aws-purple to-aws-blue transition-all duration-100 ease-linear"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -165,7 +175,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
         {/* Bottom Subtitle / Press Esc notification */}
         <div className="mt-6 flex items-center justify-between w-full text-[11px] font-mono text-slate-400 px-2">
           <span className="flex items-center gap-2 text-slate-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FF9900]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-aws-orange" />
             National Grand Technical Hackathon · Sathyabama Institute of Science and Technology
           </span>
           <span className="hidden sm:inline-block text-slate-400">

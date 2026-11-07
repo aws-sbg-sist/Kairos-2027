@@ -2,93 +2,158 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Clock, Users, IndianRupee, MapPin, Shield, Award } from 'lucide-react';
-import { EVENT_CONFIG } from '@/lib/config';
+import { sound } from '@/lib/audio';
+import { AnimatedCounter } from '@/components/animation/AnimatedCounter';
+import { ScrollReveal } from '@/components/animation/ScrollReveal';
 
 export const FactsStrip: React.FC = () => {
   const facts = [
     {
-      icon: Clock,
+      id: '01',
+      tag: 'DURATION',
       image: '/assets/duration.png',
-      value: '48 Hours',
+      imageGlow: 'rgba(238,5,242,0.35)',
+      numericValue: 48,
+      suffix: ' Hours',
       label: 'Continuous Offline Hackathon',
       detail: '22 Jan 09:30 AM – 24 Jan 05:00 PM IST',
+      badge: 'Live Hack Clock',
     },
     {
-      icon: Users,
+      id: '02',
+      tag: 'CAPACITY',
       image: '/assets/teams.png',
-      value: '100 Elite Teams',
+      imageGlow: 'rgba(118,48,217,0.35)',
+      numericValue: 100,
+      suffix: ' Teams',
       label: '4 to 6 Builders Per Team',
       detail: '400–600 Shortlisted National Hackers',
+      badge: 'National Cohort',
     },
     {
-      icon: IndianRupee,
+      id: '03',
+      tag: 'ADMISSION',
       image: '/assets/register.png',
-      value: '₹0 Fee (100% Free)',
-      label: 'Zero Entry or Attendance Fee',
+      imageGlow: 'rgba(5,17,242,0.35)',
+      numericValue: 0,
+      prefix: '₹',
+      suffix: ' Entry Fee',
+      label: '100% Free for Shortlisted Teams',
       detail: 'Meals, Stay, Swag & AWS Credits Free',
+      badge: 'Zero Hidden Fees',
     },
     {
-      icon: Award,
+      id: '04',
+      tag: 'BOUNTIES',
       image: '/assets/prizes.png',
-      value: '₹1,75,000 Pure Cash',
+      imageGlow: 'rgba(238,5,242,0.4)',
+      numericValue: 175000,
+      prefix: '₹',
+      suffix: ' Pure Cash',
       label: 'National Cash Prize Pool',
       detail: '₹60k Champion • ₹35k Tracks • Bounties',
+      badge: 'Pure Cash',
     },
     {
-      icon: MapPin,
+      id: '05',
+      tag: 'LOCATION',
       image: '/assets/venue.png',
-      value: 'Central Library',
+      imageGlow: 'rgba(56,189,248,0.35)',
+      customValue: 'Central Library',
       label: 'Sathyabama University, Chennai',
       detail: '1Gbps Wi-Fi Mesh & Power Drops',
+      badge: 'OMR Campus',
     },
     {
-      icon: Shield,
+      id: '06',
+      tag: 'SELECTION',
       image: '/assets/challenges.png',
-      value: 'Dual-Phase Quality',
+      imageGlow: 'rgba(118,48,217,0.35)',
+      customValue: 'Dual-Phase',
       label: 'Round 1 Qualifier → Round 2 Finale',
       detail: 'Top 250 Online → Top 100 On-Campus',
+      badge: 'Two-Tier Filter',
     },
   ];
 
   return (
-    <section className="relative py-12 border-y border-aws-orange/20 bg-aws-squidInk/80 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+    <section className="relative z-20 border-y border-white/10 bg-[#0a0a0f]/95 backdrop-blur-2xl overflow-hidden select-none">
+      {/* Top Ambient Neon Guide Hairline */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-aws-orange/40 to-transparent pointer-events-none" />
+
+      {/* Background Subtle Tech Grid Motif */}
+      <div className="absolute inset-0 tech-grid-pattern opacity-30 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto">
+        {/* Monolithic Architectural Telemetry Console */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 divide-y md:divide-y-0 divide-x-0 md:divide-x divide-white/5 border-x border-white/5">
           {facts.map((item, idx) => {
-            const Icon = item.icon;
             return (
-              <div
+              <ScrollReveal
                 key={idx}
-                className="p-4 rounded-xl bg-slate-900/60 border border-slate-700/60 hover:border-aws-orange/40 transition-all group flex flex-col justify-between"
+                direction="up"
+                distance={15}
+                delay={idx * 0.06}
+                className="h-full"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-aws-orange/15 text-aws-orange flex items-center justify-center group-hover:scale-110 group-hover:bg-aws-orange/25 transition-all">
-                      <Icon className="w-4 h-4" />
+                <div
+                  onMouseEnter={() => sound?.playHover()}
+                  className="group relative p-5 lg:p-6 transition-all duration-200 ease-entrance hover:bg-white/[0.035] flex flex-col justify-between h-full overflow-hidden"
+                >
+                  {/* Top Glowing Beam on Hover */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-aws-orange to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Top Subtle Ambient Bloom on Hover */}
+                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full bg-aws-orange/15 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                  <div>
+                    {/* Segment Telemetry Header */}
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+                      <span className="flex items-center gap-1.5 font-bold tracking-wider group-hover:text-aws-orange transition-colors">
+                        <span className="text-[10px] text-slate-500 font-normal">[{item.id}]</span>
+                        <span>{item.tag}</span>
+                      </span>
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400 group-hover:border-purple-500/30 group-hover:text-purple-300 transition-colors">
+                        {item.badge}
+                      </span>
                     </div>
-                    {item.image && (
-                      <div className="relative w-8 h-8 rounded-md overflow-hidden bg-slate-950/80 border border-slate-800 p-1 group-hover:border-aws-orange/40 transition-colors">
-                        <Image
-                          src={item.image}
-                          alt={item.label}
-                          fill
-                          className="object-contain"
-                        />
+
+                    {/* Visual Asset Emblem with Animated Scale */}
+                    <div className="mb-4 relative w-10 h-10 sm:w-11 sm:h-11 transition-transform duration-300 group-hover:scale-110">
+                      <Image
+                        src={item.image}
+                        alt={item.tag}
+                        fill
+                        className="object-contain filter drop-shadow-[0_4px_12px_rgba(238,5,242,0.3)]"
+                      />
+                    </div>
+
+                    {/* Metric Display with Animated Counter */}
+                    <div className="space-y-1">
+                      <div className="text-xl sm:text-2xl font-display font-black text-white tracking-tight group-hover:text-amber-200 transition-colors">
+                        {item.numericValue !== undefined ? (
+                          <AnimatedCounter
+                            value={item.numericValue}
+                            prefix={item.prefix}
+                            suffix={item.suffix}
+                            duration={1.5 + idx * 0.15}
+                          />
+                        ) : (
+                          <span>{item.customValue}</span>
+                        )}
                       </div>
-                    )}
+                      <div className="text-xs font-semibold text-slate-300 leading-snug">
+                        {item.label}
+                      </div>
+                    </div>
                   </div>
-                  <div className="font-display font-black text-lg sm:text-xl text-white tracking-tight">
-                    {item.value}
-                  </div>
-                  <div className="text-xs font-semibold text-slate-200 mt-0.5">
-                    {item.label}
+
+                  {/* Micro Detail Technical Footnote */}
+                  <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-slate-400 truncate">
+                    {item.detail}
                   </div>
                 </div>
-                <div className="text-[11px] text-slate-400 mt-2 leading-tight font-mono">
-                  {item.detail}
-                </div>
-              </div>
+              </ScrollReveal>
             );
           })}
         </div>

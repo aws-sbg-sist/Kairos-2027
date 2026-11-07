@@ -2,12 +2,15 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 import { EVENT_SCHEDULE } from '@/lib/config';
-import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield } from 'lucide-react';
+import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { sound } from '@/lib/audio';
+import { SpotlightCard } from '@/components/animation/SpotlightCard';
+import { ScrollReveal } from '@/components/animation/ScrollReveal';
 
 export const ScheduleSection: React.FC = () => {
   const [selectedDayIdx, setSelectedDayIdx] = useState(0); // Day 1 default
-
   const activeDay = EVENT_SCHEDULE[selectedDayIdx];
 
   const getCategoryBadgeClass = (category: string) => {
@@ -30,43 +33,52 @@ export const ScheduleSection: React.FC = () => {
   };
 
   return (
-    <section id="schedule" className="relative py-20 lg:py-28 overflow-hidden bg-aws-canvas">
-      
+    <section id="schedule" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
       {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-aws-orange/10 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-aws-orange/10 blur-[170px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk border border-aws-orange/30 shadow-md">
-            <div className="relative w-5 h-5 rounded overflow-hidden">
-              <Image
-                src="/assets/schedule.png"
-                alt="Schedule"
-                fill
-                className="object-contain"
-              />
+          <ScrollReveal direction="down" distance={16}>
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk/90 border border-aws-orange/30 shadow-md backdrop-blur-md">
+              <div className="relative w-5 h-5 rounded overflow-hidden">
+                <Image
+                  src="/assets/schedule.png"
+                  alt="Schedule"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span>Interactive 48-Hour Participant Agenda</span>
             </div>
-            <span>Interactive 48-Hour Participant Agenda</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
-            The 48-Hour <span className="gradient-text-kairos">Experience</span>
-          </h2>
-          <p className="text-base sm:text-lg text-slate-300">
-            Every milestone calibrated in Indian Standard Time (IST). Continuous coding, 3 table-side architecture checkpoints, AWS clinic walkabouts, and fully catered meals.
-          </p>
+          </ScrollReveal>
 
-          <div className="pt-2 flex items-center justify-center gap-3">
-            <a
-              href="/api/calendar"
-              download="KAIROS_2027_Schedule.ics"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-aws-squidInk hover:bg-slate-800 border border-aws-orange/30 text-amber-300 transition-all shadow-sm"
-            >
-              <Download className="w-3.5 h-3.5 text-aws-orange" />
-              <span>Add to Apple / Google / Outlook Calendar (.ics)</span>
-            </a>
-          </div>
+          <ScrollReveal direction="up" distance={20} delay={0.1}>
+            <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
+              The 48-Hour <span className="gradient-text-kairos">Experience</span>
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" distance={20} delay={0.2}>
+            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
+              Every milestone calibrated in Indian Standard Time (IST). Continuous coding, 3 table-side architecture checkpoints, AWS clinic walkabouts, and fully catered meals.
+            </p>
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" distance={16} delay={0.25}>
+            <div className="pt-2 flex items-center justify-center gap-3">
+              <a
+                href="/api/calendar"
+                download="KAIROS_2027_Schedule.ics"
+                onClick={() => sound?.playClick()}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-aws-squidInk hover:bg-slate-800 border border-aws-orange/30 text-amber-300 transition-all shadow-md group"
+              >
+                <Download className="w-3.5 h-3.5 text-aws-orange group-hover:translate-y-0.5 transition-transform" />
+                <span>Add to Apple / Google / Outlook Calendar (.ics)</span>
+              </a>
+            </div>
+          </ScrollReveal>
         </div>
 
         {/* Day Tabs */}
@@ -76,25 +88,28 @@ export const ScheduleSection: React.FC = () => {
             return (
               <button
                 key={day.day}
-                onClick={() => setSelectedDayIdx(idx)}
-                className={`p-4 rounded-2xl text-left transition-all ${
+                onClick={() => {
+                  sound?.playClick();
+                  setSelectedDayIdx(idx);
+                }}
+                className={`p-4 sm:p-5 rounded-2xl text-left transition-all duration-200 relative select-none ${
                   isActive
-                    ? 'bg-aws-squidInk border-2 border-aws-orange shadow-lg shadow-aws-orange/20 scale-[1.02]'
-                    : 'bg-aws-card border border-slate-700/60 hover:border-aws-orange/40 hover:bg-slate-900/80'
+                    ? 'bg-aws-squidInk border-2 border-aws-orange shadow-xl shadow-aws-orange/20 scale-[1.02]'
+                    : 'bg-aws-card/80 border border-slate-700/60 hover:border-aws-orange/40 hover:bg-slate-900/80'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[10px] font-mono text-aws-orange block uppercase font-bold">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-mono text-aws-orange block uppercase font-bold tracking-wider">
                     DAY {day.day}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-400">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-950/80 text-slate-400 border border-white/5">
                     {day.tag}
                   </span>
                 </div>
-                <span className="text-sm font-bold text-white block">
+                <span className="text-sm sm:text-base font-bold text-white block">
                   {day.dayName.split(':')[1]?.trim() || day.dayName}
                 </span>
-                <span className="text-xs text-slate-300 block truncate mt-0.5">
+                <span className="text-xs text-slate-400 block truncate mt-0.5">
                   {day.title}
                 </span>
               </button>
@@ -102,76 +117,95 @@ export const ScheduleSection: React.FC = () => {
           })}
         </div>
 
-        {/* Timeline Event List */}
-        <div className="max-w-4xl mx-auto p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 relative">
-          
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-white/10 gap-2">
-            <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-slate-950 border border-aws-orange/30 p-1.5 shrink-0 shadow-md">
-                <Image
-                  src="/assets/time.png"
-                  alt="Schedule Time Matrix"
-                  fill
-                  className="object-contain"
-                />
+        {/* Horizontal Event Journey Container */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeDay.day}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="space-y-6"
+          >
+            {/* Timeline Progress Bar / Header Banner */}
+            <div className="p-4 rounded-2xl bg-aws-card/60 border border-purple-500/20 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono">
+              <div className="flex items-center gap-2 text-slate-200">
+                <Calendar className="w-4 h-4 text-aws-orange" />
+                <span className="font-bold text-white">{activeDay.dayName}</span>
+                <span className="text-slate-500">•</span>
+                <span className="text-amber-300">{activeDay.title}</span>
               </div>
-              <div>
-                <span className="text-xs font-mono text-aws-orange font-semibold uppercase tracking-wider">
-                  {activeDay.dayName}
-                </span>
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-white mt-0.5">
-                  {activeDay.title}
-                </h3>
+              <div className="flex items-center gap-2 text-slate-400">
+                <Clock className="w-3.5 h-3.5 text-sky-400" />
+                <span>{activeDay.events.length} Calibrated Milestones</span>
               </div>
             </div>
-            <span className="text-xs font-mono font-medium text-amber-300 px-3 py-1 rounded-full bg-slate-950 border border-slate-800 self-start sm:self-auto">
-              {activeDay.tag}
-            </span>
-          </div>
 
-          <div className="space-y-6 relative before:absolute before:left-3.5 sm:before:left-[118px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gradient-to-b before:from-aws-orange/50 before:via-sky-500/30 before:to-transparent">
-            {activeDay.events.map((ev, i) => (
-              <div
-                key={i}
-                className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 relative group p-3.5 rounded-xl transition-all ${
-                  ev.highlight
-                    ? 'bg-aws-squidInk border border-aws-orange/40 shadow-md shadow-aws-orange/10'
-                    : 'hover:bg-white/[0.02]'
-                }`}
-              >
-                {/* Time Indicator */}
-                <div className="sm:w-28 flex-shrink-0 text-left sm:text-right pl-8 sm:pl-0">
-                  <span className="text-xs font-mono font-bold text-amber-300 block">
-                    {ev.time.split('–')[0]}
-                  </span>
-                  {ev.time.includes('–') && (
-                    <span className="text-[10px] font-mono text-slate-400 block">
-                      to {ev.time.split('–')[1]}
-                    </span>
-                  )}
-                </div>
+            {/* Horizontal Timeline Track */}
+            <div className="overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin">
+              <div className="flex gap-4 min-w-max">
+                {activeDay.events.map((milestone, idx) => {
+                  const badgeClass = getCategoryBadgeClass(milestone.category);
+                  const isCheckpoint = milestone.title.toLowerCase().includes('checkpoint');
+                  const isFreeze = milestone.title.toLowerCase().includes('freeze') || milestone.title.toLowerCase().includes('commences');
 
-                {/* Timeline Dot */}
-                <div className="absolute left-2.5 sm:left-[113px] top-4.5 sm:top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-aws-orange border-2 border-slate-950 shadow-[0_0_8px_#ff9900] group-hover:scale-125 transition-transform" />
+                  return (
+                    <SpotlightCard
+                      key={idx}
+                      enableTilt={true}
+                      maxTilt={5}
+                      spotlightColor="rgba(238, 5, 242, 0.15)"
+                      borderColor={isFreeze ? 'rgba(238, 5, 242, 0.5)' : isCheckpoint ? 'rgba(118, 48, 217, 0.4)' : 'rgba(255, 255, 255, 0.1)'}
+                      className={`w-[290px] sm:w-[320px] p-5 rounded-2xl border transition-all flex flex-col justify-between shrink-0 ${
+                        isFreeze
+                          ? 'bg-gradient-to-b from-purple-950/60 to-slate-950 border-aws-orange/50 shadow-lg shadow-aws-orange/10'
+                          : isCheckpoint
+                          ? 'bg-aws-card/90 border-purple-500/30'
+                          : 'bg-aws-card/70 border-slate-700/60'
+                      }`}
+                    >
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5 text-aws-orange" />
+                            <span>{milestone.time}</span>
+                          </span>
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border uppercase font-semibold ${badgeClass}`}>
+                            {milestone.category}
+                          </span>
+                        </div>
 
-                {/* Event Card Content */}
-                <div className="flex-grow pl-8 sm:pl-0 space-y-1.5">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border uppercase tracking-wider ${getCategoryBadgeClass(ev.category)}`}>
-                      {ev.category}
-                    </span>
-                    <h4 className="text-sm sm:text-base font-semibold text-white group-hover:text-amber-200 transition-colors">
-                      {ev.title}
-                    </h4>
-                  </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    {ev.desc}
-                  </p>
-                </div>
+                        <h4 className="text-base font-display font-bold text-white leading-snug">
+                          {milestone.title}
+                        </h4>
+
+                        <p className="text-xs text-slate-300 leading-relaxed">
+                          {milestone.desc}
+                        </p>
+                      </div>
+
+                      <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                        <span>Milestone 0{idx + 1}</span>
+                        {isCheckpoint && (
+                          <span className="text-purple-300 font-bold flex items-center gap-1">
+                            <Shield className="w-3 h-3 text-purple-400" />
+                            Scored Checkpoint
+                          </span>
+                        )}
+                        {isFreeze && (
+                          <span className="text-amber-300 font-bold flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3 text-aws-orange" />
+                            Critical Milestone
+                          </span>
+                        )}
+                      </div>
+                    </SpotlightCard>
+                  );
+                })}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
