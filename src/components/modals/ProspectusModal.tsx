@@ -92,7 +92,7 @@ export const ProspectusModal: React.FC<ProspectusModalProps> = ({ isOpen, onClos
             </div>
             <div className="text-right">
               <span className="text-[10px] font-mono text-slate-400 block uppercase">Proposed Support</span>
-              <span className="text-lg font-display font-bold text-amber-400">
+              <span className="text-lg font-display font-bold text-purple-400">
                 {currentTier.amount}
               </span>
             </div>

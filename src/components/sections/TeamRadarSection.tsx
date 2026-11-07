@@ -80,7 +80,7 @@ export function TeamRadarSection() {
             <button
               onClick={() => { sound?.playModalOpen(); setIsModalOpen(true); }}
               onMouseEnter={() => sound?.playHover()}
-              className="px-6 py-3 rounded-xl font-bold text-slate-950 btn-primary-themed shadow-lg shadow-aws-orange/20 transition-all flex items-center gap-2 group text-sm active:scale-95"
+              className="px-6 py-3 rounded-xl font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 transition-all flex items-center gap-2 group text-sm active:scale-95"
             >
               <Radio className="w-4 h-4 text-slate-950" />
               <span>Broadcast Your Beacon</span>
@@ -99,14 +99,14 @@ export function TeamRadarSection() {
           {/* Track Filters */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             <span className="text-xs font-mono text-slate-400 uppercase flex items-center gap-1 shrink-0 mr-2">
-              <Filter className="w-3.5 h-3.5 text-aws-orange" /> Track:
+              <Filter className="w-3.5 h-3.5 text-purple-400" /> Track:
             </span>
             <button
               onClick={() => { sound?.playClick(); setSelectedTrack('all'); }}
               onMouseEnter={() => sound?.playHover()}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 ${
                 selectedTrack === 'all'
-                  ? 'bg-aws-orange text-slate-950 shadow-md shadow-aws-orange/25 font-bold'
+                  ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
               }`}
             >
@@ -119,7 +119,7 @@ export function TeamRadarSection() {
                 onMouseEnter={() => sound?.playHover()}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 ${
                   selectedTrack === t.id
-                    ? 'bg-aws-orange text-slate-950 shadow-md shadow-aws-orange/25 font-bold'
+                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
                     : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
                 }`}
               >
@@ -166,7 +166,7 @@ export function TeamRadarSection() {
                 key={sig.id}
                 onMouseEnter={() => sound?.playHover()}
                 style={{ animationDelay: `${idx * 30}ms` }}
-                className="group p-6 rounded-2xl bg-slate-900/70 border border-white/10 hover:border-aws-orange/40 transition-all duration-200 ease-entrance relative flex flex-col justify-between hover:shadow-xl hover:shadow-aws-orange/10 backdrop-blur-md animate-fadeIn"
+                className="group p-6 rounded-2xl bg-slate-900/70 border border-white/10 hover:border-purple-500/40 transition-all duration-200 ease-entrance relative flex flex-col justify-between hover:shadow-xl hover:shadow-purple-900/30 backdrop-blur-md animate-fadeIn"
               >
                 <div>
                   {/* Top Badge & Date */}
@@ -180,7 +180,7 @@ export function TeamRadarSection() {
                   </div>
 
                   {/* Builder Name & College */}
-                  <h3 className="text-lg font-bold text-white font-display group-hover:text-aws-orange transition-colors">
+                  <h3 className="text-lg font-bold text-white font-display group-hover:text-purple-400 transition-colors">
                     {sig.builderName}
                   </h3>
                   <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-4 mt-0.5">
@@ -210,7 +210,7 @@ export function TeamRadarSection() {
                 <button
                   onClick={() => handleConnect(sig)}
                   onMouseEnter={() => sound?.playHover()}
-                  className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-white/5 hover:bg-aws-orange/15 border border-white/10 hover:border-aws-orange/40 text-slate-200 hover:text-white transition-all duration-200 ease-entrance active:scale-[0.97] flex items-center justify-center gap-2 group/btn ${
+                  className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-white/5 hover:bg-purple-950/50 border border-white/10 hover:border-purple-500/40 text-slate-200 hover:text-white transition-all duration-200 ease-entrance active:scale-[0.97] flex items-center justify-center gap-2 group/btn ${
                     copiedId === sig.id ? 'animate-success-pulse border-emerald-500/50 bg-emerald-950/30' : ''
                   }`}
                 >
@@ -237,7 +237,7 @@ export function TeamRadarSection() {
             </p>
             <button
               onClick={() => { sound?.playModalOpen(); setIsModalOpen(true); }}
-              className="px-4 py-2 rounded-lg btn-primary-themed text-slate-950 text-xs font-bold"
+              className="px-4 py-2 rounded-lg btn-primary-themed text-white text-xs font-bold"
             >
               Broadcast Beacon
             </button>

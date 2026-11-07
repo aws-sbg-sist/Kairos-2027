@@ -57,7 +57,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
   const currentTier = PROPOSED_SPONSOR_TIERS.find(t => t.id === selectedTier) || PROPOSED_SPONSOR_TIERS[0];
 
   const sponsorTechLogos = [
-    { name: 'Amazon Web Services', tag: 'Cloud Platform', color: '#FF9900' },
+    { name: 'Amazon Web Services', tag: 'Cloud Platform', color: '#a855f7' },
     { name: 'Anthropic', tag: 'AI Research', color: '#d97706' },
     { name: 'MongoDB Atlas', tag: 'Multi-Cloud Data', color: '#10b981' },
     { name: 'GitHub Enterprise', tag: 'DevOps & Copilot', color: '#a855f7' },
@@ -129,7 +129,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
                   sound?.playClick();
                   onOpenProspectusModal();
                 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold btn-primary-themed text-slate-950 transition-all shadow-lg shadow-aws-orange/20"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold btn-primary-themed text-white transition-all shadow-lg shadow-purple-900/30"
               >
                 <Briefcase className="w-4 h-4" />
                 <span>Instant Sponsorship Matrix & Inquiry</span>
@@ -182,12 +182,12 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
                   }}
                   className={`w-full p-4 rounded-2xl text-left transition-all duration-200 border flex items-center justify-between ${
                     isSelected
-                      ? 'bg-purple-950/60 border-2 border-aws-orange text-white shadow-lg shadow-aws-orange/20 scale-[1.02]'
+                      ? 'bg-purple-950/60 border-2 border-purple-500 text-white shadow-lg shadow-purple-900/30 scale-[1.02]'
                       : 'bg-aws-card/70 border-slate-700/60 text-slate-300 hover:text-white hover:bg-slate-900'
                   }`}
                 >
                   <div>
-                    <span className="text-[10px] font-mono text-amber-300 block uppercase font-bold">
+                    <span className="text-[10px] font-mono text-purple-300 block uppercase font-bold">
                       {tier.statusBadge}
                     </span>
                     <span className="font-display font-bold text-base block text-white">
@@ -211,7 +211,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
             >
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
                 <div>
-                  <span className="text-xs font-mono text-amber-300 font-bold block uppercase tracking-wider mb-1">
+                  <span className="text-xs font-mono text-purple-300 font-bold block uppercase tracking-wider mb-1">
                     {currentTier.statusBadge}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-display font-black text-white">
@@ -252,7 +252,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
                     sound?.playClick();
                     onOpenProspectusModal();
                   }}
-                  className="px-5 py-2.5 rounded-xl text-xs font-bold btn-primary-themed text-slate-950 shadow-md"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold btn-primary-themed text-white shadow-md"
                 >
                   Initiate Discussion for this Tier
                 </button>

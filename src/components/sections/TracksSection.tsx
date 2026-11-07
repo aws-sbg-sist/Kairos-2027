@@ -34,14 +34,14 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
   return (
     <section id="tracks" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
       {/* Background illumination */}
-      <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-aws-orange/10 blur-[170px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-purple-950/40 blur-[170px] pointer-events-none rounded-full" />
       <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-purple-950/20 blur-[160px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk/90 border border-aws-orange/30 shadow-md backdrop-blur-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/30 shadow-md backdrop-blur-md">
               <div className="relative w-5 h-5 rounded overflow-hidden">
                 <Image
                   src="/assets/tracks.png"
@@ -50,7 +50,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                   className="object-contain"
                 />
               </div>
-              <span>5 Enterprise Innovation Tracks • ₹7,000 Cash Bounty Each</span>
+              <span>5 Enterprise Innovation Tracks • Industry Architectures</span>
             </div>
           </ScrollReveal>
 
@@ -71,7 +71,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
               <Link
                 href="/tracks"
                 onClick={() => sound?.playClick()}
-                className="inline-flex items-center gap-2 text-xs font-bold text-amber-300 hover:text-white px-4 py-2.5 rounded-xl bg-aws-squidInk/80 border border-aws-orange/30 hover:border-aws-orange transition-all shadow-md group"
+                className="inline-flex items-center gap-2 text-xs font-bold text-purple-300 hover:text-white px-4 py-2.5 rounded-xl bg-aws-squidInk/80 border border-purple-500/30 hover:border-purple-500 transition-all shadow-md group"
               >
                 <span>Explore Complete Architectural Blueprints & Rubrics</span>
                 <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -100,14 +100,14 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                   }}
                   className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 h-full flex flex-col justify-between relative overflow-hidden group select-none ${
                     isActive
-                      ? 'bg-aws-squidInk/95 border-2 border-aws-orange shadow-xl shadow-aws-orange/20 scale-[1.02]'
-                      : 'bg-aws-card/70 border border-slate-700/60 hover:border-aws-orange/40 hover:bg-slate-900/80'
+                      ? 'bg-aws-squidInk/95 border-2 border-purple-500 shadow-xl shadow-purple-900/30 scale-[1.02]'
+                      : 'bg-aws-card/70 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/80'
                   }`}
                 >
                   {/* Subtle top indicator bar */}
                   <div
                     className={`absolute top-0 left-0 right-0 h-[2px] transition-opacity duration-300 ${
-                      isActive ? 'bg-aws-orange opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-60 group-hover:bg-aws-orange/50'
+                      isActive ? 'bg-gradient-to-r from-purple-600 to-indigo-600 opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-60 group-hover:bg-gradient-to-r from-purple-600 to-indigo-600/50'
                     }`}
                   />
 
@@ -116,30 +116,30 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
                           isActive
-                            ? 'bg-aws-orange text-slate-950 font-bold'
-                            : 'bg-white/5 text-slate-300 group-hover:text-aws-orange border border-white/10'
+                            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold'
+                            : 'bg-white/5 text-slate-300 group-hover:text-purple-400 border border-white/10'
                         }`}
                       >
                         <Icon className="w-4 h-4" />
                       </div>
-                      <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-amber-300 transition-colors">
+                      <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-purple-300 transition-colors">
                         {track.number}
                       </span>
                     </div>
 
-                    <h3 className="font-display font-bold text-sm text-white mb-2 line-clamp-2 group-hover:text-amber-200 transition-colors">
+                    <h3 className="font-display font-bold text-sm text-white mb-2 line-clamp-2 group-hover:text-purple-200 transition-colors">
                       {track.title}
                     </h3>
                   </div>
 
                   <div className="pt-3 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-amber-300 font-bold">
-                      ₹7,000 Bounty
+                    <span className="text-[10px] font-mono text-purple-300 font-bold">
+                      48H Build
                     </span>
                     <span
                       className={`text-[10px] font-mono px-2 py-0.5 rounded-full transition-colors ${
                         isActive
-                          ? 'bg-aws-orange/20 text-white border border-aws-orange/40'
+                          ? 'bg-purple-950/60 text-white border border-purple-500/40'
                           : 'text-slate-500 group-hover:text-slate-300'
                       }`}
                     >
@@ -168,7 +168,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
               className="p-6 sm:p-10 rounded-3xl bg-aws-card/90 border border-slate-700/60 relative overflow-hidden shadow-2xl backdrop-blur-xl"
             >
               {/* Track Number Watermark */}
-              <div className="absolute top-4 right-8 font-display font-black text-7xl sm:text-9xl text-aws-orange/5 select-none pointer-events-none">
+              <div className="absolute top-4 right-8 font-display font-black text-7xl sm:text-9xl text-purple-400/5 select-none pointer-events-none">
                 {activeTrack.number}
               </div>
 
@@ -176,11 +176,11 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                 {/* Left Content Column (7 cols) */}
                 <div className="lg:col-span-7 space-y-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-aws-orange/20 text-aws-orange border border-aws-orange/40 flex items-center justify-center font-bold">
+                    <div className="w-12 h-12 rounded-2xl bg-purple-950/60 text-purple-400 border border-purple-500/40 flex items-center justify-center font-bold">
                       <ActiveIcon className="w-6 h-6" />
                     </div>
                     <div>
-                      <span className="text-xs font-mono font-bold text-amber-300 block uppercase tracking-wider">
+                      <span className="text-xs font-mono font-bold text-purple-300 block uppercase tracking-wider">
                         TRACK {activeTrack.number} ARCHITECTURAL BLUEPRINT
                       </span>
                       <h3 className="text-2xl sm:text-3xl font-display font-black text-white">
@@ -202,7 +202,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                       {activeTrack.recommendedStacks.map((tech, i) => (
                         <span
                           key={i}
-                          className="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/80 border border-slate-700/70 text-slate-200 hover:border-aws-orange/40 transition-colors"
+                          className="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/80 border border-slate-700/70 text-slate-200 hover:border-purple-500/40 transition-colors"
                         >
                           {tech}
                         </span>
@@ -217,7 +217,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                         sound?.playClick();
                         onSelectTrack?.(activeTrack.title);
                       }}
-                      className="px-5 py-3 rounded-xl text-xs sm:text-sm font-bold btn-primary-themed text-slate-950 flex items-center gap-2 group shadow-lg shadow-aws-orange/20"
+                      className="px-5 py-3 rounded-xl text-xs sm:text-sm font-bold btn-primary-themed text-white flex items-center gap-2 group shadow-lg shadow-purple-900/30"
                     >
                       <span>Choose Track for Application</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -236,44 +236,19 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
 
                 {/* Right Column: Challenge Showcase & Cash Bounty (5 cols) */}
                 <div className="lg:col-span-5 space-y-4">
-                  {/* Cash Bounty Card */}
-                  <div className="p-5 rounded-2xl bg-gradient-to-br from-aws-squidInk to-purple-950/60 border border-aws-orange/40 shadow-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-mono text-amber-300 font-bold uppercase flex items-center gap-1.5">
-                        <Trophy className="w-3.5 h-3.5 text-aws-orange" />
-                        Dedicated Track Cash Bounty
+                  {/* Technical Deliverables Card */}
+                  <div className="p-4 rounded-xl bg-purple-950/40 border border-purple-500/30 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] font-mono text-purple-400 uppercase tracking-wider block font-semibold">
+                        Challenge Deliverable
                       </span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                        GUARANTEED
+                      <span className="text-sm font-bold text-white">
+                        Production Architecture & Defense
                       </span>
                     </div>
-                    <div className="text-3xl font-display font-black text-white">
-                      ₹7,000 <span className="text-xs font-mono font-normal text-slate-300">Pure Cash</span>
-                    </div>
-                    <p className="text-xs text-slate-300 mt-1">
-                      Awarded directly to the best architectural implementation in this track, independent of the Grand Champion cash prize.
-                    </p>
-                  </div>
-
-                  {/* Core Architectural Challenges */}
-                  <div className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-3">
-                    <span className="text-xs font-mono uppercase text-slate-400 block tracking-wider font-semibold">
-                      Key Engineering Criteria
+                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                      Evaluated Live
                     </span>
-                    <ul className="space-y-2 text-xs sm:text-sm text-slate-300">
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>Resilience under simulated fault injection & high load.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>Security baseline: IAM least privilege and encrypted state.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>Live demonstrable working code with automated CI/CD pipeline.</span>
-                      </li>
-                    </ul>
                   </div>
                 </div>
               </div>

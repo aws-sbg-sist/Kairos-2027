@@ -12,7 +12,7 @@ export const MissionSection: React.FC = () => {
     <section id="mission" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
       {/* Decorative cosmic background glow */}
       <div className="absolute top-1/2 left-0 w-[550px] h-[550px] bg-purple-950/20 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-aws-orange/10 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-purple-950/40 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -90,15 +90,15 @@ export const MissionSection: React.FC = () => {
                 className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-aws-squidInk/95 via-purple-950/40 to-slate-950 border-2 border-purple-500/40 h-full flex flex-col justify-between space-y-6 relative overflow-hidden shadow-2xl"
               >
                 {/* Glowing Aura Motif */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-aws-orange/15 blur-3xl pointer-events-none rounded-full" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-purple-950/50 blur-3xl pointer-events-none rounded-full" />
 
                 <div className="space-y-4 relative z-10">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold uppercase tracking-widest text-aws-orange flex items-center gap-2">
-                      <Zap className="w-4 h-4 text-aws-orange" />
+                    <span className="text-xs font-mono font-bold uppercase tracking-widest text-purple-400 flex items-center gap-2">
+                      <Zap className="w-4 h-4 text-purple-400" />
                       <span>The Kairos Standard</span>
                     </span>
-                    <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-aws-orange/20 text-amber-300 border border-aws-orange/40 font-bold">
+                    <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-purple-950/60 text-purple-300 border border-purple-500/40 font-bold">
                       The Right Architectural Moment
                     </span>
                   </div>
@@ -118,7 +118,7 @@ export const MissionSection: React.FC = () => {
                     <span className="text-[11px] text-slate-400">Zero entry or kit fees</span>
                   </div>
                   <div className="p-3 rounded-xl bg-purple-950/50 border border-purple-500/30 text-purple-200">
-                    <span className="block text-white font-bold mb-0.5">Pure Cash ₹1.75L</span>
+                    <span className="block text-white font-bold mb-0.5">Total Prize Pool ₹1.75L</span>
                     <span className="text-[11px] text-slate-400">Direct wire transfers</span>
                   </div>
                   <div className="p-3 rounded-xl bg-purple-950/50 border border-purple-500/30 text-purple-200">
@@ -198,7 +198,7 @@ export const MissionSection: React.FC = () => {
             <SpotlightCard
               spotlightColor="rgba(238, 5, 242, 0.25)"
               borderColor="rgba(238, 5, 242, 0.45)"
-              className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-aws-orange/50 transition-all space-y-5 flex flex-col justify-between h-full group"
+              className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/50 transition-all space-y-5 flex flex-col justify-between h-full group"
             >
               <div className="space-y-4">
                 <div className="relative w-14 h-14 sm:w-16 sm:h-16 transition-transform duration-300 group-hover:scale-110">
@@ -209,15 +209,15 @@ export const MissionSection: React.FC = () => {
                     className="object-contain filter drop-shadow-[0_8px_20px_rgba(238,5,242,0.35)]"
                   />
                 </div>
-                <h3 className="text-xl font-display font-bold text-white group-hover:text-amber-200 transition-colors">
+                <h3 className="text-xl font-display font-bold text-white group-hover:text-purple-200 transition-colors">
                   Transparent & Ethical Competition
                 </h3>
                 <p className="text-sm text-slate-300 leading-relaxed">
                   Zero participation fees. 100-point transparent scoring rubrics. No unannounced judging biases. Pre-event rules confirm that all code must be authored inside the 48-hour window, evaluated through rigorous checkpoints and human jury defense.
                 </p>
               </div>
-              <div className="pt-3 text-xs font-mono text-amber-400 flex items-center gap-1.5 border-t border-amber-500/20">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+              <div className="pt-3 text-xs font-mono text-purple-400 flex items-center gap-1.5 border-t border-purple-500/20">
+                <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
                 <span>100% Merit-Based Selection</span>
               </div>
             </SpotlightCard>

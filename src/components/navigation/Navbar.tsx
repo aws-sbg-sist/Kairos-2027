@@ -4,8 +4,15 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowUpRight, Shield, Volume2, VolumeX, Trophy, Users, BookOpen, Gift } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Shield, Volume2, VolumeX, ChevronDown } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
+
+interface NavLinkItem {
+  label: string;
+  href: string;
+  badge?: string;
+}
 
 interface NavbarProps {
   onOpenWaitlist?: () => void;
@@ -14,6 +21,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const pathname = usePathname();
 
@@ -35,39 +43,44 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
+  const primaryNavLinks: NavLinkItem[] = [
     { label: 'Tracks', href: '/tracks' },
-    { label: '48H Schedule', href: '/#schedule' },
-    { label: 'Resources', href: '/resources' },
-    { label: 'Qualifier (R1)', href: '/online-qualifier' },
-    { label: 'On-Campus (R2)', href: '/on-campus' },
-    { label: 'Rainmaker ₹', href: '/refer-sponsor', badge: 'Earn Cash' },
-    { label: 'Leaderboard', href: '/leaderboard' },
-    { label: 'Leadership', href: '/members/leadership' },
+    { label: 'Schedule', href: '/#schedule' },
+    { label: 'Qualifier', href: '/online-qualifier' },
+    { label: 'Rainmaker', href: '/refer-sponsor', badge: 'Referral' },
     { label: 'Rules', href: '/rules' },
   ];
 
+  const secondaryNavLinks: NavLinkItem[] = [
+    { label: 'Resources', href: '/resources' },
+    { label: 'Leaderboard', href: '/leaderboard' },
+    { label: 'Leadership', href: '/members/leadership' },
+    { label: 'On-Campus R2', href: '/on-campus' },
+  ];
+
+  const allNavLinks: NavLinkItem[] = [...primaryNavLinks, ...secondaryNavLinks];
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[70] pointer-events-auto transition-all duration-300 ${
         scrolled
-          ? 'bg-aws-squidInk/95 backdrop-blur-md border-b border-aws-orange/20 py-2.5 shadow-lg shadow-black/50'
+          ? 'bg-aws-squidInk/95 backdrop-blur-md border-b border-purple-500/20 py-2.5 shadow-lg shadow-black/50'
           : 'bg-aws-canvas/80 backdrop-blur-sm border-b border-white/5 py-3.5'
       }`}
     >
       {/* Top micro announcement bar */}
-      <div className="bg-gradient-to-r from-aws-orange/20 via-purple-600/20 to-aws-blue/20 border-b border-aws-orange/15 py-1 px-4 text-center text-[11px] font-mono text-slate-200 hidden md:block">
+      <div className="bg-gradient-to-r from-aws-orange/15 via-aws-blue/15 to-aws-orange/15 border-b border-purple-500/20 py-1 px-4 text-center text-[11px] font-mono text-slate-200 hidden md:block">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <strong className="text-white">NATIONAL APPLICATIONS OPEN:</strong> 100% Free • ₹0 Entry Fee • ₹1,75,000 Pure Cash
+            <strong className="text-white">NATIONAL APPLICATIONS OPEN:</strong> 100% Free • ₹0 Entry Fee • ₹1,75,000 Total Prize Pool
           </span>
           <div className="flex items-center gap-4 text-[10px]">
-            <Link href="/refer-sponsor" className="text-amber-300 hover:text-white underline font-semibold">
-              Refer a Corporate Sponsor $\rightarrow$ Earn 10%–15% Pure Cash
+            <Link href="/refer-sponsor" className="text-purple-300 hover:text-white underline font-semibold">
+              Refer a Corporate Sponsor → Earn 10%–15% Referral Commission
             </Link>
             <span className="text-slate-400">|</span>
-            <a href="https://meetup.com/aws-student-builder-group-sist" target="_blank" rel="noopener noreferrer" className="hover:text-amber-300">
+            <a href="https://meetup.com/aws-student-builder-group-sist" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300">
               Meetup Chapter ↗
             </a>
           </div>
@@ -85,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 alt="KAIROS 2027 Logo"
                 fill
                 sizes="40px"
-                className="object-contain filter drop-shadow-[0_0_12px_rgba(255,153,0,0.6)] group-hover:scale-105 transition-transform"
+                className="object-contain filter drop-shadow-[0_0_14px_rgba(168,85,247,0.4)] group-hover:scale-105 transition-transform"
                 priority
               />
             </div>
@@ -94,19 +107,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 <span className="font-display font-black text-lg sm:text-xl tracking-wider text-white">
                   KAIROS
                 </span>
-                <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-aws-orange/20 text-aws-orange border border-aws-orange/40">
+                <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-400 border border-purple-500/40">
                   2027
                 </span>
               </div>
-              <span className="text-[10px] text-slate-300 tracking-tight font-medium hidden sm:inline-block">
+              <span className="text-[10px] text-slate-300 tracking-tight font-medium hidden sm:inline-block whitespace-nowrap">
                 AWS Student Builder Group · SIST
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-1 text-xs font-medium text-slate-200">
-            {navLinks.map((link) => {
+          {/* Desktop Navigation Links - Spacious & Streamlined */}
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-2 text-xs font-medium text-slate-200">
+            {primaryNavLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
@@ -114,16 +127,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                   href={link.href}
                   onMouseEnter={() => sound?.playHover()}
                   onClick={() => sound?.playClick()}
-                  className={`px-2.5 py-1.5 rounded-md transition-all relative ${
+                  className={`px-2 xl:px-3 py-1.5 rounded-md transition-all relative whitespace-nowrap flex-shrink-0 ${
                     isActive
-                      ? 'text-white bg-aws-orange/15 font-semibold text-aws-orange border border-aws-orange/30'
+                      ? 'text-white bg-purple-950/50 font-semibold text-purple-400 border border-purple-500/30'
                       : 'hover:text-white hover:bg-white/5 text-slate-300'
                   }`}
                 >
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1.5 whitespace-nowrap">
                     {link.label}
                     {link.badge && (
-                      <span className="px-1 py-0.2 rounded text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      <span className="px-1.5 py-0.5 rounded text-[9px] bg-purple-950/50 text-purple-400 border border-purple-500/30 font-semibold whitespace-nowrap flex-shrink-0">
                         {link.badge}
                       </span>
                     )}
@@ -131,10 +144,49 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 </Link>
               );
             })}
+
+            {/* Elegant "More" Dropdown */}
+            <div className="relative" onMouseLeave={() => setMoreMenuOpen(false)}>
+              <button
+                onClick={() => setMoreMenuOpen(!moreMenuOpen)}
+                onMouseEnter={() => setMoreMenuOpen(true)}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 text-slate-300 transition-all"
+                aria-expanded={moreMenuOpen}
+              >
+                <span>More</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${moreMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {moreMenuOpen && (
+                <div className="absolute top-full right-0 mt-1.5 w-48 py-2 rounded-xl bg-slate-950/95 border border-white/10 shadow-2xl backdrop-blur-xl z-50 origin-top-right animate-popover-in stagger-rows">
+                  {secondaryNavLinks.map((subLink) => (
+                    <Link
+                      key={subLink.label}
+                      href={subLink.href}
+                      onClick={() => setMoreMenuOpen(false)}
+                      className="block px-3.5 py-2 text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                    >
+                      {subLink.label}
+                    </Link>
+                  ))}
+                  <div className="my-1 border-t border-white/10" />
+                  <Link
+                    href="/admin/login"
+                    onClick={() => setMoreMenuOpen(false)}
+                    className="flex items-center gap-2 px-3.5 py-2 text-xs text-slate-300 hover:text-white hover:bg-purple-950/40 transition-colors"
+                  >
+                    <Shield className="w-3.5 h-3.5 text-purple-400" />
+                    <span>Admin Portal</span>
+                  </Link>
+                </div>
+              )}
+            </div>
           </nav>
 
           {/* Desktop Action Buttons */}
-          <div className="hidden sm:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-shrink-0">
+            {/* Theme Toggle (Adobe Cyber Neon vs AWS Classic) */}
+            <ThemeToggle />
             {/* Audio Toggle */}
             <button
               onClick={() => sound?.toggle()}
@@ -153,7 +205,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               href="/dashboard"
               onMouseEnter={() => sound?.playHover()}
               onClick={() => sound?.playClick()}
-              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-aws-orange/30 transition-all"
+              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/30 transition-all"
             >
               Dashboard
             </Link>
@@ -162,7 +214,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               href="/admin/login"
               onMouseEnter={() => sound?.playHover()}
               onClick={() => sound?.playClick()}
-              className="text-xs text-slate-400 hover:text-purple-300 px-2.5 py-1.5 rounded border border-transparent hover:border-purple-500/20 transition-all flex items-center gap-1"
+              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/40 transition-all flex items-center gap-1.5"
             >
               <Shield className="w-3.5 h-3.5 text-purple-400" />
               <span>Admin</span>
@@ -172,7 +224,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               href="/register"
               onMouseEnter={() => sound?.playHover()}
               onClick={() => sound?.playClick()}
-              className="relative group px-4 py-2 rounded-lg text-xs font-bold text-slate-950 bg-gradient-to-r from-aws-orange via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-aws-orange shadow-md shadow-aws-orange/20 transition-all duration-300 active:scale-95 flex items-center gap-1.5"
+              className="relative group px-4 py-2 rounded-lg text-xs font-bold text-white btn-primary-themed shadow-md shadow-purple-900/30 transition-all duration-300 active:scale-95 flex items-center gap-1.5 whitespace-nowrap"
             >
               <span>Register (100% Free)</span>
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -180,10 +232,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="xl:hidden flex items-center gap-2">
+          <div className="lg:hidden flex items-center gap-2">
+            <ThemeToggle compact />
             <Link
               href="/register"
-              className="px-3 py-1.5 rounded-lg text-xs font-bold bg-aws-orange text-slate-950 shadow-sm"
+              className="px-3 py-1.5 rounded-lg text-xs font-bold btn-primary-themed text-white shadow-sm"
             >
               Register Free
             </Link>
@@ -199,18 +252,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="xl:hidden mt-3 p-4 rounded-xl glass-panel border border-aws-orange/20 space-y-2 animate-fadeIn bg-aws-squidInk/95">
+          <div className="lg:hidden mt-3 p-4 rounded-xl glass-panel border border-purple-500/20 space-y-2 animate-fadeIn bg-aws-squidInk/95">
             <div className="grid grid-cols-2 gap-1 pb-2 border-b border-white/10">
-              {navLinks.map((link) => (
+              {allNavLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
                   onClick={() => { sound?.playClick(); setMobileMenuOpen(false); }}
-                  className="px-3 py-2 rounded-lg text-xs text-slate-200 hover:text-white hover:bg-aws-orange/15 font-medium flex items-center justify-between"
+                  className="px-3 py-2 rounded-lg text-xs text-slate-200 hover:text-white hover:bg-purple-950/50 font-medium flex items-center justify-between"
                 >
                   <span>{link.label}</span>
                   {link.badge && (
-                    <span className="px-1 py-0.2 rounded text-[8px] bg-emerald-500/20 text-emerald-300">
+                    <span className="px-1 py-0.2 rounded text-[8px] bg-purple-950/50 text-purple-400">
                       {link.badge}
                     </span>
                   )}
@@ -222,7 +275,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               <Link
                 href="/register"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-xs text-center py-2.5 rounded-lg font-bold bg-aws-orange text-slate-950"
+                className="text-xs text-center py-2.5 rounded-lg font-bold btn-primary-themed text-white"
               >
                 Register Team (100% Free)
               </Link>
@@ -237,7 +290,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 <Link
                   href="/admin/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center py-2 rounded-lg bg-slate-900 border border-purple-500/20 text-purple-300 flex items-center justify-center gap-1"
+                  className="text-center py-2 rounded-lg bg-slate-900 border border-purple-500/30 text-purple-400 flex items-center justify-center gap-1"
                 >
                   <Shield className="w-3.5 h-3.5" />
                   <span>Admin Portal</span>

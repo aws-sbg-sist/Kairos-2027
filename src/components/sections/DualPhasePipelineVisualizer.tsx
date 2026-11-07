@@ -22,8 +22,8 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
         {/* Section Header */}
         <ScrollReveal direction="up" distance={24}>
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk/90 border border-aws-orange/30 shadow-md">
-              <Shield className="w-3.5 h-3.5 text-aws-orange" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/30 shadow-md">
+              <Shield className="w-3.5 h-3.5 text-purple-400" />
               <span>Dual-Phase Merit Pipeline</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
@@ -59,8 +59,8 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                   }}
                   className={`p-6 sm:p-7 rounded-2xl cursor-pointer transition-all duration-300 relative flex flex-col justify-between h-full ${
                     isSelected
-                      ? 'bg-aws-squidInk/95 border-2 border-aws-orange shadow-2xl shadow-aws-orange/20 scale-[1.02]'
-                      : 'bg-aws-card/80 border border-slate-700/60 hover:border-aws-orange/40 hover:bg-slate-900/90'
+                      ? 'bg-aws-squidInk/95 border-2 border-purple-500 shadow-2xl shadow-purple-900/30 scale-[1.02]'
+                      : 'bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/90'
                   }`}
                 >
                   {stage.status === 'ACTIVE_NOW' && (
@@ -75,14 +75,14 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                       <div
                         className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-all duration-300 ${
                           isSelected
-                            ? 'bg-aws-orange text-slate-950 shadow-lg shadow-aws-orange/30'
-                            : 'bg-white/5 text-aws-orange border border-white/10'
+                            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-lg shadow-purple-900/40'
+                            : 'bg-white/5 text-purple-400 border border-white/10'
                         }`}
                       >
                         <Icon className="w-6 h-6" />
                       </div>
                       <div>
-                        <span className="text-[11px] font-mono font-bold text-amber-300 block uppercase">
+                        <span className="text-[11px] font-mono font-bold text-purple-300 block uppercase">
                           {stage.step}
                         </span>
                         <h3 className="text-base font-bold text-white leading-tight">
@@ -93,10 +93,10 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
 
                     <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
                       <span className="px-2.5 py-1 rounded-lg bg-slate-950/90 border border-slate-800 text-slate-300 flex items-center gap-1">
-                        <Calendar className="w-3 h-3 text-aws-orange" />
+                        <Calendar className="w-3 h-3 text-purple-400" />
                         {stage.dates}
                       </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-950/90 border border-slate-800 text-amber-300 font-semibold">
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-950/90 border border-slate-800 text-purple-300 font-semibold">
                         {stage.scale}
                       </span>
                     </div>
@@ -117,7 +117,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                           e.stopPropagation();
                           sound?.playClick();
                         }}
-                        className="text-amber-300 font-bold hover:text-white flex items-center gap-1.5 group/btn"
+                        className="text-purple-300 font-bold hover:text-white flex items-center gap-1.5 group/btn"
                       >
                         <span>Apply Free</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
@@ -130,7 +130,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                           e.stopPropagation();
                           sound?.playClick();
                         }}
-                        className="text-amber-300 font-bold hover:text-white flex items-center gap-1.5 group/btn"
+                        className="text-purple-300 font-bold hover:text-white flex items-center gap-1.5 group/btn"
                       >
                         <span>Phase Details</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
@@ -143,7 +143,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                           e.stopPropagation();
                           sound?.playClick();
                         }}
-                        className="text-amber-300 font-bold hover:text-white flex items-center gap-1.5 group/btn"
+                        className="text-purple-300 font-bold hover:text-white flex items-center gap-1.5 group/btn"
                       >
                         <span>Venue Dossier</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />

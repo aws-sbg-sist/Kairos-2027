@@ -39,7 +39,7 @@ export default function HomePage() {
     registrationOpen: true,
     prizePoolConfirmed: true,
     demoSandboxMode: true,
-    announcementBanner: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 PURE CASH PRIZE POOL',
+    announcementBanner: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
   });
 
   useEffect(() => {
@@ -96,10 +96,10 @@ export default function HomePage() {
         {/* Atmosphere & Arena Preview Gallery (Masonry + Carousel + Lightbox) */}
         <GallerySection />
 
-        {/* 100-Point Judging Criteria */}
+        {/* Multilateral Judging Rubrics (Classified Weighting) */}
         <JudgingSection />
 
-        {/* Awards & Honors (₹1,75,000 Pure Cash Pool) */}
+        {/* Awards & Honors (₹1,75,000 Total Prize Pool) */}
         <AwardsSection prizePoolConfirmed={flags.prizePoolConfirmed} />
 
         {/* Builder Journey & Early-Interest Registration Form */}

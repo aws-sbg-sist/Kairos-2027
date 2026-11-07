@@ -142,12 +142,12 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
         {/* Priority Interest Reservation & Quick Application Drawer */}
         <ScrollReveal direction="up" distance={24} delay={0.2}>
           <div className="max-w-3xl mx-auto p-8 sm:p-10 rounded-3xl bg-aws-card/90 border border-purple-500/30 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-aws-orange/10 blur-3xl pointer-events-none rounded-full" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-950/40 blur-3xl pointer-events-none rounded-full" />
 
             <div className="relative z-10 space-y-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs font-mono text-amber-300 font-bold block uppercase tracking-wider mb-1">
+                  <span className="text-xs font-mono text-purple-300 font-bold block uppercase tracking-wider mb-1">
                     Direct Priority Reservation
                   </span>
                   <h3 className="text-2xl font-display font-black text-white">
@@ -157,7 +157,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
                 <Link
                   href="/register"
                   onClick={() => sound?.playClick()}
-                  className="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold btn-primary-themed text-slate-950 flex items-center gap-2 shadow-lg shadow-aws-orange/20"
+                  className="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold btn-primary-themed text-white flex items-center gap-2 shadow-lg shadow-purple-900/30"
                 >
                   <span>Go to Full Portal Application</span>
                   <ArrowRight className="w-4 h-4" />

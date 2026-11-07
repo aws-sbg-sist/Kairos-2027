@@ -3,9 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { JUDGING_CRITERIA } from '@/lib/config';
-import { Award, ShieldCheck, Scale, CheckSquare, Eye, Users } from 'lucide-react';
+import { Scale, CheckSquare, Eye, Lock, Sparkles } from 'lucide-react';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
+import { sound } from '@/lib/audio';
 
 export const JudgingSection: React.FC = () => {
   return (
@@ -26,24 +27,24 @@ export const JudgingSection: React.FC = () => {
                   className="object-contain"
                 />
               </div>
-              <span>Merit-Driven Evaluation • 100-Point Scoring</span>
+              <span>Merit-Driven Evaluation • Confidential Scoring Weights</span>
             </div>
           </ScrollReveal>
 
           <ScrollReveal direction="up" distance={20} delay={0.1}>
             <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight">
-              100-Point <span className="gradient-text-kairos">Judging Rubric</span>
+              Official <span className="gradient-text-kairos">Judging Rubrics</span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal direction="up" distance={20} delay={0.2}>
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
-              Transparent, uncompromised evaluation criteria designed to reward authentic software craftsmanship, architecture scalability, and user empathy.
+            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+              Rigorous, uncompromised evaluation pillars designed to reward authentic software craftsmanship, architecture scalability, and user empathy. Exact scoring weights and point distributions are kept sealed under jury embargo until officially unveiled at kickoff.
             </p>
           </ScrollReveal>
         </div>
 
-        {/* 4 Rubric Cards with Spotlight Effects */}
+        {/* 4 Rubric Cards with Mystery/Suspense Points */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {JUDGING_CRITERIA.map((criterion, idx) => (
             <ScrollReveal
@@ -58,19 +59,29 @@ export const JudgingSection: React.FC = () => {
                 maxTilt={6}
                 spotlightColor="rgba(118, 48, 217, 0.2)"
                 borderColor="rgba(118, 48, 217, 0.4)"
-                className="p-6 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/50 transition-all flex flex-col justify-between space-y-4 group h-full"
+                className="p-6 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/40 transition-all flex flex-col justify-between space-y-5 group h-full hover:shadow-xl hover:shadow-purple-950/30"
               >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono text-purple-400 font-bold uppercase">
+                <div className="space-y-3.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider">
                       CRITERION 0{idx + 1}
                     </span>
-                    <div className="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-purple-900/60 text-purple-200 border border-purple-500/40">
-                      {criterion.points} PTS ({criterion.percentage})
+
+                    {/* Mystery Points Badge */}
+                    <div
+                      onMouseEnter={() => sound?.playHover()}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-purple-950/90 text-purple-200 border border-purple-500/40 shadow-sm backdrop-blur-md group-hover:border-purple-500/50 group-hover:text-white transition-all cursor-help"
+                      title="Exact point weight is sealed under jury embargo until kickoff."
+                    >
+                      <Lock className="w-3 h-3 text-purple-400 animate-pulse" />
+                      <span className="tracking-wider">?? PTS</span>
+                      <span className="text-[10px] text-purple-300 font-semibold uppercase tracking-wider">
+                        Classified
+                      </span>
                     </div>
                   </div>
 
-                  <h3 className="text-lg font-display font-bold text-white group-hover:text-purple-200 transition-colors">
+                  <h3 className="text-lg font-display font-bold text-white group-hover:text-purple-400 transition-colors">
                     {criterion.category}
                   </h3>
 
@@ -79,13 +90,17 @@ export const JudgingSection: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Progress bar visual */}
-                <div className="pt-2">
-                  <div className="w-full h-1.5 rounded-full bg-slate-900 overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-purple-500 to-sky-400 rounded-full"
-                      style={{ width: `${criterion.points * 3.33}%` }}
-                    />
+                {/* Suspense Mystery Scanner Bar */}
+                <div className="pt-3 border-t border-white/5 space-y-2">
+                  <div className="w-full h-1.5 rounded-full bg-slate-900/90 overflow-hidden relative border border-white/5">
+                    <div className="h-full bg-gradient-to-r from-purple-500/20 via-aws-orange/70 to-purple-500/20 rounded-full w-full animate-pulse" />
+                  </div>
+                  <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
+                    <span className="flex items-center gap-1 text-slate-400">
+                      <Sparkles className="w-3 h-3 text-purple-400" />
+                      <span>Weight Sealed</span>
+                    </span>
+                    <span className="text-purple-300 font-medium">Reveals at Kickoff ⏳</span>
                   </div>
                 </div>
               </SpotlightCard>

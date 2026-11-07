@@ -26,8 +26,8 @@ export const FinalCTASection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
         {/* Top Floating Badge */}
         <ScrollReveal direction="down" distance={20}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono text-amber-300 bg-aws-squidInk/90 border border-aws-orange/40 shadow-xl backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-aws-orange" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/40 shadow-xl backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
             <span>KAIROS 2027 · Sathyabama Institute of Science and Technology</span>
           </div>
         </ScrollReveal>
@@ -35,12 +35,12 @@ export const FinalCTASection: React.FC = () => {
         {/* Animated 3D/2.5D Cosmic Hourglass Emblem */}
         <ScrollReveal direction="none" delay={0.1}>
           <div className="relative w-28 h-28 sm:w-36 sm:h-36 mx-auto animate-float-slow">
-            <div className="absolute inset-0 rounded-full bg-aws-orange/25 blur-2xl animate-pulse" />
+            <div className="absolute inset-0 rounded-full bg-purple-950/70 blur-2xl animate-pulse" />
             <Image
               src="/assets/kairos-hourglass.png"
               alt="KAIROS Hourglass"
               fill
-              className="object-contain filter drop-shadow-[0_12px_35px_var(--aws-orange-glow)]"
+              className="object-contain filter drop-shadow-[0_12px_35px_rgba(168,85,247,0.4)]"
             />
           </div>
         </ScrollReveal>
@@ -56,7 +56,7 @@ export const FinalCTASection: React.FC = () => {
 
           <ScrollReveal direction="up" distance={20} delay={0.3}>
             <p className="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed">
-              Join 100 elite student teams in Chennai. No entry fees. Verified distributed architectures. ₹1,75,000 pure cash bounties waiting on the grand auditorium stage.
+              Join 100 elite student teams in Chennai. No entry fees. Verified distributed architectures. ₹1,75,000 total prize pool waiting on the grand auditorium stage.
             </p>
           </ScrollReveal>
         </div>
@@ -65,7 +65,7 @@ export const FinalCTASection: React.FC = () => {
         <ScrollReveal direction="up" distance={16} delay={0.35}>
           <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 text-xs font-mono text-slate-300">
             <span className="px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-white/10 flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-aws-orange" />
+              <Calendar className="w-3.5 h-3.5 text-purple-400" />
               <span>January 22–24, 2027</span>
             </span>
             <span className="px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-white/10 flex items-center gap-1.5">
@@ -76,9 +76,9 @@ export const FinalCTASection: React.FC = () => {
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>100% Free Entry (₹0 Fee)</span>
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-amber-950/70 border border-amber-500/40 text-amber-300 font-bold flex items-center gap-1.5">
+            <span className="px-3.5 py-1.5 rounded-full bg-purple-950/70 border border-purple-500/40 text-purple-300 font-bold flex items-center gap-1.5">
               <Trophy className="w-3.5 h-3.5" />
-              <span>₹1,75,000 Pure Cash</span>
+              <span>₹1,75,000 Prize Pool</span>
             </span>
           </div>
         </ScrollReveal>
@@ -91,7 +91,7 @@ export const FinalCTASection: React.FC = () => {
                 href="/register"
                 onClick={() => sound?.playClick()}
                 onMouseEnter={() => sound?.playHover()}
-                className="px-8 py-4 rounded-2xl text-base font-bold text-slate-950 btn-primary-themed shadow-2xl shadow-aws-orange/30 flex items-center gap-2.5 group active:scale-[0.97]"
+                className="px-8 py-4 rounded-2xl text-base font-bold text-white btn-primary-themed shadow-2xl shadow-purple-900/40 flex items-center gap-2.5 group active:scale-[0.97]"
               >
                 <span>Submit Round 0 Project Abstract (Free)</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
@@ -103,7 +103,7 @@ export const FinalCTASection: React.FC = () => {
                 href="/tracks"
                 onClick={() => sound?.playClick()}
                 onMouseEnter={() => sound?.playHover()}
-                className="px-6 py-4 rounded-2xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-aws-orange/40 transition-all backdrop-blur-md"
+                className="px-6 py-4 rounded-2xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-all backdrop-blur-md"
               >
                 <span>Inspect Technical Tracks</span>
               </Link>

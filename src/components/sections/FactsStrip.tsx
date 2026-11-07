@@ -44,15 +44,15 @@ export const FactsStrip: React.FC = () => {
     },
     {
       id: '04',
-      tag: 'BOUNTIES',
+      tag: 'PRIZE POOL',
       image: '/assets/prizes.png',
       imageGlow: 'rgba(238,5,242,0.4)',
       numericValue: 175000,
       prefix: '₹',
-      suffix: ' Pure Cash',
+      suffix: '',
       label: 'National Cash Prize Pool',
-      detail: '₹60k Champion • ₹35k Tracks • Bounties',
-      badge: 'Pure Cash',
+      detail: 'Comprehensive Hackathon Prize Pool & Grants',
+      badge: 'Total Pool',
     },
     {
       id: '05',
@@ -104,12 +104,12 @@ export const FactsStrip: React.FC = () => {
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-aws-orange to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Top Subtle Ambient Bloom on Hover */}
-                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full bg-aws-orange/15 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full bg-purple-950/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                   <div>
                     {/* Segment Telemetry Header */}
                     <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
-                      <span className="flex items-center gap-1.5 font-bold tracking-wider group-hover:text-aws-orange transition-colors">
+                      <span className="flex items-center gap-1.5 font-bold tracking-wider group-hover:text-purple-400 transition-colors">
                         <span className="text-[10px] text-slate-500 font-normal">[{item.id}]</span>
                         <span>{item.tag}</span>
                       </span>
@@ -130,7 +130,7 @@ export const FactsStrip: React.FC = () => {
 
                     {/* Metric Display with Animated Counter */}
                     <div className="space-y-1">
-                      <div className="text-xl sm:text-2xl font-display font-black text-white tracking-tight group-hover:text-amber-200 transition-colors">
+                      <div className="text-xl sm:text-2xl font-display font-black text-white tracking-tight group-hover:text-purple-200 transition-colors">
                         {item.numericValue !== undefined ? (
                           <AnimatedCounter
                             value={item.numericValue}

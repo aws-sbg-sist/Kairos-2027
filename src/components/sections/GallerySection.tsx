@@ -39,14 +39,14 @@ const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 'podium-honors',
-    title: 'Apex Champion & Pure Cash Honors',
-    caption: '₹1,75,000 in pure cash bounties, direct bank wire transfers, and VC pitch fast-tracking.',
+    title: 'Apex Champion & Grand Honors',
+    caption: '₹1,75,000 total prize pool, institutional trophies, and VC pitch fast-tracking.',
     category: 'Awards',
     src: '/assets/achievement.png',
   },
   {
     id: 'jury-pitches',
-    title: '100-Point Transparent Architectural Jury',
+    title: 'Transparent Architectural Jury',
     caption: 'Live architecture defense before senior enterprise architects, faculty, and industry leaders.',
     category: 'Jury',
     src: '/assets/judges.png',
@@ -69,7 +69,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
 
 export const GallerySection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [viewMode, setViewMode] = useState<'masonry' | 'carousel'>('masonry');
+  const [viewMode, setViewMode] = useState<'masonry' | 'carousel'>('carousel');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const categories = ['All', 'Arena', 'Engineering', 'Community', 'Awards', 'Jury'];
@@ -87,7 +87,7 @@ export const GallerySection: React.FC = () => {
     <section id="gallery" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
       {/* Background illumination */}
       <div className="absolute top-1/3 left-1/4 -translate-y-1/2 w-[700px] h-[400px] bg-purple-950/20 blur-[160px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[350px] bg-aws-orange/10 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[350px] bg-purple-950/40 blur-[150px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -127,7 +127,7 @@ export const GallerySection: React.FC = () => {
                       }}
                       className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all ${
                         isActive
-                          ? 'bg-aws-orange text-slate-950 font-bold shadow-md shadow-aws-orange/20 scale-105'
+                          ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold shadow-md shadow-purple-900/30 scale-105'
                           : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/10'
                       }`}
                     >
@@ -190,7 +190,7 @@ export const GallerySection: React.FC = () => {
                   spotlightColor="rgba(238, 5, 242, 0.2)"
                   borderColor="rgba(238, 5, 242, 0.4)"
                   onClick={() => handleOpenLightbox(idx)}
-                  className="p-5 rounded-2xl bg-aws-card/80 border border-slate-700/60 hover:border-aws-orange/40 transition-all flex flex-col justify-between h-full group cursor-pointer"
+                  className="p-5 rounded-2xl bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 transition-all flex flex-col justify-between h-full group cursor-pointer"
                 >
                   <div className="space-y-4">
                     <div className="relative w-full h-48 sm:h-52 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">
@@ -201,7 +201,7 @@ export const GallerySection: React.FC = () => {
                         className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 filter drop-shadow-[0_8px_20px_rgba(238,5,242,0.25)]"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-end p-3">
-                        <span className="p-2 rounded-lg bg-aws-orange text-slate-950 shadow-md">
+                        <span className="p-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md">
                           <Maximize2 className="w-4 h-4" />
                         </span>
                       </div>
@@ -209,10 +209,10 @@ export const GallerySection: React.FC = () => {
 
                     <div>
                       <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-1.5">
-                        <span className="text-amber-300 font-semibold">{item.category}</span>
+                        <span className="text-purple-300 font-semibold">{item.category}</span>
                         <span>Full HD Illustration</span>
                       </div>
-                      <h3 className="font-display font-bold text-base text-white group-hover:text-amber-200 transition-colors">
+                      <h3 className="font-display font-bold text-base text-white group-hover:text-purple-200 transition-colors">
                         {item.title}
                       </h3>
                       <p className="text-xs text-slate-300 mt-1 line-clamp-2">
@@ -240,7 +240,7 @@ export const GallerySection: React.FC = () => {
                 <div
                   key={item.id}
                   onClick={() => handleOpenLightbox(idx)}
-                  className="w-[320px] sm:w-[360px] p-5 rounded-2xl bg-aws-card/85 border border-slate-700/60 hover:border-aws-orange/40 transition-all flex flex-col justify-between shrink-0 group cursor-pointer shadow-lg"
+                  className="w-[320px] sm:w-[360px] p-5 rounded-2xl bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40 transition-all flex flex-col justify-between shrink-0 group cursor-pointer shadow-lg"
                 >
                   <div className="space-y-4">
                     <div className="relative w-full h-48 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">
@@ -255,7 +255,7 @@ export const GallerySection: React.FC = () => {
                       <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
                         {item.category}
                       </span>
-                      <h3 className="font-display font-bold text-base text-white mt-2 group-hover:text-amber-200 transition-colors">
+                      <h3 className="font-display font-bold text-base text-white mt-2 group-hover:text-purple-200 transition-colors">
                         {item.title}
                       </h3>
                       <p className="text-xs text-slate-300 mt-1">

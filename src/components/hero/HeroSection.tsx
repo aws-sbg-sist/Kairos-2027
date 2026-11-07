@@ -73,8 +73,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
             {/* Event Category Badge & Watch Logo Reveal Button */}
             <ScrollReveal direction="down" distance={20} delay={0.1}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-aws-squidInk/90 border border-aws-orange/30 text-amber-300 text-xs sm:text-sm font-mono shadow-md backdrop-blur-md">
-                  <ShieldCheck className="w-4 h-4 text-aws-orange shrink-0" />
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-aws-squidInk/90 border border-purple-500/30 text-purple-300 text-xs sm:text-sm font-mono shadow-md backdrop-blur-md">
+                  <ShieldCheck className="w-4 h-4 text-purple-400 shrink-0" />
                   <span>AWS Student Builder Group SIST · National Flagship Hackathon</span>
                 </div>
 
@@ -85,10 +85,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                       window.dispatchEvent(new CustomEvent('kairos:replay-reveal'));
                     }
                   }}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-aws-orange/20 to-amber-500/10 hover:from-aws-orange/30 hover:to-amber-500/20 border border-aws-orange/40 text-amber-300 text-xs font-mono font-semibold transition-all hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-aws-orange/20 to-indigo-600/10 hover:from-aws-orange/30 hover:to-indigo-600/20 border border-purple-500/40 text-purple-300 text-xs font-mono font-semibold transition-all hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
                   title="Replay cinematic entrance logo animation"
                 >
-                  <Play className="w-3 h-3 text-aws-orange fill-aws-orange group-hover:scale-110 transition-transform" />
+                  <Play className="w-3 h-3 text-purple-400 fill-purple-400 group-hover:scale-110 transition-transform" />
                   <span>Watch Logo Reveal</span>
                 </button>
               </div>
@@ -103,7 +103,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                     alt="KAIROS 2027"
                     fill
                     priority
-                    className="object-contain object-center lg:object-left filter drop-shadow-[0_0_30px_var(--aws-orange-glow)]"
+                    className="object-contain object-center lg:object-left filter drop-shadow-[0_0_30px_rgba(168,85,247,0.4)]"
                   />
                 </div>
               </ScrollReveal>
@@ -117,7 +117,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
               <ScrollReveal direction="up" distance={20} delay={0.35}>
                 <p className="text-base sm:text-xl text-slate-300 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                  48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and High-Stakes Cash Bounties.
+                  48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors & Grants.
                 </p>
               </ScrollReveal>
             </div>
@@ -126,7 +126,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
             <ScrollReveal direction="up" distance={16} delay={0.4}>
               <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 p-2.5 rounded-xl bg-slate-900/90 border border-purple-500/30 text-xs sm:text-sm text-slate-300 font-mono shadow-md backdrop-blur-md">
                 <span className="flex items-center gap-1.5 text-white font-semibold">
-                  <Calendar className="w-3.5 h-3.5 text-aws-orange shrink-0" />
+                  <Calendar className="w-3.5 h-3.5 text-purple-400 shrink-0" />
                   January 22–24, 2027
                 </span>
                 <span className="text-slate-500">•</span>
@@ -144,11 +144,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
             {/* 48-Hour Live Countdown Timer with Glassmorphism HUD */}
             <ScrollReveal direction="up" distance={20} delay={0.45}>
-              <div className="p-4 sm:p-5 rounded-2xl glass-panel border border-aws-orange/30 max-w-xl mx-auto lg:mx-0 bg-aws-squidInk/70 shadow-2xl relative overflow-hidden group">
+              <div className="p-4 sm:p-5 rounded-2xl glass-panel border border-purple-500/30 max-w-xl mx-auto lg:mx-0 bg-aws-squidInk/70 shadow-2xl relative overflow-hidden group">
                 {/* Subtle top glow line */}
                 <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-aws-orange to-transparent opacity-60" />
 
-                <div className="flex items-center justify-between mb-3 text-xs font-mono text-amber-300">
+                <div className="flex items-center justify-between mb-3 text-xs font-mono text-purple-300">
                   <div className="flex items-center gap-2">
                     <div className="relative w-5 h-5 shrink-0">
                       <Image
@@ -170,29 +170,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                 </div>
 
                 <div className="grid grid-cols-4 gap-2 sm:gap-4 text-center">
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-aws-orange/20 transition-colors">
+                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
                     <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
                       {String(timeLeft.days).padStart(2, '0')}
                     </span>
                     <span className="text-[10px] font-mono uppercase text-slate-400">Days</span>
                   </div>
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-aws-orange/20 transition-colors">
+                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
                     <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
                       {String(timeLeft.hours).padStart(2, '0')}
                     </span>
                     <span className="text-[10px] font-mono uppercase text-slate-400">Hours</span>
                   </div>
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-aws-orange/20 transition-colors">
+                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
                     <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
                       {String(timeLeft.minutes).padStart(2, '0')}
                     </span>
                     <span className="text-[10px] font-mono uppercase text-slate-400">Minutes</span>
                   </div>
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-aws-orange/40 bg-aws-orange/5">
-                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-aws-orange block animate-pulse">
+                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-purple-500/40 bg-purple-950/30">
+                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-purple-400 block animate-pulse">
                       {String(timeLeft.seconds).padStart(2, '0')}
                     </span>
-                    <span className="text-[10px] font-mono uppercase text-amber-300">Seconds</span>
+                    <span className="text-[10px] font-mono uppercase text-purple-300">Seconds</span>
                   </div>
                 </div>
               </div>
@@ -206,7 +206,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                     href="/register"
                     onClick={() => sound?.playClick()}
                     onMouseEnter={() => sound?.playHover()}
-                    className="px-6 py-3.5 rounded-xl text-base font-bold text-slate-950 btn-primary-themed shadow-xl shadow-aws-orange/25 transition-all duration-200 ease-entrance flex items-center gap-2 group active:scale-[0.97]"
+                    className="px-6 py-3.5 rounded-xl text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 transition-all duration-200 ease-entrance flex items-center gap-2 group active:scale-[0.97]"
                   >
                     <span>Submit Round 0 Project Abstract (Free)</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
@@ -218,9 +218,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                     href="/sponsors"
                     onClick={() => sound?.playClick()}
                     onMouseEnter={() => sound?.playHover()}
-                    className="px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-aws-orange/40 transition-all flex items-center gap-2 backdrop-blur-sm"
+                    className="px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-all flex items-center gap-2 backdrop-blur-sm"
                   >
-                    <Download className="w-4 h-4 text-aws-orange" />
+                    <Download className="w-4 h-4 text-purple-400" />
                     <span>View Sponsorship Prospectus (PDF)</span>
                   </Link>
                 </MagneticButton>
@@ -250,7 +250,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
               {/* Interactive Status Indicator */}
               <div className="mt-8 sm:mt-10 flex items-center gap-2 text-[11px] font-mono text-slate-400">
                 <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-purple-500/40 text-purple-200 shadow-md backdrop-blur-md">
-                  <span className="w-2 h-2 rounded-full bg-aws-orange animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-pulse" />
                   <span>2.5D Hologram Active</span>
                 </span>
                 <span className="hidden sm:inline text-slate-400">· Interactive Parallax Tilt</span>
