@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
 import { db } from '@/lib/db';
+import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 
 export async function POST(req: NextRequest) {
+  // Rate limiting to prevent brute force on judge PINs
+  const rateLimitResult = checkRateLimit(req, { limit: 15, windowMs: 60_000 });
+  if (!rateLimitResult.allowed) {
+    return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
+  }
+
   try {
     const body = await req.json();
     const { 
@@ -17,11 +25,31 @@ export async function POST(req: NextRequest) {
       recusal 
     } = body;
 
-    // PIN check
-    if (judgePin !== '202701') {
+    if (!judgeId || !judgePin) {
       return NextResponse.json({
         success: false,
-        error: 'Invalid Jury Access PIN. Official access code required.'
+        error: 'Missing required credentials: judgeId and judgePin.'
+      }, { status: 400 });
+    }
+
+    // Per-judge DB credential verification with constant-time PIN comparison
+    const judges = db.getJudges();
+    const judge = judges.find(j => j.id === judgeId && j.isActive);
+
+    if (!judge) {
+      return NextResponse.json({
+        success: false,
+        error: 'Judge account not found or is currently inactive.'
+      }, { status: 403 });
+    }
+
+    const pinBuffer = Buffer.from(String(judgePin).trim());
+    const expectedBuffer = Buffer.from(String(judge.accessPin).trim());
+
+    if (pinBuffer.length !== expectedBuffer.length || !crypto.timingSafeEqual(pinBuffer, expectedBuffer)) {
+      return NextResponse.json({
+        success: false,
+        error: 'Invalid Jury Access PIN for this judge account.'
       }, { status: 403 });
     }
 
@@ -33,10 +61,17 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    if (!judgeId || !teamId || !checkpointGate) {
+    if (!teamId || checkpointGate === undefined || checkpointGate === null) {
       return NextResponse.json({
         success: false,
-        error: 'Missing required evaluation fields: judgeId, teamId, checkpointGate.'
+        error: 'Missing required evaluation fields: teamId, checkpointGate.'
+      }, { status: 400 });
+    }
+
+    if (qualitativeFeedback && qualitativeFeedback.length > 2000) {
+      return NextResponse.json({
+        success: false,
+        error: 'Qualitative feedback exceeds maximum 2000 characters.'
       }, { status: 400 });
     }
 

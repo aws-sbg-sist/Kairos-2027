@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 10 registrations per minute per IP
+  const rateLimitResult = checkRateLimit(req, { limit: 10, windowMs: 60_000 });
+  if (!rateLimitResult.allowed) {
+    return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
+  }
+
   try {
     const body = await req.json();
     const { 
@@ -25,6 +32,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ 
         success: false, 
         error: 'Full name and email are mandatory fields.' 
+      }, { status: 400 });
+    }
+
+    // Input length validation
+    if (
+      fullName.length > 150 ||
+      email.length > 254 ||
+      (phone && phone.length > 50) ||
+      (college && college.length > 200) ||
+      (githubUrl && githubUrl.length > 300) ||
+      (linkedinUrl && linkedinUrl.length > 300) ||
+      (teamCode && teamCode.length > 50) ||
+      (meetupProfileUrl && meetupProfileUrl.length > 300) ||
+      (awsBuilderCenterUrl && awsBuilderCenterUrl.length > 300)
+    ) {
+      return NextResponse.json({
+        success: false,
+        error: 'One or more fields exceed maximum allowed character length.'
       }, { status: 400 });
     }
 

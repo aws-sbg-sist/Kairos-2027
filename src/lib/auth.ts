@@ -1,7 +1,19 @@
 import crypto from 'crypto';
 import { cookies } from 'next/headers';
 
-const MASTER_SECRET = process.env.ADMIN_MASTER_SECRET || 'kairos2027-sist-admin';
+function getMasterSecret(): string {
+  const secret = process.env.ADMIN_MASTER_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('ADMIN_MASTER_SECRET environment variable is mandatory in production');
+    }
+    // Development-only deterministic secret with prominent warning
+    console.warn('[SECURITY WARNING] ADMIN_MASTER_SECRET is not set in development. Using dev-only fallback.');
+    return 'kairos-local-development-secret-key-do-not-use-in-prod';
+  }
+  return secret;
+}
+
 const COOKIE_NAME = 'kairos_admin_session';
 
 export interface AdminSession {
@@ -11,12 +23,13 @@ export interface AdminSession {
 }
 
 export function createAdminToken(organizerName: string, organizerRole: string): string {
+  const secret = getMasterSecret();
   const payload = JSON.stringify({
     organizerName,
     organizerRole,
     authenticatedAt: Date.now()
   });
-  const hmac = crypto.createHmac('sha256', MASTER_SECRET).update(payload).digest('hex');
+  const hmac = crypto.createHmac('sha256', secret).update(payload).digest('hex');
   return Buffer.from(`${payload}::${hmac}`).toString('base64');
 }
 
@@ -26,7 +39,8 @@ export function verifyAdminToken(token: string): AdminSession | null {
     const [payload, signature] = raw.split('::');
     if (!payload || !signature) return null;
 
-    const expectedSig = crypto.createHmac('sha256', MASTER_SECRET).update(payload).digest('hex');
+    const secret = getMasterSecret();
+    const expectedSig = crypto.createHmac('sha256', secret).update(payload).digest('hex');
     if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
       return null;
     }
@@ -45,8 +59,9 @@ export function verifyAdminToken(token: string): AdminSession | null {
 
 export function verifyAdminPasskey(passkey: string): boolean {
   if (!passkey) return false;
+  const secret = getMasterSecret();
   const buffA = Buffer.from(passkey.trim());
-  const buffB = Buffer.from(MASTER_SECRET.trim());
+  const buffB = Buffer.from(secret.trim());
   if (buffA.length !== buffB.length) return false;
   return crypto.timingSafeEqual(buffA, buffB);
 }

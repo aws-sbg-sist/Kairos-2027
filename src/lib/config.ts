@@ -4,8 +4,8 @@ export const EVENT_CONFIG = {
   name: 'KAIROS 2027',
   edition: 'Grand Edition',
   tagline: 'Where Architecture Meets Execution.',
-  subtitle: '48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and High-Stakes Cash Bounties.',
-  notificationBar: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 PURE CASH PRIZE POOL',
+  subtitle: '48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors.',
+  notificationBar: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
   organizer: {
     name: 'AWS Student Builder Group (AWS SBG)',
     chapter: 'AWS Student Builder Group — SIST Chapter',
@@ -13,7 +13,7 @@ export const EVENT_CONFIG = {
     institution: 'Sathyabama Institute of Science and Technology',
     location: 'Chennai, Tamil Nadu, India - 600119',
     contactEmail: 'sistawscc@gmail.com',
-    leadOrganizer: 'Thenappan T (Register No: 44110855), President & Student Builder Group Leader (SBGL)',
+    leadOrganizer: 'Thenappan T, President & Student Builder Group Leader (SBGL)',
     meetupUrl: 'https://meetup.com/aws-student-builder-group-sist',
     assetGeneratorUrl: 'https://aws-version-3--assets-generator.netlify.app/',
     targetDomain: 'https://kairos.sathyabama.ac.in',
@@ -53,8 +53,8 @@ export const EVENT_CONFIG = {
     onCampusFinalists: '100 Elite On-Campus Teams',
     organizingCadre: '106 Student Organizers, Leads & Volunteers',
     registrationFee: '₹0 (100% Free — Zero Entry Fee for All Students)',
-    cashPrizePool: '₹1,75,000 Pure Cash',
-    totalPrizesWithCredits: '₹1,75,000 Pure Cash + $50,000+ AWS Cloud Promotional Credits',
+    cashPrizePool: '₹1,75,000 Total Prize Pool',
+    totalPrizesWithCredits: '₹1,75,000 Total Prize Pool + $50,000+ AWS Cloud Promotional Credits',
     mealsProvided: '100% Complimentary Meals, Midnight Sustenance, Swag & Campus Stay',
     travelSupport: 'Chartered Sathyabama Bus Fleet across Chennai Hubs + Campus EV Buggies',
   },
@@ -85,8 +85,7 @@ export const TECHNICAL_TRACKS = [
     id: 'agentic-ai',
     number: '01',
     title: 'Agentic AI & Generative Intelligence',
-    bounty: 'Dedicated Track Winner Bounty: ₹7,000 Cash',
-    bountyAmount: '₹7,000',
+    
     shortDescription: 'Architect autonomous multi-agent swarms, self-healing developer pipelines, and production generative AI workflows powered by Amazon Bedrock and Claude.',
     longDescription: 'Go beyond single prompt-response interfaces. Construct coordinated autonomous agent squads that interact with external tools, APIs, and real-time data environments to automate end-to-end multi-step reasoning while maintaining verifiable truthfulness and deterministic bounds.',
     themes: [
@@ -102,8 +101,7 @@ export const TECHNICAL_TRACKS = [
     id: 'cloud-native',
     number: '02',
     title: 'Cloud-Native, High-Throughput & Distributed Systems',
-    bounty: 'Dedicated Track Winner Bounty: ₹7,000 Cash',
-    bountyAmount: '₹7,000',
+    
     shortDescription: 'Build hyper-scale event-driven architectures, resilient distributed ledgers, and zero-downtime microservices capable of sustaining millions of concurrent events.',
     longDescription: 'Architect resilient backend systems built to withstand extreme traffic, network partitions, and cascading failures. Focus on serverless durability, low-latency stream processing, distributed transaction orchestration, and observable telemetry.',
     themes: [
@@ -119,8 +117,7 @@ export const TECHNICAL_TRACKS = [
     id: 'edge-iot',
     number: '03',
     title: 'Autonomous Edge IoT & Sustainable Green Energy',
-    bounty: 'Dedicated Track Winner Bounty: ₹7,000 Cash',
-    bountyAmount: '₹7,000',
+    
     shortDescription: 'Deploy hardware microcontrollers, intelligent sensor networks, and edge inference systems optimizing renewable energy distribution and smart mobility.',
     longDescription: 'Solve urgent physical-world challenges through resilient software engineering and IoT telemetry integration. Tackle resource distribution, renewable energy microgrid balancing, environmental monitoring, and intelligent community utilities.',
     themes: [
@@ -136,8 +133,7 @@ export const TECHNICAL_TRACKS = [
     id: 'fintech-trust',
     number: '04',
     title: 'Next-Gen FinTech, Trust & Cryptographic Security',
-    bounty: 'Dedicated Track Winner Bounty: ₹7,000 Cash',
-    bountyAmount: '₹7,000',
+    
     shortDescription: 'Engineer low-latency settlement systems, real-time algorithmic fraud prevention, and zero-knowledge identity architectures.',
     longDescription: 'Re-engineer digital financial rails with mathematical integrity. Build high-volume transaction verification, instant anomaly and synthetic identity fraud detection, and automated audit trails while upholding privacy and regulatory compliance.',
     themes: [
@@ -153,8 +149,7 @@ export const TECHNICAL_TRACKS = [
     id: 'open-enterprise',
     number: '05',
     title: 'Open Enterprise & Campus Life Innovation',
-    bounty: 'Dedicated Track Winner Bounty: ₹7,000 Cash',
-    bountyAmount: '₹7,000',
+    
     shortDescription: 'Tackle pressing institutional and societal bottlenecks across healthcare diagnostics, agricultural supply chains, and automated university operations.',
     longDescription: 'Engineer high-impact institutional and social systems. Transform enterprise workflows, automate campus student experiences, modernize medical diagnostics triage, and build accessible tools for underserved demographics.',
     themes: [
@@ -171,7 +166,7 @@ export const TECHNICAL_TRACKS = [
 export const PRIZE_POOL_CARDS = [
   {
     position: '1st Place — Overall Grand Champion',
-    cashPrize: '₹60,000 Pure Cash',
+    cashPrize: 'Total Prize Pool & Honors',
     perks: [
       'Grand Kairos Acrylic & Brass Champion Trophy',
       'VC Angel Incubation Fast-Track Pitching',
@@ -184,7 +179,7 @@ export const PRIZE_POOL_CARDS = [
   },
   {
     position: '2nd Place — First Runner-Up',
-    cashPrize: '₹35,000 Pure Cash',
+    cashPrize: 'Total Prize Pool & Honors',
     perks: [
       '1st Runner-Up Acrylic Trophy',
       '$2,500 in AWS Cloud Promotional Credits',
@@ -196,7 +191,7 @@ export const PRIZE_POOL_CARDS = [
   },
   {
     position: '3rd Place — Second Runner-Up',
-    cashPrize: '₹20,000 Pure Cash',
+    cashPrize: 'Total Prize Pool & Honors',
     perks: [
       '2nd Runner-Up Acrylic Trophy',
       '$1,000 in AWS Cloud Promotional Credits',
@@ -204,28 +199,6 @@ export const PRIZE_POOL_CARDS = [
     ],
     highlight: false,
     badge: 'Second Runner-Up'
-  },
-  {
-    position: '5 Enterprise Track Category Winners',
-    cashPrize: '₹7,000 Each (Total ₹35,000 Pure Cash)',
-    perks: [
-      'Dedicated Enterprise Track Winner Mementos',
-      'Direct API Partner Swag Crates & Bounties',
-      'Fast-track Evaluation for Sponsor Accelerator Programs'
-    ],
-    highlight: false,
-    badge: '5 Dedicated Tracks'
-  },
-  {
-    position: 'Special Category Bounties',
-    cashPrize: '₹25,000 Pure Cash Total',
-    perks: [
-      'Best All-Women Team: ₹10,000 Pure Cash',
-      'Best Freshman / Rookie Team: ₹7,500 Pure Cash',
-      'Most Scalable AWS Architecture: ₹7,500 Pure Cash'
-    ],
-    highlight: false,
-    badge: 'Special Citations'
   }
 ];
 
@@ -280,7 +253,7 @@ export const DUAL_PHASE_PIPELINE = [
     title: 'On-Campus 48-Hour Grand Finale',
     dates: '22 – 24 Jan 2027',
     scale: 'Top 100 Elite National Teams',
-    description: 'The Top 100 teams assemble at Sathyabama Central Library, Chennai for 48 hours of continuous hacking, 3 evaluation checkpoints, and ₹1,75,000 pure cash bounties.',
+    description: 'The Top 100 teams assemble at Sathyabama Central Library, Chennai for 48 hours of continuous hacking, 3 evaluation checkpoints, and ₹1,75,000 total prize pool.',
     badge: 'Top 100 Physical Stage',
     status: 'UPCOMING'
   }
@@ -438,13 +411,13 @@ export const EVENT_SCHEDULE = [
       {
         time: '01:30 PM – 02:15 PM',
         title: 'Grand Jury Deliberation & Final Shortlisting',
-        desc: 'Evaluator committee convenes to finalize winners and track bounties.',
+        desc: 'Evaluator committee convenes to finalize winners and track finalists.',
         category: 'DELIBERATION'
       },
       {
         time: '02:30 PM – 04:30 PM',
         title: '🎆 Grand Valedictory, Award Ceremony & Finale',
-        desc: 'Addresses by Keynote VIPs and University Leadership. Presentation of Track Bounties & Special Innovation Awards. Grand Winner Announcement: 2nd Runner Up, 1st Runner Up, and Grand Champion (National Trophy & Awards Conferral).',
+        desc: 'Addresses by Keynote VIPs and University Leadership. Presentation of Track Awards & Special Innovation Honors. Grand Winner Announcement: 2nd Runner Up, 1st Runner Up, and Grand Champion (National Trophy & Awards Conferral).',
         category: 'CEREMONY',
         highlight: true
       },
@@ -463,7 +436,7 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'title',
     name: 'Title Presenting Partner',
     amount: '₹2,00,000',
-    referralPayout: '₹20,000 – ₹30,000 Pure Cash',
+    referralPayout: '₹20,000 – ₹30,000 Direct Payout',
     commissionRate: '10% – 15%',
     statusBadge: 'Premier Flagship',
     description: 'Prime headline association. Maximum brand prominence across every digital, stage, and physical touchpoint.',
@@ -482,7 +455,7 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'powered_by',
     name: 'Co-Powered By Partner',
     amount: '₹1,00,000',
-    referralPayout: '₹10,000 – ₹12,000 Pure Cash',
+    referralPayout: '₹10,000 – ₹12,000 Direct Payout',
     commissionRate: '10% – 12%',
     statusBadge: 'Platform Partner',
     description: 'Premier technology platform visibility. Showcase tools and drive direct API/SDK adoption.',
@@ -501,7 +474,7 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'gold',
     name: 'Associate / Gold Partner',
     amount: '₹50,000',
-    referralPayout: '₹5,000 Pure Cash',
+    referralPayout: '₹5,000 Direct Payout',
     commissionRate: '10%',
     statusBadge: 'Ecosystem Partner',
     description: 'Strong presence and recruitment access at a highly accessible investment level.',
@@ -519,7 +492,7 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'track',
     name: 'Track & Bounty Partner',
     amount: '₹25,000',
-    referralPayout: '₹2,500 Pure Cash',
+    referralPayout: '₹2,500 Direct Payout',
     commissionRate: '10%',
     statusBadge: 'Track Sponsor',
     description: 'Associate your brand directly with one of our five core engineering tracks.',
@@ -536,7 +509,7 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'in_kind',
     name: 'In-Kind F&B / Fuel Partner',
     amount: 'Energy Drinks / Snacks / Cloud Credits',
-    referralPayout: '₹3,000 – ₹5,000 Pure Cash',
+    referralPayout: '₹3,000 – ₹5,000 Direct Payout',
     commissionRate: 'Fixed Bounty',
     statusBadge: 'Fuel Partner',
     description: 'Provide developer cloud credits, software licenses, snacks, or energy beverages.',
@@ -609,7 +582,7 @@ export const SPONSOR_REFERRAL_TIERS = [
     tier: 'Title Presenting Partner',
     dealSize: '₹2,00,000',
     commissionPercentage: '10% – 15%',
-    cashPayout: '₹20,000 – ₹30,000 Pure Cash',
+    cashPayout: '₹20,000 – ₹30,000 Direct Payout',
     perks: [
       'National Corporate Rainmaker Trophy on stage',
       'VIP Main-Stage All-Access Pass to Kairos 2027',
@@ -620,7 +593,7 @@ export const SPONSOR_REFERRAL_TIERS = [
     tier: 'Co-Powered By Partner',
     dealSize: '₹1,00,000',
     commissionPercentage: '10% – 12%',
-    cashPayout: '₹10,000 – ₹12,000 Pure Cash',
+    cashPayout: '₹10,000 – ₹12,000 Direct Payout',
     perks: [
       'VIP Jury Lounge Access',
       'Official Letter of Recommendation',
@@ -631,7 +604,7 @@ export const SPONSOR_REFERRAL_TIERS = [
     tier: 'Associate / Gold Partner',
     dealSize: '₹50,000',
     commissionPercentage: '10%',
-    cashPayout: '₹5,000 Pure Cash',
+    cashPayout: '₹5,000 Direct Payout',
     perks: [
       'Exclusive Merch Kit',
       'Verified Recommendation Certificate'
@@ -641,7 +614,7 @@ export const SPONSOR_REFERRAL_TIERS = [
     tier: 'Track & Bounty Partner',
     dealSize: '₹25,000',
     commissionPercentage: '10%',
-    cashPayout: '₹2,500 Pure Cash',
+    cashPayout: '₹2,500 Direct Payout',
     perks: [
       'Official Partner Certificate',
       'Kairos Swag Pack'
@@ -651,7 +624,7 @@ export const SPONSOR_REFERRAL_TIERS = [
     tier: 'In-Kind F&B / Fuel Deals',
     dealSize: 'Red Bull / Energy / Snacks',
     commissionPercentage: 'Fixed Bounty',
-    cashPayout: '₹3,000 – ₹5,000 Pure Cash',
+    cashPayout: '₹3,000 – ₹5,000 Direct Payout',
     perks: [
       'Special Swag Drop',
       'Official Event Recognition'
@@ -807,47 +780,24 @@ export const FAQS = [
     a: 'NO. KAIROS 2027 is 100% FREE. There are ZERO registration fees, ZERO qualifier fees, and ZERO attendance fees. All meals, on-campus stay, builder tees, smart badges, bus transit, and AWS credits are completely complimentary.'
   },
   {
-    q: 'What is the Online Technical Qualifier (Round 1)?',
-    a: 'To ensure only teams with peak-quality ideas and verified coding capabilities reach our on-campus stage, the Top 250 semi-finalist teams will participate in a virtual qualifier from January 02–04, 2027. Teams submit a working GitHub repository proof-of-concept, a 3-minute Loom video demo, and defend their architecture live via Google Meet with AWS Solutions Architects. The Top 100 teams advance to the physical finale.'
+    q: 'Who can participate and what is the required team size?',
+    a: 'Open to all undergraduate and postgraduate engineering and technology students across India. Teams must comprise 4 to 6 builders. Cross-college, cross-department, and cross-year teams are fully permitted and encouraged.'
+  },
+  {
+    q: 'What is the Round 1 Online Technical Qualifier?',
+    a: 'The Top 250 semi-finalist teams will participate in a virtual qualifier from January 02–04, 2027. Teams submit a working GitHub repository proof-of-concept and a 3-minute video demo, followed by a virtual architecture defense with AWS Solutions Architects. The Top 100 teams advance to the physical finale.'
   },
   {
     q: 'What are the grand finale dates and venue?',
-    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 at Sathyabama Institute of Science and Technology, Chennai.'
-  },
-  {
-    q: 'Why is Meetup RSVP verification required during registration?',
-    a: 'As an official AWS Student Builder Group event, Kairos 2027 follows the AWS SBG Leader guidelines which mandate that community attendance is tracked on Meetup.com. Joining our official SIST Meetup chapter and RSVPing is 100% free and takes under 60 seconds.'
+    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 (48 continuous non-stop hours) at Sathyabama Institute of Science and Technology, Chennai (Central Library & Indoor Stadium bays).'
   },
   {
     q: 'Who owns the intellectual property (IP)?',
-    a: 'You own 100% of your code and intellectual property. Zero equity or claims are made by the organizers, college, or sponsors.'
+    a: 'You own 100% of your code, blueprints, and intellectual property. Zero equity or IP claims are made by the organizers, university, or sponsors.'
   },
   {
-    q: 'Will travel support and bus transit be provided?',
-    a: 'Yes. We operate chartered Sathyabama University buses across major Chennai transit hubs (Central Railway Station, Tambaram, Airport, CMBT Koyambedu) for inbound pickup on Friday morning and outbound drop-off on Sunday evening, as well as on-campus EV buggies, all free of cost.'
-  },
-  {
-    q: 'What food, meals, and refreshments are provided?',
-    a: 'Seven principal meal services are provided on-campus (Friday lunch & dinner; Saturday breakfast, lunch & dinner; Sunday breakfast & lunch), alongside evening high-teas, midnight energy snacks, continuous filter coffee, and electrolyte dispensaries.'
-  },
-  {
-    q: 'What can we build, and are pre-built projects allowed?',
-    a: 'All project code must be authored during the 48-hour competition window starting at 12:15 PM IST on Friday, 22 January 2027. Open-source libraries, frameworks, APIs, and public foundation models are fully permitted. Pre-written proprietary codebases or finished projects are strictly prohibited and verified via our automated Git commit telemetry.'
-  },
-  {
-    q: 'What hardware and equipment should our team bring?',
-    a: 'Each participant should bring their own laptop, chargers, valid student identification cards, and personal hygiene essentials. For the Edge IoT & Green Energy track, teams may bring microcontrollers and sensors. Surge-protected power drops, 1Gbps dual-band Wi-Fi, and smart badges will be provisioned by the organizers.'
-  },
-  {
-    q: 'How does the sponsorship referral program work?',
-    a: 'Through our Crowdsourced Rainmaker Referral Hub (/refer-sponsor), any student nationwide can refer a corporate brand or startup. You receive a guaranteed 10% to 15% pure cash commission (e.g., ₹20,000–₹30,000 on a ₹2L Title Deal) transferred directly into your bank account within 48–72 hours of fund clearance.'
-  },
-  {
-    q: 'How are winners evaluated and normalized across judges?',
-    a: 'Evaluation is based on a transparent 100-point rubric across 3 checkpoints: Technical Architecture (30 pts), Originality (25 pts), Working Prototype & UX (25 pts), and Pitch Defense (20 pts). Scores from our 25+ industry judges are normalized in real-time using mathematical Z-scores to eliminate lenient or harsh grading bias.'
-  },
-  {
-    q: 'What AWS Cloud credits and sandboxes are provided?',
-    a: 'All shortlisted finalist teams receive AWS Promotional Credit vouchers ($50 to $100 per team) in their hacker dashboard to deploy live workloads on AWS Bedrock, ECS, Lambda, and Aurora without spending a single rupee.'
+    q: 'What meals, travel support, and hardware are provided?',
+    a: 'Seven principal meal services are provided on-campus (all meals from Friday lunch through Sunday lunch), alongside midnight energy snacks and continuous hydration. Complimentary chartered Sathyabama buses run from major Chennai transit hubs, and teams receive surge-protected power drops and 1Gbps arena Wi-Fi.'
   }
 ];
+

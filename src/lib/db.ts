@@ -352,7 +352,7 @@ const DEFAULT_STORE: StoreSchema = {
       lockExpiryDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(),
       status: 'DISCOVERY_SCHEDULED',
       commissionRate: '12%',
-      estimatedPayout: '₹12,000 Pure Cash',
+      estimatedPayout: '₹12,000 Direct Payout',
       submittedAt: '2026-10-24T12:00:00.000Z'
     }
   ],
@@ -360,7 +360,7 @@ const DEFAULT_STORE: StoreSchema = {
     registrationOpen: true,
     prizePoolConfirmed: true,
     demoSandboxMode: true,
-    announcementBanner: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 PURE CASH PRIZE POOL',
+    announcementBanner: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
     registrationDeadline: '2026-12-28T23:59:59+05:30'
   },
   auditLogs: [
@@ -582,6 +582,10 @@ const DEFAULT_STORE: StoreSchema = {
   members: DEFAULT_MEMBERS
 };
 
+// In-memory cache and serialized write queue to prevent concurrency race conditions
+let cachedStore: StoreSchema | null = null;
+let writeQueue: Promise<void> = Promise.resolve();
+
 // Safe thread-safe file persistence
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) {
@@ -593,11 +597,14 @@ function ensureDataDir() {
 }
 
 function readStore(): StoreSchema {
+  if (cachedStore) {
+    return cachedStore;
+  }
   try {
     ensureDataDir();
     const raw = fs.readFileSync(JSON_FILE, 'utf-8');
     const parsed = JSON.parse(raw);
-    return {
+    const store: StoreSchema = {
       ...DEFAULT_STORE,
       ...parsed,
       members: parsed.members && parsed.members.length > 0 ? parsed.members : DEFAULT_MEMBERS,
@@ -606,21 +613,31 @@ function readStore(): StoreSchema {
       evaluations: parsed.evaluations || DEFAULT_STORE.evaluations,
       csat: parsed.csat || DEFAULT_STORE.csat,
     };
+    cachedStore = store;
+    return store;
   } catch (err) {
     console.error('[DB] Read error, falling back to default store:', err);
-    return DEFAULT_STORE;
+    const fallback: StoreSchema = { ...DEFAULT_STORE };
+    cachedStore = fallback;
+    return fallback;
   }
 }
 
 function writeStore(data: StoreSchema) {
-  try {
-    ensureDataDir();
-    const tmpFile = `${JSON_FILE}.tmp`;
-    fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), 'utf-8');
-    fs.renameSync(tmpFile, JSON_FILE);
-  } catch (err) {
-    console.error('[DB] Write error:', err);
-  }
+  // Update in-memory reference immediately so subsequent reads in this process see the update
+  cachedStore = data;
+
+  // Chain atomic disk persistence onto serialized write queue
+  writeQueue = writeQueue.then(async () => {
+    try {
+      ensureDataDir();
+      const tmpFile = `${JSON_FILE}.${Date.now()}-${Math.random().toString(36).substring(2, 6)}.tmp`;
+      fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), 'utf-8');
+      fs.renameSync(tmpFile, JSON_FILE);
+    } catch (err) {
+      console.error('[DB] Concurrent write error:', err);
+    }
+  });
 }
 
 export const db = {
