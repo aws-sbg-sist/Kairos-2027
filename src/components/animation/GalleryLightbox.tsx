@@ -125,7 +125,7 @@ export const GalleryLightbox: React.FC<GalleryLightboxProps> = ({
             <div className="p-4 sm:p-6 bg-aws-squidInk/95 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-aws-orange/20 text-amber-300 border border-aws-orange/30">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-950/60 text-purple-300 border border-purple-500/30">
                     {currentItem.category}
                   </span>
                   <span className="text-xs font-mono text-slate-400">

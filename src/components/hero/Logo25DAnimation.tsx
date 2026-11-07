@@ -144,7 +144,7 @@ export const Logo25DAnimation: React.FC = () => {
           <div className="w-full h-full rounded-full border border-purple-500/40 shadow-[0_0_20px_rgba(118,48,217,0.35)] relative animate-orbit-spin">
             {/* Satellite 1: Neon Magenta Node */}
             <div
-              className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-aws-orange shadow-[0_0_14px_var(--aws-orange)] flex items-center justify-center animate-pulse"
+              className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 shadow-[0_0_14px_var(--aws-orange)] flex items-center justify-center animate-pulse"
             >
               <div className="w-1.5 h-1.5 rounded-full bg-white" />
             </div>
@@ -219,7 +219,7 @@ export const Logo25DAnimation: React.FC = () => {
           className="absolute top-2 right-4 sm:right-6 px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-950/90 border border-purple-500/40 text-purple-200 shadow-lg shadow-black/60 backdrop-blur-md flex items-center gap-1.5 pointer-events-none"
           style={{ transform: 'translateZ(75px)' }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-aws-orange animate-ping" />
+          <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-ping" />
           <span className="font-bold tracking-wider text-white">48H SAND SYNC</span>
         </div>
 
@@ -237,7 +237,7 @@ export const Logo25DAnimation: React.FC = () => {
           className="absolute pointer-events-none"
           style={{ transform: 'translateZ(60px)' }}
         >
-          <Sparkles className="w-4 h-4 text-amber-300 animate-spin" style={{ animationDuration: '6s' }} />
+          <Sparkles className="w-4 h-4 text-purple-300 animate-spin" style={{ animationDuration: '6s' }} />
         </div>
       </div>
     </div>

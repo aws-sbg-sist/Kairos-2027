@@ -2,15 +2,146 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-outfit: 'Outfit', 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+/* ==========================================================================
+   THEME DEFINITIONS: ADOBE CYBER NEON (PRIMARY) & AWS CLOUD CLASSIC
+   Primary palette extracted from AdobeColor My Color Theme.ase:
+   1. #ee05f2 (Neon Magenta / Electric Fuchsia) -> rgb(238, 5, 242)
+   2. #7630d9 (Vivid Purple / Cyber Violet)      -> rgb(118, 48, 217)
+   3. #edebf2 (Pale Lavender Snow / White)      -> rgb(237, 235, 242)
+   4. #0511f2 (Electric Cobalt Blue)            -> rgb(5, 17, 242)
+   5. #0d0d0d (Deep Void Obsidian Black)        -> rgb(13, 13, 13)
+   ========================================================================== */
+
+:root,
+[data-theme="cyber"] {
+  --theme-name: 'cyber';
+
+  /* Premium Typography (Inter + Outfit with Helvetica fallback) */
+  --font-helvetica: 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --font-inter: var(--font-inter), 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-outfit: var(--font-outfit), 'Helvetica Neue', Helvetica, Space Grotesk, sans-serif;
+  --font-mono: var(--font-mono), 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* 5 Exact Swatch Colors from Adobe ASE Swatch */
+  --cyber-magenta: #ee05f2;
+  --cyber-purple: #7630d9;
+  --cyber-snow: #edebf2;
+  --cyber-blue: #0511f2;
+  --cyber-black: #0d0d0d;
+
+  /* Space-separated RGB Channels for Tailwind <alpha-value> syntax */
+  --aws-orange-rgb: 238 5 242; /* Primary Accent: Neon Magenta */
+  --aws-squid-ink-rgb: 20 15 32; /* Deep Velvet Obsidian Surface */
+  --aws-canvas-rgb: 10 10 15; /* Deep Obsidian Void: #0a0a0f */
+  --aws-surface-rgb: 24 18 40; /* Surface card */
+  --aws-card-rgb: 24 18 40; /* Card Surface */
+  --aws-card-hover-rgb: 34 26 56; /* Card Hover */
+  --aws-blue-rgb: 5 17 242; /* Secondary Accent: Electric Cobalt Blue */
+  --aws-purple-rgb: 118 48 217; /* Tertiary Accent: Vivid Cyber Violet */
+  --aws-snow-rgb: 241 239 247; /* Pure Text: Pale Lavender Snow */
+
+  /* Direct Hex Aliases for CSS and Canvas */
+  --aws-orange: #ee05f2;
+  --aws-orange-glow: rgba(238, 5, 242, 0.35);
+  --aws-squid-ink: #140f20;
+  --aws-canvas: #0a0a0f;
+  --aws-surface: #181228;
+  --aws-card: #181228;
+  --aws-card-hover: #221a38;
+  --aws-blue: #0511f2;
+  --aws-purple: #7630d9;
+  --aws-snow: #f1eff7;
+
+  /* Ambient Cosmic Radiations (Soft Atmospheric Blurs) */
+  --ambient-glow-1: rgba(238, 5, 242, 0.10);
+  --ambient-glow-2: rgba(5, 17, 242, 0.08);
+  --ambient-glow-3: rgba(118, 48, 217, 0.08);
+  --tech-grid-color: rgba(118, 48, 217, 0.04);
+
+  /* Micro UI Elements (Refined, Subtle Violet Borders) */
+  --selection-bg: rgba(238, 5, 242, 0.40);
+  --focus-ring: #ee05f2;
+  --border-subtle: rgba(118, 48, 217, 0.22);
+  --border-glow: rgba(238, 5, 242, 0.45);
+  --scrollbar-thumb: #221838;
+  --scrollbar-thumb-hover: #ee05f2;
+
+  /* Glowing Text & Button Gradients */
+  --gradient-kairos-start: #ffffff;
+  --gradient-kairos-mid1: #fbcfe8;
+  --gradient-kairos-mid2: #ee05f2;
+  --gradient-kairos-end: #7630d9;
+
+  --gradient-accent-start: #ff66ff;
+  --gradient-accent-mid: #ee05f2;
+  --gradient-accent-end: #7630d9;
+
+  --btn-grad-start: #ee05f2;
+  --btn-grad-mid: #c026d3;
+  --btn-grad-end: #7630d9;
+}
+
+/* AWS CLOUD CLASSIC THEME (SWITCHABLE) */
+[data-theme="aws"] {
+  --theme-name: 'aws';
+
+  /* Premium Swiss Typography (Helvetica Stack) */
+  --font-helvetica: 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-inter: 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-outfit: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --aws-orange: #FF9900;
+
+  /* Space-separated RGB Channels for Tailwind <alpha-value> syntax */
+  --aws-orange-rgb: 168 85 247; /* #a855f7 Purple */
+  --aws-squid-ink-rgb: 35 47 62; /* #232F3E */
+  --aws-canvas-rgb: 11 15 25; /* #0B0F19 */
+  --aws-surface-rgb: 22 30 46; /* #161E2E */
+  --aws-card-rgb: 22 30 46; /* #161E2E */
+  --aws-card-hover-rgb: 30 41 59; /* #1E293B */
+  --aws-blue-rgb: 0 115 187; /* #0073BB */
+  --aws-purple-rgb: 139 92 246; /* #8b5cf6 */
+  --aws-snow-rgb: 248 250 252; /* #F8FAFC */
+
+
+  /* Direct Hex Aliases for CSS and Canvas */
+  --aws-orange: #a855f7;
+  --aws-orange-glow: rgba(168, 85, 247, 0.4);
   --aws-squid-ink: #232F3E;
-  --aws-obsidian: #0B0F19;
+  --aws-canvas: #0B0F19;
   --aws-surface: #161E2E;
+  --aws-card: #161E2E;
+  --aws-card-hover: #1E293B;
   --aws-blue: #0073BB;
+  --aws-purple: #8b5cf6;
+  --aws-snow: #F8FAFC;
+
+  /* Ambient Cosmic Radiations */
+  --ambient-glow-1: rgba(168, 85, 247, 0.15);
+  --ambient-glow-2: rgba(0, 115, 187, 0.10);
+  --ambient-glow-3: rgba(139, 92, 246, 0.08);
+  --tech-grid-color: rgba(168, 85, 247, 0.05);
+
+  /* Micro UI Elements */
+  --selection-bg: rgba(168, 85, 247, 0.40);
+  --focus-ring: #a855f7;
+  --border-subtle: rgba(168, 85, 247, 0.25);
+  --border-glow: rgba(168, 85, 247, 0.5);
+  --scrollbar-thumb: #232F3E;
+  --scrollbar-thumb-hover: #a855f7;
+
+  /* Glowing Text & Button Gradients */
+  --gradient-kairos-start: #ffffff;
+  --gradient-kairos-mid1: #f3e8ff;
+  --gradient-kairos-mid2: #c084fc;
+  --gradient-kairos-end: #9333ea;
+
+  --gradient-accent-start: #c084fc;
+  --gradient-accent-mid: #a855f7;
+  --gradient-accent-end: #7630d9;
+
+  --btn-grad-start: #9333ea;
+  --btn-grad-mid: #7630d9;
+  --btn-grad-end: #4f46e5;
 }
 
 * {
@@ -25,83 +156,103 @@ html {
 }
 
 body {
-  background-color: #0B0F19;
-  color: #F8FAFC;
-  font-family: 'Amazon Ember', var(--font-inter), sans-serif;
+  background-color: var(--aws-canvas);
+  color: var(--aws-snow);
+  font-family: var(--font-inter), 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
   min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Premium Display Typography Polish */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-outfit), 'Helvetica Neue', Helvetica, Space Grotesk, sans-serif;
 }
 
 ::selection {
-  background: rgba(255, 153, 0, 0.4);
+  background: var(--selection-bg);
   color: #ffffff;
 }
 
-/* Custom Sleek Dark Scrollbar */
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--aws-canvas);
+}
+
+/* Custom Sleek Dark WebKit Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0F19;
+  background: var(--aws-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #232F3E;
+  background: var(--scrollbar-thumb);
   border-radius: 4px;
-  border: 1px solid rgba(255, 153, 0, 0.2);
+  border: 1px solid var(--border-subtle);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF9900;
+  background: var(--scrollbar-thumb-hover);
 }
 
-/* Glassmorphism primitives */
+/* Glassmorphism primitives - crisp, razor-sharp rendering without full-site blur */
 .glass-panel {
-  background: rgba(22, 30, 46, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 153, 0, 0.15);
+  background: rgba(var(--aws-card-rgb) / 0.94);
+  border: 1px solid var(--border-subtle);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
 }
 
 .glass-panel:hover {
-  border-color: rgba(255, 153, 0, 0.35);
+  border-color: var(--border-glow);
 }
 
 .glass-panel-glow {
-  background: rgba(22, 30, 46, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 153, 0, 0.3);
-  box-shadow: 0 0 35px -5px rgba(255, 153, 0, 0.25);
+  background: rgba(var(--aws-card-rgb) / 0.96);
+  border: 1px solid var(--border-glow);
+  box-shadow: 0 0 25px -5px var(--aws-orange-glow);
 }
 
 .glass-input {
-  background: rgba(11, 15, 25, 0.85);
-  border: 1px solid rgba(255, 153, 0, 0.25);
-  color: #f8fafc;
+  background: rgba(var(--aws-canvas-rgb) / 0.88);
+  border: 1px solid var(--border-subtle);
+  color: var(--aws-snow);
   outline: none;
   transition: all 0.2s ease;
 }
 
 .glass-input:focus {
-  border-color: #FF9900;
-  box-shadow: 0 0 15px -2px rgba(255, 153, 0, 0.4);
+  border-color: var(--aws-orange);
+  box-shadow: 0 0 15px -2px var(--aws-orange-glow);
+}
+
+/* Confidential Details Classified Blur (for mystery points table & internal details) */
+.blur-classified {
+  filter: blur(6px);
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+  display: inline-block;
 }
 
 /* Glowing text gradients */
 .gradient-text-kairos {
-  background: linear-gradient(135deg, #ffffff 0%, #fed7aa 30%, #FF9900 70%, #f97316 100%);
+  background: linear-gradient(135deg, var(--gradient-kairos-start) 0%, var(--gradient-kairos-mid1) 30%, var(--gradient-kairos-mid2) 70%, var(--gradient-kairos-end) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-orange {
-  background: linear-gradient(135deg, #FFAC33 0%, #FF9900 60%, #E68A00 100%);
+  background: linear-gradient(135deg, var(--gradient-accent-start) 0%, var(--gradient-accent-mid) 60%, var(--gradient-accent-end) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-purple {
-  background: linear-gradient(135deg, #c084fc 0%, #8b5cf6 60%, #38bdf8 100%);
+  background: linear-gradient(135deg, #c084fc 0%, var(--aws-purple) 60%, var(--aws-blue) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -115,28 +266,203 @@ body {
 /* Starfield & Ambient Glow Background */
 .ambient-cosmic-bg {
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(255, 153, 0, 0.12) 0%, transparent 60%),
-    radial-gradient(circle at 10% 40%, rgba(0, 115, 187, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 90% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 55%);
+    radial-gradient(circle at 50% 0%, var(--ambient-glow-1) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, var(--ambient-glow-2) 0%, transparent 50%),
+    radial-gradient(circle at 90% 70%, var(--ambient-glow-3) 0%, transparent 55%);
 }
 
 /* Tech Grid Pattern */
 .tech-grid-pattern {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(255, 153, 0, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 153, 0, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, var(--tech-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--tech-grid-color) 1px, transparent 1px);
 }
 
 /* Accessible focus ring */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 2px solid #FF9900;
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+}
+
+/* Primary Themed Button Gradient Class */
+.btn-primary-themed {
+  background: linear-gradient(135deg, var(--btn-grad-start) 0%, var(--btn-grad-mid) 50%, var(--btn-grad-end) 100%);
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px -4px var(--aws-orange-glow);
+  transition: all 0.22s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.btn-primary-themed:hover {
+  background: linear-gradient(135deg, var(--btn-grad-mid) 0%, var(--btn-grad-start) 100%);
+  box-shadow: 0 12px 28px -4px var(--aws-orange-glow);
+}
+
+/* =========================================================================
+   ANIMATION & MOTION DESIGN DOCTRINE
+   ========================================================================= */
+
+/* Scale buttons to 0.97 on press */
+button:active,
+a[role="button"]:active,
+.btn-primary-themed:active,
+.btn-tactile:active {
+  transform: scale(0.97) !important;
+  transition-duration: 75ms !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1) !important;
+}
+
+/* Stagger list rows by 30ms */
+.stagger-rows > *:nth-child(1) { animation-delay: 30ms; }
+.stagger-rows > *:nth-child(2) { animation-delay: 60ms; }
+.stagger-rows > *:nth-child(3) { animation-delay: 90ms; }
+.stagger-rows > *:nth-child(4) { animation-delay: 120ms; }
+.stagger-rows > *:nth-child(5) { animation-delay: 150ms; }
+.stagger-rows > *:nth-child(6) { animation-delay: 180ms; }
+.stagger-rows > *:nth-child(7) { animation-delay: 210ms; }
+.stagger-rows > *:nth-child(8) { animation-delay: 240ms; }
+
+/* Moving knobs stretch by 12% in direction of motion */
+.knob-stretch {
+  transition: transform 190ms cubic-bezier(0.4, 0, 0.2, 1), background-color 190ms cubic-bezier(0, 0, 0.2, 1);
+}
+.knob-stretch:active,
+.knob-moving {
+  transform: scaleX(1.12);
+}
+
+/* Popovers start at scale 0.95 from trigger */
+.popover-from-trigger {
+  transform-origin: top right;
+  animation: popoverIn 190ms cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.popover-from-bottom-right {
+  transform-origin: bottom right;
+  animation: popoverIn 190ms cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+@keyframes popoverIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes popoverOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95) translateY(-4px);
+  }
+}
+
+/* Success Confirmation Pulse */
+@keyframes successPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  40% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-success-pulse {
+  animation: successPulse 0.45s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+/* Curved Arc Object Motion */
+@keyframes arcMove {
+  0% {
+    transform: translate3d(0, 0, 0);
+    animation-timing-function: cubic-bezier(0.2, 0, 0.4, 1);
+  }
+  50% {
+    transform: translate3d(8px, -12px, 0);
+    animation-timing-function: cubic-bezier(0.6, 0, 0.8, 1);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-arc-move {
+  animation: arcMove 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Mask for reveals and color changes */
+.mask-wipe-reveal {
+  mask-image: linear-gradient(to right, black 0%, black 100%);
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 100%);
+}
+
+/* Crossfade icons with scale and blur */
+.icon-crossfade-enter {
+  animation: iconCrossfadeEnter 190ms cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+.icon-crossfade-exit {
+  animation: iconCrossfadeExit 150ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes iconCrossfadeEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.75);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+}
+
+@keyframes iconCrossfadeExit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.75);
+    filter: blur(2px);
+  }
+}
+
+/* Rubberband past drag boundaries */
+.rubberband-boundary {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* GPU Compositor acceleration */
 .gpu-layer {
   transform: translateZ(0);
   backface-visibility: hidden;
-  will-change: transform;
+}
+
+/* Accessibility: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

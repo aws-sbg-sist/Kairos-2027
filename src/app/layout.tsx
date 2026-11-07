@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Outfit, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+import { KairosChatbot } from '@/components/chatbot/KairosChatbot';
+import { ThemeProvider } from '@/components/theme/ThemeProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -29,7 +31,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'KAIROS 2027 — National Flagship 48-Hour Hackathon | AWS Student Builder Group SIST',
-  description: 'Join 400–600 elite developers (teams of 4–6) at Sathyabama for KAIROS 2027. 48 hours continuous non-stop hacking on AWS Cloud. 100% Free - Zero Entry Fee. ₹1,75,000 pure cash prizes, two-tier technical screening, and tier-1 corporate sponsors. Register for free now!',
+  description: 'Join 400–600 elite developers (teams of 4–6) at Sathyabama for KAIROS 2027. 48 hours continuous non-stop hacking on AWS Cloud. 100% Free - Zero Entry Fee. ₹1,75,000 total prize pool, two-tier technical screening, and tier-1 corporate sponsors. Register for free now!',
   keywords: [
     'KAIROS 2027',
     'KAIROS Hackathon',
@@ -48,7 +50,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://kairos.sathyabama.ac.in'),
   openGraph: {
     title: 'KAIROS 2027 | The Defining Moment to Build on AWS Cloud',
-    description: '48 Hours Non-Stop • ₹1,75,000 Pure Cash Prize Pool • 100 Elite Teams • Sathyabama Institute of Science and Technology, Chennai.',
+    description: '48 Hours Non-Stop • ₹1,75,000 Total Prize Pool • 100 Elite Teams • Sathyabama Institute of Science and Technology, Chennai.',
     url: 'https://kairos.sathyabama.ac.in',
     siteName: 'Kairos 2027 Hackathon',
     images: [
@@ -65,7 +67,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'KAIROS 2027 — Build the Future in 48 Hours',
-    description: '100% Free National Hackathon. ₹1,75,000 Pure Cash. Free Meals, Swag, and Travel Support.',
+    description: '100% Free National Hackathon. ₹1,75,000 Total Prize Pool. Free Meals, Swag, and Travel Support.',
     creator: '@awssbg_sist',
   },
   icons: {
@@ -126,15 +128,41 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} dark`}>
+    <html lang="en" data-theme="cyber" className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} dark`}>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var t = localStorage.getItem('kairos-theme-v2');
+                  var resolved = (t === 'aws') ? 'aws' : 'cyber';
+                  document.documentElement.setAttribute('data-theme', resolved);
+                } catch(e) {
+                  document.documentElement.setAttribute('data-theme', 'cyber');
+                }
+              })();
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-aws-orange selection:text-white">
-        {children}
+      <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-gradient-to-r from-purple-600 to-indigo-600 selection:text-white">
+        <ThemeProvider>
+          {/* WCAG 2.4.1 Accessible Skip Navigation */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[999] px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition"
+          >
+            Skip to main content
+          </a>
+          {children}
+          {/* Floating Kairos AI Chatbot */}
+          <KairosChatbot />
+        </ThemeProvider>
       </body>
     </html>
   );

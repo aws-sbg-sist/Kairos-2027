@@ -112,7 +112,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
       {/* Top Header Bar inside reveal */}
       <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-20">
         <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/60 backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-aws-orange animate-ping" />
+          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-ping" />
           <span className="text-[11px] font-mono font-bold tracking-wider text-slate-300 uppercase">
             AWS SBGL · KAIROS 2027 Logo Reveal
           </span>
@@ -127,7 +127,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
           >
             {isMuted ? (
               <>
-                <VolumeX className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition" />
+                <VolumeX className="w-3.5 h-3.5 text-purple-400 group-hover:scale-110 transition" />
                 <span className="hidden sm:inline">Unmute Audio</span>
               </>
             ) : (
@@ -141,7 +141,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
           {/* Skip Intro Button */}
           <button
             onClick={handleDismiss}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full btn-primary-themed text-slate-950 text-xs font-bold font-mono transition shadow-lg group"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full btn-primary-themed text-white text-xs font-bold font-mono transition shadow-lg group"
           >
             <span>Skip Intro</span>
             <X className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform" />
@@ -151,7 +151,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
 
       {/* Central Video Frame */}
       <div className="relative z-10 w-full max-w-4xl px-4 sm:px-6 flex flex-col items-center">
-        <div className="relative rounded-3xl overflow-hidden border-2 border-aws-orange/40 shadow-[0_0_80px_var(--aws-orange-glow)] bg-slate-950/90 aspect-video w-full flex items-center justify-center">
+        <div className="relative rounded-3xl overflow-hidden border-2 border-purple-500/40 shadow-[0_0_80px_rgba(168,85,247,0.4)] bg-slate-950/90 aspect-video w-full flex items-center justify-center">
           <video
             ref={videoRef}
             src="/assets/kairos-logo-reveal.mp4"
@@ -175,7 +175,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
         {/* Bottom Subtitle / Press Esc notification */}
         <div className="mt-6 flex items-center justify-between w-full text-[11px] font-mono text-slate-400 px-2">
           <span className="flex items-center gap-2 text-slate-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-aws-orange" />
+            <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600" />
             National Grand Technical Hackathon · Sathyabama Institute of Science and Technology
           </span>
           <span className="hidden sm:inline-block text-slate-400">

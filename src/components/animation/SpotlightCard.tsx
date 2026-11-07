@@ -67,7 +67,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
       onClick={onClick}
       style={{
         ...style,
-        transformStyle: 'preserve-3d',
+        transformStyle: isHovered && enableTilt && !prefersReducedMotion ? 'preserve-3d' : undefined,
       }}
       animate={
         enableTilt && !prefersReducedMotion
