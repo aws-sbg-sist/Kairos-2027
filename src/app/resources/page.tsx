@@ -44,11 +44,11 @@ export default function ResourcesPage() {
             {AWS_RESOURCE_LIBRARY.map((item) => (
               <div
                 key={item.id}
-                className="p-6 sm:p-7 rounded-3xl bg-aws-card border border-slate-700/60 flex flex-col justify-between hover:border-purple-500/40 transition-all space-y-6 group"
+                className="p-6 sm:p-7 rounded-3xl bg-aws-card border border-slate-700/60 flex flex-col justify-between hover:border-purple-500/40 transition-colors space-y-6 group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-purple-400 uppercase font-bold px-2 py-0.5 rounded bg-purple-950/40 border border-purple-500/20">
+                    <span className="text-[10px] font-mono text-purple-400  font-bold px-2 py-0.5 rounded bg-purple-950/40 border border-purple-500/20">
                       {item.category}
                     </span>
                     <span className="text-[10px] font-mono text-slate-400">
@@ -65,7 +65,7 @@ export default function ResourcesPage() {
                   </p>
 
                   <div className="space-y-2 pt-2 border-t border-white/10">
-                    <span className="text-[11px] font-mono text-purple-300 uppercase font-semibold block">
+                    <span className="text-[11px] font-mono text-purple-300  font-semibold block">
                       Curriculum Highlights:
                     </span>
                     <ul className="space-y-1.5 text-xs text-slate-300">
@@ -103,7 +103,7 @@ export default function ResourcesPage() {
                   ) : (
                     <button
                       onClick={() => alert(`Starting download for ${item.title}... Module package will be saved.`)}
-                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 flex items-center justify-center gap-1.5 transition-colors shadow-sm"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Download Starter Assets (Zip)</span>

@@ -26,7 +26,7 @@ export default function OnlineQualifierPage() {
 
   const assignedSlot = {
     date: 'Saturday, January 03, 2027',
-    time: '11:00 AM – 11:10 AM IST (7-Minute Live Defense)',
+    time: '11:00 AM  to  11:10 AM IST (7-Minute Live Defense)',
     room: 'Virtual-Meet-02',
     meetUrl: 'https://meet.google.com/kairos-r1-eval-02',
     leadArchitect: 'Vikrant Roy (AWS Principal Solutions Architect)'
@@ -72,7 +72,7 @@ export default function OnlineQualifierPage() {
           <div className="text-center space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-sky-300 bg-sky-950/40 border border-sky-500/30">
               <Calendar className="w-3.5 h-3.5" />
-              <span>Round 1 Online Technical Qualifier • Jan 02–04, 2027</span>
+              <span>Round 1 Online Technical Qualifier • Jan 02 to 04, 2027</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
               Round 1: Virtual <span className="gradient-text-kairos">Evaluation Bay</span>
@@ -98,19 +98,19 @@ export default function OnlineQualifierPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-mono pt-2">
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">DATE</span>
+                <span className="text-slate-400 block text-[10px]">DATE</span>
                 <span className="text-white font-bold block mt-0.5">{assignedSlot.date}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">TIME SLOT</span>
+                <span className="text-slate-400 block text-[10px]">TIME SLOT</span>
                 <span className="text-purple-300 font-bold block mt-0.5">{assignedSlot.time.split('(')[0]}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">VIRTUAL ROOM</span>
+                <span className="text-slate-400 block text-[10px]">VIRTUAL ROOM</span>
                 <span className="text-sky-300 font-bold block mt-0.5">{assignedSlot.room}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">LEAD EVALUATOR</span>
+                <span className="text-slate-400 block text-[10px]">LEAD EVALUATOR</span>
                 <span className="text-slate-200 block mt-0.5 truncate">{assignedSlot.leadArchitect}</span>
               </div>
             </div>
@@ -123,7 +123,7 @@ export default function OnlineQualifierPage() {
                 href={assignedSlot.meetUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors flex items-center gap-1.5 flex-shrink-0"
+                className="px-4 py-2 rounded-xl font-bold bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors flex items-center gap-1.5 flex-shrink-0"
               >
                 <span>Launch Google Meet Room ↗</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -216,7 +216,7 @@ export default function OnlineQualifierPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full py-3.5 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-colors flex items-center justify-center gap-2"
                   >
                     <span>{submitting ? 'Submitting Deliverables...' : 'Lock Round 1 Qualifier Submission'}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -228,11 +228,11 @@ export default function OnlineQualifierPage() {
 
           {/* Advancement Rule Card */}
           <div className="p-6 rounded-2xl bg-slate-900 border border-slate-700/60 text-xs text-slate-300 space-y-2">
-            <span className="font-bold text-white block font-mono uppercase text-purple-300">
+            <span className="font-bold text-white block font-mono  text-purple-300">
               Advancement to On-Campus Grand Finale (Round 2)
             </span>
             <p className="leading-relaxed">
-              Following virtual evaluations across January 02–04, the <strong>Top 100 Elite Teams</strong> will receive official invitations to attend the 48-Hour On-Campus Grand Finale at Sathyabama Central Library, Chennai (January 22–24, 2027). All 100 teams receive complimentary on-campus stay, meals, builder kits, and transit bus pickups.
+              Following virtual evaluations across January 02 to 04, the <strong>Top 100 Elite Teams</strong> will receive official invitations to attend the 48-Hour On-Campus Grand Finale at Sathyabama Central Library, Chennai (January 22 to 24, 2027). All 100 teams receive complimentary on-campus stay, meals, builder kits, and transit bus pickups.
             </p>
           </div>
 

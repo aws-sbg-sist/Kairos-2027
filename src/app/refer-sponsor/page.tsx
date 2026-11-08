@@ -95,10 +95,10 @@ export default function ReferSponsorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen bg-[var(--color-ink-canvas)] text-slate-100 pt-28 pb-24">
       {/* Background glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/3 w-[600px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
+        <div className="absolute top-1/4 left-1/3 w-[600px] h-[500px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -109,23 +109,23 @@ export default function ReferSponsorPage() {
           <span>/</span>
           <Link href="/sponsors" className="hover:text-slate-200">Sponsors</Link>
           <span>/</span>
-          <span className="text-[#10B981] font-mono">Rainmaker Referral Hub</span>
+          <span className="text-emerald-400 font-mono">Rainmaker Referral Hub</span>
         </div>
 
         {/* Hero Title */}
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#10B981]/10 border border-[#10B981]/30 text-[#10B981] text-xs font-mono font-bold tracking-wider uppercase mb-5">
+          <div role="status" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium mb-5">
             <TrendingUp className="w-3.5 h-3.5" />
             Crowdsourced Corporate Rainmaker Program
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-6">
             Refer a Corporate Sponsor. <br />
             <span className="bg-gradient-to-r gradient-text-kairos bg-clip-text text-transparent">
-              Earn 10%–15% Direct Referral Commission.
+              Earn 10% to 15% Direct Referral Commission.
             </span>
           </h1>
           <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
-            Open to every student and builder in India. Connect us with decision-makers at corporate brands, tech firms, or startups. When the sponsorship agreement clears, receive up to <strong className="text-[#10B981]">₹30,000 direct payout</strong> transferred straight to your UPI ID.
+            Open to every student and builder in India. Connect us with decision-makers at corporate brands, tech firms, or startups. When the sponsorship agreement clears, receive up to <strong className="text-emerald-400">₹30,000 direct payout</strong> transferred straight to your UPI ID.
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export default function ReferSponsorPage() {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#10B981]/15 text-[#10B981]">
+                  <div className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-400">
                     <DollarSign className="w-5 h-5" />
                   </div>
                   <div>
@@ -163,7 +163,7 @@ export default function ReferSponsorPage() {
                   step="25000"
                   value={dealAmount}
                   onChange={(e) => setDealAmount(Number(e.target.value))}
-                  className="w-full h-3 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-[#10B981]"
+                  className="w-full h-3 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-emerald-400"
                 />
                 <div className="flex justify-between text-[11px] text-slate-400 font-mono">
                   <span>₹25,000 (Track)</span>
@@ -176,14 +176,14 @@ export default function ReferSponsorPage() {
               {/* Commission Earnings Highlight */}
               <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-slate-950 to-purple-950/30 border border-emerald-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                  <div className="text-xs uppercase tracking-wider font-mono text-slate-400 font-bold mb-1">
+                  <div className="text-xs  font-mono text-slate-400 font-bold mb-1">
                     Your Guaranteed Cash Reward:
                   </div>
-                  <div className="text-4xl font-black text-[#10B981] font-mono">
+                  <div className="text-4xl font-black text-emerald-400 font-mono">
                     ₹{estimatedCommission.toLocaleString('en-IN')}
                   </div>
                   <p className="text-xs text-slate-400 mt-1">
-                    Transferred directly to your UPI ID within 48–72 hours of sponsor fund receipt.
+                    Transferred directly to your UPI ID within 48 to 72 hours of sponsor fund receipt.
                   </p>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center shrink-0">
@@ -213,25 +213,25 @@ export default function ReferSponsorPage() {
               
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
                   <p className="text-xs text-slate-300">
                     <strong className="text-white">Timestamped Lock:</strong> The moment you submit a verified company lead, it is locked to your student profile for 21 days.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
                   <p className="text-xs text-slate-300">
                     <strong className="text-white">Zero Poaching:</strong> No other student or organizer can claim commission on your company while your lock is active.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
                   <p className="text-xs text-slate-300">
                     <strong className="text-white">Executive Outreach:</strong> Our Chief Partnership Officer (CPFO Nikki Nangaiyar) and President Thenappan T handle negotiations, presentations, and contracts.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
                   <p className="text-xs text-slate-300">
                     <strong className="text-white">Instant UPI Transfer:</strong> Once funds hit the university escrow, your payout is credited automatically.
                   </p>
@@ -295,8 +295,8 @@ export default function ReferSponsorPage() {
 
               {/* Section 1: Referrer Details */}
               <div>
-                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#10B981] mb-4 flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-[#10B981]/20 flex items-center justify-center text-[10px]">1</span>
+                <h4 className="text-xs font-mono font-bold  text-emerald-400 mb-4 flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px]">1</span>
                   Your Details (For Commission Payout)
                 </h4>
                 
@@ -309,7 +309,7 @@ export default function ReferSponsorPage() {
                       value={formData.referrerName}
                       onChange={e => setFormData({ ...formData, referrerName: e.target.value })}
                       placeholder="e.g. Rahul Sharma"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#10B981] text-sm text-white placeholder-slate-400 outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-400 text-sm text-white placeholder-slate-400 outline-none transition"
                     />
                   </div>
                   <div>
@@ -319,7 +319,7 @@ export default function ReferSponsorPage() {
                       value={formData.referrerCollege}
                       onChange={e => setFormData({ ...formData, referrerCollege: e.target.value })}
                       placeholder="e.g. Sathyabama IST / IIT Madras"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#10B981] text-sm text-white placeholder-slate-400 outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-400 text-sm text-white placeholder-slate-400 outline-none transition"
                     />
                   </div>
                 </div>
@@ -333,7 +333,7 @@ export default function ReferSponsorPage() {
                       value={formData.referrerEmail}
                       onChange={e => setFormData({ ...formData, referrerEmail: e.target.value })}
                       placeholder="rahul@example.com"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#10B981] text-sm text-white placeholder-slate-400 outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-400 text-sm text-white placeholder-slate-400 outline-none transition"
                     />
                   </div>
                   <div>
@@ -343,7 +343,7 @@ export default function ReferSponsorPage() {
                       value={formData.referrerPhone}
                       onChange={e => setFormData({ ...formData, referrerPhone: e.target.value })}
                       placeholder="+91 98765 43210"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#10B981] text-sm text-white placeholder-slate-400 outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-400 text-sm text-white placeholder-slate-400 outline-none transition"
                     />
                   </div>
                   <div>
@@ -354,7 +354,7 @@ export default function ReferSponsorPage() {
                       value={formData.referrerUpiId}
                       onChange={e => setFormData({ ...formData, referrerUpiId: e.target.value })}
                       placeholder="rahul@oksbi or paytm"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#10B981] text-sm text-[#10B981] font-mono placeholder-slate-400 outline-none transition"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-400 text-sm text-emerald-400 font-mono placeholder-slate-400 outline-none transition"
                     />
                   </div>
                 </div>
@@ -362,7 +362,7 @@ export default function ReferSponsorPage() {
 
               {/* Section 2: Target Corporate Sponsor Details */}
               <div className="pt-6 border-t border-slate-800">
-                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-purple-400 mb-4 flex items-center gap-2">
+                <h4 className="text-xs font-mono font-bold  text-purple-400 mb-4 flex items-center gap-2">
                   <span className="w-5 h-5 rounded-full bg-purple-950/80 flex items-center justify-center text-[10px]">2</span>
                   Target Corporate Sponsor & Decision-Maker Details
                 </h4>
@@ -421,11 +421,11 @@ export default function ReferSponsorPage() {
                       onChange={e => setFormData({ ...formData, estimatedDealTier: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 text-sm text-white outline-none transition"
                     >
-                      <option value="TITLE_200K">Title Partner (₹2,00,000) — ₹20k–₹30k Payout</option>
-                      <option value="POWERED_100K">Co-Powered Partner (₹1,00,000) — ₹10k–₹12k Payout</option>
-                      <option value="ASSOCIATE_50K">Associate / Gold (₹50,000) — ₹5,000 Payout</option>
-                      <option value="TRACK_25K">Technical Track Partner (₹25,000) — ₹2,500 Payout</option>
-                      <option value="IN_KIND">In-Kind F&B / Cloud Sponsorship — ₹3,000–₹5,000</option>
+                      <option value="TITLE_200K">Title Partner (₹2,00,000) :  ₹20k to ₹30k Payout</option>
+                      <option value="POWERED_100K">Co-Powered Partner (₹1,00,000) :  ₹10k to ₹12k Payout</option>
+                      <option value="ASSOCIATE_50K">Associate / Gold (₹50,000) :  ₹5,000 Payout</option>
+                      <option value="TRACK_25K">Technical Track Partner (₹25,000) :  ₹2,500 Payout</option>
+                      <option value="IN_KIND">In-Kind F&B / Cloud Sponsorship :  ₹3,000 to ₹5,000</option>
                     </select>
                   </div>
                 </div>
@@ -447,7 +447,7 @@ export default function ReferSponsorPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#10B981] to-emerald-600 text-slate-950 font-bold text-sm hover:brightness-110 transition shadow-lg shadow-[#10B981]/20 flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 font-bold text-sm hover:brightness-110 transition shadow-lg shadow-emerald-950/20 flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   <span>Securing Exclusive 21-Day Lock...</span>
@@ -465,7 +465,7 @@ export default function ReferSponsorPage() {
         {/* Lead Status Tracker Box */}
         <div className="max-w-3xl mx-auto rounded-3xl bg-slate-900/80 border border-slate-800 p-8 sm:p-10 shadow-xl mb-20">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2.5 rounded-xl bg-[#0073BB]/15 text-[#0073BB]">
+            <div className="p-2.5 rounded-xl bg-sky-500/15 text-sky-400">
               <Search className="w-5 h-5" />
             </div>
             <div>
@@ -480,12 +480,12 @@ export default function ReferSponsorPage() {
               value={searchCode}
               onChange={e => setSearchCode(e.target.value)}
               placeholder="e.g. RAIN-8921"
-              className="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-[#0073BB] text-sm text-white font-mono placeholder-slate-400 outline-none uppercase"
+              className="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-sky-400 text-sm text-white font-mono placeholder-slate-400 outline-none "
             />
             <button
               type="submit"
               disabled={lookingUp}
-              className="px-6 py-3 rounded-xl bg-[#0073BB] hover:bg-blue-600 text-white font-bold text-sm transition shrink-0"
+              className="px-6 py-3 rounded-xl bg-sky-500 hover:bg-blue-600 text-white font-bold text-sm transition shrink-0"
             >
               {lookingUp ? 'Checking...' : 'Check Status'}
             </button>
@@ -500,7 +500,7 @@ export default function ReferSponsorPage() {
           {lookupResult && (
             <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-sm font-bold text-[#10B981]">{lookupResult.referralCode}</span>
+                <span className="font-mono text-sm font-bold text-emerald-400">{lookupResult.referralCode}</span>
                 <span className={`text-xs px-2.5 py-0.5 rounded-full font-mono font-bold ${
                   lookupResult.status === 'PAID_OUT' ? 'bg-emerald-500/20 text-emerald-400' :
                   lookupResult.status === 'CONTRACT_SIGNED' ? 'bg-blue-500/20 text-blue-400' :
@@ -514,7 +514,7 @@ export default function ReferSponsorPage() {
               <div className="text-xs text-slate-400">Referrer: {lookupResult.referrerName} ({lookupResult.referrerUpiId})</div>
               <div className="text-xs text-slate-400">Lock Expiry: {new Date(lookupResult.lockExpiryDate).toLocaleDateString()}</div>
               {lookupResult.payoutAmount && (
-                <div className="text-sm font-mono text-[#10B981] font-bold">Disbursed Payout: ₹{lookupResult.payoutAmount.toLocaleString('en-IN')}</div>
+                <div className="text-sm font-mono text-emerald-400 font-bold">Disbursed Payout: ₹{lookupResult.payoutAmount.toLocaleString('en-IN')}</div>
               )}
             </div>
           )}
@@ -527,7 +527,7 @@ export default function ReferSponsorPage() {
             <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
               <h4 className="text-sm font-bold text-white mb-1">When and how is the cash commission paid?</h4>
               <p className="text-xs text-slate-400 leading-relaxed">
-                As soon as the corporate partner executes the agreement and clears funds into the university account, our Chief Partnership Officer authorizes the transfer. Your 10%–15% commission is sent via instant UPI or NEFT within 48–72 hours of fund clearance.
+                As soon as the corporate partner executes the agreement and clears funds into the university account, our Chief Partnership Officer authorizes the transfer. Your 10% to 15% commission is sent via instant UPI or NEFT within 48 to 72 hours of fund clearance.
               </p>
             </div>
             <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800">

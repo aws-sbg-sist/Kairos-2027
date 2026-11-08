@@ -118,7 +118,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
                 href="/docs/KAIROS_2027_Sponsorship_Prospectus.pdf"
                 download="KAIROS_2027_Sponsorship_Prospectus.pdf"
                 onClick={() => sound?.playClick()}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-purple-900/40 hover:bg-purple-800/50 border border-purple-500/30 text-purple-200 transition-all shadow-md group"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-purple-900/40 hover:bg-purple-800/50 border border-purple-500/30 text-purple-200 transition-colors shadow-md group"
               >
                 <Download className="w-4 h-4 text-purple-400 group-hover:translate-y-0.5 transition-transform" />
                 <span>Download Official Prospectus PDF</span>
@@ -129,7 +129,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
                   sound?.playClick();
                   onOpenProspectusModal();
                 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold btn-primary-themed text-white transition-all shadow-lg shadow-purple-900/30"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold btn-primary-themed text-white transition-colors shadow-lg shadow-purple-900/30"
               >
                 <Briefcase className="w-4 h-4" />
                 <span>Instant Sponsorship Matrix & Inquiry</span>
@@ -140,14 +140,14 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
 
         {/* Continuous Partner Marquee */}
         <div className="mb-16 space-y-4">
-          <div className="text-center text-xs font-mono uppercase tracking-widest text-slate-400">
+          <div className="text-center text-xs font-mono  text-slate-400">
             Enterprise & Cloud Ecosystem Alignment
           </div>
           <Marquee speed={24} pauseOnHover={true}>
             {sponsorTechLogos.map((logo, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-aws-card/60 border border-slate-700/50 hover:border-purple-500/50 transition-all backdrop-blur-md"
+                className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-aws-card/60 border border-slate-700/50 hover:border-purple-500/50 transition-colors backdrop-blur-md"
               >
                 <span
                   className="w-2.5 h-2.5 rounded-full"
@@ -168,7 +168,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
           {/* Tier Switcher (4 cols) */}
           <div className="lg:col-span-4 space-y-3">
-            <span className="text-xs font-mono uppercase text-slate-400 block tracking-wider font-semibold mb-2">
+            <span className="text-xs font-mono  text-slate-400 block font-semibold mb-2">
               Select Sponsorship Tier
             </span>
             {PROPOSED_SPONSOR_TIERS.map((tier) => {
@@ -180,14 +180,14 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
                     sound?.playClick();
                     setSelectedTier(tier.id);
                   }}
-                  className={`w-full p-4 rounded-2xl text-left transition-all duration-200 border flex items-center justify-between ${
+                  className={`w-full p-4 rounded-2xl text-left transition-colors duration-200 border flex items-center justify-between ${
                     isSelected
                       ? 'bg-purple-950/60 border-2 border-purple-500 text-white shadow-lg shadow-purple-900/30 scale-[1.02]'
                       : 'bg-aws-card/70 border-slate-700/60 text-slate-300 hover:text-white hover:bg-slate-900'
                   }`}
                 >
                   <div>
-                    <span className="text-[10px] font-mono text-purple-300 block uppercase font-bold">
+                    <span className="text-[10px] font-mono text-purple-300 block  font-bold">
                       {tier.statusBadge}
                     </span>
                     <span className="font-display font-bold text-base block text-white">
@@ -211,7 +211,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
             >
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
                 <div>
-                  <span className="text-xs font-mono text-purple-300 font-bold block uppercase tracking-wider mb-1">
+                  <span className="text-xs font-mono text-purple-300 font-bold block  mb-1">
                     {currentTier.statusBadge}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-display font-black text-white">
@@ -230,7 +230,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
 
               {/* Tier Deliverables Checklist */}
               <div className="space-y-3">
-                <span className="text-xs font-mono uppercase text-slate-400 block tracking-wider font-semibold">
+                <span className="text-xs font-mono  text-slate-400 block font-semibold">
                   Key Partner Privileges & Deliverables
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

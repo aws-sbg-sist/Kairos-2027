@@ -45,7 +45,7 @@ export const MissionSection: React.FC = () => {
               <div className="p-8 sm:p-10 rounded-3xl bg-slate-950/70 border border-slate-800/80 h-full flex flex-col justify-between space-y-6 relative overflow-hidden group">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                    <span className="text-xs font-mono font-bold  text-slate-400 flex items-center gap-2">
                       <Clock className="w-4 h-4 text-slate-400" />
                       <span>The Chronos Reality</span>
                     </span>
@@ -94,7 +94,7 @@ export const MissionSection: React.FC = () => {
 
                 <div className="space-y-4 relative z-10">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold uppercase tracking-widest text-purple-400 flex items-center gap-2">
+                    <span className="text-xs font-mono font-bold  text-purple-400 flex items-center gap-2">
                       <Zap className="w-4 h-4 text-purple-400" />
                       <span>The Kairos Standard</span>
                     </span>
@@ -138,7 +138,7 @@ export const MissionSection: React.FC = () => {
             <SpotlightCard
               spotlightColor="rgba(118, 48, 217, 0.25)"
               borderColor="rgba(118, 48, 217, 0.45)"
-              className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/50 transition-all space-y-5 flex flex-col justify-between h-full group"
+              className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/50 transition-colors space-y-5 flex flex-col justify-between h-full group"
             >
               <div className="space-y-4">
                 <div className="relative w-14 h-14 sm:w-16 sm:h-16 transition-transform duration-300 group-hover:scale-110">
@@ -146,7 +146,7 @@ export const MissionSection: React.FC = () => {
                     src="/assets/innov.png"
                     alt="Applied Engineering Innovation"
                     fill
-                    className="object-contain filter drop-shadow-[0_8px_20px_rgba(118,48,217,0.35)]"
+                    className="object-contain filter drop-shadow-md"
                   />
                 </div>
                 <h3 className="text-xl font-display font-bold text-white group-hover:text-purple-200 transition-colors">
@@ -168,7 +168,7 @@ export const MissionSection: React.FC = () => {
             <SpotlightCard
               spotlightColor="rgba(56, 189, 248, 0.25)"
               borderColor="rgba(56, 189, 248, 0.45)"
-              className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-sky-500/50 transition-all space-y-5 flex flex-col justify-between h-full group"
+              className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-sky-500/50 transition-colors space-y-5 flex flex-col justify-between h-full group"
             >
               <div className="space-y-4">
                 <div className="relative w-14 h-14 sm:w-16 sm:h-16 transition-transform duration-300 group-hover:scale-110">
@@ -176,7 +176,7 @@ export const MissionSection: React.FC = () => {
                     src="/assets/collaborate.png"
                     alt="Builder Collaboration"
                     fill
-                    className="object-contain filter drop-shadow-[0_8px_20px_rgba(56,189,248,0.35)]"
+                    className="object-contain filter drop-shadow-md"
                   />
                 </div>
                 <h3 className="text-xl font-display font-bold text-white group-hover:text-sky-200 transition-colors">
@@ -198,7 +198,7 @@ export const MissionSection: React.FC = () => {
             <SpotlightCard
               spotlightColor="rgba(238, 5, 242, 0.25)"
               borderColor="rgba(238, 5, 242, 0.45)"
-              className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/50 transition-all space-y-5 flex flex-col justify-between h-full group"
+              className="p-8 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/50 transition-colors space-y-5 flex flex-col justify-between h-full group"
             >
               <div className="space-y-4">
                 <div className="relative w-14 h-14 sm:w-16 sm:h-16 transition-transform duration-300 group-hover:scale-110">
@@ -206,7 +206,7 @@ export const MissionSection: React.FC = () => {
                     src="/assets/build.png"
                     alt="Transparent Merit & Build"
                     fill
-                    className="object-contain filter drop-shadow-[0_8px_20px_rgba(238,5,242,0.35)]"
+                    className="object-contain filter drop-shadow-md"
                   />
                 </div>
                 <h3 className="text-xl font-display font-bold text-white group-hover:text-purple-200 transition-colors">

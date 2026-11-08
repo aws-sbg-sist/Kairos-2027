@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { Sparkles, Compass } from 'lucide-react';
+import { Compass } from 'lucide-react';
 
 export const Logo25DAnimation: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -76,10 +76,10 @@ export const Logo25DAnimation: React.FC = () => {
             LAYER 0: Deep Ambient Glow & Radial Diffusion (Z: -60px)
             ================================================================= */}
         <div
-          className="absolute w-72 h-72 sm:w-88 sm:h-88 rounded-full blur-[80px] opacity-45 pointer-events-none transition-all duration-500"
+          className="absolute w-72 h-72 sm:w-88 sm:h-88 rounded-full blur-[80px] opacity-45 pointer-events-none transition-colors duration-500"
           style={{
             transform: 'translateZ(-60px)',
-            background: 'radial-gradient(circle, var(--aws-orange) 0%, #7630d9 45%, #0511f2 80%, transparent 100%)',
+            background: 'radial-gradient(circle, var(--aws-orange) 0%, var(--btn-grad-start) 45%, var(--aws-purple) 80%, transparent 100%)',
           }}
         />
 
@@ -93,7 +93,7 @@ export const Logo25DAnimation: React.FC = () => {
           }}
         >
           {/* Circular SVG Caliper with Technical Tick Marks */}
-          <svg viewBox="0 0 400 400" className="w-full h-full opacity-35 text-[#7630d9]">
+          <svg aria-hidden="true" viewBox="0 0 400 400" className="w-full h-full opacity-35 text-purple-500">
             <circle
               cx="200"
               cy="200"
@@ -141,24 +141,24 @@ export const Logo25DAnimation: React.FC = () => {
           }}
         >
           {/* The Glowing Elliptical Track */}
-          <div className="w-full h-full rounded-full border border-purple-500/40 shadow-[0_0_20px_rgba(118,48,217,0.35)] relative animate-orbit-spin">
+          <div className="w-full h-full rounded-full border border-purple-500/40 shadow-lg shadow-purple-900/40 relative animate-orbit-spin">
             {/* Satellite 1: Neon Magenta Node */}
             <div
-              className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 shadow-[0_0_14px_var(--aws-orange)] flex items-center justify-center animate-pulse"
+              className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 shadow-[0_0_14px_var(--aws-orange)] flex items-center justify-center animate-pulse"
             >
               <div className="w-1.5 h-1.5 rounded-full bg-white" />
             </div>
 
             {/* Satellite 2: Electric Cobalt Blue Node */}
             <div
-              className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#0511f2] shadow-[0_0_14px_#0511f2] flex items-center justify-center"
+              className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-purple-600 shadow-lg shadow-purple-900/50 flex items-center justify-center"
             >
               <div className="w-1 h-1 rounded-full bg-white" />
             </div>
 
             {/* Satellite 3: Cyan Micro Photon */}
             <div
-              className="absolute top-1/2 -left-2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_10px_#38bdf8]"
+              className="absolute top-1/2 -left-2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-sky-400 shadow-md shadow-sky-950/50"
             />
           </div>
         </div>
@@ -175,9 +175,9 @@ export const Logo25DAnimation: React.FC = () => {
         >
           {/* Logo Drop Shadow Projected Behind */}
           <div
-            className="absolute inset-0 rounded-full blur-2xl opacity-50 transition-all duration-200 pointer-events-none"
+            className="absolute inset-0 rounded-full blur-2xl opacity-50 transition-colors duration-200 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle, var(--aws-orange) 0%, #7630d9 60%, transparent 100%)',
+              background: 'radial-gradient(circle, var(--aws-orange) 0%, var(--btn-grad-start) 60%, transparent 100%)',
               transform: `translate(${shadowX}px, ${shadowY}px) scale(0.9)`,
             }}
           />
@@ -190,13 +190,13 @@ export const Logo25DAnimation: React.FC = () => {
               fill
               priority
               sizes="(max-width: 768px) 256px, 320px"
-              className="object-contain filter drop-shadow-[0_12px_30px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform"
+              className="object-contain filter drop-shadow-2xl group-hover:scale-105 transition-transform"
             />
           </div>
 
           {/* Central Quantum Constriction Ring (The Waist of Time) */}
           <div
-            className="absolute w-12 h-3 rounded-full border border-sky-400 bg-sky-400/20 blur-[1px] shadow-[0_0_12px_#38bdf8] pointer-events-none animate-pulse"
+            className="absolute w-12 h-3 rounded-full border border-sky-400 bg-sky-400/20 blur-[1px] shadow-md shadow-sky-950/50 pointer-events-none animate-pulse"
             style={{ transform: 'translateZ(20px)' }}
           />
 
@@ -219,8 +219,8 @@ export const Logo25DAnimation: React.FC = () => {
           className="absolute top-2 right-4 sm:right-6 px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-950/90 border border-purple-500/40 text-purple-200 shadow-lg shadow-black/60 backdrop-blur-md flex items-center gap-1.5 pointer-events-none"
           style={{ transform: 'translateZ(75px)' }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-ping" />
-          <span className="font-bold tracking-wider text-white">48H SAND SYNC</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 animate-ping" />
+          <span className="font-bold  text-white">48H SAND SYNC</span>
         </div>
 
         {/* Bottom-Left Coordinates Chip */}
@@ -229,15 +229,7 @@ export const Logo25DAnimation: React.FC = () => {
           style={{ transform: 'translateZ(75px)' }}
         >
           <Compass className="w-3 h-3 text-sky-400" />
-          <span>IST CALIBRATED · 12.87°N</span>
-        </div>
-
-        {/* Center Waist Active Particle Flux */}
-        <div
-          className="absolute pointer-events-none"
-          style={{ transform: 'translateZ(60px)' }}
-        >
-          <Sparkles className="w-4 h-4 text-purple-300 animate-spin" style={{ animationDuration: '6s' }} />
+          <span>IST CALIBRATED - 12.87°N</span>
         </div>
       </div>
     </div>

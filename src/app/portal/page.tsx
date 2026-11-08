@@ -77,7 +77,7 @@ export default function ParticipantPortalPage() {
                 Builder Dashboard
               </span>
               <span className="text-[10px] font-mono text-purple-400 block">
-                KAIROS 2027 · SATHYABAMA INDOOR STADIUM
+                KAIROS 2027 - SATHYABAMA INDOOR STADIUM
               </span>
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function ParticipantPortalPage() {
             
             <Link
               href="/portal/pass"
-              className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-all flex items-center gap-1.5 shadow-sm"
+              className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-colors flex items-center gap-1.5 shadow-sm"
             >
               <QrCode className="w-3.5 h-3.5" />
               <span>View Stadium QR Pass</span>
@@ -103,7 +103,7 @@ export default function ParticipantPortalPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-purple-500/15">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-mono font-bold text-purple-400 uppercase">
+                <span className="text-xs font-mono font-bold text-purple-400 ">
                   TEAM ROSTER (4–6 BUILDERS)
                 </span>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-900/60 text-purple-200">
@@ -121,7 +121,7 @@ export default function ParticipantPortalPage() {
             {/* Invite Code Box */}
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-purple-500/25 flex items-center justify-between gap-4">
               <div>
-                <span className="text-[10px] font-mono text-slate-400 block uppercase">Teammate Join Code</span>
+                <span className="text-[10px] font-mono text-slate-400 block ">Teammate Join Code</span>
                 <span className="text-lg font-mono font-bold text-purple-300 tracking-wider">
                   {team.inviteCode}
                 </span>
@@ -234,15 +234,15 @@ export default function ParticipantPortalPage() {
         {/* Stadium Desk & Arena Allocation Card */}
         <div className="p-6 rounded-3xl glass-panel border border-purple-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-xs font-mono text-purple-400 font-bold uppercase">VENUE CHECK-IN READY</span>
-            <h4 className="text-lg font-bold text-white">Sathyabama Indoor Stadium · Arena Bay B-14</h4>
+            <span className="text-xs font-mono text-purple-400 font-bold">VENUE CHECK-IN READY</span>
+            <h4 className="text-lg font-bold text-white">Sathyabama Indoor Stadium - Arena Bay B-14</h4>
             <p className="text-xs text-slate-400">
               Allocated 6 power outlets, surge suppressor board, and dual-band high-density Wi-Fi SSID.
             </p>
           </div>
           <Link
             href="/portal/pass"
-            className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-sky-500 hover:from-purple-500 shadow-md flex items-center gap-2"
+            className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 shadow-md flex items-center gap-2"
           >
             <QrCode className="w-4 h-4" />
             <span>Generate Digital Pass</span>

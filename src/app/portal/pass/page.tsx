@@ -19,7 +19,7 @@ export default function ParticipantPassPage() {
     bay: 'Stadium Arena Bay B-14',
     accessCode: 'KAIROS-2027-BLDR-4411',
     accessTier: '48H Full Arena + 7 Meal Pass',
-    dates: '22–24 January 2027',
+    dates: '22 to 24 January 2027',
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function ParticipantPassPage() {
       <div className="w-full max-w-md flex items-center justify-between mb-6 z-10">
         <Link
           href="/portal"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white px-3 py-1.5 rounded-lg bg-white/5 border border-purple-500/20 transition-all"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white px-3 py-1.5 rounded-lg bg-white/5 border border-purple-500/20 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Dashboard</span>
@@ -66,7 +66,7 @@ export default function ParticipantPassPage() {
 
         <button
           onClick={handlePrint}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 px-3.5 py-1.5 rounded-xl shadow-sm transition-all"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 px-3.5 py-1.5 rounded-xl shadow-sm transition-colors"
         >
           <Printer className="w-3.5 h-3.5" />
           <span>Print / Save Badge</span>
@@ -77,7 +77,7 @@ export default function ParticipantPassPage() {
       <div className="w-full max-w-md rounded-3xl glass-panel-glow border-2 border-purple-500/40 p-6 sm:p-8 relative overflow-hidden shadow-2xl shadow-purple-950/80 z-10 space-y-6">
         
         {/* Holographic Top Stripe */}
-        <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-purple-500 via-sky-400 to-indigo-500" />
+        <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-purple-600 via-purple-700 to-purple-900" />
 
         {/* Lanyard Slot Cutout Simulation */}
         <div className="w-16 h-2 rounded-full bg-slate-900 border border-purple-500/30 mx-auto" />
@@ -90,7 +90,7 @@ export default function ParticipantPassPage() {
                 src="/assets/kairos-hourglass.png"
                 alt="KAIROS Logo"
                 fill
-                className="object-contain filter drop-shadow-[0_0_12px_rgba(168,85,247,0.7)]"
+                className="object-contain filter drop-shadow-md"
                 priority
               />
             </div>
@@ -98,7 +98,7 @@ export default function ParticipantPassPage() {
               <span className="font-display font-black text-xl tracking-wider text-white block leading-none">
                 KAIROS <span className="text-purple-400 text-sm font-mono">2027</span>
               </span>
-              <span className="text-[9px] font-mono text-slate-400 tracking-tight uppercase">
+              <span className="text-[9px] font-mono text-slate-400 tracking-tight ">
                 NATIONAL TECHNICAL HACKATHON
               </span>
             </div>
@@ -116,14 +116,14 @@ export default function ParticipantPassPage() {
 
         {/* Builder Identity */}
         <div className="text-center py-2 space-y-1 border-y border-purple-500/20">
-          <span className="text-[10px] font-mono text-purple-400 uppercase tracking-widest font-semibold block">
+          <span className="text-[10px] font-mono text-purple-400  font-semibold block">
             OFFICIAL PARTICIPANT PASS
           </span>
           <h2 className="text-2xl font-display font-extrabold text-white">
             {passData.participantName}
           </h2>
           <span className="text-xs font-semibold text-purple-300 block">
-            {passData.teamName} · {passData.role}
+            {passData.teamName} - {passData.role}
           </span>
           <span className="text-[11px] text-slate-400 block">
             {passData.institution}
@@ -145,7 +145,7 @@ export default function ParticipantPassPage() {
               Generating Security Token...
             </div>
           )}
-          <span className="text-[10px] font-mono text-purple-300 mt-2 font-bold tracking-widest">
+          <span className="text-[10px] font-mono text-purple-300 mt-2 font-bold ">
             {passData.accessCode}
           </span>
         </div>
@@ -153,24 +153,24 @@ export default function ParticipantPassPage() {
         {/* Venue & Track Allocations */}
         <div className="grid grid-cols-2 gap-2 text-left text-xs">
           <div className="p-2.5 rounded-xl bg-purple-950/40 border border-purple-500/20">
-            <span className="text-[9px] font-mono text-purple-400 uppercase block">ALLOCATED BAY</span>
+            <span className="text-[9px] font-mono text-purple-400  block">ALLOCATED BAY</span>
             <span className="font-bold text-white text-xs block truncate">{passData.bay}</span>
           </div>
 
           <div className="p-2.5 rounded-xl bg-purple-950/40 border border-purple-500/20">
-            <span className="text-[9px] font-mono text-purple-400 uppercase block">ACCESS TIER</span>
+            <span className="text-[9px] font-mono text-purple-400  block">ACCESS TIER</span>
             <span className="font-bold text-emerald-400 text-xs block truncate">{passData.accessTier}</span>
           </div>
 
           <div className="col-span-2 p-2.5 rounded-xl bg-purple-950/40 border border-purple-500/20">
-            <span className="text-[9px] font-mono text-purple-400 uppercase block">TRACK</span>
+            <span className="text-[9px] font-mono text-purple-400  block">TRACK</span>
             <span className="font-bold text-white text-xs block truncate">{passData.track}</span>
           </div>
         </div>
 
         {/* Security Watermark Footnote */}
         <div className="text-[9px] font-mono text-slate-500 text-center leading-tight">
-          Sathyabama Indoor Stadium · 22–24 Jan 2027 · Valid with Student ID Card
+          Sathyabama Indoor Stadium - 22 to 24 Jan 2027 - Valid with Student ID Card
         </div>
       </div>
     </div>

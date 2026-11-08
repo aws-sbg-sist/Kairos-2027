@@ -103,7 +103,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
               className="h-full"
             >
               <div
-                className={`p-5 rounded-2xl relative flex flex-col justify-between space-y-3 transition-all h-full ${
+                className={`p-5 rounded-2xl relative flex flex-col justify-between space-y-3 transition-colors h-full ${
                   st.current
                     ? 'bg-purple-950/50 border-2 border-purple-500 shadow-xl shadow-purple-950/60 scale-[1.02]'
                     : 'glass-panel opacity-85 hover:opacity-100 hover:border-purple-500/40'
@@ -115,7 +115,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
                     <span
                       className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                         st.current
-                          ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.2)]'
+                          ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 shadow-md shadow-emerald-950/30'
                           : 'bg-slate-900 text-slate-400'
                       }`}
                     >
@@ -147,7 +147,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
             <div className="relative z-10 space-y-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs font-mono text-purple-300 font-bold block uppercase tracking-wider mb-1">
+                  <span className="text-xs font-mono text-purple-300 font-bold block  mb-1">
                     Direct Priority Reservation
                   </span>
                   <h3 className="text-2xl font-display font-black text-white">

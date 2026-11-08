@@ -27,14 +27,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                   src="/assets/kairos-hourglass.png"
                   alt="KAIROS 2027 Logo"
                   fill
-                  className="object-contain filter drop-shadow-[0_0_15px_rgba(255,153,0,0.5)]"
+                  className="object-contain filter drop-shadow-md"
                 />
               </div>
               <div className="flex flex-col">
                 <span className="font-display font-extrabold text-2xl tracking-wider text-white">
                   KAIROS <span className="text-sm font-mono text-purple-400 font-normal">2027</span>
                 </span>
-                <span className="text-xs text-slate-400 font-medium">Grand Edition · National Technical Hackathon</span>
+                <span className="text-xs text-slate-400 font-medium">Grand Edition - National Technical Hackathon</span>
               </div>
             </div>
 
@@ -69,7 +69,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
 
           {/* Column 2: Event Navigation */}
           <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-semibold mb-4 flex items-center gap-1.5">
+            <h4 className="text-xs font-mono  text-purple-300 font-semibold mb-4 flex items-center gap-1.5">
               <span>Main Journey</span>
             </h4>
             <ul className="space-y-2 text-sm text-slate-300">
@@ -84,12 +84,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
 
           {/* Column 3: Resources & Referrals */}
           <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-semibold mb-4">
+            <h4 className="text-xs font-mono  text-purple-300 font-semibold mb-4">
               Resources & Partner
             </h4>
             <ul className="space-y-2 text-sm text-slate-300">
               <li><Link href="/resources" className="hover:text-white transition-colors text-sky-400">AWS SBG Learning Library</Link></li>
-              <li><Link href="/refer-sponsor" className="hover:text-white transition-colors text-emerald-400 font-semibold">Earn 10%–15% Referral Cash</Link></li>
+              <li><Link href="/refer-sponsor" className="hover:text-white transition-colors text-emerald-400 font-semibold">Earn 10% to 15% Referral Cash</Link></li>
               <li><Link href="/sponsors" className="hover:text-white transition-colors">Sponsorship Prospectus</Link></li>
               <li><Link href="/rules" className="hover:text-white transition-colors">100% Student IP & Rules</Link></li>
               
@@ -108,7 +108,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
 
           {/* Column 4: Community & Leadership */}
           <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-semibold mb-4">
+            <h4 className="text-xs font-mono  text-purple-300 font-semibold mb-4">
               AWS SBGL Governance
             </h4>
             <div className="space-y-3">
@@ -127,7 +127,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 </span>
               </div>
               <p className="text-xs text-slate-400 leading-snug">
-                President Thenappan T · Executive Leadership · Faculty Patrons
+                President Thenappan T - Executive Leadership - Faculty Patrons
               </p>
               <div className="pt-1 flex flex-col gap-2">
                 <Link
@@ -135,7 +135,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                   className="inline-flex items-center gap-1.5 text-xs text-purple-300 hover:text-white px-2.5 py-1.5 rounded bg-purple-950/50 border border-purple-500/30 transition-colors"
                 >
                   <Award className="w-3.5 h-3.5" />
-                  <span>2026–27 Leadership Gallery</span>
+                  <span>2026 to 27 Leadership Gallery</span>
                 </Link>
                 <Link
                   href="/members"
@@ -153,21 +153,21 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
         <div className="pt-8 text-[11px] text-slate-400 leading-relaxed space-y-3">
           <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700/50">
             <p className="text-slate-300">
-              <strong className="text-purple-400 font-semibold uppercase tracking-wider">Mandatory AWS Co-Branding Disclaimer:</strong>{' '}
+              <strong className="text-purple-400 font-semibold ">Mandatory AWS Co-Branding Disclaimer:</strong>{' '}
               {EVENT_CONFIG.disclaimer.aws}
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800 text-xs">
-            <p>© 2026–2027 KAIROS Hackathon. AWS Student Builder Group — SIST Chapter. Sathyabama Institute of Science and Technology.</p>
+            <p>© 2026 to 2027 KAIROS Hackathon. AWS Student Builder Group :  SIST Chapter. Sathyabama Institute of Science and Technology.</p>
             <div className="flex items-center gap-4 text-slate-400">
               <Link href="/rules" className="hover:text-white">IP & Conduct</Link>
-              <span>•</span>
+              <span>|</span>
               <a href="https://meetup.com/aws-student-builder-group-sist" target="_blank" rel="noopener noreferrer" className="hover:text-white">
                 Official Meetup Chapter ↗
               </a>
-              <span>•</span>
-              <span className="text-emerald-400 font-mono">100% Free · ₹0 Fee</span>
+              <span>|</span>
+              <span className="text-emerald-400 font-mono">100% Free - ₹0 Fee</span>
             </div>
           </div>
         </div>

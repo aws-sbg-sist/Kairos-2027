@@ -19,11 +19,11 @@ const INITIAL_MESSAGES: Message[] = [
     content: `👋 **Welcome to KAIROS 2027!**
 
 I am the official AWS Student Builder Group AI Assistant. Ask me anything about:
-• **₹1,75,000** Total Prize Pool & AWS cloud credits
+• **₹1,75,000** Cash Prize Pool & $50,000+ AWS Credits (Secret Split-Ups!)
 • **5 Technical Tracks** (Agentic AI, Cloud-Native, IoT, FinTech, Open Enterprise)
-• **Dual-Phase Selection** & Free Round 0 Registration
-• **Complimentary Meals, Transit Bus Fleet & 48H Venue**
-• **Rainmaker Program** (Earn 10%–15% cash referring sponsors)
+• **Dual-Phase Selection** & 100% Free Registration
+• **Complimentary Meals & Transit Bus Fleet**
+• **Venue:** Indoor Auditorium, Sathyabama, Chennai
 
 What would you like to know?`,
     time: 'Just now',
@@ -31,13 +31,65 @@ What would you like to know?`,
 ];
 
 const SUGGESTED_PROMPTS = [
-  '🏆 Cash prizes breakdown?',
+  '🏆 Cash prize pool?',
   '⚡ What are the 5 tracks?',
   '🆓 Is registration 100% free?',
   '📅 Full 48-hour schedule?',
-  '💰 How does referral cash work?',
-  '🏨 Meals, stay & transit buses?',
+  '📍 Where is the venue?',
+  '🏨 Meals & transit buses?',
 ];
+
+function renderFormattedMessage(content: string) {
+  const lines = content.split('\n');
+  return lines.map((line, idx) => {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      return <div key={idx} className="h-1" />;
+    }
+
+    if (line.startsWith('### ')) {
+      return (
+        <div key={idx} className="font-bold text-purple-300 text-[12px] mt-1.5 mb-0.5">
+          {line.replace('### ', '')}
+        </div>
+      );
+    }
+    if (line.startsWith('## ')) {
+      return (
+        <div key={idx} className="font-bold text-white text-[12.5px] mt-2 mb-1">
+          {line.replace('## ', '')}
+        </div>
+      );
+    }
+
+    const isBullet = trimmed.startsWith('•') || trimmed.startsWith('* ') || trimmed.startsWith('- ');
+    const cleanLine = isBullet ? trimmed.replace(/^[•*-]\s*/, '') : line;
+
+    // Format bold segments
+    const parts = cleanLine.split(/(\*\*[^*]+\*\*)/g);
+    const renderedParts = parts.map((part, pIdx) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={pIdx} className="font-semibold text-white">{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+
+    if (isBullet) {
+      return (
+        <div key={idx} className="flex gap-1.5 pl-1 my-0.5 items-start">
+          <span className="text-purple-400 select-none leading-none mt-1">•</span>
+          <span className="flex-1 leading-relaxed">{renderedParts}</span>
+        </div>
+      );
+    }
+
+    return (
+      <div key={idx} className="my-0.5 leading-relaxed">
+        {renderedParts}
+      </div>
+    );
+  });
+}
 
 export const KairosChatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -140,7 +192,7 @@ export const KairosChatbot: React.FC = () => {
             sound?.playClick();
             setIsOpen(true);
           }}
-          className="relative group flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-aws-orange via-fuchsia-400 to-yellow-500 hover:from-purple-500 hover:to-aws-orange text-slate-950 font-bold shadow-xl shadow-purple-900/40 hover:scale-105 active:scale-[0.97] transition-all duration-200 ease-entrance border border-purple-500/40"
+          className="relative group flex items-center gap-2.5 px-4 py-3 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-colors duration-200 ease-entrance border border-purple-400/40"
           aria-label="Open Kairos AI Chatbot"
         >
           <div className="relative w-6 h-6 flex-shrink-0 animate-pulse">
@@ -160,7 +212,7 @@ export const KairosChatbot: React.FC = () => {
           {/* Micro Tooltip */}
           {!hasInteracted && (
             <span className="absolute -top-10 right-0 bg-aws-canvas/95 border border-purple-500/40 text-purple-300 text-[10px] font-mono px-2.5 py-1 rounded-md shadow-lg pointer-events-none whitespace-nowrap">
-              ⚡ Instant RAG answers about Kairos 2027
+              Instant RAG answers about Kairos 2027
             </span>
           )}
         </button>
@@ -231,14 +283,14 @@ export const KairosChatbot: React.FC = () => {
                 )}
 
                 <div
-                  className={`max-w-[85%] rounded-xl p-3 leading-relaxed whitespace-pre-wrap ${
+                  className={`max-w-[85%] rounded-xl p-3 leading-relaxed ${
                     msg.role === 'user'
                       ? 'bg-gradient-to-r from-aws-orange/25 to-indigo-600/20 border border-purple-500/40 text-purple-200 font-medium'
                       : 'bg-aws-card/95 border border-purple-500/20 text-aws-snow shadow-sm'
                   }`}
                 >
                   <div className="text-[11.5px] leading-relaxed select-text">
-                    {msg.content}
+                    {msg.role === 'assistant' ? renderFormattedMessage(msg.content) : msg.content}
                   </div>
                   <div className="mt-1 text-[9px] font-mono text-slate-400 text-right">
                     {msg.time}
@@ -261,9 +313,9 @@ export const KairosChatbot: React.FC = () => {
                 <div className="flex items-center gap-1.5 font-mono text-[11px] text-purple-300">
                   <span>Searching Kairos knowledge base</span>
                   <span className="flex gap-0.5">
-                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-bounce" />
-                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-bounce [animation-delay:0.2s]" />
-                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-bounce [animation-delay:0.4s]" />
+                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 animate-bounce" />
+                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 animate-bounce [animation-delay:0.2s]" />
+                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 animate-bounce [animation-delay:0.4s]" />
                   </span>
                 </div>
               </div>
@@ -307,7 +359,7 @@ export const KairosChatbot: React.FC = () => {
             <button
               onClick={() => handleSendMessage()}
               disabled={!inputValue.trim() || isLoading}
-              className="p-2 rounded-xl bg-gradient-to-r from-aws-orange via-fuchsia-400 to-yellow-500 hover:from-purple-500 hover:to-aws-orange text-slate-950 disabled:opacity-40 disabled:cursor-not-allowed transition font-bold shadow-md shadow-purple-900/30 flex-shrink-0"
+              className="p-2 rounded-xl btn-primary-themed text-white hover:opacity-95 disabled:opacity-40 disabled:cursor-not-allowed transition font-bold shadow-md shadow-purple-900/30 flex-shrink-0"
               title="Send message"
             >
               <Send className="w-3.5 h-3.5" />

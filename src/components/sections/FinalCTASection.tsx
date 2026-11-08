@@ -10,13 +10,13 @@ import { ScrollReveal } from '@/components/animation/ScrollReveal';
 
 export const FinalCTASection: React.FC = () => {
   return (
-    <section className="relative py-28 lg:py-40 overflow-hidden bg-gradient-to-b from-aws-canvas via-[#0d091a] to-aws-canvas select-none">
+    <section className="relative py-28 lg:py-40 overflow-hidden bg-gradient-to-b from-aws-canvas via-aws-canvas to-aws-canvas select-none">
       {/* Relativistic Radial Glows & Concentric Astrolabe Rings */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-gradient-to-r from-aws-orange/20 via-purple-900/30 to-aws-blue/20 blur-[180px] pointer-events-none rounded-full" />
       
       {/* Astrolabe Background SVG Rings */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none opacity-20">
-        <svg viewBox="0 0 700 700" className="w-full h-full text-purple-400 animate-orbit-spin">
+        <svg aria-hidden="true" viewBox="0 0 700 700" className="w-full h-full text-purple-400 animate-orbit-spin">
           <circle cx="350" cy="350" r="330" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4 8" />
           <circle cx="350" cy="350" r="260" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="12 12" />
           <circle cx="350" cy="350" r="190" fill="none" stroke="currentColor" strokeWidth="1" />
@@ -28,7 +28,7 @@ export const FinalCTASection: React.FC = () => {
         <ScrollReveal direction="down" distance={20}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/40 shadow-xl backdrop-blur-md">
             <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-            <span>KAIROS 2027 · Sathyabama Institute of Science and Technology</span>
+            <span>KAIROS 2027 - Sathyabama Institute of Science and Technology</span>
           </div>
         </ScrollReveal>
 
@@ -40,7 +40,7 @@ export const FinalCTASection: React.FC = () => {
               src="/assets/kairos-hourglass.png"
               alt="KAIROS Hourglass"
               fill
-              className="object-contain filter drop-shadow-[0_12px_35px_rgba(168,85,247,0.4)]"
+              className="object-contain filter drop-shadow-xl"
             />
           </div>
         </ScrollReveal>
@@ -66,7 +66,7 @@ export const FinalCTASection: React.FC = () => {
           <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 text-xs font-mono text-slate-300">
             <span className="px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-white/10 flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-purple-400" />
-              <span>January 22–24, 2027</span>
+              <span>January 22 to 24, 2027</span>
             </span>
             <span className="px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-white/10 flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-sky-400" />
@@ -103,7 +103,7 @@ export const FinalCTASection: React.FC = () => {
                 href="/tracks"
                 onClick={() => sound?.playClick()}
                 onMouseEnter={() => sound?.playHover()}
-                className="px-6 py-4 rounded-2xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-all backdrop-blur-md"
+                className="px-6 py-4 rounded-2xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-colors backdrop-blur-md"
               >
                 <span>Inspect Technical Tracks</span>
               </Link>
@@ -115,7 +115,7 @@ export const FinalCTASection: React.FC = () => {
                 download="KAIROS_2027_Sponsorship_Prospectus.pdf"
                 onClick={() => sound?.playClick()}
                 onMouseEnter={() => sound?.playHover()}
-                className="px-5 py-4 rounded-2xl text-sm font-semibold text-slate-300 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-purple-500/40 transition-all flex items-center gap-2 backdrop-blur-md"
+                className="px-5 py-4 rounded-2xl text-sm font-semibold text-slate-300 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-purple-500/40 transition-colors flex items-center gap-2 backdrop-blur-md"
               >
                 <Download className="w-4 h-4 text-purple-400" />
                 <span>Partner Prospectus</span>

@@ -177,7 +177,7 @@ export default function AdminDashboardPage() {
             </button>
             <button
               onClick={handleLogout}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-red-300 bg-red-950/40 hover:bg-red-900/60 border border-red-500/25 transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-red-300 bg-red-950/40 hover:bg-red-900/60 border border-red-500/25 transition-colors"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Sign Out</span>
@@ -268,7 +268,7 @@ export default function AdminDashboardPage() {
                   </div>
                   <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
                     <div
-                      className="bg-gradient-to-r from-purple-500 to-indigo-400 h-full rounded-full transition-all duration-500"
+                      className="bg-gradient-to-r from-purple-600 to-purple-800 h-full rounded-full transition-colors duration-500"
                       style={{ width: `${Math.max(pct, count > 0 ? 8 : 0)}%` }}
                     />
                   </div>
@@ -283,7 +283,7 @@ export default function AdminDashboardPage() {
         <div className="flex flex-wrap items-center gap-2 border-b border-purple-500/20 pb-2">
           <button
             onClick={() => setActiveTab('waitlist')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors flex items-center gap-1.5 ${
               activeTab === 'waitlist'
                 ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
@@ -295,7 +295,7 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab('sponsors')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors flex items-center gap-1.5 ${
               activeTab === 'sponsors'
                 ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
@@ -307,7 +307,7 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab('flags')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors flex items-center gap-1.5 ${
               activeTab === 'flags'
                 ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
@@ -350,7 +350,7 @@ export default function AdminDashboardPage() {
 
               <a
                 href="/api/admin/export?type=waitlist"
-                className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Export Waitlist CSV</span>
@@ -361,7 +361,7 @@ export default function AdminDashboardPage() {
             <div className="rounded-2xl glass-panel border border-purple-500/20 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-950/80 text-purple-300 font-mono uppercase border-b border-purple-500/20">
+                  <thead className="bg-slate-950/80 text-purple-300 font-mono  border-b border-purple-500/20">
                     <tr>
                       <th className="p-3.5">Candidate</th>
                       <th className="p-3.5">Institution & Year</th>
@@ -392,13 +392,13 @@ export default function AdminDashboardPage() {
                                 rel="noreferrer"
                                 className="text-[10px] text-sky-400 hover:underline mt-0.5 inline-block"
                               >
-                                View Portfolio →
+                                View Portfolio
                               </a>
                             )}
                           </td>
                           <td className="p-3.5">
                             <span className="text-slate-200 block">{w.institution}</span>
-                            <span className="text-slate-400 text-[10px] block font-mono">{w.yearOfStudy} · {w.department}</span>
+                            <span className="text-slate-400 text-[10px] block font-mono">{w.yearOfStudy} - {w.department}</span>
                           </td>
                           <td className="p-3.5">
                             <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-purple-950/80 border border-purple-500/30 text-purple-200">
@@ -431,21 +431,21 @@ export default function AdminDashboardPage() {
                             <div className="flex items-center gap-1.5">
                               <button
                                 onClick={() => handleUpdateWaitlistStatus(w.id, 'shortlisted')}
-                                className="px-2 py-1 rounded bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-[10px] font-semibold transition-all"
+                                className="px-2 py-1 rounded bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-[10px] font-semibold transition-colors"
                                 title="Shortlist for 75-team arena"
                               >
                                 Shortlist
                               </button>
                               <button
                                 onClick={() => handleUpdateWaitlistStatus(w.id, 'reviewed')}
-                                className="px-2 py-1 rounded bg-sky-600/30 hover:bg-sky-600 text-sky-300 hover:text-white border border-sky-500/30 text-[10px] font-semibold transition-all"
+                                className="px-2 py-1 rounded bg-sky-600/30 hover:bg-sky-600 text-sky-300 hover:text-white border border-sky-500/30 text-[10px] font-semibold transition-colors"
                                 title="Mark candidate as reviewed"
                               >
                                 Review
                               </button>
                               <button
                                 onClick={() => handleUpdateWaitlistStatus(w.id, 'waitlisted')}
-                                className="px-2 py-1 rounded bg-purple-700/30 hover:bg-purple-700 text-purple-300 hover:text-white border border-purple-500/30 text-[10px] font-semibold transition-all"
+                                className="px-2 py-1 rounded bg-purple-700/30 hover:bg-purple-700 text-purple-300 hover:text-white border border-purple-500/30 text-[10px] font-semibold transition-colors"
                                 title="Place on secondary waitlist"
                               >
                                 Waitlist
@@ -475,7 +475,7 @@ export default function AdminDashboardPage() {
               </span>
               <a
                 href="/api/admin/export?type=sponsors"
-                className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-sky-700 hover:bg-sky-600 transition-all flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-sky-700 hover:bg-sky-600 transition-colors flex items-center gap-1.5 shadow-sm"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Export Sponsors CSV</span>
@@ -485,7 +485,7 @@ export default function AdminDashboardPage() {
             <div className="rounded-2xl glass-panel border border-purple-500/20 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-950/80 text-sky-300 font-mono uppercase border-b border-purple-500/20">
+                  <thead className="bg-slate-950/80 text-sky-300 font-mono  border-b border-purple-500/20">
                     <tr>
                       <th className="p-3.5">Company & Contact</th>
                       <th className="p-3.5">Requested Tier</th>
@@ -513,7 +513,7 @@ export default function AdminDashboardPage() {
                             )}
                           </td>
                           <td className="p-3.5">
-                            <span className="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-purple-900/50 text-purple-200 border border-purple-500/30 uppercase">
+                            <span className="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-purple-900/50 text-purple-200 border border-purple-500/30 ">
                               {s.interestedTier}
                             </span>
                           </td>
@@ -571,7 +571,7 @@ export default function AdminDashboardPage() {
                 <button
                   onClick={() => handleUpdateFlags({ registrationOpen: !flags.registrationOpen })}
                   disabled={savingFlags}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
                     flags.registrationOpen
                       ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-md'
                       : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -592,7 +592,7 @@ export default function AdminDashboardPage() {
                 <button
                   onClick={() => handleUpdateFlags({ prizePoolConfirmed: !flags.prizePoolConfirmed })}
                   disabled={savingFlags}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
                     flags.prizePoolConfirmed
                       ? 'bg-purple-700 hover:bg-purple-600 text-white shadow-md'
                       : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -613,7 +613,7 @@ export default function AdminDashboardPage() {
                 <button
                   onClick={() => handleUpdateFlags({ demoSandboxMode: !flags.demoSandboxMode })}
                   disabled={savingFlags}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
                     flags.demoSandboxMode
                       ? 'bg-purple-600 hover:bg-purple-500 text-white shadow-md'
                       : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -631,7 +631,7 @@ export default function AdminDashboardPage() {
                 
                 {/* Live Preview Bar */}
                 <div className="p-3 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center gap-2 shadow-inner">
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/40 text-purple-200 uppercase font-bold shrink-0">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/40 text-purple-200  font-bold shrink-0">
                     PUBLIC PREVIEW
                   </span>
                   <span className="text-xs text-purple-100 font-medium truncate">
@@ -650,7 +650,7 @@ export default function AdminDashboardPage() {
                   <button
                     onClick={() => handleUpdateFlags({ announcementBanner: flags.announcementBanner })}
                     disabled={savingFlags}
-                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-all shrink-0 shadow-md"
+                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-colors shrink-0 shadow-md"
                   >
                     Save Banner
                   </button>
@@ -668,7 +668,7 @@ export default function AdminDashboardPage() {
                 href="/portal"
                 className="px-4 py-2 rounded-xl text-xs font-bold text-purple-300 hover:text-white bg-purple-900/60 border border-purple-500/30"
               >
-                Launch Portal Demo →
+                Launch Portal Demo
               </Link>
             </div>
           </div>

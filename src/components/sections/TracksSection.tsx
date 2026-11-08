@@ -71,7 +71,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
               <Link
                 href="/tracks"
                 onClick={() => sound?.playClick()}
-                className="inline-flex items-center gap-2 text-xs font-bold text-purple-300 hover:text-white px-4 py-2.5 rounded-xl bg-aws-squidInk/80 border border-purple-500/30 hover:border-purple-500 transition-all shadow-md group"
+                className="inline-flex items-center gap-2 text-xs font-bold text-purple-300 hover:text-white px-4 py-2.5 rounded-xl bg-aws-squidInk/80 border border-purple-500/30 hover:border-purple-500 transition-colors shadow-md group"
               >
                 <span>Explore Complete Architectural Blueprints & Rubrics</span>
                 <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -98,7 +98,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                     sound?.playClick();
                     setActiveTrackId(track.id);
                   }}
-                  className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 h-full flex flex-col justify-between relative overflow-hidden group select-none ${
+                  className={`p-5 rounded-2xl cursor-pointer transition-colors duration-300 h-full flex flex-col justify-between relative overflow-hidden group select-none ${
                     isActive
                       ? 'bg-aws-squidInk/95 border-2 border-purple-500 shadow-xl shadow-purple-900/30 scale-[1.02]'
                       : 'bg-aws-card/70 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/80'
@@ -107,7 +107,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                   {/* Subtle top indicator bar */}
                   <div
                     className={`absolute top-0 left-0 right-0 h-[2px] transition-opacity duration-300 ${
-                      isActive ? 'bg-gradient-to-r from-purple-600 to-indigo-600 opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-60 group-hover:bg-gradient-to-r from-purple-600 to-indigo-600/50'
+                      isActive ? 'bg-gradient-to-r from-purple-700 to-purple-900 opacity-100' : 'bg-transparent opacity-0 group-hover:opacity-60 group-hover:bg-gradient-to-r from-purple-700 to-purple-900/50'
                     }`}
                   />
 
@@ -116,7 +116,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
                           isActive
-                            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold'
+                            ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-bold'
                             : 'bg-white/5 text-slate-300 group-hover:text-purple-400 border border-white/10'
                         }`}
                       >
@@ -180,7 +180,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                       <ActiveIcon className="w-6 h-6" />
                     </div>
                     <div>
-                      <span className="text-xs font-mono font-bold text-purple-300 block uppercase tracking-wider">
+                      <span className="text-xs font-mono font-bold text-purple-300 block ">
                         TRACK {activeTrack.number} ARCHITECTURAL BLUEPRINT
                       </span>
                       <h3 className="text-2xl sm:text-3xl font-display font-black text-white">
@@ -195,7 +195,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
 
                   {/* Architecture & Tech Stack Tags */}
                   <div className="space-y-3">
-                    <span className="text-xs font-mono uppercase text-slate-400 block tracking-wider font-semibold">
+                    <span className="text-xs font-mono text-slate-400 block font-semibold">
                       Suggested AWS Primitives & Tools
                     </span>
                     <div className="flex flex-wrap gap-2">
@@ -239,7 +239,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                   {/* Technical Deliverables Card */}
                   <div className="p-4 rounded-xl bg-purple-950/40 border border-purple-500/30 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] font-mono text-purple-400 uppercase tracking-wider block font-semibold">
+                      <span className="text-[10px] font-mono text-purple-400  block font-semibold">
                         Challenge Deliverable
                       </span>
                       <span className="text-sm font-bold text-white">

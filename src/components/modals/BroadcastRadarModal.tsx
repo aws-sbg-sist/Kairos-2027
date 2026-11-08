@@ -135,7 +135,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1.5 uppercase">
+                  <label className="block text-xs font-mono text-slate-300 mb-1.5 ">
                     Your Name *
                   </label>
                   <input
@@ -148,7 +148,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1.5 uppercase">
+                  <label className="block text-xs font-mono text-slate-300 mb-1.5 ">
                     Primary Discipline *
                   </label>
                   <select
@@ -167,7 +167,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1.5 uppercase">
+                  <label className="block text-xs font-mono text-slate-300 mb-1.5 ">
                     Target Track *
                   </label>
                   <select
@@ -181,7 +181,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1.5 uppercase">
+                  <label className="block text-xs font-mono text-slate-300 mb-1.5 ">
                     College / Institution *
                   </label>
                   <input
@@ -196,7 +196,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-slate-300 mb-1.5 uppercase">
+                <label className="block text-xs font-mono text-slate-300 mb-1.5 ">
                   Core Tech Stack (Comma Separated) *
                 </label>
                 <input
@@ -210,7 +210,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-slate-300 mb-1.5 uppercase">
+                <label className="block text-xs font-mono text-slate-300 mb-1.5 ">
                   What are you looking for? (Seeking Squad) *
                 </label>
                 <textarea
@@ -224,7 +224,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-slate-300 mb-1.5 uppercase">
+                <label className="block text-xs font-mono text-slate-300 mb-1.5 ">
                   Contact Handle / URL (GitHub, LinkedIn, Discord) *
                 </label>
                 <input
@@ -242,7 +242,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
                   type="submit"
                   disabled={loading}
                   onMouseEnter={() => sound?.playHover()}
-                  className="w-full py-3.5 px-6 rounded-xl font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-95"
+                  className="w-full py-3.5 px-6 rounded-xl font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 active:scale-95"
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">

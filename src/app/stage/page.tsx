@@ -65,7 +65,7 @@ export default function StageScreenMode() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 sm:p-10 flex flex-col justify-between font-sans selection:bg-gradient-to-r from-purple-600 to-indigo-600 selection:text-black overflow-hidden relative">
+    <div className="min-h-screen bg-black text-white p-6 sm:p-10 flex flex-col justify-between font-sans selection:bg-gradient-to-r from-purple-700 to-purple-900 selection:text-black overflow-hidden relative">
       
       {/* Background Subtle Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-purple-950/40 blur-[180px] pointer-events-none rounded-full" />
@@ -79,15 +79,15 @@ export default function StageScreenMode() {
               src="/assets/kairos-hourglass.png"
               alt="KAIROS 2027"
               fill
-              className="object-contain filter drop-shadow-[0_0_20px_rgba(255,153,0,0.8)]"
+              className="object-contain filter drop-shadow-lg"
             />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display font-black text-2xl tracking-widest text-white">
+              <span className="font-display font-black text-2xl  text-white">
                 KAIROS 2027
               </span>
-              <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-black">
+              <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-gradient-to-r from-purple-700 to-purple-900 text-black">
                 GRAND FINALE
               </span>
               <span className="px-2 py-0.5 rounded text-xs font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
@@ -103,8 +103,8 @@ export default function StageScreenMode() {
 
         <div className="flex items-center gap-4">
           <div className="text-right hidden sm:block">
-            <span className="text-[11px] font-mono text-slate-400 block uppercase">ARENA SCALE</span>
-            <span className="text-sm font-mono font-bold text-purple-300 block">100 Teams • 450+ Builders • 100% Free</span>
+            <span className="text-[11px] font-mono text-slate-400 block ">ARENA SCALE</span>
+            <span className="text-sm font-mono font-bold text-purple-300 block">100 Teams | 450+ Builders | 100% Free</span>
           </div>
           <button
             onClick={toggleFullscreen}
@@ -127,30 +127,30 @@ export default function StageScreenMode() {
         
         {/* Stage Announcement Marquee */}
         <div className="max-w-4xl mx-auto w-full p-3.5 rounded-2xl bg-aws-squidInk/90 border border-purple-500/40 text-purple-300 font-mono text-xs sm:text-sm shadow-xl flex items-center justify-center gap-2.5">
-          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-ping" />
-          <span className="font-bold tracking-wider">{activeAnnouncement}</span>
+          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 animate-ping" />
+          <span className="font-bold ">{activeAnnouncement}</span>
         </div>
 
         {/* Giant Countdown Clock */}
         <div className="space-y-4">
-          <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.3em] text-slate-400 block font-bold">
+          <span className="text-xs sm:text-sm font-mono   text-slate-400 block font-bold">
             COUNTDOWN TO HARD CODE FREEZE (08:30 AM IST)
           </span>
 
-          <div className="flex items-center justify-center gap-3 sm:gap-6 font-mono font-black text-6xl sm:text-8xl lg:text-9xl text-white tracking-wider">
+          <div className="flex items-center justify-center gap-3 sm:gap-6 font-mono font-black text-6xl sm:text-8xl lg:text-9xl text-white ">
             <div className="p-4 sm:p-8 rounded-3xl bg-slate-950/90 border-2 border-purple-500/40 shadow-2xl shadow-purple-900/30 min-w-[130px] sm:min-w-[200px]">
               <span className="block text-purple-400">{String(timeLeft.hours).padStart(2, '0')}</span>
-              <span className="text-xs sm:text-sm text-slate-500 font-sans tracking-widest block font-bold mt-2">HOURS</span>
+              <span className="text-xs sm:text-sm text-slate-500 font-sans  block font-bold mt-2">HOURS</span>
             </div>
             <span className="text-purple-400/60 animate-pulse">:</span>
             <div className="p-4 sm:p-8 rounded-3xl bg-slate-950/90 border-2 border-purple-500/40 shadow-2xl shadow-purple-900/30 min-w-[130px] sm:min-w-[200px]">
               <span className="block text-white">{String(timeLeft.minutes).padStart(2, '0')}</span>
-              <span className="text-xs sm:text-sm text-slate-500 font-sans tracking-widest block font-bold mt-2">MINUTES</span>
+              <span className="text-xs sm:text-sm text-slate-500 font-sans  block font-bold mt-2">MINUTES</span>
             </div>
             <span className="text-purple-400/60 animate-pulse">:</span>
             <div className="p-4 sm:p-8 rounded-3xl bg-slate-950/90 border-2 border-purple-500/40 shadow-2xl shadow-purple-900/30 min-w-[130px] sm:min-w-[200px]">
               <span className="block text-purple-300">{String(timeLeft.seconds).padStart(2, '0')}</span>
-              <span className="text-xs sm:text-sm text-slate-500 font-sans tracking-widest block font-bold mt-2">SECONDS</span>
+              <span className="text-xs sm:text-sm text-slate-500 font-sans  block font-bold mt-2">SECONDS</span>
             </div>
           </div>
         </div>

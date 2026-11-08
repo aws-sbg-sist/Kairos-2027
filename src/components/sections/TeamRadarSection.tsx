@@ -48,7 +48,7 @@ export function TeamRadarSection() {
   };
 
   return (
-    <section id="radar" className="py-24 relative overflow-hidden bg-[#07090e]">
+    <section id="radar" className="py-24 relative overflow-hidden bg-aws-canvas">
       {/* Background ambient radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-purple-950/20 blur-[140px] rounded-full pointer-events-none" />
 
@@ -62,7 +62,7 @@ export function TeamRadarSection() {
                 src="/assets/teams.png"
                 alt="Teams Formation"
                 fill
-                className="object-contain filter drop-shadow-[0_2px_8px_rgba(238,5,242,0.4)]"
+                className="object-contain filter drop-shadow-md"
               />
             </div>
             <span>BUILDER RADAR & MATCHING</span>
@@ -80,7 +80,7 @@ export function TeamRadarSection() {
             <button
               onClick={() => { sound?.playModalOpen(); setIsModalOpen(true); }}
               onMouseEnter={() => sound?.playHover()}
-              className="px-6 py-3 rounded-xl font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 transition-all flex items-center gap-2 group text-sm active:scale-95"
+              className="px-6 py-3 rounded-xl font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 transition-colors flex items-center gap-2 group text-sm active:scale-95"
             >
               <Radio className="w-4 h-4 text-slate-950" />
               <span>Broadcast Your Beacon</span>
@@ -98,15 +98,15 @@ export function TeamRadarSection() {
         <div className="mb-10 space-y-4">
           {/* Track Filters */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-            <span className="text-xs font-mono text-slate-400 uppercase flex items-center gap-1 shrink-0 mr-2">
+            <span className="text-xs font-mono text-slate-400 flex items-center gap-1 shrink-0 mr-2">
               <Filter className="w-3.5 h-3.5 text-purple-400" /> Track:
             </span>
             <button
               onClick={() => { sound?.playClick(); setSelectedTrack('all'); }}
               onMouseEnter={() => sound?.playHover()}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 ${
                 selectedTrack === 'all'
-                  ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
+                  ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
               }`}
             >
@@ -117,9 +117,9 @@ export function TeamRadarSection() {
                 key={t.id}
                 onClick={() => { sound?.playClick(); setSelectedTrack(t.id); }}
                 onMouseEnter={() => sound?.playHover()}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 ${
                   selectedTrack === t.id
-                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
+                    ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
                     : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
                 }`}
               >
@@ -130,7 +130,7 @@ export function TeamRadarSection() {
 
           {/* Role Filters */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-            <span className="text-xs font-mono text-slate-400 uppercase flex items-center gap-1 shrink-0 mr-2">
+            <span className="text-xs font-mono text-slate-400 flex items-center gap-1 shrink-0 mr-2">
               <Users className="w-3.5 h-3.5 text-sky-400" /> Role:
             </span>
             {[
@@ -145,7 +145,7 @@ export function TeamRadarSection() {
                 key={r.id}
                 onClick={() => { sound?.playClick(); setSelectedRole(r.id); }}
                 onMouseEnter={() => sound?.playHover()}
-                className={`px-3 py-1 rounded-md text-xs font-mono transition-all shrink-0 ${
+                className={`px-3 py-1 rounded-md text-xs font-mono transition-colors shrink-0 ${
                   selectedRole === r.id
                     ? 'bg-purple-600 text-white font-bold border border-purple-400/40 shadow-sm'
                     : 'bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/5'
@@ -166,7 +166,7 @@ export function TeamRadarSection() {
                 key={sig.id}
                 onMouseEnter={() => sound?.playHover()}
                 style={{ animationDelay: `${idx * 30}ms` }}
-                className="group p-6 rounded-2xl bg-slate-900/70 border border-white/10 hover:border-purple-500/40 transition-all duration-200 ease-entrance relative flex flex-col justify-between hover:shadow-xl hover:shadow-purple-900/30 backdrop-blur-md animate-fadeIn"
+                className="group p-6 rounded-2xl bg-slate-900/70 border border-white/10 hover:border-purple-500/40 transition-colors duration-200 ease-entrance relative flex flex-col justify-between hover:shadow-xl hover:shadow-purple-900/30 backdrop-blur-md animate-fadeIn"
               >
                 <div>
                   {/* Top Badge & Date */}
@@ -210,7 +210,7 @@ export function TeamRadarSection() {
                 <button
                   onClick={() => handleConnect(sig)}
                   onMouseEnter={() => sound?.playHover()}
-                  className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-white/5 hover:bg-purple-950/50 border border-white/10 hover:border-purple-500/40 text-slate-200 hover:text-white transition-all duration-200 ease-entrance active:scale-[0.97] flex items-center justify-center gap-2 group/btn ${
+                  className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-white/5 hover:bg-purple-950/50 border border-white/10 hover:border-purple-500/40 text-slate-200 hover:text-white transition-colors duration-200 ease-entrance active:scale-[0.97] flex items-center justify-center gap-2 group/btn ${
                     copiedId === sig.id ? 'animate-success-pulse border-emerald-500/50 bg-emerald-950/30' : ''
                   }`}
                 >

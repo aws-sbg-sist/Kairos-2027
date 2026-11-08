@@ -26,14 +26,14 @@ export const CommitteeSection: React.FC = () => {
                   className="object-contain"
                 />
               </div>
-              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider">
+              <span className="text-xs font-mono font-bold text-purple-400 ">
                 Official Organizing Student Community
               </span>
             </div>
 
             <div className="space-y-3">
               <h2 className="text-2xl sm:text-4xl font-display font-black text-white tracking-tight">
-                AWS Student Builder Group — <span className="gradient-text-kairos">SIST Chapter</span>
+                AWS Student Builder Group :  <span className="gradient-text-kairos">SIST Chapter</span>
               </h2>
               <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
                 KAIROS 2027 is conceptualized, architected, and executed by the student leadership and organizing cadre of the AWS Student Builder Group at Sathyabama Institute of Science and Technology.
@@ -47,7 +47,7 @@ export const CommitteeSection: React.FC = () => {
                 rel="noopener noreferrer"
                 onClick={() => sound?.playClick()}
                 onMouseEnter={() => sound?.playHover()}
-                className="px-6 py-3.5 rounded-xl text-sm font-bold btn-primary-themed text-white flex items-center gap-2 shadow-lg shadow-purple-900/30 hover:scale-105 active:scale-[0.97] transition-all"
+                className="px-6 py-3.5 rounded-xl text-sm font-bold btn-primary-themed text-white flex items-center gap-2 shadow-lg shadow-purple-900/30 hover:scale-105 active:scale-[0.97] transition-colors"
               >
                 <span>View Club Website</span>
                 <ExternalLink className="w-4 h-4" />

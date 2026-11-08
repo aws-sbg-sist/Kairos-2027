@@ -53,7 +53,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
             <div className="p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 max-w-2xl mx-auto flex items-center justify-center gap-2.5 text-xs sm:text-sm text-emerald-300 font-medium shadow-md">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>
-                <strong>Zero Entry Fee:</strong> 100% Free Participation • ₹1,75,000 Total Prize Pool • Fast-Track Incubation & Credits
+                <strong>Zero Entry Fee:</strong> 100% Free Participation | ₹1,75,000 Total Prize Pool | Fast-Track Incubation & Credits
               </span>
             </div>
           </ScrollReveal>
@@ -77,14 +77,14 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                   maxTilt={7}
                   spotlightColor={isGrand ? 'rgba(238, 5, 242, 0.3)' : 'rgba(118, 48, 217, 0.2)'}
                   borderColor={isGrand ? 'rgba(238, 5, 242, 0.7)' : 'rgba(118, 48, 217, 0.35)'}
-                  className={`p-6 sm:p-8 rounded-3xl flex flex-col justify-between transition-all relative overflow-hidden h-full ${
+                  className={`p-6 sm:p-8 rounded-3xl flex flex-col justify-between transition-colors relative overflow-hidden h-full ${
                     isGrand
                       ? 'bg-gradient-to-b from-aws-squidInk via-slate-950 to-slate-950 border-2 border-purple-500 shadow-2xl shadow-purple-900/30 lg:-translate-y-3'
                       : 'bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40'
                   }`}
                 >
                   {isGrand && (
-                    <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-mono font-black text-xs rounded-bl-2xl uppercase tracking-wider shadow-md">
+                    <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-mono font-black text-xs rounded-bl-2xl  shadow-md">
                       Apex Champion
                     </div>
                   )}
@@ -110,7 +110,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                         )}
                       </div>
                       <div>
-                        <span className="text-[11px] font-mono text-purple-300 font-semibold block uppercase">
+                        <span role="status" className="text-[11px] font-mono text-purple-300 font-medium block">
                           {item.badge}
                         </span>
                         <h3 className="text-xl font-display font-bold text-white">
@@ -151,10 +151,10 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {/* Card 1: VC Incubation & Angel Pitching */}
           <ScrollReveal direction="up" distance={20} delay={0.2} className="h-full">
-            <div className="p-6 rounded-2xl bg-aws-card/75 border border-purple-500/20 hover:border-purple-500/40 transition-all flex flex-col justify-between h-full">
+            <div className="p-6 rounded-2xl bg-aws-card/75 border border-purple-500/20 hover:border-purple-500/40 transition-colors flex flex-col justify-between h-full">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-purple-300 font-bold uppercase">
+                  <span className="text-xs font-mono text-purple-300 font-bold ">
                     Startup Accelerator
                   </span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
@@ -176,10 +176,10 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
 
           {/* Card 2: Special Innovation & Diversity Honors */}
           <ScrollReveal direction="up" distance={20} delay={0.3} className="h-full">
-            <div className="p-6 rounded-2xl bg-aws-card/75 border border-purple-500/20 hover:border-purple-500/40 transition-all flex flex-col justify-between h-full">
+            <div className="p-6 rounded-2xl bg-aws-card/75 border border-purple-500/20 hover:border-purple-500/40 transition-colors flex flex-col justify-between h-full">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-purple-300 font-bold uppercase">
+                  <span className="text-xs font-mono text-purple-300 font-bold ">
                     Special Category Honors
                   </span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
@@ -201,10 +201,10 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
 
           {/* Card 3: AWS Promotional Cloud Credits */}
           <ScrollReveal direction="up" distance={20} delay={0.4} className="h-full">
-            <div className="p-6 rounded-2xl bg-aws-card/75 border border-purple-500/20 hover:border-purple-500/40 transition-all flex flex-col justify-between h-full">
+            <div className="p-6 rounded-2xl bg-aws-card/75 border border-purple-500/20 hover:border-purple-500/40 transition-colors flex flex-col justify-between h-full">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-sky-400 font-bold uppercase">
+                  <span className="text-xs font-mono text-sky-400 font-bold ">
                     Cloud Infrastructure
                   </span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-500/30">

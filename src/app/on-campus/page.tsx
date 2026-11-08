@@ -9,7 +9,9 @@ import {
   MapPin, 
   Bus, 
   Shirt, 
-  ShieldAlert, 
+  ShieldAlert,
+  Lock,
+  Bed, 
   Navigation, 
   Clock, 
   CheckCircle2, 
@@ -27,32 +29,32 @@ export default function OnCampusGuidePage() {
     central: {
       hubName: 'Chennai Central Railway Station (MAS)',
       boardingPoint: 'Main Portico / Pillar 4 Pickup Bay',
-      departureTimes: ['Friday, Jan 22 — 06:45 AM', 'Friday, Jan 22 — 07:30 AM'],
-      returnDeparture: 'Sunday, Jan 24 — 05:15 PM from Central Library Gate',
+      departureTimes: ['Friday, Jan 22 at 06:45 AM', 'Friday, Jan 22 at 07:30 AM'],
+      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Central Library Gate',
       transitDuration: 'Approx. 55 mins via OMR Express Corridor',
       driverPOC: 'Bus Captain Murugan: +91 94441 23451'
     },
     tambaram: {
       hubName: 'Tambaram Railway Station (TBM)',
       boardingPoint: 'East Tambaram Bus Stand / Sathyabama Pickup Standee',
-      departureTimes: ['Friday, Jan 22 — 07:00 AM', 'Friday, Jan 22 — 07:45 AM'],
-      returnDeparture: 'Sunday, Jan 24 — 05:15 PM from Central Library Gate',
+      departureTimes: ['Friday, Jan 22 at 07:00 AM', 'Friday, Jan 22 at 07:45 AM'],
+      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Central Library Gate',
       transitDuration: 'Approx. 40 mins via Medavakkam Bypass',
       driverPOC: 'Bus Captain Velu: +91 94441 23452'
     },
     airport: {
       hubName: 'Chennai International Airport (MAA)',
-      boardingPoint: 'Arrival Terminal T1 — Pillar 12 Coach Bay',
-      departureTimes: ['Friday, Jan 22 — 07:15 AM', 'Friday, Jan 22 — 08:00 AM'],
-      returnDeparture: 'Sunday, Jan 24 — 05:15 PM from Central Library Gate',
+      boardingPoint: 'Arrival Terminal T1: Pillar 12 Coach Bay',
+      departureTimes: ['Friday, Jan 22 at 07:15 AM', 'Friday, Jan 22 at 08:00 AM'],
+      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Central Library Gate',
       transitDuration: 'Approx. 45 mins via Radial Road',
       driverPOC: 'Bus Captain Sundar: +91 94441 23453'
     },
     cmbt: {
       hubName: 'CMBT Koyambedu Inter-State Bus Terminus',
       boardingPoint: 'Platform 3 Private Coach Drop / Sathyabama Standee',
-      departureTimes: ['Friday, Jan 22 — 06:30 AM', 'Friday, Jan 22 — 07:15 AM'],
-      returnDeparture: 'Sunday, Jan 24 — 05:15 PM from Central Library Gate',
+      departureTimes: ['Friday, Jan 22 at 06:30 AM', 'Friday, Jan 22 at 07:15 AM'],
+      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Central Library Gate',
       transitDuration: 'Approx. 60 mins via Inner Ring Road',
       driverPOC: 'Bus Captain Rajesh: +91 94441 23454'
     }
@@ -60,7 +62,7 @@ export default function OnCampusGuidePage() {
 
   const floorplans = {
     ground: {
-      title: 'Ground Level — Registration, Keynote Auditorium & Arena Foyer',
+      title: 'Ground Level :  Registration, Keynote Auditorium & Arena Foyer',
       facilities: [
         'Grand Red-Carpet Check-In & Smart NFC Badge Encoding Desks',
         'Main Keynote Auditorium (20x10ft 4K LED Screen & AV Array)',
@@ -69,7 +71,7 @@ export default function OnCampusGuidePage() {
       ]
     },
     first: {
-      title: 'First Floor — Hacking Bays LH1 & LH2 (Teams 01–50)',
+      title: 'First Floor :  Hacking Bays LH1 & LH2 (Teams 01 to 50)',
       facilities: [
         'Dedicated Team Bays with Spike-Protected Power Drops',
         'Dual-Band 1Gbps High-Density Wi-Fi Access Points',
@@ -78,16 +80,16 @@ export default function OnCampusGuidePage() {
       ]
     },
     second: {
-      title: 'Second Floor — Hacking Bay LH3 (Teams 51–100) & Focus Labs',
+      title: 'Second Floor :  Hacking Bay LH3 (Teams 51 to 100) & Focus Labs',
       facilities: [
-        'Teams 51–100 Assigned Workstations',
+        'Teams 51 to 100 Assigned Workstations',
         'Silent Code Sprint Pods for Deep Architecture Sprints',
         'Rest & Recline Stations with Ergonomic Bean Bags',
         'First Aid & Emergency Health Station'
       ]
     },
     top: {
-      title: 'Top Floor — Grand Jury Deliberation Suites & Dining Corridor',
+      title: 'Top Floor :  Grand Jury Deliberation Suites & Dining Corridor',
       facilities: [
         'VIP Jury Scoring Rooms (PIN-Protected Digital Rubric Terminals)',
         'Faculty & Institutional Leadership Lounge',
@@ -111,7 +113,7 @@ export default function OnCampusGuidePage() {
           <div className="text-center space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk border border-purple-500/30">
               <MapPin className="w-3.5 h-3.5 text-purple-400" />
-              <span>Round 2: Top 100 Teams Finalist Guide • Jan 22–24, 2027</span>
+              <span>Round 2: Top 100 Teams Finalist Guide • Jan 22 to 24, 2027</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
               On-Campus Venue & <span className="gradient-text-kairos">Logistics Guide</span>
@@ -134,7 +136,7 @@ export default function OnCampusGuidePage() {
                   />
                 </div>
                 <div>
-                  <span className="text-xs font-mono text-purple-400 font-bold uppercase">VENUE LAYOUT</span>
+                  <span role="status" className="text-xs font-mono text-purple-400 font-medium">Venue Layout</span>
                   <h2 className="text-xl sm:text-2xl font-display font-black text-white">
                     Sathyabama Central Library Complex
                   </h2>
@@ -156,9 +158,9 @@ export default function OnCampusGuidePage() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
                 <span className="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700/60 backdrop-blur-md">
-                  Central Library Arena · 100 Hacking Bays & 24/7 Operations Hub
+                  Central Library Arena - 100 Hacking Bays & 24/7 Operations Hub
                 </span>
-                <span className="hidden sm:inline-block bg-gradient-to-r from-purple-600 to-indigo-600/90 text-slate-950 font-bold px-3 py-1 rounded-lg shadow-md">
+                <span className="hidden sm:inline-block bg-gradient-to-r from-purple-700 to-purple-900/90 text-slate-950 font-bold px-3 py-1 rounded-lg shadow-md">
                   100 Elite National Teams
                 </span>
               </div>
@@ -170,9 +172,9 @@ export default function OnCampusGuidePage() {
                 <button
                   key={floor}
                   onClick={() => setSelectedFloor(floor)}
-                  className={`p-3 rounded-xl text-xs font-bold font-mono transition-all uppercase ${
+                  className={`p-3 rounded-xl text-xs font-bold font-mono transition-colors  ${
                     selectedFloor === floor
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md'
+                      ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-md'
                       : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
                   }`}
                 >
@@ -223,7 +225,7 @@ export default function OnCampusGuidePage() {
           <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
               <div>
-                <span className="text-xs font-mono text-sky-400 font-bold uppercase">FREE TRANSIT SHUTTLES</span>
+                <span role="status" className="text-xs font-mono text-sky-400 font-medium">Free Transit Shuttles</span>
                 <h2 className="text-xl sm:text-2xl font-display font-black text-white">
                   Sathyabama Chartered Bus Fleet
                 </h2>
@@ -248,7 +250,7 @@ export default function OnCampusGuidePage() {
                 <button
                   key={h.id}
                   onClick={() => setSelectedHub(h.id as any)}
-                  className={`p-3 rounded-xl text-xs font-bold transition-all ${
+                  className={`p-3 rounded-xl text-xs font-bold transition-colors ${
                     selectedHub === h.id
                       ? 'bg-sky-500 text-slate-950 font-bold shadow-md'
                       : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
@@ -298,7 +300,7 @@ export default function OnCampusGuidePage() {
             <div className="flex items-center gap-2 border-b border-white/10 pb-4">
               <ShieldCheck className="w-5 h-5 text-emerald-400" />
               <div>
-                <span className="text-xs font-mono text-emerald-400 font-bold uppercase">BUILDER WELFARE</span>
+                <span role="status" className="text-xs font-mono text-emerald-400 font-medium">Builder Welfare</span>
                 <h2 className="text-xl sm:text-2xl font-display font-black text-white">
                   Night Safety, Rest & Medical Protocols
                 </h2>
@@ -307,9 +309,7 @@ export default function OnCampusGuidePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">
-                  🔒
-                </div>
+                <div className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center"><Lock className="w-4 h-4" /></div>
                 <h4 className="text-sm font-bold text-white">10 PM Night Lock-In Protocol</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
                   Campus perimeter security activates at 10:00 PM nightly. No external visitor entry is permitted between 10 PM and 6 AM to guarantee full builder safety.
@@ -317,9 +317,7 @@ export default function OnCampusGuidePage() {
               </div>
 
               <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
-                  🛏️
-                </div>
+                <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center"><Bed className="w-4 h-4" /></div>
                 <h4 className="text-sm font-bold text-white">Segregated Rest Corridors</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
                   Quiet relaxation lounges and dedicated hostel rooms with separate secured stairwells are provided for men and women builders to take scheduled sleep breaks.
@@ -327,9 +325,7 @@ export default function OnCampusGuidePage() {
               </div>
 
               <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">
-                  🚑
-                </div>
+                <div className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center"><ShieldAlert className="w-4 h-4" /></div>
                 <h4 className="text-sm font-bold text-white">24/7 Campus Medical Care</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
                   On-campus emergency health center with qualified nursing staff and on-call university medical doctor available throughout the 48-hour continuous sprint.
@@ -341,7 +337,7 @@ export default function OnCampusGuidePage() {
           {/* Section 4: Complimentary Builder Streetwear Kit */}
           <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-aws-squidInk to-slate-950 border border-purple-500/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-2 text-center md:text-left">
-              <span className="text-xs font-mono text-purple-400 font-bold uppercase">FINALIST MERCH CRATE</span>
+              <span role="status" className="text-xs font-mono text-purple-400 font-medium">Finalist Merch Crate</span>
               <h3 className="text-2xl font-bold text-white font-display">
                 Complimentary Streetwear Builder Kit
               </h3>
@@ -351,7 +347,7 @@ export default function OnCampusGuidePage() {
             </div>
             <Link
               href="/register"
-              className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md flex-shrink-0"
+              className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors shadow-md flex-shrink-0"
             >
               Verify Your Tee Size in Registration
             </Link>

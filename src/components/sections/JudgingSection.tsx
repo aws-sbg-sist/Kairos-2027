@@ -59,23 +59,23 @@ export const JudgingSection: React.FC = () => {
                 maxTilt={6}
                 spotlightColor="rgba(118, 48, 217, 0.2)"
                 borderColor="rgba(118, 48, 217, 0.4)"
-                className="p-6 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/40 transition-all flex flex-col justify-between space-y-5 group h-full hover:shadow-xl hover:shadow-purple-950/30"
+                className="p-6 rounded-2xl glass-panel border border-purple-500/20 hover:border-purple-500/40 transition-colors flex flex-col justify-between space-y-5 group h-full hover:shadow-xl hover:shadow-purple-950/30"
               >
                 <div className="space-y-3.5">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider">
+                    <span className="text-xs font-mono text-purple-400 font-bold ">
                       CRITERION 0{idx + 1}
                     </span>
 
                     {/* Mystery Points Badge */}
                     <div
                       onMouseEnter={() => sound?.playHover()}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-purple-950/90 text-purple-200 border border-purple-500/40 shadow-sm backdrop-blur-md group-hover:border-purple-500/50 group-hover:text-white transition-all cursor-help"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-purple-950/90 text-purple-200 border border-purple-500/40 shadow-sm backdrop-blur-md group-hover:border-purple-500/50 group-hover:text-white transition-colors cursor-help"
                       title="Exact point weight is sealed under jury embargo until kickoff."
                     >
                       <Lock className="w-3 h-3 text-purple-400 animate-pulse" />
-                      <span className="tracking-wider">?? PTS</span>
-                      <span className="text-[10px] text-purple-300 font-semibold uppercase tracking-wider">
+                      <span className="">?? PTS</span>
+                      <span className="text-[10px] text-purple-300 font-semibold ">
                         Classified
                       </span>
                     </div>

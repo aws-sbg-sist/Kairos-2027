@@ -117,7 +117,7 @@ export default function DashboardPage() {
               </Link>
               <Link
                 href="/online-qualifier"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors shadow-md flex items-center gap-1.5"
               >
                 <Video className="w-4 h-4" />
                 <span>Round 1 Qualifier Bay</span>
@@ -129,7 +129,7 @@ export default function DashboardPage() {
           <div className="p-6 rounded-3xl bg-aws-squidInk border border-purple-500/40 shadow-xl relative overflow-hidden">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
               <div className="space-y-1.5">
-                <span className={`inline-block px-3 py-1 rounded-full text-xs font-mono font-bold border uppercase tracking-wider ${stage.badgeClass}`}>
+                <span className={`inline-block px-3 py-1 rounded-full text-xs font-mono font-bold border  ${stage.badgeClass}`}>
                   {stage.title}
                 </span>
                 <h3 className="text-lg font-bold text-white">
@@ -192,7 +192,7 @@ export default function DashboardPage() {
                       </div>
                       <div className="text-right">
                         <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                          🟢 RSVP
+                          RSVP Verified
                         </span>
                       </div>
                     </div>
@@ -277,7 +277,7 @@ export default function DashboardPage() {
                 </p>
 
                 <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block">Promotional Voucher</span>
+                  <span className="text-[10px] font-mono text-slate-400  block">Promotional Voucher</span>
                   <div className="flex items-center justify-between font-mono font-bold text-sm text-purple-400">
                     <span>{team.awsCreditVoucher || 'AWS-KAIROS-PENDING'}</span>
                     <button
@@ -311,19 +311,19 @@ export default function DashboardPage() {
                     href="/resources"
                     className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 block transition-colors"
                   >
-                    🚀 Bedrock Foundation Model Starter Kit
+                    Bedrock Foundation Model Starter Kit
                   </Link>
                   <Link
                     href="/resources"
                     className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 block transition-colors"
                   >
-                    🏆 AWS Cloud Quest: Cloud Practitioner
+                    AWS Cloud Quest: Cloud Practitioner
                   </Link>
                   <Link
                     href="/resources"
                     className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 block transition-colors"
                   >
-                    📖 Storytelling for Career Readiness
+                    Storytelling for Career Readiness
                   </Link>
                 </div>
               </div>

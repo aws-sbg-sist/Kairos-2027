@@ -37,11 +37,11 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
         }}
         onMouseEnter={() => sound?.playHover()}
         aria-label={`Toggle theme. Current: ${isCyber ? 'Cyber Neon (Primary)' : 'AWS Classic'}`}
-        title={`Active: ${isCyber ? 'Cyber Neon (Default Adobe Palette)' : 'AWS Classic'} · Click to switch`}
-        className={`p-1.5 rounded-lg border transition-all duration-200 ease-onscreen active:scale-[0.97] flex items-center justify-center relative overflow-hidden ${
+        title={`Active: ${isCyber ? 'Cyber Neon (Default Adobe Palette)' : 'AWS Classic'} - Click to switch`}
+        className={`p-1.5 rounded-lg border transition-colors duration-200 ease-onscreen active:scale-[0.97] flex items-center justify-center relative overflow-hidden ${
           isCyber
-            ? 'bg-[#181126] border-[#ee05f2]/50 text-[#ee05f2] shadow-[0_0_10px_rgba(238,5,242,0.3)]'
-            : 'bg-[#161E2E] border-[#a855f7]/50 text-[#a855f7] shadow-[0_0_10px_rgba(168,85,247,0.3)]'
+            ? 'bg-purple-950/60 border-purple-500/50 text-purple-400 shadow-md shadow-purple-900/40'
+            : 'bg-slate-900 border-purple-500/50 text-purple-400 shadow-md shadow-purple-900/40'
         } ${className}`}
       >
         <AnimatePresence mode="popLayout" initial={false}>
@@ -88,7 +88,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
         {isCyber && (
           <motion.div
             layoutId="activeThemeKnob"
-            className="absolute inset-0 rounded-md bg-[#ee05f2] shadow-[0_0_12px_rgba(238,5,242,0.6)] z-[-1]"
+            className="absolute inset-0 rounded-md bg-purple-600 shadow-md shadow-purple-900/50 z-[-1]"
             animate={{ scaleX: isTransitioning ? 1.12 : 1 }}
             transition={{
               type: 'tween',
@@ -106,7 +106,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
             transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
             className="flex items-center gap-1"
           >
-            <Sparkles className={`w-3 h-3 ${isCyber ? 'text-slate-950' : 'text-slate-400 group-hover:text-[#ee05f2]'}`} />
+            <Sparkles className={`w-3 h-3 ${isCyber ? 'text-slate-950' : 'text-slate-400 group-hover:text-purple-400'}`} />
             <span className={isCyber ? 'text-slate-950' : 'text-slate-400 hover:text-white'}>CYBER</span>
           </motion.div>
         </AnimatePresence>
@@ -123,7 +123,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
         {!isCyber && (
           <motion.div
             layoutId="activeThemeKnob"
-            className="absolute inset-0 rounded-md bg-[#a855f7] shadow-[0_0_12px_rgba(168,85,247,0.6)] z-[-1]"
+            className="absolute inset-0 rounded-md bg-purple-500 shadow-md shadow-purple-900/50 z-[-1]"
             animate={{ scaleX: isTransitioning ? 1.12 : 1 }}
             transition={{
               type: 'tween',
@@ -141,7 +141,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
             transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
             className="flex items-center gap-1"
           >
-            <Flame className={`w-3 h-3 ${!isCyber ? 'text-slate-950' : 'text-[#a855f7]'}`} />
+            <Flame className={`w-3 h-3 ${!isCyber ? 'text-slate-950' : 'text-purple-400'}`} />
             <span className={!isCyber ? 'text-slate-950' : 'text-slate-400 hover:text-white'}>AWS</span>
           </motion.div>
         </AnimatePresence>

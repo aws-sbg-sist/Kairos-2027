@@ -172,7 +172,7 @@ export default function JudgingPortalPage() {
                 <button
                   type="submit"
                   disabled={loading || pin.length < 4}
-                  className="w-full py-3.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md disabled:opacity-50"
+                  className="w-full py-3.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors shadow-md disabled:opacity-50"
                 >
                   {loading ? 'Authenticating...' : 'Unlock Evaluation Terminal →'}
                 </button>
@@ -206,11 +206,11 @@ export default function JudgingPortalPage() {
                   <h3 className="text-xl font-bold text-white">Scores Logged & Mathematically Normalized</h3>
                   <div className="flex items-center justify-center gap-6 font-mono text-xs">
                     <div>
-                      <span className="text-slate-400 block uppercase">Raw Score</span>
+                      <span className="text-slate-400 block">Raw Score</span>
                       <span className="text-xl font-bold text-white">{submittedScore.rawTotalScore} / 100</span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block uppercase">Calculated Z-Score</span>
+                      <span className="text-slate-400 block">Calculated Z-Score</span>
                       <span className="text-xl font-bold text-emerald-400">+{submittedScore.normalizedZScore}σ</span>
                     </div>
                   </div>
@@ -220,7 +220,7 @@ export default function JudgingPortalPage() {
                   <div className="pt-2 flex items-center justify-center gap-3">
                     <button
                       onClick={() => { setSubmittedScore(null); setFeedback(''); }}
-                      className="px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors"
+                      className="px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors"
                     >
                       Evaluate Next Team
                     </button>
@@ -244,7 +244,7 @@ export default function JudgingPortalPage() {
                         value={teamCode}
                         onChange={e => setTeamCode(e.target.value.toUpperCase())}
                         placeholder="e.g. KAIROS-T001"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono font-bold text-purple-400 uppercase"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono font-bold text-purple-400 "
                       />
                     </div>
 
@@ -264,7 +264,7 @@ export default function JudgingPortalPage() {
 
                   {/* 4 Rubric Criteria Sliders */}
                   <div className="space-y-5 pt-2">
-                    <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold border-b border-white/10 pb-2">
+                    <h3 className="text-xs font-mono  text-purple-300 font-bold border-b border-white/10 pb-2">
                       100-Point Evaluation Rubric
                     </h3>
 
@@ -386,7 +386,7 @@ export default function JudgingPortalPage() {
                     <button
                       type="submit"
                       disabled={scoreSubmitting}
-                      className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2"
+                      className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-colors flex items-center justify-center gap-2"
                     >
                       <span>{scoreSubmitting ? 'Calculating Z-Score...' : 'Commit Evaluation Scores & Trigger Z-Score Service'}</span>
                       <ArrowRight className="w-4 h-4" />

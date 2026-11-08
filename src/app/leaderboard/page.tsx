@@ -173,7 +173,7 @@ export default function LeaderboardPage() {
             <div className="space-y-1.5">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-purple-400" />
-                <h3 className="text-sm font-bold text-white font-mono uppercase tracking-wider">
+                <h3 className="text-sm font-bold text-white font-mono ">
                   Algorithmic Fairness: The Z-Score Formula
                 </h3>
               </div>
@@ -192,9 +192,9 @@ export default function LeaderboardPage() {
             <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
               <button
                 onClick={() => setSelectedTrack('all')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
                   selectedTrack === 'all'
-                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold'
+                    ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-bold'
                     : 'bg-aws-card text-slate-300 hover:text-white border border-slate-700/60'
                 }`}
               >
@@ -204,9 +204,9 @@ export default function LeaderboardPage() {
                 <button
                   key={t.id}
                   onClick={() => setSelectedTrack(t.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
                     selectedTrack === t.id
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold'
+                      ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-bold'
                       : 'bg-aws-card text-slate-300 hover:text-white border border-slate-700/60'
                   }`}
                 >
@@ -232,7 +232,7 @@ export default function LeaderboardPage() {
           <div className="p-6 sm:p-8 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/10 text-[11px] font-mono text-purple-300 uppercase">
+                <tr className="border-b border-white/10 text-[11px] font-mono text-purple-300 ">
                   <th className="py-3 px-3">Rank</th>
                   <th className="py-3 px-3">Team Code</th>
                   <th className="py-3 px-3">Team & Institution</th>
@@ -257,9 +257,9 @@ export default function LeaderboardPage() {
                     >
                       <td className="py-4 px-3 font-mono font-bold">
                         <div className="flex items-center gap-1.5">
-                          {r.rank === 1 && <span className="text-purple-400 font-black">🥇 1</span>}
-                          {r.rank === 2 && <span className="text-slate-300 font-black">🥈 2</span>}
-                          {r.rank === 3 && <span className="text-amber-600 font-black">🥉 3</span>}
+                          {r.rank === 1 && <span className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold border border-purple-500/30 text-xs">#1</span>}
+                          {r.rank === 2 && <span className="px-2 py-0.5 rounded bg-slate-500/20 text-slate-200 font-bold border border-slate-500/30 text-xs">#2</span>}
+                          {r.rank === 3 && <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30 text-xs">#3</span>}
                           {r.rank > 3 && <span className="text-slate-400">{r.rank}</span>}
                         </div>
                       </td>
@@ -309,9 +309,9 @@ export default function LeaderboardPage() {
           <div className="text-center pt-2">
             <Link
               href="/stage"
-              className="inline-flex items-center gap-2 text-xs font-mono font-bold text-purple-300 hover:text-white px-5 py-2.5 rounded-xl bg-aws-squidInk border border-purple-500/30 hover:border-purple-500 transition-all"
+              className="inline-flex items-center gap-2 text-xs font-mono font-bold text-purple-300 hover:text-white px-5 py-2.5 rounded-xl bg-aws-squidInk border border-purple-500/30 hover:border-purple-500 transition-colors"
             >
-              <span>Switch to Auditorium 20x10ft Stage Display Mode →</span>
+              <span>Switch to Auditorium 20x10ft Stage Display Mode</span>
             </Link>
           </div>
 

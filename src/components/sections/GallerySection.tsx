@@ -125,9 +125,9 @@ export const GallerySection: React.FC = () => {
                         sound?.playClick();
                         setSelectedCategory(cat);
                       }}
-                      className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all ${
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-colors ${
                         isActive
-                          ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold shadow-md shadow-purple-900/30 scale-105'
+                          ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-bold shadow-md shadow-purple-900/30 scale-105'
                           : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/10'
                       }`}
                     >
@@ -144,7 +144,7 @@ export const GallerySection: React.FC = () => {
                     sound?.playClick();
                     setViewMode('masonry');
                   }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
                     viewMode === 'masonry'
                       ? 'bg-purple-950 text-purple-200 border border-purple-500/40 font-bold'
                       : 'text-slate-400 hover:text-white'
@@ -159,7 +159,7 @@ export const GallerySection: React.FC = () => {
                     sound?.playClick();
                     setViewMode('carousel');
                   }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
                     viewMode === 'carousel'
                       ? 'bg-purple-950 text-purple-200 border border-purple-500/40 font-bold'
                       : 'text-slate-400 hover:text-white'
@@ -190,7 +190,7 @@ export const GallerySection: React.FC = () => {
                   spotlightColor="rgba(238, 5, 242, 0.2)"
                   borderColor="rgba(238, 5, 242, 0.4)"
                   onClick={() => handleOpenLightbox(idx)}
-                  className="p-5 rounded-2xl bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 transition-all flex flex-col justify-between h-full group cursor-pointer"
+                  className="p-5 rounded-2xl bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 transition-colors flex flex-col justify-between h-full group cursor-pointer"
                 >
                   <div className="space-y-4">
                     <div className="relative w-full h-48 sm:h-52 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">
@@ -198,10 +198,10 @@ export const GallerySection: React.FC = () => {
                         src={item.src}
                         alt={item.title}
                         fill
-                        className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 filter drop-shadow-[0_8px_20px_rgba(238,5,242,0.25)]"
+                        className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 filter drop-shadow-md"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-end p-3">
-                        <span className="p-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md">
+                        <span className="p-2 rounded-lg bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-md">
                           <Maximize2 className="w-4 h-4" />
                         </span>
                       </div>
@@ -240,7 +240,7 @@ export const GallerySection: React.FC = () => {
                 <div
                   key={item.id}
                   onClick={() => handleOpenLightbox(idx)}
-                  className="w-[320px] sm:w-[360px] p-5 rounded-2xl bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40 transition-all flex flex-col justify-between shrink-0 group cursor-pointer shadow-lg"
+                  className="w-[320px] sm:w-[360px] p-5 rounded-2xl bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40 transition-colors flex flex-col justify-between shrink-0 group cursor-pointer shadow-lg"
                 >
                   <div className="space-y-4">
                     <div className="relative w-full h-48 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">

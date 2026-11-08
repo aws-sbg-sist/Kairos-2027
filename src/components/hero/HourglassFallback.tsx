@@ -20,7 +20,7 @@ export const HourglassFallback: React.FC = () => {
           fill
           priority
           sizes="(max-width: 768px) 256px, 320px"
-          className="object-contain filter drop-shadow-[0_0_35px_rgba(168,85,247,0.7)]"
+          className="object-contain filter drop-shadow-xl"
         />
       </div>
 

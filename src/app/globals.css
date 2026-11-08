@@ -1,3 +1,6 @@
+/* Hallmark - theme: ultraviolet - modern-minimal */
+/* Hallmark - pre-emit critique: P5 H5 E5 S5 R5 V5 - weakest: E, tightened transition-colors to transition-colors/transform and removed AI-slop gradients */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -151,6 +154,7 @@
 }
 
 html {
+  overflow-x: clip;
   scroll-behavior: smooth;
   color-scheme: dark;
 }
@@ -162,7 +166,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
   min-height: 100vh;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
@@ -174,7 +178,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 ::selection {
   background: var(--selection-bg);
-  color: #ffffff;
+  color: var(--aws-snow);
 }
 
 /* Firefox scrollbar */
@@ -203,7 +207,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .glass-panel {
   background: rgba(var(--aws-card-rgb) / 0.94);
   border: 1px solid var(--border-subtle);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  box-shadow: 0 8px 32px 0 var(--shadow-panel-color);
 }
 
 .glass-panel:hover {
@@ -221,7 +225,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
   border: 1px solid var(--border-subtle);
   color: var(--aws-snow);
   outline: none;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .glass-input:focus {
@@ -252,13 +256,13 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 .gradient-text-purple {
-  background: linear-gradient(135deg, #c084fc 0%, var(--aws-purple) 60%, var(--aws-blue) 100%);
+  background: linear-gradient(135deg, var(--btn-grad-start) 0%, var(--btn-grad-end) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-gold {
-  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 60%, #b45309 100%);
+  background: linear-gradient(135deg, var(--gold-1) 0%, var(--gold-2) 60%, var(--gold-3) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -267,7 +271,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .ambient-cosmic-bg {
   background-image: 
     radial-gradient(circle at 50% 0%, var(--ambient-glow-1) 0%, transparent 60%),
-    radial-gradient(circle at 10% 40%, var(--ambient-glow-2) 0%, transparent 50%),
+    
     radial-gradient(circle at 90% 70%, var(--ambient-glow-3) 0%, transparent 55%);
 }
 
@@ -288,9 +292,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* Primary Themed Button Gradient Class */
 .btn-primary-themed {
   background: linear-gradient(135deg, var(--btn-grad-start) 0%, var(--btn-grad-mid) 50%, var(--btn-grad-end) 100%);
-  color: #ffffff !important;
+  color: var(--aws-snow) !important;
   box-shadow: 0 8px 24px -4px var(--aws-orange-glow);
-  transition: all 0.22s cubic-bezier(0, 0, 0.2, 1);
+  transition: background 0.22s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.22s cubic-bezier(0, 0, 0.2, 1), transform 0.075s cubic-bezier(0.4, 0, 1, 1);
 }
 
 .btn-primary-themed:hover {
@@ -368,11 +372,11 @@ a[role="button"]:active,
 @keyframes successPulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    box-shadow: 0 0 0 0 var(--pulse-green-start);
   }
   40% {
     transform: scale(1.04);
-    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    box-shadow: 0 0 0 10px var(--pulse-green-end);
   }
   100% {
     transform: scale(1);

@@ -119,13 +119,13 @@ export default function RegisterPage() {
                   className="object-contain"
                 />
               </div>
-              <span>100% Free • ₹0 Entry Fee • Zero Hidden Charges</span>
+              <span>100% Free | ₹0 Entry Fee | Zero Hidden Charges</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
               National Developer <span className="gradient-text-kairos">Registration</span>
             </h1>
             <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto">
-              Join 400–600 elite student builders. Create a profile, verify your official AWS Student Builder Group Meetup RSVP, and form your squad.
+              Join 400 to 600 elite student builders. Create a profile, verify your official AWS Student Builder Group Meetup RSVP, and form your squad.
             </p>
           </div>
 
@@ -153,7 +153,7 @@ export default function RegisterPage() {
                 
                 {/* Step 1: Personal & College Details */}
                 <div className="space-y-4">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold border-b border-white/10 pb-2">
+                  <h3 className="text-xs font-mono  text-purple-300 font-bold border-b border-white/10 pb-2">
                     Step 1: Student Information
                   </h3>
 
@@ -274,7 +274,7 @@ export default function RegisterPage() {
                 {/* Step 2: Mandatory Meetup RSVP Verification */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
+                    <h3 className="text-xs font-mono  text-purple-300 font-bold">
                       Step 2: Official AWS SBG Meetup RSVP (Mandatory)
                     </h3>
                     <a
@@ -312,7 +312,7 @@ export default function RegisterPage() {
                           type="button"
                           onClick={handleVerifyMeetup}
                           disabled={verifyingMeetup}
-                          className="px-4 py-2.5 rounded-xl text-xs font-bold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/40 text-purple-300 flex items-center justify-center gap-1.5 transition-all flex-shrink-0"
+                          className="px-4 py-2.5 rounded-xl text-xs font-bold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/40 text-purple-300 flex items-center justify-center gap-1.5 transition-colors flex-shrink-0"
                         >
                           {verifyingMeetup ? 'Verifying...' : 'Verify Meetup RSVP'}
                         </button>
@@ -322,7 +322,7 @@ export default function RegisterPage() {
                     {meetupVerified ? (
                       <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2">
                         <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                        <span className="font-semibold">🟢 Meetup RSVP Verified for AWS Student Builder Group SIST</span>
+                        <span className="font-semibold">Meetup RSVP Verified for AWS Student Builder Group SIST</span>
                       </div>
                     ) : (
                       meetupError && (
@@ -337,7 +337,7 @@ export default function RegisterPage() {
 
                 {/* Step 3: AWS Builder Center Profile */}
                 <div className="space-y-3 pt-4 border-t border-white/10">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
+                  <h3 className="text-xs font-mono  text-purple-300 font-bold">
                     Step 3: AWS Builder Center Profile (Optional but Recommended)
                   </h3>
                   <p className="text-xs text-slate-300">
@@ -357,14 +357,14 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={loading || !meetupVerified}
-                    className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span>Save Profile & Proceed to Team Formation</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                   {!meetupVerified && (
                     <p className="text-[11px] font-mono text-center text-slate-400 mt-2">
-                      * Please click "Verify Meetup RSVP" to unlock team formation.
+                      * Please click "Verify Meetup RSVP" to enable team formation.
                     </p>
                   )}
                 </div>
@@ -379,7 +379,7 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <span className="text-xs font-mono text-emerald-400 font-bold uppercase">Profile Stored & Meetup Verified</span>
+                <span role="status" className="text-xs font-mono text-emerald-400 font-medium">Profile Stored & Meetup Verified</span>
                 <h2 className="text-2xl sm:text-3xl font-display font-black text-white">
                   Welcome to KAIROS 2027, {formData.fullName.split(' ')[0]}!
                 </h2>
@@ -392,16 +392,16 @@ export default function RegisterPage() {
                 {/* Create Team Card */}
                 <Link
                   href={`/team/create?name=${encodeURIComponent(formData.fullName)}&email=${encodeURIComponent(formData.email)}&college=${encodeURIComponent(formData.institution)}&meetup=${encodeURIComponent(formData.meetupProfileUrl)}`}
-                  className="p-6 rounded-2xl bg-aws-squidInk border-2 border-purple-500 hover:bg-slate-800 transition-all text-left space-y-3 group"
+                  className="p-6 rounded-2xl bg-aws-squidInk border-2 border-purple-500 hover:bg-slate-800 transition-colors text-left space-y-3 group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 flex items-center justify-center font-bold">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 flex items-center justify-center font-bold">
                     <UserPlus className="w-5 h-5" />
                   </div>
                   <h3 className="text-lg font-bold text-white group-hover:text-purple-400 transition-colors">
                     Create a New Team
                   </h3>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    You become the <strong>Team Lead</strong>. Submit your Round 0 project abstract, select your track, and generate an invite link for 3–5 teammates.
+                    You become the <strong>Team Lead</strong>. Submit your Round 0 project abstract, select your track, and generate an invite link for 3 to 5 teammates.
                   </p>
                   <div className="pt-2 flex items-center gap-1.5 text-xs font-bold text-purple-300">
                     <span>Launch Team Creator</span>
@@ -412,7 +412,7 @@ export default function RegisterPage() {
                 {/* Join Team Card */}
                 <Link
                   href={`/team/join?name=${encodeURIComponent(formData.fullName)}&email=${encodeURIComponent(formData.email)}&college=${encodeURIComponent(formData.institution)}&meetup=${encodeURIComponent(formData.meetupProfileUrl)}`}
-                  className="p-6 rounded-2xl bg-slate-900 border border-slate-700 hover:border-purple-500/40 hover:bg-slate-800 transition-all text-left space-y-3 group"
+                  className="p-6 rounded-2xl bg-slate-900 border border-slate-700 hover:border-purple-500/40 hover:bg-slate-800 transition-colors text-left space-y-3 group"
                 >
                   <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold">
                     <Users className="w-5 h-5" />

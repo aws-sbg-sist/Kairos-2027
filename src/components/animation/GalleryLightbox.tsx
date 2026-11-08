@@ -117,7 +117,7 @@ export const GalleryLightbox: React.FC<GalleryLightboxProps> = ({
                 alt={currentItem.title}
                 fill
                 priority
-                className="object-contain p-4 drop-shadow-[0_10px_35px_rgba(238,5,242,0.3)]"
+                className="object-contain p-4 drop-shadow-xl"
               />
             </div>
 

@@ -85,7 +85,7 @@ Timestamp: ${new Date().toISOString()}
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-36 pb-24 text-center font-mono">
+      <div className="min-h-screen bg-aws-canvas text-slate-100 pt-36 pb-24 text-center font-mono">
         Loading verified builder portfolio dossier...
       </div>
     );
@@ -93,7 +93,7 @@ Timestamp: ${new Date().toISOString()}
 
   if (!member) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-36 pb-24 text-center">
+      <div className="min-h-screen bg-aws-canvas text-slate-100 pt-36 pb-24 text-center">
         <div className="max-w-md mx-auto p-8 rounded-3xl bg-slate-900 border border-slate-800">
           <h2 className="text-2xl font-bold text-white mb-2">Member Not Found</h2>
           <p className="text-xs text-slate-400 mb-6">
@@ -101,7 +101,7 @@ Timestamp: ${new Date().toISOString()}
           </p>
           <Link
             href="/members"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold text-xs"
           >
             <ChevronLeft className="w-4 h-4" />
             Back to Cadre Directory
@@ -112,10 +112,10 @@ Timestamp: ${new Date().toISOString()}
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen bg-aws-canvas text-slate-100 pt-28 pb-24">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -153,10 +153,10 @@ Timestamp: ${new Date().toISOString()}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
             
             {/* Avatar / Photo */}
-            <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-gradient-to-br from-purple-600 to-indigo-600 p-1 shadow-2xl shadow-purple-900/40 shrink-0">
+            <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-gradient-to-br from-purple-700 to-purple-900 p-1 shadow-2xl shadow-purple-900/40 shrink-0">
               <div className="w-full h-full rounded-[22px] bg-slate-950 flex flex-col items-center justify-center font-mono font-black text-3xl sm:text-4xl text-white">
                 {member.fullName.charAt(0)}
-                <span className="text-[10px] text-purple-400 uppercase font-bold tracking-widest mt-1">
+                <span className="text-[10px] text-purple-400 font-bold  mt-1">
                   Builder
                 </span>
               </div>
@@ -165,9 +165,9 @@ Timestamp: ${new Date().toISOString()}
             {/* Main Info */}
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2">
-                <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
+                <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full  ${
                   member.tier === 'APEX_PRESIDENT' ? 'bg-purple-950/80 text-purple-400 border border-purple-500/40' :
-                  member.tier === 'SUPER_HEAD' ? 'bg-[#0073BB]/20 text-[#0073BB] border border-[#0073BB]/40' :
+                  member.tier === 'SUPER_HEAD' ? 'bg-sky-500/20 text-sky-400 border border-sky-500/40' :
                   'bg-slate-800 text-slate-300'
                 }`}>
                   {member.tier.replace('_', ' ')}
@@ -252,7 +252,7 @@ Timestamp: ${new Date().toISOString()}
         {/* Credentials & Certifications */}
         {member.awsCertifications && member.awsCertifications.length > 0 && (
           <div className="mb-10 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+            <h3 className="text-xs font-mono font-bold  text-slate-400 mb-4 flex items-center gap-2">
               <Award className="w-4 h-4 text-purple-400" />
               Verified AWS Certifications & Accreditations
             </h3>
@@ -262,7 +262,7 @@ Timestamp: ${new Date().toISOString()}
                   key={idx}
                   className="px-4 py-2 rounded-xl bg-slate-950 border border-purple-500/30 text-xs font-medium text-purple-300 flex items-center gap-2"
                 >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   {cert}
                 </div>
               ))}
@@ -273,7 +273,7 @@ Timestamp: ${new Date().toISOString()}
         {/* Quantifiable Contributions Ledger */}
         <div className="mb-12">
           <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-[#10B981]" />
+            <ShieldCheck className="w-5 h-5 text-emerald-400" />
             Quantifiable Impact & Contribution Ledger
           </h2>
 
@@ -284,7 +284,7 @@ Timestamp: ${new Date().toISOString()}
                 className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                  <span className="text-xs font-mono text-[#0073BB] font-semibold">
+                  <span className="text-xs font-mono text-sky-400 font-semibold">
                     {item.category}
                   </span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold">
@@ -303,7 +303,7 @@ Timestamp: ${new Date().toISOString()}
                       <Hash className="w-3.5 h-3.5 text-slate-400" />
                       Hash: {item.verificationHash}
                     </span>
-                    <span className="text-[#10B981] font-bold shrink-0">
+                    <span className="text-emerald-400 font-bold shrink-0">
                       CRYPTOGRAPHICALLY SIGNED
                     </span>
                   </div>

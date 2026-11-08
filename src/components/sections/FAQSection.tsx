@@ -75,10 +75,10 @@ export const FAQSection: React.FC = () => {
             </div>
             <button
               onClick={handleOpenAiChat}
-              className="px-5 py-2.5 rounded-xl text-xs font-bold btn-primary-themed text-white flex items-center gap-2 shrink-0 shadow-md shadow-purple-900/30 hover:scale-105 active:scale-[0.97] transition-all"
+              className="px-5 py-2.5 rounded-xl text-xs font-bold btn-primary-themed text-white flex items-center gap-2 shrink-0 shadow-md shadow-purple-900/30 hover:scale-105 active:scale-[0.97] transition-colors"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Launch Kairos AI →</span>
+              <span>Launch Kairos AI</span>
             </button>
           </div>
         </ScrollReveal>
@@ -90,7 +90,7 @@ export const FAQSection: React.FC = () => {
             return (
               <div
                 key={idx}
-                className={`rounded-2xl glass-panel border transition-all duration-200 overflow-hidden ${
+                className={`rounded-2xl glass-panel border transition-colors duration-200 overflow-hidden ${
                   isOpen ? 'border-purple-500/40 bg-aws-squidInk/80 shadow-lg' : 'border-purple-500/15 hover:border-purple-500/30'
                 }`}
               >

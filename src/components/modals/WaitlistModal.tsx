@@ -79,7 +79,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
             Join the KAIROS 2027 Waitlist
           </h3>
           <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-            Reserve priority notification for your 4–6 builder team. ₹0 admission fee.
+            Reserve priority notification for your 4 to 6 builder team. ₹0 admission fee.
           </p>
         </div>
 
@@ -90,11 +90,11 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
             </div>
             <h4 className="text-xl font-bold text-white">Priority Recorded!</h4>
             <p className="text-xs text-slate-300 max-w-sm mx-auto leading-relaxed">
-              We have reserved your early-interest spot under <strong>{formData.email}</strong>. When national team applications unlock, you will receive primary notification.
+              We have reserved your early-interest spot under <strong>{formData.email}</strong>. When national team applications access, you will receive primary notification.
             </p>
             <button
               onClick={onClose}
-              className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 transition-all"
+              className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 transition-colors"
             >
               Done
             </button>
@@ -193,7 +193,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
             <button
               type="submit"
               disabled={submitting}
-              className="w-full mt-2 py-3 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-purple-600 to-sky-500 hover:from-purple-500 hover:to-sky-400 shadow-md shadow-purple-950 transition-all flex items-center justify-center gap-2"
+              className="w-full mt-2 py-3 rounded-xl font-bold text-xs text-white btn-primary-themed shadow-md shadow-purple-950 transition-colors flex items-center justify-center gap-2"
             >
               {submitting ? (
                 <span>Registering...</span>

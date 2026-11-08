@@ -56,7 +56,7 @@ export function buildWaitlistConfirmationEmail(fullName: string, track: string):
     html: `
       <div style="font-family: sans-serif; background-color: #070712; color: #f8fafc; padding: 32px; border-radius: 12px; max-width: 600px; margin: 0 auto; border: 1px solid rgba(139, 92, 246, 0.2);">
         <h2 style="color: #a855f7; margin-bottom: 8px;">KAIROS 2027 | Grand Edition</h2>
-        <p style="color: #94a3b8; font-size: 14px; margin-top: 0;">National Technical Hackathon · 22–24 Jan 2027 · Sathyabama Indoor Stadium</p>
+        <p style="color: #94a3b8; font-size: 14px; margin-top: 0;">National Technical Hackathon - 22–24 Jan 2027 - Sathyabama Indoor Stadium</p>
         <hr style="border: 0; border-top: 1px solid rgba(139, 92, 246, 0.2); margin: 20px 0;" />
         <p>Hello <strong>${fullName}</strong>,</p>
         <p>Thank you for expressing early interest in KAIROS 2027. Your waitlist priority has been successfully recorded.</p>

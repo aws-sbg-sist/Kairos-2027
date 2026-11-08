@@ -72,7 +72,7 @@ export const ScheduleSection: React.FC = () => {
                 href="/api/calendar"
                 download="KAIROS_2027_Schedule.ics"
                 onClick={() => sound?.playClick()}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/30 text-purple-300 transition-all shadow-md group"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/30 text-purple-300 transition-colors shadow-md group"
               >
                 <Download className="w-3.5 h-3.5 text-purple-400 group-hover:translate-y-0.5 transition-transform" />
                 <span>Add to Apple / Google / Outlook Calendar (.ics)</span>
@@ -92,14 +92,14 @@ export const ScheduleSection: React.FC = () => {
                   sound?.playClick();
                   setSelectedDayIdx(idx);
                 }}
-                className={`p-4 sm:p-5 rounded-2xl text-left transition-all duration-200 relative select-none ${
+                className={`p-4 sm:p-5 rounded-2xl text-left transition-colors duration-200 relative select-none ${
                   isActive
                     ? 'bg-aws-squidInk border-2 border-purple-500 shadow-xl shadow-purple-900/30 scale-[1.02]'
                     : 'bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/80'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] font-mono text-purple-400 block uppercase font-bold tracking-wider">
+                  <span className="text-[10px] font-mono text-purple-400 block font-bold">
                     DAY {day.day}
                   </span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-950/80 text-slate-400 border border-white/5">
@@ -156,7 +156,7 @@ export const ScheduleSection: React.FC = () => {
                       maxTilt={5}
                       spotlightColor="rgba(238, 5, 242, 0.15)"
                       borderColor={isFreeze ? 'rgba(238, 5, 242, 0.5)' : isCheckpoint ? 'rgba(118, 48, 217, 0.4)' : 'rgba(255, 255, 255, 0.1)'}
-                      className={`w-[290px] sm:w-[320px] p-5 rounded-2xl border transition-all flex flex-col justify-between shrink-0 ${
+                      className={`w-[290px] sm:w-[320px] p-5 rounded-2xl border transition-colors flex flex-col justify-between shrink-0 ${
                         isFreeze
                           ? 'bg-gradient-to-b from-purple-950/60 to-slate-950 border-purple-500/50 shadow-lg shadow-purple-900/30'
                           : isCheckpoint
@@ -170,7 +170,7 @@ export const ScheduleSection: React.FC = () => {
                             <Clock className="w-3.5 h-3.5 text-purple-400" />
                             <span>{milestone.time}</span>
                           </span>
-                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border uppercase font-semibold ${badgeClass}`}>
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border  font-semibold ${badgeClass}`}>
                             {milestone.category}
                           </span>
                         </div>

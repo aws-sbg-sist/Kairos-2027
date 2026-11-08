@@ -133,14 +133,14 @@ export const CosmicBackground: React.FC<CosmicBackgroundProps> = ({
     <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
       {/* Aurora Radial Spotlights */}
       <div className="absolute -top-32 left-1/4 w-[600px] h-[600px] bg-purple-900/15 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 -right-32 w-[550px] h-[550px] bg-[#ee05f2]/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-[#0511f2]/12 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/2 -right-32 w-[550px] h-[550px] bg-aws-orange/10 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-aws-blue/12 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Tech Grid Pattern overlay */}
       <div className="absolute inset-0 tech-grid-pattern opacity-40 pointer-events-none" />
 
       {/* Canvas for dynamic particles */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+      <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 w-full h-full pointer-events-none" />
     </div>
   );
 };

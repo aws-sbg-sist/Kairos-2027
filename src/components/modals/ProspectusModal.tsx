@@ -83,15 +83,15 @@ export const ProspectusModal: React.FC<ProspectusModalProps> = ({ isOpen, onClos
         <div className="p-5 rounded-2xl bg-slate-950/80 border border-purple-500/25 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-purple-500/15">
             <div>
-              <span className="text-[10px] font-mono text-purple-400 block uppercase font-bold">
+              <span className="text-[10px] font-mono text-purple-400 block  font-bold">
                 PROPOSAL SPECIFICATION
               </span>
               <h4 className="text-lg font-bold text-white">
-                {companyName ? `${companyName} · ` : ''}{currentTier.name}
+                {companyName ? `${companyName} - ` : ''}{currentTier.name}
               </h4>
             </div>
             <div className="text-right">
-              <span className="text-[10px] font-mono text-slate-400 block uppercase">Proposed Support</span>
+              <span className="text-[10px] font-mono text-slate-400 block ">Proposed Support</span>
               <span className="text-lg font-display font-bold text-purple-400">
                 {currentTier.amount}
               </span>
@@ -121,7 +121,7 @@ export const ProspectusModal: React.FC<ProspectusModalProps> = ({ isOpen, onClos
             <a
               href="/docs/KAIROS_2027_Sponsorship_Prospectus.pdf"
               download="KAIROS_2027_Sponsorship_Prospectus.pdf"
-              className="px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-md flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-md flex items-center gap-1.5"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Download Official PDF</span>

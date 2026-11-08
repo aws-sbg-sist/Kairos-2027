@@ -21,10 +21,10 @@ export default function LeadershipPage() {
   const apex = HIGHER_MANAGEMENT.apexLeader;
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen bg-aws-canvas text-slate-100 pt-28 pb-24">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[550px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[550px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -35,12 +35,12 @@ export default function LeadershipPage() {
           <span>/</span>
           <Link href="/members" className="hover:text-slate-200">Organizing Cadre</Link>
           <span>/</span>
-          <span className="text-purple-400 font-mono">Higher Management (Batch of 26–27)</span>
+          <span className="text-purple-400 font-mono">Higher Management (Batch of 2026-2027)</span>
         </div>
 
         {/* Header Title */}
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-400 text-xs font-mono font-bold tracking-wider uppercase mb-5">
+          <div role="status" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-400 text-xs font-mono font-medium mb-5">
             <Crown className="w-3.5 h-3.5" />
             Executive Directorate & Higher Management
           </div>
@@ -56,7 +56,7 @@ export default function LeadershipPage() {
         </div>
 
         {/* Apex Leader: President & SBGL Thenappan T */}
-        <div className="max-w-5xl mx-auto mb-20 rounded-3xl bg-gradient-to-br from-purple-950/40 via-slate-900 to-indigo-950/30 border-2 border-purple-500/50 p-8 sm:p-12 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+        <div className="max-w-5xl mx-auto mb-20 rounded-3xl bg-gradient-to-br from-purple-950/40 via-slate-900 to-purple-950/30 border-2 border-purple-500/50 p-8 sm:p-12 shadow-2xl backdrop-blur-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
             <Crown className="w-64 h-64 text-purple-400" />
           </div>
@@ -64,10 +64,10 @@ export default function LeadershipPage() {
           <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 sm:gap-12 relative z-10">
             {/* Avatar Badge */}
             <div className="shrink-0 text-center">
-              <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-3xl bg-gradient-to-br from-purple-600 to-indigo-600 p-1 shadow-2xl shadow-purple-900/40">
+              <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-3xl bg-gradient-to-br from-purple-700 to-purple-900 p-1 shadow-2xl shadow-purple-900/40">
                 <div className="w-full h-full rounded-[22px] bg-slate-950 flex flex-col items-center justify-center text-center p-4">
                   <div className="text-5xl font-black text-white font-mono mb-1">TT</div>
-                  <div className="text-[10px] font-mono text-purple-400 uppercase font-bold tracking-widest">
+                  <div className="text-[10px] font-mono text-purple-400 font-bold">
                     Apex Leader
                   </div>
                 </div>
@@ -80,7 +80,7 @@ export default function LeadershipPage() {
             {/* Profile Info */}
             <div className="flex-1 text-center lg:text-left">
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-2">
-                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-gradient-to-r from-purple-600 to-indigo-600 text-white uppercase">
+                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-gradient-to-r from-purple-700 to-purple-900 text-white ">
                   President & SBGL
                 </span>
                 <span className="text-xs font-mono text-slate-400">
@@ -113,14 +113,14 @@ export default function LeadershipPage() {
                   href={`tel:${apex.contact.phone.replace(/[^0-9+]/g, '')}`}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition"
                 >
-                  <Phone className="w-3.5 h-3.5 text-[#10B981]" />
+                  <Phone className="w-3.5 h-3.5 text-emerald-400" />
                   {apex.contact.phone}
                 </a>
                 <Link
                   href="/members/thenappan-t"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold hover:bg-purple-600 transition"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-700 to-purple-900 text-white text-xs font-bold hover:bg-purple-600 transition"
                 >
-                  View Full Portfolio Dossier →
+                  View Full Portfolio Dossier
                 </Link>
               </div>
             </div>
@@ -130,7 +130,7 @@ export default function LeadershipPage() {
         {/* Faculty Coordinators & Institutional Leadership */}
         <div className="mb-20">
           <div className="text-center max-w-3xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-mono font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-mono font-bold  mb-3">
               <GraduationCap className="w-3.5 h-3.5" />
               Academic Mentors & Faculty Patrons
             </div>
@@ -161,7 +161,7 @@ export default function LeadershipPage() {
         {/* The 6 Divisional Super Heads */}
         <div className="mb-20">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0073BB]/10 border border-[#0073BB]/30 text-[#0073BB] text-xs font-mono font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-mono font-bold  mb-3">
               <ShieldCheck className="w-3.5 h-3.5" />
               The 6 Operational Pillars
             </div>
@@ -175,11 +175,11 @@ export default function LeadershipPage() {
             {HIGHER_MANAGEMENT.superHeads.map((head, idx) => (
               <div 
                 key={idx}
-                className="p-7 rounded-3xl bg-slate-900/70 border border-slate-800 hover:border-[#0073BB]/50 transition shadow-xl flex flex-col justify-between"
+                className="p-7 rounded-3xl bg-slate-900/70 border border-slate-800 hover:border-sky-500/50 transition shadow-xl flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-[#0073BB]/20 text-[#0073BB] uppercase">
+                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-sky-500/20 text-sky-400 ">
                       {head.code.replace('_', ' ')}
                     </span>
                     <span className="text-[11px] font-mono text-slate-400">

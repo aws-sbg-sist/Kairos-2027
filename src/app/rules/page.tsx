@@ -21,10 +21,10 @@ import { EVENT_CONFIG } from '@/lib/config';
 
 export default function RulesPage() {
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen bg-aws-canvas text-slate-100 pt-28 pb-24">
       {/* Background Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[500px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -38,7 +38,7 @@ export default function RulesPage() {
 
         {/* Header */}
         <div className="max-w-4xl mb-16">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-400 text-xs font-mono font-bold tracking-wider uppercase mb-5 shadow-md">
+          <div role="status" className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-400 text-xs font-mono font-medium mb-5 shadow-md">
             <div className="relative w-4 h-4 rounded overflow-hidden">
               <Image
                 src="/assets/rules.png"
@@ -61,7 +61,7 @@ export default function RulesPage() {
         </div>
 
         {/* 100% IP Ownership Highlight Callout */}
-        <div className="mb-16 p-8 rounded-3xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/30 border-2 border-purple-500/40 shadow-2xl backdrop-blur-md">
+        <div className="mb-16 p-8 rounded-3xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-purple-950/30 border-2 border-purple-500/40 shadow-2xl backdrop-blur-md">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-start gap-5">
               <div className="p-3 rounded-2xl bg-purple-950/80 text-purple-400 border border-purple-500/40 shrink-0 relative w-16 h-16 flex items-center justify-center">
@@ -73,7 +73,7 @@ export default function RulesPage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-purple-950/80 text-purple-400 uppercase tracking-wider">
+                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-purple-950/80 text-purple-400 ">
                   Universal IP Guarantee
                 </span>
                 <h3 className="text-2xl font-black text-white mt-2 mb-2">
@@ -85,7 +85,7 @@ export default function RulesPage() {
               </div>
             </div>
             <div className="shrink-0 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-center font-mono">
-              <div className="text-3xl font-black text-[#10B981]">0%</div>
+              <div className="text-3xl font-black text-emerald-400">0%</div>
               <div className="text-xs text-slate-400">Equity Claimed</div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function RulesPage() {
           {/* Rule 1: Fresh Code & Commit Telemetry */}
           <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 rounded-xl bg-[#0073BB]/15 text-[#0073BB]">
+              <div className="p-3 rounded-xl bg-sky-500/15 text-sky-400">
                 <GitCommit className="w-6 h-6" />
               </div>
               <div>
@@ -112,7 +112,7 @@ export default function RulesPage() {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
                 <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 text-xs space-y-2">
-                  <div className="font-bold text-emerald-400 uppercase font-mono flex items-center gap-1.5">
+                  <div className="font-bold text-emerald-400 font-mono flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4" /> Permitted & Encouraged
                   </div>
                   <ul className="list-disc list-inside space-y-1 text-slate-300">
@@ -124,7 +124,7 @@ export default function RulesPage() {
                 </div>
 
                 <div className="p-4 rounded-2xl bg-rose-950/20 border border-rose-500/30 text-xs space-y-2">
-                  <div className="font-bold text-rose-400 uppercase font-mono flex items-center gap-1.5">
+                  <div className="font-bold text-rose-400 font-mono flex items-center gap-1.5">
                     <AlertTriangle className="w-4 h-4" /> Strictly Prohibited & Disqualifying
                   </div>
                   <ul className="list-disc list-inside space-y-1 text-slate-300">
@@ -162,7 +162,7 @@ export default function RulesPage() {
                 </div>
                 <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
                   <div className="text-xs text-slate-400 font-mono">Entry Fee</div>
-                  <div className="text-lg font-bold text-[#10B981]">₹0 (100% Free)</div>
+                  <div className="text-lg font-bold text-emerald-400">₹0 (100% Free)</div>
                   <div className="text-[11px] text-slate-400 mt-1">Meals, stay, swag & transit free</div>
                 </div>
                 <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
@@ -209,7 +209,7 @@ export default function RulesPage() {
           {/* Rule 4: Judging Ethics & Recusal */}
           <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 rounded-xl bg-[#10B981]/15 text-[#10B981]">
+              <div className="p-3 rounded-xl bg-emerald-500/15 text-emerald-400">
                 <Scale className="w-6 h-6" />
               </div>
               <div>

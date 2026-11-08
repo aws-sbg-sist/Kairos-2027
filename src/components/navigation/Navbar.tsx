@@ -62,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[70] pointer-events-auto transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[70] pointer-events-auto transition-colors duration-300 ${
         scrolled
           ? 'bg-aws-squidInk/95 backdrop-blur-md border-b border-purple-500/20 py-2.5 shadow-lg shadow-black/50'
           : 'bg-aws-canvas/80 backdrop-blur-sm border-b border-white/5 py-3.5'
@@ -73,11 +73,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <strong className="text-white">NATIONAL APPLICATIONS OPEN:</strong> 100% Free • ₹0 Entry Fee • ₹1,75,000 Total Prize Pool
+            <strong className="text-white">NATIONAL APPLICATIONS OPEN:</strong> 100% Free | ₹0 Entry Fee | ₹1,75,000 Total Prize Pool
           </span>
           <div className="flex items-center gap-4 text-[10px]">
             <Link href="/refer-sponsor" className="text-purple-300 hover:text-white underline font-semibold">
-              Refer a Corporate Sponsor → Earn 10%–15% Referral Commission
+              Refer a Corporate Sponsor: Earn 10% to 15% Referral Commission
             </Link>
             <span className="text-slate-400">|</span>
             <a href="https://meetup.com/aws-student-builder-group-sist" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300">
@@ -98,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 alt="KAIROS 2027 Logo"
                 fill
                 sizes="40px"
-                className="object-contain filter drop-shadow-[0_0_14px_rgba(168,85,247,0.4)] group-hover:scale-105 transition-transform"
+                className="object-contain filter drop-shadow-md group-hover:scale-105 transition-transform"
                 priority
               />
             </div>
@@ -112,7 +112,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 </span>
               </div>
               <span className="text-[10px] text-slate-300 tracking-tight font-medium hidden sm:inline-block whitespace-nowrap">
-                AWS Student Builder Group · SIST
+                AWS Student Builder Group - SIST
               </span>
             </div>
           </Link>
@@ -127,7 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                   href={link.href}
                   onMouseEnter={() => sound?.playHover()}
                   onClick={() => sound?.playClick()}
-                  className={`px-2 xl:px-3 py-1.5 rounded-md transition-all relative whitespace-nowrap flex-shrink-0 ${
+                  className={`px-2 xl:px-3 py-1.5 rounded-md transition-colors relative whitespace-nowrap flex-shrink-0 ${
                     isActive
                       ? 'text-white bg-purple-950/50 font-semibold text-purple-400 border border-purple-500/30'
                       : 'hover:text-white hover:bg-white/5 text-slate-300'
@@ -150,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               <button
                 onClick={() => setMoreMenuOpen(!moreMenuOpen)}
                 onMouseEnter={() => setMoreMenuOpen(true)}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 text-slate-300 transition-all"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 text-slate-300 transition-colors"
                 aria-expanded={moreMenuOpen}
               >
                 <span>More</span>
@@ -191,7 +191,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
             <button
               onClick={() => sound?.toggle()}
               onMouseEnter={() => sound?.playHover()}
-              className="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all flex items-center gap-1 text-xs font-mono"
+              className="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-xs font-mono"
               title={soundEnabled ? "Mute Ambient FX" : "Enable Ambient FX"}
             >
               {soundEnabled ? (
@@ -205,7 +205,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               href="/dashboard"
               onMouseEnter={() => sound?.playHover()}
               onClick={() => sound?.playClick()}
-              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/30 transition-all"
+              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/30 transition-colors"
             >
               Dashboard
             </Link>
@@ -214,7 +214,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               href="/admin/login"
               onMouseEnter={() => sound?.playHover()}
               onClick={() => sound?.playClick()}
-              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/40 transition-all flex items-center gap-1.5"
+              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/40 transition-colors flex items-center gap-1.5"
             >
               <Shield className="w-3.5 h-3.5 text-purple-400" />
               <span>Admin</span>
@@ -224,7 +224,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               href="/register"
               onMouseEnter={() => sound?.playHover()}
               onClick={() => sound?.playClick()}
-              className="relative group px-4 py-2 rounded-lg text-xs font-bold text-white btn-primary-themed shadow-md shadow-purple-900/30 transition-all duration-300 active:scale-95 flex items-center gap-1.5 whitespace-nowrap"
+              className="relative group px-4 py-2 rounded-lg text-xs font-bold text-white btn-primary-themed shadow-md shadow-purple-900/30 transition-colors duration-300 active:scale-95 flex items-center gap-1.5 whitespace-nowrap"
             >
               <span>Register (100% Free)</span>
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
