@@ -466,3 +466,212 @@ a[role="button"]:active,
     scroll-behavior: auto !important;
   }
 }
+
+
+/* =========================================================================
+   LUXURY DESIGN ENGINEERING PRIMITIVES (EMIL KOWALSKI & AWWWARDS-TIER)
+   ========================================================================= */
+
+:root {
+  --ease-out-lux: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Double-Bezel (Doppelrand) Concentric Nested Hardware Enclosure */
+.double-bezel {
+  position: relative;
+  border-radius: 1.75rem;
+  padding: 0.375rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+  transition: border-color 0.25s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.double-bezel:hover {
+  border-color: rgba(238, 5, 242, 0.3);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px -5px var(--aws-orange-glow);
+}
+
+.double-bezel-inner {
+  border-radius: calc(1.75rem - 0.375rem);
+  background: rgba(var(--aws-card-rgb) / 0.94);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08), 0 4px 12px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Island Button with Button-in-Button Trailing Icon Micro-Physics */
+.island-btn {
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.18s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.18s cubic-bezier(0.23, 1, 0.32, 1), background-color 0.18s ease;
+}
+
+.island-btn:hover {
+  transform: translateY(-2px);
+}
+
+.island-btn:active {
+  transform: scale(0.97) translateY(0) !important;
+}
+
+.island-btn-icon {
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
+  transition: transform 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.island-btn:hover .island-btn-icon {
+  transform: translateX(3px) translateY(-1px) scale(1.08);
+}
+
+/* Subtle Shimmer Ray */
+.shine-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: none;
+}
+
+.shine-hover:hover::before {
+  left: 150%;
+}
+
+
+/* =========================================================================
+   CYBERNETIC AEROSPACE & HARDWARE HUD PRIMITIVES
+   ========================================================================= */
+
+/* Aerospace Telemetry Card with Machined Corner Notches */
+.hud-frame {
+  position: relative;
+  background: rgba(var(--aws-squid-ink-rgb) / 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.25s var(--ease-out-lux), box-shadow 0.25s var(--ease-out-lux);
+}
+
+.hud-frame:hover {
+  border-color: rgba(238, 5, 242, 0.4);
+  box-shadow: 0 0 25px -5px var(--aws-orange-glow);
+}
+
+/* Aerospace Calibrated Reticle */
+.reticle-frame {
+  position: relative;
+  border: 1px dashed rgba(238, 5, 242, 0.25);
+  border-radius: 9999px;
+}
+
+.reticle-frame::before,
+.reticle-frame::after {
+  content: '';
+  position: absolute;
+  background: rgba(238, 5, 242, 0.6);
+  pointer-events: none;
+}
+
+/* Horizontal crosshair ticks */
+.reticle-frame::before {
+  top: 50%;
+  left: -8px;
+  right: -8px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(238, 5, 242, 0.8) 0%, transparent 10%, transparent 90%, rgba(238, 5, 242, 0.8) 100%);
+}
+
+/* Vertical crosshair ticks */
+.reticle-frame::after {
+  left: 50%;
+  top: -8px;
+  bottom: -8px;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(238, 5, 242, 0.8) 0%, transparent 10%, transparent 90%, rgba(238, 5, 242, 0.8) 100%);
+}
+
+/* Traveling Horizontal Laser Scanline */
+@keyframes laserSweep {
+  0% {
+    top: -5%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    top: 105%;
+    opacity: 0;
+  }
+}
+
+.laser-scan-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(238, 5, 242, 0.8) 50%, transparent 100%);
+  box-shadow: 0 0 12px 1px var(--aws-orange);
+  animation: laserSweep 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Sound Wave Equalizer Bars Animation */
+@keyframes waveDance1 {
+  0%, 100% { height: 4px; }
+  50% { height: 14px; }
+}
+
+@keyframes waveDance2 {
+  0%, 100% { height: 12px; }
+  50% { height: 5px; }
+}
+
+@keyframes waveDance3 {
+  0%, 100% { height: 6px; }
+  50% { height: 16px; }
+}
+
+.sound-bar-1 {
+  animation: waveDance1 0.8s ease-in-out infinite;
+}
+
+.sound-bar-2 {
+  animation: waveDance2 0.65s ease-in-out infinite;
+}
+
+.sound-bar-3 {
+  animation: waveDance3 0.9s ease-in-out infinite;
+}

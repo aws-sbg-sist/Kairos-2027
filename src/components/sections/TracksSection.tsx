@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { Cpu, Server, ShieldCheck, Leaf, ArrowRight, Layers, Code, CheckCircle2, Trophy, ExternalLink, Sparkles } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 
@@ -96,9 +97,10 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                 <div
                   onClick={() => {
                     sound?.playClick();
+                    haptics?.selection();
                     setActiveTrackId(track.id);
                   }}
-                  className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 h-full flex flex-col justify-between relative overflow-hidden group select-none ${
+                  className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 h-full flex flex-col justify-between relative overflow-hidden group select-none active:scale-[0.98] ${
                     isActive
                       ? 'bg-aws-squidInk/95 border-2 border-purple-500 shadow-xl shadow-purple-900/30 scale-[1.02]'
                       : 'bg-aws-card/70 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/80'
@@ -161,98 +163,143 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
           >
-            <SpotlightCard
-              spotlightColor="rgba(238, 5, 242, 0.2)"
-              borderColor="rgba(238, 5, 242, 0.4)"
-              enableTilt={false}
-              className="p-6 sm:p-10 rounded-3xl bg-aws-card/90 border border-slate-700/60 relative overflow-hidden shadow-2xl backdrop-blur-xl"
-            >
-              {/* Track Number Watermark */}
-              <div className="absolute top-4 right-8 font-display font-black text-7xl sm:text-9xl text-purple-400/5 select-none pointer-events-none">
-                {activeTrack.number}
-              </div>
+            <div className="double-bezel shadow-2xl">
+              <div className="double-bezel-inner p-6 sm:p-10 relative overflow-hidden">
+                {/* Track Number Watermark */}
+                <div className="absolute top-4 right-8 font-display font-black text-7xl sm:text-9xl text-purple-400/5 select-none pointer-events-none">
+                  {activeTrack.number}
+                </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
-                {/* Left Content Column (7 cols) */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-950/60 text-purple-400 border border-purple-500/40 flex items-center justify-center font-bold">
-                      <ActiveIcon className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-mono font-bold text-purple-300 block uppercase tracking-wider">
-                        TRACK {activeTrack.number} ARCHITECTURAL BLUEPRINT
-                      </span>
-                      <h3 className="text-2xl sm:text-3xl font-display font-black text-white">
-                        {activeTrack.title}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-                    {activeTrack.longDescription}
-                  </p>
-
-                  {/* Architecture & Tech Stack Tags */}
-                  <div className="space-y-3">
-                    <span className="text-xs font-mono uppercase text-slate-400 block tracking-wider font-semibold">
-                      Suggested AWS Primitives & Tools
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {activeTrack.recommendedStacks.map((tech, i) => (
-                        <span
-                          key={i}
-                          className="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/80 border border-slate-700/70 text-slate-200 hover:border-purple-500/40 transition-colors"
-                        >
-                          {tech}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
+                  {/* Left Content Column (7 cols) */}
+                  <div className="lg:col-span-7 space-y-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-2xl bg-purple-950/60 text-purple-400 border border-purple-500/40 flex items-center justify-center font-bold">
+                        <ActiveIcon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <span className="text-xs font-mono font-bold text-purple-300 block uppercase tracking-wider">
+                          TRACK {activeTrack.number} ARCHITECTURAL BLUEPRINT
                         </span>
-                      ))}
+                        <h3 className="text-2xl sm:text-3xl font-display font-black text-white">
+                          {activeTrack.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
+                      {activeTrack.longDescription}
+                    </p>
+
+                    {/* Architecture & Tech Stack Tags */}
+                    <div className="space-y-3">
+                      <span className="text-xs font-mono uppercase text-slate-400 block tracking-wider font-semibold">
+                        Suggested AWS Primitives & Tools
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {activeTrack.recommendedStacks.map((tech, i) => (
+                          <span
+                            key={i}
+                            className="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/80 border border-slate-700/70 text-slate-200 hover:border-purple-500/40 transition-colors"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Row */}
+                    <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
+                      <button
+                        onClick={() => {
+                          sound?.playClick();
+                          haptics?.medium();
+                          onSelectTrack?.(activeTrack.title);
+                        }}
+                        className="island-btn px-5 py-3 text-xs sm:text-sm font-bold btn-primary-themed text-white shadow-lg shadow-purple-900/30 group active:scale-[0.97]"
+                      >
+                        <span>Choose Track for Application</span>
+                        <span className="island-btn-icon w-6 h-6 rounded-full bg-white/20">
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </span>
+                      </button>
+
+                      <Link
+                        href="/tracks"
+                        onClick={() => {
+                          sound?.playClick();
+                          haptics?.selection();
+                        }}
+                        className="island-btn px-4 py-3 text-xs sm:text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/15 text-slate-200 transition-colors active:scale-[0.97]"
+                      >
+                        <span>View Rubric & Challenges</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-purple-400" />
+                      </Link>
                     </div>
                   </div>
 
-                  {/* Action Row */}
-                  <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
-                    <button
-                      onClick={() => {
-                        sound?.playClick();
-                        onSelectTrack?.(activeTrack.title);
-                      }}
-                      className="px-5 py-3 rounded-xl text-xs sm:text-sm font-bold btn-primary-themed text-white flex items-center gap-2 group shadow-lg shadow-purple-900/30"
-                    >
-                      <span>Choose Track for Application</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
-
-                    <Link
-                      href="/tracks"
-                      onClick={() => sound?.playClick()}
-                      className="px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/15 text-slate-200 flex items-center gap-1.5 transition-colors"
-                    >
-                      <span>View Rubric & Challenges</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right Column: Challenge Showcase & Cash Bounty (5 cols) */}
-                <div className="lg:col-span-5 space-y-4">
-                  {/* Technical Deliverables Card */}
-                  <div className="p-4 rounded-xl bg-purple-950/40 border border-purple-500/30 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] font-mono text-purple-400 uppercase tracking-wider block font-semibold">
-                        Challenge Deliverable
-                      </span>
-                      <span className="text-sm font-bold text-white">
-                        Production Architecture & Defense
+                  {/* Right Column: Aerospace Evaluation Blueprint (5 cols) */}
+                  <div className="lg:col-span-5 space-y-4">
+                    {/* Track Bounty Card */}
+                    <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-950/40 via-purple-950/40 to-slate-950 border border-emerald-500/30 flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-wider block font-semibold">
+                          TRACK CASH BOUNTY
+                        </span>
+                        <span className="text-xl font-black text-white font-mono">
+                          ₹25,000 CASH
+                        </span>
+                      </div>
+                      <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        + AWS Credits
                       </span>
                     </div>
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                      Evaluated Live
-                    </span>
+
+                    {/* Scoring Distribution Telemetry */}
+                    <div className="p-4 rounded-xl bg-slate-950/80 border border-white/10 space-y-2.5">
+                      <div className="flex items-center justify-between text-xs font-mono">
+                        <span className="text-slate-400 uppercase font-semibold">Live Rubric Weights</span>
+                        <span className="text-purple-400 font-bold">100% TOTAL</span>
+                      </div>
+
+                      <div className="space-y-1.5 text-xs font-mono">
+                        <div className="flex items-center justify-between text-slate-300 text-[11px]">
+                          <span>Architecture & Concurrency</span>
+                          <span className="text-white font-bold">35%</span>
+                        </div>
+                        <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                          <div className="bg-purple-500 h-full rounded-full" style={{ width: '35%' }} />
+                        </div>
+
+                        <div className="flex items-center justify-between text-slate-300 text-[11px]">
+                          <span>Working Implementation</span>
+                          <span className="text-white font-bold">25%</span>
+                        </div>
+                        <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                          <div className="bg-indigo-500 h-full rounded-full" style={{ width: '25%' }} />
+                        </div>
+
+                        <div className="flex items-center justify-between text-slate-300 text-[11px]">
+                          <span>AWS Cloud Primitives Depth</span>
+                          <span className="text-white font-bold">20%</span>
+                        </div>
+                        <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                          <div className="bg-sky-500 h-full rounded-full" style={{ width: '20%' }} />
+                        </div>
+
+                        <div className="flex items-center justify-between text-slate-300 text-[11px]">
+                          <span>Architecture Defense & Q&A</span>
+                          <span className="text-white font-bold">20%</span>
+                        </div>
+                        <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                          <div className="bg-emerald-500 h-full rounded-full" style={{ width: '20%' }} />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </SpotlightCard>
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>

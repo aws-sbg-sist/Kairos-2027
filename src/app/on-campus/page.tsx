@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
+import { useHaptics } from '@/lib/haptics';
+import { useSound } from '@/lib/sound';
 import { 
   MapPin, 
   Bus, 
@@ -16,12 +18,16 @@ import {
   Building2, 
   PhoneCall, 
   ShieldCheck,
-  Compass
+  Compass,
+  Wifi,
+  Sparkles
 } from 'lucide-react';
 
 export default function OnCampusGuidePage() {
   const [selectedHub, setSelectedHub] = useState<'central' | 'tambaram' | 'airport' | 'cmbt'>('central');
   const [selectedFloor, setSelectedFloor] = useState<'ground' | 'first' | 'second' | 'top'>('ground');
+  const haptics = useHaptics();
+  const sound = useSound();
 
   const busRoutes = {
     central: {
@@ -121,240 +127,266 @@ export default function OnCampusGuidePage() {
             </p>
           </div>
 
-          {/* Section 1: Interactive Venue Map & Floorplan */}
-          <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
-              <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-slate-950 border border-purple-500/40 p-1.5 shrink-0 shadow-md">
-                  <Image
-                    src="/assets/venue.png"
-                    alt="Venue Symbol"
-                    fill
-                    className="object-contain"
-                  />
+          {/* Section 1: Interactive Venue Map & Floorplan Double-Bezel Card */}
+          <div className="double-bezel shadow-2xl">
+            <div className="double-bezel-inner p-6 sm:p-10 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-slate-950 border border-purple-500/40 p-1.5 shrink-0 shadow-md">
+                    <Image
+                      src="/assets/venue.png"
+                      alt="Venue Symbol"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-xs font-mono text-purple-400 font-bold uppercase">VENUE LAYOUT & TELEMETRY</span>
+                    <h2 className="text-xl sm:text-2xl font-display font-black text-white">
+                      Sathyabama Central Library Complex
+                    </h2>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-xs font-mono text-purple-400 font-bold uppercase">VENUE LAYOUT</span>
-                  <h2 className="text-xl sm:text-2xl font-display font-black text-white">
-                    Sathyabama Central Library Complex
-                  </h2>
+                <span className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-purple-400" />
+                  Rajiv Gandhi Salai (OMR), Chennai - 600119
+                </span>
+              </div>
+
+              {/* Campus Architectural Panorama Illustration */}
+              <div className="relative rounded-2xl overflow-hidden border border-purple-500/30 bg-slate-950/80 aspect-[21/9] max-h-[320px] w-full flex items-center justify-center group shadow-xl">
+                <Image
+                  src="/assets/venue-illustration.png"
+                  alt="Sathyabama Central Library Arena Architectural Illustration"
+                  fill
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+                  <span className="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700/60 backdrop-blur-md">
+                    Central Library Arena · 100 Hacking Bays & 24/7 Operations Hub
+                  </span>
+                  <span className="hidden sm:inline-block bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold px-3 py-1 rounded-lg shadow-md">
+                    100 Elite National Teams
+                  </span>
                 </div>
               </div>
-              <span className="text-xs font-mono text-slate-400">
-                Rajiv Gandhi Salai (OMR), Chennai - 600119
-              </span>
-            </div>
 
-            {/* Campus Architectural Panorama Illustration */}
-            <div className="relative rounded-2xl overflow-hidden border border-purple-500/30 bg-slate-950/80 aspect-[21/9] max-h-[320px] w-full flex items-center justify-center group shadow-xl">
-              <Image
-                src="/assets/venue-illustration.png"
-                alt="Sathyabama Central Library Arena Architectural Illustration"
-                fill
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
-                <span className="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700/60 backdrop-blur-md">
-                  Central Library Arena · 100 Hacking Bays & 24/7 Operations Hub
-                </span>
-                <span className="hidden sm:inline-block bg-gradient-to-r from-purple-600 to-indigo-600/90 text-slate-950 font-bold px-3 py-1 rounded-lg shadow-md">
-                  100 Elite National Teams
-                </span>
-              </div>
-            </div>
-
-            {/* Floor selector tabs */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              {(['ground', 'first', 'second', 'top'] as const).map((floor) => (
-                <button
-                  key={floor}
-                  onClick={() => setSelectedFloor(floor)}
-                  className={`p-3 rounded-xl text-xs font-bold font-mono transition-all uppercase ${
-                    selectedFloor === floor
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md'
-                      : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
-                  }`}
-                >
-                  {floor} Floor
-                </button>
-              ))}
-            </div>
-
-            {/* Active Floor Plan Details with Coding Workspace Visual */}
-            <div className="p-6 rounded-2xl bg-aws-squidInk border border-purple-500/30 space-y-6">
-              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-                <h3 className="text-lg font-bold text-white font-display">
-                  {currentFloor.title}
-                </h3>
-                <span className="text-xs font-mono text-emerald-400 font-semibold px-2.5 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/30">
-                  Gigabit Mesh & Spike-Protected Drops
-                </span>
+              {/* Floor selector tabs */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {(['ground', 'first', 'second', 'top'] as const).map((floor) => (
+                  <button
+                    key={floor}
+                    onClick={() => {
+                      sound?.playClick();
+                      haptics?.selection();
+                      setSelectedFloor(floor);
+                    }}
+                    className={`p-3 rounded-xl text-xs font-bold font-mono transition-all uppercase active:scale-[0.97] ${
+                      selectedFloor === floor
+                        ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-900/40'
+                        : 'bg-slate-900/80 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
+                    }`}
+                  >
+                    {floor} Floor
+                  </button>
+                ))}
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                {/* Facilities List (7 cols) */}
-                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {currentFloor.facilities.map((fac, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-2.5 text-xs text-slate-200">
-                      <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                      <span>{fac}</span>
+              {/* Active Floor Plan Details with Coding Workspace Visual */}
+              <div className="hud-frame p-6 rounded-2xl bg-aws-squidInk border border-purple-500/30 space-y-6">
+                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                  <h3 className="text-lg font-bold text-white font-display">
+                    {currentFloor.title}
+                  </h3>
+                  <span className="text-xs font-mono text-emerald-400 font-semibold px-2.5 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/30 flex items-center gap-1.5">
+                    <Wifi className="w-3.5 h-3.5 text-emerald-400" />
+                    Gigabit Mesh & Spike-Protected Drops
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                  {/* Facilities List (7 cols) */}
+                  <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {currentFloor.facilities.map((fac, idx) => (
+                      <div key={idx} className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-2.5 text-xs text-slate-200">
+                        <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                        <span>{fac}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Workspace Floor Visual (5 cols) */}
+                  <div className="lg:col-span-5 relative rounded-xl overflow-hidden border border-slate-700/60 bg-slate-950 aspect-video flex items-center justify-center shadow-lg group">
+                    <Image
+                      src={selectedFloor === 'first' || selectedFloor === 'second' ? '/assets/coding-workspace.png' : '/assets/venue.png'}
+                      alt="Floor Visual Architecture"
+                      fill
+                      className="object-contain p-2 group-hover:scale-105 transition-transform"
+                    />
+                    <div className="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-purple-300 border border-slate-800">
+                      {selectedFloor === 'first' || selectedFloor === 'second' ? 'Hacking Bay Workstation Layout' : 'Complex Arena Hub'}
                     </div>
-                  ))}
-                </div>
-
-                {/* Workspace Floor Visual (5 cols) */}
-                <div className="lg:col-span-5 relative rounded-xl overflow-hidden border border-slate-700/60 bg-slate-950 aspect-video flex items-center justify-center shadow-lg group">
-                  <Image
-                    src={selectedFloor === 'first' || selectedFloor === 'second' ? '/assets/coding-workspace.png' : '/assets/venue.png'}
-                    alt="Floor Visual Architecture"
-                    fill
-                    className="object-contain p-2 group-hover:scale-105 transition-transform"
-                  />
-                  <div className="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-purple-300 border border-slate-800">
-                    {selectedFloor === 'first' || selectedFloor === 'second' ? 'Hacking Bay Workstation Layout' : 'Complex Arena Hub'}
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Section 2: Sathyabama Bus Fleet Scheduler */}
-          <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
-              <div>
-                <span className="text-xs font-mono text-sky-400 font-bold uppercase">FREE TRANSIT SHUTTLES</span>
-                <h2 className="text-xl sm:text-2xl font-display font-black text-white">
-                  Sathyabama Chartered Bus Fleet
-                </h2>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 font-bold">
-                100% Free for All Contestants
-              </span>
-            </div>
-
-            <p className="text-xs text-slate-300">
-              Complimentary university buses pick up builders from primary Chennai transit junctions on Friday morning and provide return dispersal on Sunday evening.
-            </p>
-
-            {/* Hub Selector Pills */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              {[
-                { id: 'central', label: 'Chennai Central (MAS)' },
-                { id: 'tambaram', label: 'Tambaram (TBM)' },
-                { id: 'airport', label: 'Chennai Airport (MAA)' },
-                { id: 'cmbt', label: 'CMBT Koyambedu' },
-              ].map(h => (
-                <button
-                  key={h.id}
-                  onClick={() => setSelectedHub(h.id as any)}
-                  className={`p-3 rounded-xl text-xs font-bold transition-all ${
-                    selectedHub === h.id
-                      ? 'bg-sky-500 text-slate-950 font-bold shadow-md'
-                      : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
-                  }`}
-                >
-                  {h.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Selected Bus Route Schedule Details */}
-            <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-700/60 space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-lg font-bold text-white">
-                  Route: {currentBus.hubName}
-                </h3>
-                <span className="text-xs font-mono text-slate-400">{currentBus.transitDuration}</span>
+          {/* Section 2: Sathyabama Bus Fleet Scheduler Double-Bezel Card */}
+          <div className="double-bezel shadow-2xl">
+            <div className="double-bezel-inner p-6 sm:p-10 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+                <div>
+                  <span className="text-xs font-mono text-sky-400 font-bold uppercase flex items-center gap-1.5">
+                    <Bus className="w-3.5 h-3.5 text-sky-400" />
+                    FREE TRANSIT SHUTTLES
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-display font-black text-white">
+                    Sathyabama Chartered Bus Fleet
+                  </h2>
+                </div>
+                <span className="text-xs font-mono text-emerald-400 font-bold">
+                  100% Free for All Contestants
+                </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                  <span className="font-mono text-purple-300 font-bold block">Boarding Landmark</span>
-                  <span className="text-slate-200">{currentBus.boardingPoint}</span>
+              <p className="text-xs sm:text-sm text-slate-300">
+                Complimentary university buses pick up builders from primary Chennai transit junctions on Friday morning and provide return dispersal on Sunday evening.
+              </p>
+
+              {/* Hub Selector Pills */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {[
+                  { id: 'central', label: 'Chennai Central (MAS)' },
+                  { id: 'tambaram', label: 'Tambaram (TBM)' },
+                  { id: 'airport', label: 'Chennai Airport (MAA)' },
+                  { id: 'cmbt', label: 'CMBT Koyambedu' },
+                ].map(h => (
+                  <button
+                    key={h.id}
+                    onClick={() => {
+                      sound?.playClick();
+                      haptics?.selection();
+                      setSelectedHub(h.id as any);
+                    }}
+                    className={`p-3 rounded-xl text-xs font-bold transition-all active:scale-[0.97] ${
+                      selectedHub === h.id
+                        ? 'bg-sky-500 text-slate-950 font-bold shadow-md shadow-sky-900/40'
+                        : 'bg-slate-900/80 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
+                    }`}
+                  >
+                    {h.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Selected Bus Route Schedule Details */}
+              <div className="hud-frame p-6 rounded-2xl bg-slate-900/90 border border-slate-700/60 space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <h3 className="text-lg font-bold text-white">
+                    Route: {currentBus.hubName}
+                  </h3>
+                  <span className="text-xs font-mono text-slate-400">{currentBus.transitDuration}</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                  <span className="font-mono text-emerald-400 font-bold block">Friday Morning Departures</span>
-                  <ul className="text-slate-200 space-y-0.5">
-                    {currentBus.departureTimes.map((t, i) => (
-                      <li key={i}>• {t}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                  <span className="font-mono text-purple-400 font-bold block">Sunday Return Dispersal</span>
-                  <span className="text-slate-200">{currentBus.returnDeparture}</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                  <span className="font-mono text-sky-400 font-bold block">Driver & Transit POC</span>
-                  <span className="text-slate-200 font-mono">{currentBus.driverPOC}</span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                    <span className="font-mono text-purple-300 font-bold block">Boarding Landmark</span>
+                    <span className="text-slate-200">{currentBus.boardingPoint}</span>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                    <span className="font-mono text-emerald-400 font-bold block">Friday Morning Departures</span>
+                    <ul className="text-slate-200 space-y-0.5">
+                      {currentBus.departureTimes.map((t, i) => (
+                        <li key={i}>• {t}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                    <span className="font-mono text-purple-400 font-bold block">Sunday Return Dispersal</span>
+                    <span className="text-slate-200">{currentBus.returnDeparture}</span>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                    <span className="font-mono text-sky-400 font-bold block">Driver & Transit POC</span>
+                    <span className="text-slate-200 font-mono">{currentBus.driverPOC}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Section 3: Night Safety & Rest Protocols */}
-          <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-6">
-            <div className="flex items-center gap-2 border-b border-white/10 pb-4">
-              <ShieldCheck className="w-5 h-5 text-emerald-400" />
-              <div>
-                <span className="text-xs font-mono text-emerald-400 font-bold uppercase">BUILDER WELFARE</span>
-                <h2 className="text-xl sm:text-2xl font-display font-black text-white">
-                  Night Safety, Rest & Medical Protocols
-                </h2>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">
-                  🔒
+          <div className="double-bezel shadow-2xl">
+            <div className="double-bezel-inner p-6 sm:p-10 space-y-6">
+              <div className="flex items-center gap-2 border-b border-white/10 pb-4">
+                <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                <div>
+                  <span className="text-xs font-mono text-emerald-400 font-bold uppercase">BUILDER WELFARE & PROTOCOLS</span>
+                  <h2 className="text-xl sm:text-2xl font-display font-black text-white">
+                    Night Safety, Rest & Medical Protocols
+                  </h2>
                 </div>
-                <h4 className="text-sm font-bold text-white">10 PM Night Lock-In Protocol</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Campus perimeter security activates at 10:00 PM nightly. No external visitor entry is permitted between 10 PM and 6 AM to guarantee full builder safety.
-                </p>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
-                  🛏️
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="hud-frame p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
+                  <div className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">
+                    🔒
+                  </div>
+                  <h4 className="text-sm font-bold text-white">10 PM Night Lock-In Protocol</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Campus perimeter security activates at 10:00 PM nightly. No external visitor entry is permitted between 10 PM and 6 AM to guarantee full builder safety.
+                  </p>
                 </div>
-                <h4 className="text-sm font-bold text-white">Segregated Rest Corridors</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Quiet relaxation lounges and dedicated hostel rooms with separate secured stairwells are provided for men and women builders to take scheduled sleep breaks.
-                </p>
-              </div>
 
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                <div className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">
-                  🚑
+                <div className="hud-frame p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
+                  <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
+                    🛏️
+                  </div>
+                  <h4 className="text-sm font-bold text-white">Segregated Rest Corridors</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Quiet relaxation lounges and dedicated hostel rooms with separate secured stairwells are provided for men and women builders to take scheduled sleep breaks.
+                  </p>
                 </div>
-                <h4 className="text-sm font-bold text-white">24/7 Campus Medical Care</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  On-campus emergency health center with qualified nursing staff and on-call university medical doctor available throughout the 48-hour continuous sprint.
-                </p>
+
+                <div className="hud-frame p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
+                  <div className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">
+                    🚑
+                  </div>
+                  <h4 className="text-sm font-bold text-white">24/7 Campus Medical Care</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    On-campus emergency health center with qualified nursing staff and on-call university medical doctor available throughout the 48-hour continuous sprint.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Section 4: Complimentary Builder Streetwear Kit */}
-          <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-aws-squidInk to-slate-950 border border-purple-500/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-2 text-center md:text-left">
-              <span className="text-xs font-mono text-purple-400 font-bold uppercase">FINALIST MERCH CRATE</span>
-              <h3 className="text-2xl font-bold text-white font-display">
-                Complimentary Streetwear Builder Kit
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
-                Every finalist receives an exclusive heavyweight builder t-shirt, laser-etched smart NFC badge, holographic stickers, and sponsor swag kit upon Friday check-in.
-              </p>
+          <div className="double-bezel shadow-2xl">
+            <div className="double-bezel-inner p-6 sm:p-10 bg-gradient-to-br from-aws-squidInk to-slate-950 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="space-y-2 text-center md:text-left">
+                <span className="text-xs font-mono text-purple-400 font-bold uppercase flex items-center gap-1.5">
+                  <Shirt className="w-3.5 h-3.5 text-purple-400" />
+                  FINALIST MERCH CRATE
+                </span>
+                <h3 className="text-2xl font-bold text-white font-display">
+                  Complimentary Streetwear Builder Kit
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+                  Every finalist receives an exclusive heavyweight builder t-shirt, laser-etched smart NFC badge, holographic stickers, and sponsor swag kit upon Friday check-in.
+                </p>
+              </div>
+              <Link
+                href="/register"
+                onClick={() => { sound?.playClick(); haptics?.medium(); }}
+                className="island-btn px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:opacity-90 transition-all shadow-lg flex-shrink-0 active:scale-[0.97]"
+              >
+                <span>Verify Your Tee Size in Registration</span>
+                <span className="island-btn-icon">→</span>
+              </Link>
             </div>
-            <Link
-              href="/register"
-              className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md flex-shrink-0"
-            >
-              Verify Your Tee Size in Registration
-            </Link>
           </div>
 
         </div>

@@ -17,6 +17,9 @@ import {
   Check, 
   AlertCircle 
 } from 'lucide-react';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
+import { fireConfetti } from '@/lib/confetti';
 
 function CreateTeamContent() {
   const searchParams = useSearchParams();
@@ -54,10 +57,14 @@ function CreateTeamContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (wordCount > 250) {
+      sound?.playError();
+      haptics?.error();
       setError('Abstract exceeds maximum word limit of 250 words.');
       return;
     }
 
+    sound?.playClick();
+    haptics?.heavy();
     setLoading(true);
     setError('');
 
@@ -71,10 +78,17 @@ function CreateTeamContent() {
       const data = await res.json();
       if (res.ok && data.success) {
         setCreatedTeam(data.team);
+        sound?.playSuccess();
+        haptics?.celebration();
+        fireConfetti();
       } else {
+        sound?.playError();
+        haptics?.error();
         setError(data.error || 'Failed to create team. Please try again.');
       }
     } catch (err: any) {
+      sound?.playError();
+      haptics?.error();
       setError(err.message || 'Error communicating with server.');
     } finally {
       setLoading(false);
@@ -85,6 +99,8 @@ function CreateTeamContent() {
     if (!createdTeam) return;
     const link = `${window.location.origin}/team/join?code=${createdTeam.teamCode}`;
     navigator.clipboard.writeText(link);
+    sound?.playClick();
+    haptics?.medium();
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };

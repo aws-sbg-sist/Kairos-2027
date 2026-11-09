@@ -2,21 +2,27 @@
 
 import React, { useRef, useState, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 
 export interface MagneticButtonProps {
   children: React.ReactNode;
   className?: string;
   pullStrength?: number; // max pixels button shifts toward mouse
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   onMouseEnter?: () => void;
+  hapticFeedback?: boolean;
+  soundFeedback?: boolean;
 }
 
 export const MagneticButton: React.FC<MagneticButtonProps> = ({
   children,
   className = '',
-  pullStrength = 12,
+  pullStrength = 10,
   onClick,
   onMouseEnter,
+  hapticFeedback = true,
+  soundFeedback = true,
 }) => {
   const buttonRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -39,26 +45,48 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
     [pullStrength, prefersReducedMotion]
   );
 
+  const handleMouseEnter = () => {
+    if (soundFeedback) {
+      sound?.playHover();
+    }
+    if (hapticFeedback) {
+      haptics?.light();
+    }
+    onMouseEnter?.();
+  };
+
   const handleMouseLeave = () => {
     setPosition({ x: 0, y: 0 });
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (soundFeedback) {
+      sound?.playClick();
+    }
+    if (hapticFeedback) {
+      haptics?.medium();
+    }
+    onClick?.(e);
   };
 
   return (
     <motion.div
       ref={buttonRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={onMouseEnter}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
+      onClick={handleClick}
       animate={{
         x: position.x,
         y: position.y,
       }}
+      whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
+      whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
       transition={{
         type: 'spring',
-        stiffness: 250,
-        damping: 18,
-        mass: 0.5,
+        stiffness: 300,
+        damping: 20,
+        mass: 0.4,
       }}
       className={`inline-block cursor-pointer select-none ${className}`}
     >

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { EVENT_SCHEDULE } from '@/lib/config';
 import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 
@@ -71,10 +72,15 @@ export const ScheduleSection: React.FC = () => {
               <a
                 href="/api/calendar"
                 download="KAIROS_2027_Schedule.ics"
-                onClick={() => sound?.playClick()}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/30 text-purple-300 transition-all shadow-md group"
+                onClick={() => {
+                  sound?.playClick();
+                  haptics?.success();
+                }}
+                className="island-btn px-5 py-2.5 text-xs font-semibold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/30 text-purple-300 shadow-md group active:scale-[0.97]"
               >
-                <Download className="w-3.5 h-3.5 text-purple-400 group-hover:translate-y-0.5 transition-transform" />
+                <span className="island-btn-icon w-6 h-6 rounded-full bg-purple-500/20 text-purple-400">
+                  <Download className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
+                </span>
                 <span>Add to Apple / Google / Outlook Calendar (.ics)</span>
               </a>
             </div>
@@ -90,9 +96,10 @@ export const ScheduleSection: React.FC = () => {
                 key={day.day}
                 onClick={() => {
                   sound?.playClick();
+                  haptics?.selection();
                   setSelectedDayIdx(idx);
                 }}
-                className={`p-4 sm:p-5 rounded-2xl text-left transition-all duration-200 relative select-none ${
+                className={`p-4 sm:p-5 rounded-2xl text-left transition-all duration-200 relative select-none active:scale-[0.98] ${
                   isActive
                     ? 'bg-aws-squidInk border-2 border-purple-500 shadow-xl shadow-purple-900/30 scale-[1.02]'
                     : 'bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/80'

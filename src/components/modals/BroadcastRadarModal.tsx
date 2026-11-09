@@ -5,6 +5,8 @@ import { X, Radio, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { TeamRadarSignal } from '@/types';
 import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
+import { fireConfetti } from '@/lib/confetti';
 
 interface BroadcastRadarModalProps {
   isOpen: boolean;
@@ -68,6 +70,8 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
 
       setSubmitted(true);
       sound?.playSuccess();
+      haptics?.celebration();
+      fireConfetti();
       onSuccess(data.signal);
 
       setTimeout(() => {
@@ -76,6 +80,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
       }, 2500);
     } catch (err: unknown) {
       sound?.playError();
+      haptics?.error();
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);

@@ -17,6 +17,8 @@ import {
   TrendingUp,
   Cpu
 } from 'lucide-react';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 
 export default function LeaderboardPage() {
   const [selectedTrack, setSelectedTrack] = useState<string>('all');
@@ -218,10 +220,14 @@ export default function LeaderboardPage() {
             {/* Track selector */}
             <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
               <button
-                onClick={() => setSelectedTrack('all')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                onClick={() => {
+                  sound?.playClick();
+                  haptics?.selection();
+                  setSelectedTrack('all');
+                }}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all active:scale-[0.97] ${
                   selectedTrack === 'all'
-                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold'
+                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold shadow-md shadow-purple-900/40'
                     : 'bg-aws-card text-slate-300 hover:text-white border border-slate-700/60'
                 }`}
               >
@@ -230,10 +236,14 @@ export default function LeaderboardPage() {
               {TECHNICAL_TRACKS.map(t => (
                 <button
                   key={t.id}
-                  onClick={() => setSelectedTrack(t.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  onClick={() => {
+                    sound?.playClick();
+                    haptics?.selection();
+                    setSelectedTrack(t.id);
+                  }}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all active:scale-[0.97] ${
                     selectedTrack === t.id
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold'
+                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold shadow-md shadow-purple-900/40'
                       : 'bg-aws-card text-slate-300 hover:text-white border border-slate-700/60'
                   }`}
                 >
@@ -255,9 +265,10 @@ export default function LeaderboardPage() {
             </div>
           </div>
 
-          {/* Leaderboard Table Card */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl overflow-x-auto">
-            <table className="w-full text-left text-xs">
+          {/* Leaderboard Table Double-Bezel Card */}
+          <div className="double-bezel shadow-2xl">
+            <div className="double-bezel-inner p-6 sm:p-8 overflow-x-auto">
+              <table className="w-full text-left text-xs">
               <thead>
                 <tr className="border-b border-white/10 text-[11px] font-mono text-purple-300 uppercase">
                   <th className="py-3 px-3">Rank</th>
@@ -331,14 +342,16 @@ export default function LeaderboardPage() {
               </tbody>
             </table>
           </div>
+        </div>
 
           {/* Bottom Stage Screen Link */}
           <div className="text-center pt-2">
             <Link
               href="/stage"
-              className="inline-flex items-center gap-2 text-xs font-mono font-bold text-purple-300 hover:text-white px-5 py-2.5 rounded-xl bg-aws-squidInk border border-purple-500/30 hover:border-purple-500 transition-all"
+              className="island-btn inline-flex items-center gap-2 text-xs font-mono font-bold text-purple-300 hover:text-white px-5 py-2.5 rounded-xl bg-aws-squidInk border border-purple-500/30 hover:border-purple-500 transition-all shadow-lg hover:shadow-purple-500/20 active:scale-[0.98]"
             >
-              <span>Switch to Auditorium 20x10ft Stage Display Mode →</span>
+              <span>Switch to Auditorium 20x10ft Stage Display Mode</span>
+              <span className="island-btn-icon">→</span>
             </Link>
           </div>
 

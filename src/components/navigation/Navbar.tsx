@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowUpRight, Shield, Volume2, VolumeX, ChevronDown } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
 interface NavLinkItem {
@@ -125,9 +126,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 <Link
                   key={link.label}
                   href={link.href}
-                  onMouseEnter={() => sound?.playHover()}
-                  onClick={() => sound?.playClick()}
-                  className={`px-2 xl:px-3 py-1.5 rounded-md transition-all relative whitespace-nowrap flex-shrink-0 ${
+                  onMouseEnter={() => {
+                    sound?.playHover();
+                    haptics?.light();
+                  }}
+                  onClick={() => {
+                    sound?.playClick();
+                    haptics?.selection();
+                  }}
+                  className={`px-2 xl:px-3 py-1.5 rounded-md transition-all relative whitespace-nowrap flex-shrink-0 active:scale-[0.97] ${
                     isActive
                       ? 'text-white bg-purple-950/50 font-semibold text-purple-400 border border-purple-500/30'
                       : 'hover:text-white hover:bg-white/5 text-slate-300'
@@ -148,9 +155,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
             {/* Elegant "More" Dropdown */}
             <div className="relative" onMouseLeave={() => setMoreMenuOpen(false)}>
               <button
-                onClick={() => setMoreMenuOpen(!moreMenuOpen)}
-                onMouseEnter={() => setMoreMenuOpen(true)}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 text-slate-300 transition-all"
+                onClick={() => {
+                  haptics?.selection();
+                  setMoreMenuOpen(!moreMenuOpen);
+                }}
+                onMouseEnter={() => {
+                  haptics?.light();
+                  setMoreMenuOpen(true);
+                }}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 text-slate-300 transition-all active:scale-[0.97]"
                 aria-expanded={moreMenuOpen}
               >
                 <span>More</span>
@@ -163,7 +176,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                     <Link
                       key={subLink.label}
                       href={subLink.href}
-                      onClick={() => setMoreMenuOpen(false)}
+                      onClick={() => {
+                        sound?.playClick();
+                        haptics?.selection();
+                        setMoreMenuOpen(false);
+                      }}
                       className="block px-3.5 py-2 text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
                     >
                       {subLink.label}
@@ -172,7 +189,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                   <div className="my-1 border-t border-white/10" />
                   <Link
                     href="/admin/login"
-                    onClick={() => setMoreMenuOpen(false)}
+                    onClick={() => {
+                      sound?.playClick();
+                      haptics?.selection();
+                      setMoreMenuOpen(false);
+                    }}
                     className="flex items-center gap-2 px-3.5 py-2 text-xs text-slate-300 hover:text-white hover:bg-purple-950/40 transition-colors"
                   >
                     <Shield className="w-3.5 h-3.5 text-purple-400" />
@@ -187,34 +208,62 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
           <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-shrink-0">
             {/* Theme Toggle (Adobe Cyber Neon vs AWS Classic) */}
             <ThemeToggle />
-            {/* Audio Toggle */}
+            {/* Audio Toggle with Animated Aerospace Equalizer */}
             <button
-              onClick={() => sound?.toggle()}
-              onMouseEnter={() => sound?.playHover()}
-              className="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all flex items-center gap-1 text-xs font-mono"
+              onClick={() => {
+                haptics?.medium();
+                sound?.toggle();
+              }}
+              onMouseEnter={() => {
+                sound?.playHover();
+                haptics?.light();
+              }}
+              className="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 text-xs font-mono active:scale-[0.97]"
               title={soundEnabled ? "Mute Ambient FX" : "Enable Ambient FX"}
             >
               {soundEnabled ? (
-                <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
+                <div className="flex items-center gap-1.5">
+                  <div className="flex items-end gap-0.5 h-3.5 w-3 pb-0.5">
+                    <span className="w-0.5 bg-emerald-400 rounded-full sound-bar-1" />
+                    <span className="w-0.5 bg-purple-400 rounded-full sound-bar-2" />
+                    <span className="w-0.5 bg-sky-400 rounded-full sound-bar-3" />
+                  </div>
+                  <span className="text-[10px] text-emerald-400 font-bold hidden xl:inline">FX ON</span>
+                </div>
               ) : (
-                <VolumeX className="w-3.5 h-3.5 text-slate-500" />
+                <div className="flex items-center gap-1">
+                  <VolumeX className="w-3.5 h-3.5 text-slate-500" />
+                  <span className="text-[10px] text-slate-500 hidden xl:inline">MUTED</span>
+                </div>
               )}
             </button>
 
             <Link
               href="/dashboard"
-              onMouseEnter={() => sound?.playHover()}
-              onClick={() => sound?.playClick()}
-              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/30 transition-all"
+              onMouseEnter={() => {
+                sound?.playHover();
+                haptics?.light();
+              }}
+              onClick={() => {
+                sound?.playClick();
+                haptics?.medium();
+              }}
+              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/30 transition-all active:scale-[0.97]"
             >
               Dashboard
             </Link>
 
             <Link
               href="/admin/login"
-              onMouseEnter={() => sound?.playHover()}
-              onClick={() => sound?.playClick()}
-              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/40 transition-all flex items-center gap-1.5"
+              onMouseEnter={() => {
+                sound?.playHover();
+                haptics?.light();
+              }}
+              onClick={() => {
+                sound?.playClick();
+                haptics?.medium();
+              }}
+              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/40 transition-all flex items-center gap-1.5 active:scale-[0.97]"
             >
               <Shield className="w-3.5 h-3.5 text-purple-400" />
               <span>Admin</span>
@@ -222,9 +271,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
 
             <Link
               href="/register"
-              onMouseEnter={() => sound?.playHover()}
-              onClick={() => sound?.playClick()}
-              className="relative group px-4 py-2 rounded-lg text-xs font-bold text-white btn-primary-themed shadow-md shadow-purple-900/30 transition-all duration-300 active:scale-95 flex items-center gap-1.5 whitespace-nowrap"
+              onMouseEnter={() => {
+                sound?.playHover();
+                haptics?.light();
+              }}
+              onClick={() => {
+                sound?.playClick();
+                haptics?.heavy();
+              }}
+              className="relative group px-4 py-2 rounded-lg text-xs font-bold text-white btn-primary-themed shadow-md shadow-purple-900/30 transition-all duration-300 active:scale-[0.97] flex items-center gap-1.5 whitespace-nowrap"
             >
               <span>Register (100% Free)</span>
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -236,13 +291,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
             <ThemeToggle compact />
             <Link
               href="/register"
-              className="px-3 py-1.5 rounded-lg text-xs font-bold btn-primary-themed text-white shadow-sm"
+              onClick={() => haptics?.medium()}
+              className="px-3 py-1.5 rounded-lg text-xs font-bold btn-primary-themed text-white shadow-sm active:scale-[0.97]"
             >
               Register Free
             </Link>
             <button
-              onClick={() => { sound?.playClick(); setMobileMenuOpen(!mobileMenuOpen); }}
-              className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 focus:outline-none"
+              onClick={() => { 
+                sound?.playClick(); 
+                haptics?.medium();
+                setMobileMenuOpen(!mobileMenuOpen); 
+              }}
+              className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 focus:outline-none active:scale-[0.97]"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -258,8 +318,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 <Link
                   key={link.label}
                   href={link.href}
-                  onClick={() => { sound?.playClick(); setMobileMenuOpen(false); }}
-                  className="px-3 py-2 rounded-lg text-xs text-slate-200 hover:text-white hover:bg-purple-950/50 font-medium flex items-center justify-between"
+                  onClick={() => { 
+                    sound?.playClick(); 
+                    haptics?.selection();
+                    setMobileMenuOpen(false); 
+                  }}
+                  className="px-3 py-2 rounded-lg text-xs text-slate-200 hover:text-white hover:bg-purple-950/50 font-medium flex items-center justify-between active:scale-[0.97]"
                 >
                   <span>{link.label}</span>
                   {link.badge && (

@@ -7,6 +7,7 @@ import { TECHNICAL_TRACKS } from '@/lib/config';
 import { TeamRadarSignal } from '@/types';
 import { BroadcastRadarModal } from '@/components/modals/BroadcastRadarModal';
 import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 
 export function TeamRadarSection() {
   const [signals, setSignals] = useState<TeamRadarSignal[]>([]);
@@ -38,10 +39,12 @@ export function TeamRadarSection() {
 
   const handleConnect = (sig: TeamRadarSignal) => {
     sound?.playClick();
+    haptics?.medium();
     if (sig.contactUrl.startsWith('http')) {
       window.open(sig.contactUrl, '_blank', 'noopener,noreferrer');
     } else {
       navigator.clipboard.writeText(sig.contactUrl);
+      haptics?.success();
       setCopiedId(sig.id);
       setTimeout(() => setCopiedId(null), 2500);
     }
@@ -102,9 +105,13 @@ export function TeamRadarSection() {
               <Filter className="w-3.5 h-3.5 text-purple-400" /> Track:
             </span>
             <button
-              onClick={() => { sound?.playClick(); setSelectedTrack('all'); }}
+              onClick={() => { 
+                sound?.playClick(); 
+                haptics?.selection();
+                setSelectedTrack('all'); 
+              }}
               onMouseEnter={() => sound?.playHover()}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 active:scale-[0.97] ${
                 selectedTrack === 'all'
                   ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
@@ -115,9 +122,13 @@ export function TeamRadarSection() {
             {TECHNICAL_TRACKS.map(t => (
               <button
                 key={t.id}
-                onClick={() => { sound?.playClick(); setSelectedTrack(t.id); }}
+                onClick={() => { 
+                  sound?.playClick(); 
+                  haptics?.selection();
+                  setSelectedTrack(t.id); 
+                }}
                 onMouseEnter={() => sound?.playHover()}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 active:scale-[0.97] ${
                   selectedTrack === t.id
                     ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
                     : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
@@ -143,9 +154,13 @@ export function TeamRadarSection() {
             ].map(r => (
               <button
                 key={r.id}
-                onClick={() => { sound?.playClick(); setSelectedRole(r.id); }}
+                onClick={() => { 
+                  sound?.playClick(); 
+                  haptics?.selection();
+                  setSelectedRole(r.id); 
+                }}
                 onMouseEnter={() => sound?.playHover()}
-                className={`px-3 py-1 rounded-md text-xs font-mono transition-all shrink-0 ${
+                className={`px-3 py-1 rounded-md text-xs font-mono transition-all shrink-0 active:scale-[0.97] ${
                   selectedRole === r.id
                     ? 'bg-purple-600 text-white font-bold border border-purple-400/40 shadow-sm'
                     : 'bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/5'

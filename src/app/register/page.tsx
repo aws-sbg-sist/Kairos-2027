@@ -16,6 +16,9 @@ import {
   Lock,
   AlertCircle
 } from 'lucide-react';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
+import { fireConfetti } from '@/lib/confetti';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -45,10 +48,14 @@ export default function RegisterPage() {
 
   const handleVerifyMeetup = async () => {
     if (!formData.meetupProfileUrl.trim()) {
+      sound?.playError();
+      haptics?.error();
       setMeetupError('Please enter your Meetup profile URL.');
       return;
     }
 
+    sound?.playClick();
+    haptics?.medium();
     setVerifyingMeetup(true);
     setMeetupError('');
 
@@ -64,12 +71,18 @@ export default function RegisterPage() {
 
       const data = await res.json();
       if (res.ok && data.verified) {
+        sound?.playSuccess();
+        haptics?.success();
         setMeetupVerified(true);
       } else {
+        sound?.playError();
+        haptics?.error();
         setMeetupError(data.message || 'Unable to verify RSVP. Please ensure you joined the SIST chapter on Meetup.com.');
       }
     } catch (err) {
       // Fallback local verification for demo resilience
+      sound?.playSuccess();
+      haptics?.success();
       setMeetupVerified(true);
     } finally {
       setVerifyingMeetup(false);
@@ -79,10 +92,14 @@ export default function RegisterPage() {
   const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!meetupVerified) {
+      sound?.playError();
+      haptics?.error();
       setMeetupError('Mandatory per AWS SBGL guidelines: Please verify your Meetup RSVP before continuing.');
       return;
     }
 
+    sound?.playClick();
+    haptics?.heavy();
     setLoading(true);
     setFormError('');
 
@@ -96,10 +113,17 @@ export default function RegisterPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setSubmitted(true);
+        sound?.playSuccess();
+        haptics?.celebration();
+        fireConfetti();
       } else {
+        sound?.playError();
+        haptics?.error();
         setFormError(data.error || 'Failed to submit registration. Please verify your details.');
       }
     } catch (err: any) {
+      sound?.playError();
+      haptics?.error();
       setFormError(err.message || 'Error communicating with server.');
     } finally {
       setLoading(false);

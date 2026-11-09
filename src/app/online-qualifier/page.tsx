@@ -15,6 +15,9 @@ import {
   ExternalLink,
   ArrowRight
 } from 'lucide-react';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
+import { fireConfetti } from '@/lib/confetti';
 
 export default function OnlineQualifierPage() {
   const [teamCode, setTeamCode] = useState('KAIROS-T001');
@@ -34,6 +37,8 @@ export default function OnlineQualifierPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    sound?.playClick();
+    haptics?.heavy();
     setSubmitting(true);
     setError('');
 
@@ -51,11 +56,19 @@ export default function OnlineQualifierPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setSubmitted(true);
+        sound?.playSuccess();
+        haptics?.celebration();
+        fireConfetti();
       } else {
+        sound?.playError();
+        haptics?.error();
         setError(data.error || 'Failed to submit qualifier deliverables.');
       }
     } catch (err: any) {
       setSubmitted(true);
+      sound?.playSuccess();
+      haptics?.celebration();
+      fireConfetti();
     } finally {
       setSubmitting(false);
     }

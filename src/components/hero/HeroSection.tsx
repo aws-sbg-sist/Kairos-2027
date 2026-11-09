@@ -7,6 +7,7 @@ import { ArrowRight, Calendar, MapPin, Download, ShieldCheck, Play, Trophy, User
 import { EVENT_CONFIG } from '@/lib/config';
 import { Logo25DAnimation } from './Logo25DAnimation';
 import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 import { CosmicBackground } from '@/components/animation/CosmicBackground';
 import { KineticText } from '@/components/animation/KineticText';
 import { MagneticButton } from '@/components/animation/MagneticButton';
@@ -142,85 +143,103 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
               </div>
             </ScrollReveal>
 
-            {/* 48-Hour Live Countdown Timer with Glassmorphism HUD */}
+            {/* 48-Hour Live Countdown Timer with Double-Bezel Hardware Enclosure HUD */}
             <ScrollReveal direction="up" distance={20} delay={0.45}>
-              <div className="p-4 sm:p-5 rounded-2xl glass-panel border border-purple-500/30 max-w-xl mx-auto lg:mx-0 bg-aws-squidInk/70 shadow-2xl relative overflow-hidden group">
-                {/* Subtle top glow line */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-aws-orange to-transparent opacity-60" />
+              <div className="double-bezel max-w-xl mx-auto lg:mx-0 group">
+                <div className="double-bezel-inner p-4 sm:p-5 relative overflow-hidden">
+                  {/* Subtle top glow line */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-aws-orange to-transparent opacity-60" />
 
-                <div className="flex items-center justify-between mb-3 text-xs font-mono text-purple-300">
-                  <div className="flex items-center gap-2">
-                    <div className="relative w-5 h-5 shrink-0">
-                      <Image
-                        src="/assets/duration.png"
-                        alt="48 Hours Duration"
-                        fill
-                        className="object-contain"
-                      />
+                  <div className="flex items-center justify-between mb-3 text-xs font-mono text-purple-300">
+                    <div className="flex items-center gap-2">
+                      <div className="relative w-5 h-5 shrink-0">
+                        <Image
+                          src="/assets/duration.png"
+                          alt="48 Hours Duration"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <span className="font-semibold tracking-wider uppercase">
+                        {countdownStatus === 'upcoming'
+                          ? 'Countdown to Clock Start (IST)'
+                          : countdownStatus === 'live'
+                          ? '⚡ 48-Hour Clock Active!'
+                          : 'Competition Concluded'}
+                      </span>
                     </div>
-                    <span className="font-semibold tracking-wider uppercase">
-                      {countdownStatus === 'upcoming'
-                        ? 'Countdown to Clock Start (IST)'
-                        : countdownStatus === 'live'
-                        ? '⚡ 48-Hour Clock Active!'
-                        : 'Competition Concluded'}
-                    </span>
+                    <span className="text-slate-400">Chennai · Asia/Kolkata</span>
                   </div>
-                  <span className="text-slate-400">Chennai · Asia/Kolkata</span>
-                </div>
 
-                <div className="grid grid-cols-4 gap-2 sm:gap-4 text-center">
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
-                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
-                      {String(timeLeft.days).padStart(2, '0')}
-                    </span>
-                    <span className="text-[10px] font-mono uppercase text-slate-400">Days</span>
-                  </div>
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
-                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
-                      {String(timeLeft.hours).padStart(2, '0')}
-                    </span>
-                    <span className="text-[10px] font-mono uppercase text-slate-400">Hours</span>
-                  </div>
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
-                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
-                      {String(timeLeft.minutes).padStart(2, '0')}
-                    </span>
-                    <span className="text-[10px] font-mono uppercase text-slate-400">Minutes</span>
-                  </div>
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-purple-500/40 bg-purple-950/30">
-                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-purple-400 block animate-pulse">
-                      {String(timeLeft.seconds).padStart(2, '0')}
-                    </span>
-                    <span className="text-[10px] font-mono uppercase text-purple-300">Seconds</span>
+                  <div className="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+                    <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
+                      <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
+                        {String(timeLeft.days).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] font-mono uppercase text-slate-400">Days</span>
+                    </div>
+                    <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
+                      <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
+                        {String(timeLeft.hours).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] font-mono uppercase text-slate-400">Hours</span>
+                    </div>
+                    <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
+                      <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
+                        {String(timeLeft.minutes).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] font-mono uppercase text-slate-400">Minutes</span>
+                    </div>
+                    <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-purple-500/40 bg-purple-950/30">
+                      <span className="font-display font-extrabold text-2xl sm:text-3xl text-purple-400 block animate-pulse">
+                        {String(timeLeft.seconds).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] font-mono uppercase text-purple-300">Seconds</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Primary & Secondary Call-to-Action Buttons with Magnetic Physics */}
+            {/* Primary & Secondary Call-to-Action Buttons with Island Button Trailing Icon Physics */}
             <ScrollReveal direction="up" distance={20} delay={0.5}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
                 <MagneticButton pullStrength={10}>
                   <Link
                     href="/register"
-                    onClick={() => sound?.playClick()}
-                    onMouseEnter={() => sound?.playHover()}
-                    className="px-6 py-3.5 rounded-xl text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 transition-all duration-200 ease-entrance flex items-center gap-2 group active:scale-[0.97]"
+                    onClick={() => {
+                      sound?.playClick();
+                      haptics?.heavy();
+                    }}
+                    onMouseEnter={() => {
+                      sound?.playHover();
+                      haptics?.light();
+                    }}
+                    className="island-btn px-6 py-3 text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 group active:scale-[0.97] shine-hover"
                   >
                     <span>Submit Round 0 Project Abstract (Free)</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+                    <span className="island-btn-icon w-8 h-8 rounded-full bg-white/20">
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    </span>
                   </Link>
                 </MagneticButton>
 
                 <MagneticButton pullStrength={8}>
                   <Link
                     href="/sponsors"
-                    onClick={() => sound?.playClick()}
-                    onMouseEnter={() => sound?.playHover()}
-                    className="px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-all flex items-center gap-2 backdrop-blur-sm"
+                    onClick={() => {
+                      sound?.playClick();
+                      haptics?.medium();
+                    }}
+                    onMouseEnter={() => {
+                      sound?.playHover();
+                      haptics?.light();
+                    }}
+                    className="island-btn px-5 py-3 text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-all backdrop-blur-sm group active:scale-[0.97]"
                   >
-                    <Download className="w-4 h-4 text-purple-400" />
+                    <span className="island-btn-icon w-7 h-7 rounded-full bg-purple-500/20 text-purple-300">
+                      <Download className="w-3.5 h-3.5" />
+                    </span>
                     <span>View Sponsorship Prospectus (PDF)</span>
                   </Link>
                 </MagneticButton>
@@ -228,11 +247,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                 <MagneticButton pullStrength={6}>
                   <Link
                     href="/refer-sponsor"
-                    onClick={() => sound?.playClick()}
-                    onMouseEnter={() => sound?.playHover()}
-                    className="px-4 py-3.5 rounded-xl text-xs font-semibold text-emerald-400 hover:text-white bg-emerald-950/40 border border-emerald-500/30 hover:border-emerald-500/60 transition-all flex items-center gap-1.5 backdrop-blur-sm"
+                    onClick={() => {
+                      sound?.playClick();
+                      haptics?.medium();
+                    }}
+                    onMouseEnter={() => {
+                      sound?.playHover();
+                      haptics?.light();
+                    }}
+                    className="island-btn px-4 py-3 text-xs font-semibold text-emerald-400 hover:text-white bg-emerald-950/40 border border-emerald-500/30 hover:border-emerald-500/60 transition-all backdrop-blur-sm group active:scale-[0.97]"
                   >
-                    <Trophy className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="island-btn-icon w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400">
+                      <Trophy className="w-3 h-3" />
+                    </span>
                     <span>Earn 10%–15% Referral Cash</span>
                   </Link>
                 </MagneticButton>
@@ -247,13 +274,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                 <Logo25DAnimation />
               </div>
 
-              {/* Interactive Status Indicator */}
-              <div className="mt-8 sm:mt-10 flex items-center gap-2 text-[11px] font-mono text-slate-400">
-                <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-purple-500/40 text-purple-200 shadow-md backdrop-blur-md">
-                  <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-pulse" />
-                  <span>2.5D Hologram Active</span>
-                </span>
-                <span className="hidden sm:inline text-slate-400">· Interactive Parallax Tilt</span>
+              {/* Interactive Status Indicator & Aerospace Telemetry */}
+              <div className="mt-8 sm:mt-10 flex flex-col items-center gap-3">
+                <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400">
+                  <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-purple-500/40 text-purple-200 shadow-md backdrop-blur-md">
+                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-pulse" />
+                    <span>2.5D Hologram Active</span>
+                  </span>
+                  <span className="hidden sm:inline text-slate-400">· Interactive Parallax Tilt</span>
+                </div>
+
+                {/* Aerospace Telemetry Mini Dock */}
+                <div className="grid grid-cols-3 gap-2 w-full max-w-sm pt-1">
+                  <div className="p-2 rounded-lg bg-slate-950/80 border border-white/10 text-center font-mono">
+                    <span className="text-[10px] text-slate-400 block uppercase">PRIZE POOL</span>
+                    <span className="text-xs font-bold text-emerald-400">₹1,75,000</span>
+                  </div>
+                  <div className="p-2 rounded-lg bg-slate-950/80 border border-white/10 text-center font-mono">
+                    <span className="text-[10px] text-slate-400 block uppercase">NATIONAL</span>
+                    <span className="text-xs font-bold text-white">100 SQUADS</span>
+                  </div>
+                  <div className="p-2 rounded-lg bg-slate-950/80 border border-white/10 text-center font-mono">
+                    <span className="text-[10px] text-slate-400 block uppercase">FEE</span>
+                    <span className="text-xs font-bold text-purple-300">₹0 MERIT</span>
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
           </div>

@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { MessageSquare, X, Send, Sparkles, RotateCcw, Bot, User } from 'lucide-react';
 import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 
 interface Message {
   id: string;
@@ -70,6 +71,7 @@ export const KairosChatbot: React.FC = () => {
     if (!query || isLoading) return;
 
     sound?.playClick();
+    haptics?.medium();
     setHasInteracted(true);
     const userMsg: Message = {
       id: `usr-${Date.now()}`,
@@ -104,9 +106,13 @@ export const KairosChatbot: React.FC = () => {
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 
+      sound?.playHover();
+      haptics?.light();
       setMessages((prev) => [...prev, botMsg]);
     } catch (err: any) {
       console.error('[Chatbot error]:', err);
+      sound?.playError();
+      haptics?.error();
       const errorMsg: Message = {
         id: `err-${Date.now()}`,
         role: 'assistant',
@@ -128,6 +134,7 @@ export const KairosChatbot: React.FC = () => {
 
   const handleClearHistory = () => {
     sound?.playClick();
+    haptics?.selection();
     setMessages(INITIAL_MESSAGES);
   };
 
@@ -137,7 +144,8 @@ export const KairosChatbot: React.FC = () => {
       {!isOpen && (
         <button
           onClick={() => {
-            sound?.playClick();
+            sound?.playModalOpen();
+            haptics?.medium();
             setIsOpen(true);
           }}
           className="relative group flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-aws-orange via-fuchsia-400 to-yellow-500 hover:from-purple-500 hover:to-aws-orange text-slate-950 font-bold shadow-xl shadow-purple-900/40 hover:scale-105 active:scale-[0.97] transition-all duration-200 ease-entrance border border-purple-500/40"
@@ -281,9 +289,12 @@ export const KairosChatbot: React.FC = () => {
               {SUGGESTED_PROMPTS.map((prompt) => (
                 <button
                   key={prompt}
-                  onClick={() => handleSendMessage(prompt)}
+                  onClick={() => {
+                    haptics?.selection();
+                    handleSendMessage(prompt);
+                  }}
                   disabled={isLoading}
-                  className="px-2.5 py-1 rounded-full bg-aws-squidInk/80 hover:bg-purple-950/60 border border-purple-500/20 hover:border-purple-500/60 text-slate-300 hover:text-white transition whitespace-nowrap flex-shrink-0 disabled:opacity-50"
+                  className="px-2.5 py-1 rounded-full bg-aws-squidInk/80 hover:bg-purple-950/60 border border-purple-500/20 hover:border-purple-500/60 text-slate-300 hover:text-white transition whitespace-nowrap flex-shrink-0 disabled:opacity-50 active:scale-[0.97]"
                 >
                   {prompt}
                 </button>

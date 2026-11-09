@@ -16,6 +16,9 @@ import {
   ArrowRight,
   ExternalLink
 } from 'lucide-react';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
+import { fireGoldMilestone } from '@/lib/confetti';
 import { EVENT_CONFIG, SPONSOR_REFERRAL_TIERS } from '@/lib/config';
 
 export default function ReferSponsorPage() {
@@ -51,6 +54,8 @@ export default function ReferSponsorPage() {
   const handleLookup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchCode.trim()) return;
+    sound?.playClick();
+    haptics?.medium();
     setLookingUp(true);
     setLookupError('');
     setLookupResult(null);
@@ -60,10 +65,16 @@ export default function ReferSponsorPage() {
       const data = await res.json();
       if (res.ok && data.success && data.lead) {
         setLookupResult(data.lead);
+        sound?.playSuccess();
+        haptics?.success();
       } else {
+        sound?.playError();
+        haptics?.error();
         setLookupError(data.error || 'Referral lead code not found.');
       }
     } catch (err) {
+      sound?.playError();
+      haptics?.error();
       setLookupError('Network error checking code status.');
     } finally {
       setLookingUp(false);
@@ -72,6 +83,8 @@ export default function ReferSponsorPage() {
 
   const handleSubmitLead = async (e: React.FormEvent) => {
     e.preventDefault();
+    sound?.playClick();
+    haptics?.heavy();
     setSubmitting(true);
     setSubmitError('');
 
@@ -84,10 +97,17 @@ export default function ReferSponsorPage() {
       const data = await res.json();
       if (res.ok && data.success && data.lead) {
         setSubmittedLead(data.lead);
+        sound?.playSuccess();
+        haptics?.celebration();
+        fireGoldMilestone();
       } else {
+        sound?.playError();
+        haptics?.error();
         setSubmitError(data.error || 'Failed to submit referral lead.');
       }
     } catch (err) {
+      sound?.playError();
+      haptics?.error();
       setSubmitError('Failed to connect to referral intake service.');
     } finally {
       setSubmitting(false);
@@ -162,7 +182,10 @@ export default function ReferSponsorPage() {
                   max="200000"
                   step="25000"
                   value={dealAmount}
-                  onChange={(e) => setDealAmount(Number(e.target.value))}
+                  onChange={(e) => {
+                    haptics?.selection();
+                    setDealAmount(Number(e.target.value));
+                  }}
                   className="w-full h-3 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-[#10B981]"
                 />
                 <div className="flex justify-between text-[11px] text-slate-400 font-mono">

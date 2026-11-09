@@ -3,6 +3,7 @@ import { Inter, Outfit, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { KairosChatbot } from '@/components/chatbot/KairosChatbot';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -152,6 +153,8 @@ export default function RootLayout({
       </head>
       <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-purple-600 selection:text-white">
         <ThemeProvider>
+          {/* Ambient Magnetic Cursor Glow for Fine Pointers */}
+          <MagneticGlowCursor />
           {/* WCAG 2.4.1 Accessible Skip Navigation */}
           <a
             href="#main-content"

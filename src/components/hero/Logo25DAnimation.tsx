@@ -66,12 +66,14 @@ export const Logo25DAnimation: React.FC = () => {
     >
       {/* 2.5D Rotating & Tilting Stage */}
       <div
-        className="relative w-full h-full flex items-center justify-center transition-transform duration-200 ease-out"
+        className="relative w-full h-full flex items-center justify-center transition-transform duration-200 ease-out reticle-frame"
         style={{
           transformStyle: 'preserve-3d',
           transform: `rotateX(${currentRotX}deg) rotateY(${currentRotY}deg) translateY(${currentTranslateY}px)`,
         }}
       >
+        {/* Subtle Horizontal Laser Scan Beam */}
+        <div className="laser-scan-beam" />
         {/* =================================================================
             LAYER 0: Deep Ambient Glow & Radial Diffusion (Z: -60px)
             ================================================================= */}

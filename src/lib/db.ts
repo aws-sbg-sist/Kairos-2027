@@ -776,7 +776,7 @@ export const db = {
   }): { success: boolean; team?: ParticipantTeam; error?: string } {
     const store = readStore();
     const clean = teamCode.trim().toUpperCase();
-    const team = store.teams.find(t => (t.teamCode && t.teamCode.toUpperCase() === clean) || t.inviteCode.toUpperCase() === clean);
+    const team = store.teams.find(t => t.inviteCode && t.inviteCode.toUpperCase() === clean);
 
     if (!team) {
       return { success: false, error: 'Invalid Team Code. Please verify your team invitation code.' };
@@ -815,7 +815,7 @@ export const db = {
   submitRound1Qualifier(teamCode: string, data: { loomVideoUrl: string; githubUrl: string }): boolean {
     const store = readStore();
     const clean = teamCode.trim().toUpperCase();
-    const team = store.teams.find(t => (t.teamCode && t.teamCode.toUpperCase() === clean) || t.inviteCode.toUpperCase() === clean);
+    const team = store.teams.find(t => (t.teamCode && t.teamCode.toUpperCase() === clean) || (t.inviteCode && t.inviteCode.toUpperCase() === clean));
     if (!team) return false;
 
     team.loomVideoUrl = data.loomVideoUrl;

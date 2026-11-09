@@ -14,6 +14,9 @@ import {
   Search, 
   Shirt
 } from 'lucide-react';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
+import { fireConfetti } from '@/lib/confetti';
 
 function JoinTeamContent() {
   const searchParams = useSearchParams();
@@ -54,10 +57,14 @@ function JoinTeamContent() {
   const handleLookupTeam = async (codeToSearch?: string) => {
     const code = (codeToSearch || teamCode).trim();
     if (!code) {
+      sound?.playError();
+      haptics?.error();
       setError('Please enter a valid Team Code.');
       return;
     }
 
+    sound?.playClick();
+    haptics?.selection();
     setSearching(true);
     setError('');
 
@@ -66,11 +73,17 @@ function JoinTeamContent() {
       const data = await res.json();
       if (res.ok && data.team) {
         setTargetTeam(data.team);
+        sound?.playSuccess();
+        haptics?.success();
       } else {
+        sound?.playError();
+        haptics?.error();
         setError(data.error || 'Team not found. Verify the Team Code with your team leader.');
         setTargetTeam(null);
       }
     } catch (err) {
+      sound?.playError();
+      haptics?.error();
       setError('Unable to reach server. Please try again.');
     } finally {
       setSearching(false);
@@ -80,10 +93,14 @@ function JoinTeamContent() {
   const handleJoinSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!targetTeam) {
+      sound?.playError();
+      haptics?.error();
       setError('Please search and verify your target team first.');
       return;
     }
 
+    sound?.playClick();
+    haptics?.heavy();
     setJoining(true);
     setError('');
 
@@ -92,7 +109,7 @@ function JoinTeamContent() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          teamCode: targetTeam.teamCode,
+          teamCode: teamCode.trim().toUpperCase() || targetTeam.teamCode,
           member: formData
         }),
       });
@@ -100,10 +117,17 @@ function JoinTeamContent() {
       const data = await res.json();
       if (res.ok && data.success) {
         setJoinedSuccess(true);
+        sound?.playSuccess();
+        haptics?.celebration();
+        fireConfetti();
       } else {
+        sound?.playError();
+        haptics?.error();
         setError(data.error || 'Failed to join team.');
       }
     } catch (err: any) {
+      sound?.playError();
+      haptics?.error();
       setError(err.message || 'Error communicating with server.');
     } finally {
       setJoining(false);
@@ -137,14 +161,14 @@ function JoinTeamContent() {
               {/* Step A: Team Code Lookup */}
               <div className="space-y-3">
                 <label className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold block">
-                  1. Enter Team Code (Provided by Team Lead)
+                  1. Enter Team Invite Code (Provided by Team Lead)
                 </label>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={teamCode}
                     onChange={e => setTeamCode(e.target.value.toUpperCase())}
-                    placeholder="e.g. KAIROS-T001"
+                    placeholder="e.g. KAIROS-7721"
                     className="flex-grow px-4 py-3 rounded-xl glass-input font-mono font-bold text-base sm:text-lg tracking-wider text-purple-400 uppercase"
                   />
                   <button

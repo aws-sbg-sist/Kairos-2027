@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
+import { getCurrentAdminSession } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   // Rate limiting to prevent brute force on judge PINs
@@ -134,6 +135,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   const evaluations = db.getEvaluations();
   const teams = db.getTeams();
+  const session = await getCurrentAdminSession();
 
   const standings = teams.map(t => {
     const teamEvals = evaluations.filter(e => e.teamId === t.id);
@@ -161,6 +163,6 @@ export async function GET() {
     success: true,
     totalEvaluations: evaluations.length,
     standings,
-    evaluations
+    ...(session ? { evaluations } : {})
   });
 }

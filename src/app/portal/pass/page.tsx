@@ -6,6 +6,9 @@ import Link from 'next/link';
 import QRCode from 'qrcode';
 import { ArrowLeft, Printer, Download, ShieldCheck, MapPin, Calendar, Clock } from 'lucide-react';
 import { EVENT_CONFIG } from '@/lib/config';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
+import { fireGoldMilestone } from '@/lib/confetti';
 
 export default function ParticipantPassPage() {
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
@@ -45,6 +48,9 @@ export default function ParticipantPassPage() {
   }, []);
 
   const handlePrint = () => {
+    sound?.playClick();
+    haptics?.heavy();
+    fireGoldMilestone();
     window.print();
   };
 
@@ -58,7 +64,11 @@ export default function ParticipantPassPage() {
       <div className="w-full max-w-md flex items-center justify-between mb-6 z-10">
         <Link
           href="/portal"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white px-3 py-1.5 rounded-lg bg-white/5 border border-purple-500/20 transition-all"
+          onClick={() => {
+            sound?.playClick();
+            haptics?.selection();
+          }}
+          className="island-btn inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white px-3 py-1.5 rounded-lg bg-white/5 border border-purple-500/20 transition-all active:scale-[0.97]"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Dashboard</span>
@@ -66,9 +76,11 @@ export default function ParticipantPassPage() {
 
         <button
           onClick={handlePrint}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 px-3.5 py-1.5 rounded-xl shadow-sm transition-all"
+          className="island-btn inline-flex items-center gap-1.5 text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 px-3.5 py-1.5 rounded-xl shadow-sm transition-all active:scale-[0.97]"
         >
-          <Printer className="w-3.5 h-3.5" />
+          <span className="island-btn-icon w-5 h-5 rounded-full bg-white/20">
+            <Printer className="w-3 h-3" />
+          </span>
           <span>Print / Save Badge</span>
         </button>
       </div>
