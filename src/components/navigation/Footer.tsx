@@ -163,7 +163,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
             <div className="flex items-center gap-4 text-slate-400">
               <Link href="/rules" className="hover:text-white">IP & Conduct</Link>
               <span>|</span>
-              <a href="https://meetup.com/aws-student-builder-group-sist" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+              <a href="https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/" target="_blank" rel="noopener noreferrer" className="hover:text-white">
                 Official Meetup Chapter ↗
               </a>
               <span>|</span>

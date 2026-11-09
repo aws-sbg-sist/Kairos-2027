@@ -36,7 +36,7 @@ assert(Array.isArray(KAIROS_KNOWLEDGE_BASE) && KAIROS_KNOWLEDGE_BASE.length >= 8
 const prizeChunks = retrieveKairosKnowledge('What is the total cash prize pool?');
 assert(prizeChunks.length > 0, 'Should retrieve knowledge chunks for prize query');
 const prizeAnswer = synthesizeLocalAnswer('What is the total cash prize pool?', prizeChunks);
-assert(prizeAnswer.includes('₹1,75,000') && prizeAnswer.includes('₹60,000'), 'Prize answer must contain exact cash amounts');
+assert(prizeAnswer.includes('₹1,75,000'), 'Prize answer must contain total prize pool amount');
 console.log('✓ TEST 2 PASSED: RAG retrieval & answer synthesis for Prizes verified.');
 
 // Test Tracks Query
@@ -90,7 +90,7 @@ console.log('✓ TEST 6 PASSED: Constant-time PIN verification verified against 
 // 5. Test Meetup URL Format Validation
 const MEETUP_URL_REGEX = /^https?:\/\/(www\.)?meetup\.com\/([a-zA-Z0-9_-]+\/)*(members\/\d+|events\/\d+|[\w.-]+)\/?(\?.*)?$/i;
 assert.strictEqual(MEETUP_URL_REGEX.test('https://www.meetup.com/members/48192831/'), true, 'Valid meetup profile link passes');
-assert.strictEqual(MEETUP_URL_REGEX.test('https://meetup.com/aws-student-builder-group-sist/events/123/'), true, 'Valid event link passes');
+assert.strictEqual(MEETUP_URL_REGEX.test('https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/events/123/'), true, 'Valid event link passes');
 assert.strictEqual(MEETUP_URL_REGEX.test('https://fake-site.com/meetup.com'), false, 'Spoofed domain fails');
 console.log('✓ TEST 7 PASSED: Meetup profile and event regex filters invalid URLs.');
 

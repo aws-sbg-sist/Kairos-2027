@@ -176,7 +176,7 @@ export default function RulesPage() {
                 <strong>College Identification:</strong> Every team member must present a valid physical college ID card issued by their accredited institution during red-carpet check-in on Friday, January 22, 2027.
               </p>
               <p>
-                <strong>Dual Registration Protocol:</strong> Every team leader and member must RSVP on the official <Link href="https://meetup.com/aws-student-builder-group-sist" target="_blank" className="text-purple-400 underline font-semibold">AWS Student Builder Group SIST Meetup</Link> page. This ensures compliance with global AWS Student Builder Group community tracking standards.
+                <strong>Dual Registration Protocol:</strong> Every team leader and member must RSVP on the official <Link href="https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/" target="_blank" className="text-purple-400 underline font-semibold">AWS Student Builder Group SIST Meetup</Link> page. This ensures compliance with global AWS Student Builder Group community tracking standards.
               </p>
             </div>
           </div>

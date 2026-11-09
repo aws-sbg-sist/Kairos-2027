@@ -278,7 +278,7 @@ export default function RegisterPage() {
                       Step 2: Official AWS SBG Meetup RSVP (Mandatory)
                     </h3>
                     <a
-                      href="https://meetup.com/aws-student-builder-group-sist"
+                      href="https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-sky-400 hover:underline flex items-center gap-1 font-mono"

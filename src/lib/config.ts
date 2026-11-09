@@ -14,7 +14,7 @@ export const EVENT_CONFIG = {
     location: 'Chennai, Tamil Nadu, India - 600119',
     contactEmail: 'sistawscc@gmail.com',
     leadOrganizer: 'Thenappan T, President & Student Builder Group Leader (SBGL)',
-    meetupUrl: 'https://meetup.com/aws-student-builder-group-sist',
+    meetupUrl: 'https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/',
     assetGeneratorUrl: 'https://aws-version-3--assets-generator.netlify.app/',
     targetDomain: 'https://kairos.sathyabama.ac.in',
   },
@@ -76,7 +76,7 @@ export const EVENT_CONFIG = {
     xTag: '@awsdevelopers',
     linkedin: 'AWS Developers',
     instagram: '@awssbg_sist',
-    meetup: 'https://meetup.com/aws-student-builder-group-sist',
+    meetup: 'https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/',
   }
 };
 

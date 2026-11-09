@@ -212,7 +212,7 @@ OFFICIAL CLUB CONTACT & LOCATION:
 - Support Email: sistawscc@gmail.com
 - Club LinkedIn: https://www.linkedin.com/company/aws-student-builder-group-sist
 - Club Instagram: https://instagram.com/awssbg_sist (@awssbg_sist)
-- Official Meetup: https://meetup.com/aws-student-builder-group-sist
+- Official Meetup: https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/
 - Venue: Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai, Tamil Nadu - 600119
 
 =============================================================================

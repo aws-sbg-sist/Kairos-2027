@@ -165,7 +165,7 @@ For all official queries, permissions, team updates, and event questions, please
 - Official Support Email: sistawscc@gmail.com
 - Club LinkedIn: https://www.linkedin.com/company/aws-student-builder-group-sist
 - Club Instagram: https://instagram.com/awssbg_sist (@awssbg_sist)
-- Official Meetup Chapter: https://meetup.com/aws-student-builder-group-sist
+- Official Meetup Chapter: https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/
 - Physical Venue: Indoor Auditorium, Sathyabama Institute of Science and Technology, Jeppiaar Nagar, Rajiv Gandhi Salai (OMR), Chennai, Tamil Nadu - 600119.`
   },
   {
@@ -396,6 +396,15 @@ export function synthesizeLocalAnswer(query: string, retrieved: KnowledgeChunk[]
 How can I assist you with KAIROS 2027 today?`;
   }
 
+  // 0. Referral & Rainmaker Crowdsourced Sponsorship Program
+  if (q.includes('referral') || q.includes('rainmaker') || q.includes('commission') || (q.includes('sponsor') && (q.includes('earn') || q.includes('refer')))) {
+    return `### 💼 Rainmaker Crowdsourced Sponsorship Program
+
+• **Earn Referral Commission:** Earn a direct **10% to 15% cash commission** for every verified corporate sponsor you connect to KAIROS 2027!
+• **Payout:** Direct UPI cash payout transferred straight to your bank account within 21 days of sponsorship deal closure.
+• **How to Submit:** Visit the **/refer-sponsor** page on the portal and submit your corporate sponsor lead details.`;
+  }
+
   // 1. Cash Prize Pool & Secret Split-Ups
   if (q.includes('prize') || q.includes('cash') || q.includes('bounty') || q.includes('money') || q.includes('pool') || q.includes('champion') || q.includes('stipend') || q.includes('first place') || q.includes('second place') || q.includes('split') || q.includes('moolah')) {
     return `### 🏆 KAIROS 2027 Prize Pool: ₹1,75,000 Cash + $50,000+ AWS Credits
@@ -472,7 +481,7 @@ For all inquiries, please reach out directly through the official club channels:
 • **Official Support Email:** [sistawscc@gmail.com](mailto:sistawscc@gmail.com)
 • **LinkedIn:** [AWS Student Builder Group — SIST Chapter](https://www.linkedin.com/company/aws-student-builder-group-sist)
 • **Instagram:** [@awssbg_sist](https://instagram.com/awssbg_sist)
-• **Meetup:** [AWS SBG SIST Chapter](https://meetup.com/aws-student-builder-group-sist)
+• **Meetup:** [AWS SBG SIST Chapter](https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/)
 • **Venue:** Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai`;
   }
 

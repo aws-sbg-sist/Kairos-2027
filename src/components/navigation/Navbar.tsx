@@ -80,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               Refer a Corporate Sponsor: Earn 10% to 15% Referral Commission
             </Link>
             <span className="text-slate-400">|</span>
-            <a href="https://meetup.com/aws-student-builder-group-sist" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300">
+            <a href="https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300">
               Meetup Chapter ↗
             </a>
           </div>

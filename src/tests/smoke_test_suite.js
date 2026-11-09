@@ -164,7 +164,7 @@ async function runSmokeTests() {
     'Hero Secondary CTA: "View Sponsorship Prospectus (PDF)" button targets /sponsors'
   );
   assert(
-    heroSrc.includes('href="/refer-sponsor"') && heroSrc.includes('Earn 10%–15% Referral Cash'),
+    heroSrc.includes('href="/refer-sponsor"') && (heroSrc.includes('Earn 10% to 15% Referral Cash') || heroSrc.includes('Earn 10%–15% Referral Cash')),
     'Hero Tertiary CTA: "Earn 10%–15% Referral Cash" button targets /refer-sponsor'
   );
   assert(
