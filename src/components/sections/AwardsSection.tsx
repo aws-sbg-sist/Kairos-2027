@@ -110,7 +110,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                         )}
                       </div>
                       <div>
-                        <span role="status" className="text-[11px] font-mono text-purple-300 font-medium block">
+                        <span role="status" className="text-xs font-mono text-purple-300 font-semibold block">
                           {item.badge}
                         </span>
                         <h3 className="text-xl font-display font-bold text-white">
@@ -122,7 +122,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                     
 
                     {/* Perks & Benefits Checklist */}
-                    <ul className="space-y-2.5 text-xs sm:text-sm text-slate-300 pt-1">
+                    <ul className="space-y-3 text-sm sm:text-base text-slate-200 pt-1">
                       {item.perks.map((perk, i) => (
                         <li key={i} className="flex items-start gap-2">
                           <CheckCircle2
@@ -157,14 +157,14 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                   <span className="text-xs font-mono text-purple-300 font-bold ">
                     Startup Accelerator
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
                     Top Teams
                   </span>
                 </div>
                 <h4 className="text-lg font-display font-bold text-white">
                   VC Incubation & Angel Pitching
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
                   Direct fast-track pitching sessions with angel networks, venture capitalists, and institutional accelerators to transition hackathon prototypes into production startups.
                 </p>
               </div>
@@ -182,14 +182,14 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                   <span className="text-xs font-mono text-purple-300 font-bold ">
                     Special Category Honors
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
                     Excellence
                   </span>
                 </div>
                 <h4 className="text-lg font-display font-bold text-white">
                   Special Innovation & Diversity
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
                   Dedicated citations for Best All-Women Engineering Team, Most Scalable Serverless Architecture, and Audience Favorite Project.
                 </p>
               </div>
@@ -207,14 +207,14 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                   <span className="text-xs font-mono text-sky-400 font-bold ">
                     Cloud Infrastructure
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-500/30">
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-500/30">
                     All Finalists
                   </span>
                 </div>
                 <h4 className="text-lg font-display font-bold text-white">
                   $50,000+ AWS Cloud Credits
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
                   All 100 on-campus finalist teams receive direct AWS Cloud Promotional credits to operate large language models, clusters, and databases.
                 </p>
               </div>

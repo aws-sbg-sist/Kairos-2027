@@ -116,7 +116,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
               </ScrollReveal>
 
               <ScrollReveal direction="up" distance={20} delay={0.35}>
-                <p className="text-base sm:text-xl text-slate-300 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                <p className="text-lg sm:text-2xl text-slate-200 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                   48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors & Grants.
                 </p>
               </ScrollReveal>
@@ -124,7 +124,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
             {/* Event Details Chip */}
             <ScrollReveal direction="up" distance={16} delay={0.4}>
-              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 p-2.5 rounded-xl bg-slate-900/90 border border-purple-500/30 text-xs sm:text-sm text-slate-300 font-mono shadow-md backdrop-blur-md">
+              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5 p-3 rounded-xl bg-slate-900/90 border border-purple-500/30 text-sm sm:text-base text-slate-200 font-mono shadow-md backdrop-blur-md">
                 <span className="flex items-center gap-1.5 text-white font-semibold">
                   <Calendar className="w-3.5 h-3.5 text-purple-400 shrink-0" />
                   January 22 to 24, 2027
@@ -174,25 +174,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                     <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
                       {String(timeLeft.days).padStart(2, '0')}
                     </span>
-                    <span className="text-[10px] font-mono font-medium text-slate-400">Days</span>
+                    <span className="text-xs font-mono font-semibold text-slate-300">Days</span>
                   </div>
                   <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
                     <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
                       {String(timeLeft.hours).padStart(2, '0')}
                     </span>
-                    <span className="text-[10px] font-mono font-medium text-slate-400">Hours</span>
+                    <span className="text-xs font-mono font-semibold text-slate-300">Hours</span>
                   </div>
                   <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
                     <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
                       {String(timeLeft.minutes).padStart(2, '0')}
                     </span>
-                    <span className="text-[10px] font-mono font-medium text-slate-400">Minutes</span>
+                    <span className="text-xs font-mono font-semibold text-slate-300">Minutes</span>
                   </div>
                   <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-purple-500/40 bg-purple-950/30">
                     <span className="font-display font-extrabold text-2xl sm:text-3xl text-purple-400 block animate-pulse">
                       {String(timeLeft.seconds).padStart(2, '0')}
                     </span>
-                    <span className="text-[10px] font-mono font-medium text-purple-300">Seconds</span>
+                    <span className="text-xs font-mono font-semibold text-purple-300">Seconds</span>
                   </div>
                 </div>
               </div>
@@ -230,7 +230,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                     href="/refer-sponsor"
                     onClick={() => sound?.playClick()}
                     onMouseEnter={() => sound?.playHover()}
-                    className="px-4 py-3.5 rounded-xl text-xs font-semibold text-emerald-400 hover:text-white bg-emerald-950/40 border border-emerald-500/30 hover:border-emerald-500/60 transition-colors flex items-center gap-1.5 backdrop-blur-sm"
+                    className="px-4 py-3.5 rounded-xl text-sm font-semibold text-emerald-400 hover:text-white bg-emerald-950/40 border border-emerald-500/30 hover:border-emerald-500/60 transition-colors flex items-center gap-1.5 backdrop-blur-sm"
                   >
                     <Trophy className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Earn 10% to 15% Referral Cash</span>
@@ -248,7 +248,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
               </div>
 
               {/* Interactive Status Indicator */}
-              <div className="mt-8 sm:mt-10 flex items-center gap-2 text-[11px] font-mono text-slate-400">
+              <div className="mt-8 sm:mt-10 flex items-center gap-2 text-xs font-mono text-slate-300">
                 <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-purple-500/40 text-purple-200 shadow-md backdrop-blur-md">
                   <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 animate-pulse" />
                   <span>2.5D Hologram Active</span>

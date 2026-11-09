@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <strong className="text-white">NATIONAL APPLICATIONS OPEN:</strong> 100% Free | ₹0 Entry Fee | ₹1,75,000 Total Prize Pool
           </span>
-          <div className="flex items-center gap-4 text-[10px]">
+          <div className="flex items-center gap-4 text-xs sm:text-sm">
             <Link href="/refer-sponsor" className="text-purple-300 hover:text-white underline font-semibold">
               Refer a Corporate Sponsor: Earn 10% to 15% Referral Commission
             </Link>
@@ -107,18 +107,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                 <span className="font-display font-black text-lg sm:text-xl tracking-wider text-white">
                   KAIROS
                 </span>
-                <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-400 border border-purple-500/40">
+                <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-purple-950/60 text-purple-400 border border-purple-500/40">
                   2027
                 </span>
               </div>
-              <span className="text-[10px] text-slate-300 tracking-tight font-medium hidden sm:inline-block whitespace-nowrap">
+              <span className="text-xs text-slate-300 font-medium hidden sm:inline-block whitespace-nowrap">
                 AWS Student Builder Group - SIST
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links - Spacious & Streamlined */}
-          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-2 text-xs font-medium text-slate-200">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium text-slate-200">
             {primaryNavLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -136,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                   <span className="flex items-center gap-1.5 whitespace-nowrap">
                     {link.label}
                     {link.badge && (
-                      <span className="px-1.5 py-0.5 rounded text-[9px] bg-purple-950/50 text-purple-400 border border-purple-500/30 font-semibold whitespace-nowrap flex-shrink-0">
+                      <span className="px-2 py-0.5 rounded text-[11px] bg-purple-950/50 text-purple-400 border border-purple-500/30 font-semibold whitespace-nowrap flex-shrink-0">
                         {link.badge}
                       </span>
                     )}
@@ -164,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                       key={subLink.label}
                       href={subLink.href}
                       onClick={() => setMoreMenuOpen(false)}
-                      className="block px-3.5 py-2 text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                      className="block px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
                     >
                       {subLink.label}
                     </Link>
@@ -173,7 +173,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                   <Link
                     href="/admin/login"
                     onClick={() => setMoreMenuOpen(false)}
-                    className="flex items-center gap-2 px-3.5 py-2 text-xs text-slate-300 hover:text-white hover:bg-purple-950/40 transition-colors"
+                    className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-purple-950/40 transition-colors"
                   >
                     <Shield className="w-3.5 h-3.5 text-purple-400" />
                     <span>Admin Portal</span>

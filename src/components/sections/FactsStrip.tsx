@@ -110,10 +110,10 @@ export const FactsStrip: React.FC = () => {
                     {/* Segment Telemetry Header */}
                     <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
                       <span className="flex items-center gap-1.5 font-bold  group-hover:text-purple-400 transition-colors">
-                        <span className="text-[10px] text-slate-500 font-normal">[{item.id}]</span>
+                        <span className="text-xs text-slate-400 font-normal">[{item.id}]</span>
                         <span>{item.tag}</span>
                       </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400 group-hover:border-purple-500/30 group-hover:text-purple-300 transition-colors">
+                      <span className="text-xs px-2.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300 group-hover:border-purple-500/30 group-hover:text-purple-300 transition-colors">
                         {item.badge}
                       </span>
                     </div>

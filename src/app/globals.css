@@ -24,6 +24,7 @@
   --font-inter: var(--font-inter), 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-outfit: var(--font-outfit), 'Helvetica Neue', Helvetica, Space Grotesk, sans-serif;
   --font-mono: var(--font-mono), 'JetBrains Mono', 'Fira Code', monospace;
+  --font-ai: var(--font-ai), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
   /* 5 Exact Swatch Colors from Adobe ASE Swatch */
   --cyber-magenta: #ee05f2;
@@ -90,9 +91,10 @@
 
   /* Premium Swiss Typography (Helvetica Stack) */
   --font-helvetica: 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  --font-inter: 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  --font-outfit: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-inter: var(--font-inter), 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-outfit: var(--font-outfit), 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-mono), 'JetBrains Mono', 'Fira Code', monospace;
+  --font-ai: var(--font-ai), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
   /* Space-separated RGB Channels for Tailwind <alpha-value> syntax */
   --aws-orange-rgb: 168 85 247; /* #a855f7 Purple */
@@ -154,6 +156,8 @@
 }
 
 html {
+  font-size: 17.5px;
+  letter-spacing: 0.012em;
   overflow-x: clip;
   scroll-behavior: smooth;
   color-scheme: dark;
@@ -163,6 +167,9 @@ body {
   background-color: var(--aws-canvas);
   color: var(--aws-snow);
   font-family: var(--font-inter), 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.68;
+  letter-spacing: 0.012em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -469,4 +476,11 @@ a[role="button"]:active,
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+
+/* Dedicated KAIROS AI Assistant Typography (Plus Jakarta Sans) */
+.font-ai {
+  font-family: var(--font-ai), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  letter-spacing: 0.012em;
 }

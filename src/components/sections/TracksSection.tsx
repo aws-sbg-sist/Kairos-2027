@@ -127,17 +127,17 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                       </span>
                     </div>
 
-                    <h3 className="font-display font-bold text-sm text-white mb-2 line-clamp-2 group-hover:text-purple-200 transition-colors">
+                    <h3 className="font-display font-bold text-base text-white mb-2 line-clamp-2 group-hover:text-purple-200 transition-colors">
                       {track.title}
                     </h3>
                   </div>
 
                   <div className="pt-3 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-purple-300 font-bold">
+                    <span className="text-xs font-mono text-purple-300 font-bold">
                       48H Build
                     </span>
                     <span
-                      className={`text-[10px] font-mono px-2 py-0.5 rounded-full transition-colors ${
+                      className={`text-xs font-mono px-2.5 py-0.5 rounded-full transition-colors ${
                         isActive
                           ? 'bg-purple-950/60 text-white border border-purple-500/40'
                           : 'text-slate-500 group-hover:text-slate-300'
@@ -189,7 +189,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                     </div>
                   </div>
 
-                  <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
+                  <p className="text-base sm:text-lg text-slate-200 leading-relaxed">
                     {activeTrack.longDescription}
                   </p>
 
@@ -202,7 +202,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                       {activeTrack.recommendedStacks.map((tech, i) => (
                         <span
                           key={i}
-                          className="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/80 border border-slate-700/70 text-slate-200 hover:border-purple-500/40 transition-colors"
+                          className="px-3.5 py-2 rounded-lg text-sm font-mono bg-slate-900/80 border border-slate-700/70 text-slate-200 hover:border-purple-500/40 transition-colors"
                         >
                           {tech}
                         </span>
@@ -217,7 +217,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                         sound?.playClick();
                         onSelectTrack?.(activeTrack.title);
                       }}
-                      className="px-5 py-3 rounded-xl text-xs sm:text-sm font-bold btn-primary-themed text-white flex items-center gap-2 group shadow-lg shadow-purple-900/30"
+                      className="px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold btn-primary-themed text-white flex items-center gap-2 group shadow-lg shadow-purple-900/30"
                     >
                       <span>Choose Track for Application</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

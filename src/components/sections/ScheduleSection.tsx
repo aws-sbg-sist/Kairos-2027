@@ -99,14 +99,14 @@ export const ScheduleSection: React.FC = () => {
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] font-mono text-purple-400 block font-bold">
+                  <span className="text-xs font-mono text-purple-400 block font-bold">
                     DAY {day.day}
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-950/80 text-slate-400 border border-white/5">
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-slate-950/80 text-slate-300 border border-white/10">
                     {day.tag}
                   </span>
                 </div>
-                <span className="text-sm sm:text-base font-bold text-white block">
+                <span className="text-base sm:text-lg font-bold text-white block">
                   {day.dayName.split(':')[1]?.trim() || day.dayName}
                 </span>
                 <span className="text-xs text-slate-400 block truncate mt-0.5">
@@ -179,12 +179,12 @@ export const ScheduleSection: React.FC = () => {
                           {milestone.title}
                         </h4>
 
-                        <p className="text-xs text-slate-300 leading-relaxed">
+                        <p className="text-sm text-slate-200 leading-relaxed">
                           {milestone.desc}
                         </p>
                       </div>
 
-                      <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                      <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-slate-300">
                         <span>Milestone 0{idx + 1}</span>
                         {isCheckpoint && (
                           <span className="text-purple-300 font-bold flex items-center gap-1">

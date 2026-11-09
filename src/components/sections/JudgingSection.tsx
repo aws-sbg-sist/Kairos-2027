@@ -75,7 +75,7 @@ export const JudgingSection: React.FC = () => {
                     >
                       <Lock className="w-3 h-3 text-purple-400 animate-pulse" />
                       <span className="">?? PTS</span>
-                      <span className="text-[10px] text-purple-300 font-semibold ">
+                      <span className="text-xs text-purple-300 font-semibold ">
                         Classified
                       </span>
                     </div>
@@ -95,7 +95,7 @@ export const JudgingSection: React.FC = () => {
                   <div className="w-full h-1.5 rounded-full bg-slate-900/90 overflow-hidden relative border border-white/5">
                     <div className="h-full bg-gradient-to-r from-purple-500/20 via-aws-orange/70 to-purple-500/20 rounded-full w-full animate-pulse" />
                   </div>
-                  <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
+                  <div className="flex items-center justify-between text-xs font-mono text-slate-300">
                     <span className="flex items-center gap-1 text-slate-400">
                       <Sparkles className="w-3 h-3 text-purple-400" />
                       <span>Weight Sealed</span>
