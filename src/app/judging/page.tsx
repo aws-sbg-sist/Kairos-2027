@@ -35,6 +35,7 @@ export default function JudgingPortalPage() {
   const [conflictRecusal, setConflictRecusal] = useState(false);
   const [submittedScore, setSubmittedScore] = useState<any>(null);
   const [scoreSubmitting, setScoreSubmitting] = useState(false);
+  const [evalError, setEvalError] = useState('');
 
   const rawTotal = scores.criterion1 + scores.criterion2 + scores.criterion3 + scores.criterion4;
 
@@ -94,20 +95,17 @@ export default function JudgingPortalPage() {
 
       const data = await res.json();
       if (res.ok && data.success) {
-        setSubmittedScore(data.evaluation);
-      } else {
-        setSubmittedScore({
+        setSubmittedScore(data.evaluation || {
           rawTotalScore: rawTotal,
           normalizedZScore: 1.45,
           teamCode
         });
+        setEvalError('');
+      } else {
+        setEvalError(data.error || 'Failed to record evaluation score.');
       }
-    } catch (err) {
-      setSubmittedScore({
-        rawTotalScore: rawTotal,
-        normalizedZScore: 1.45,
-        teamCode
-      });
+    } catch (err: any) {
+      setEvalError(err.message || 'Error communicating with evaluation server.');
     } finally {
       setScoreSubmitting(false);
     }
@@ -235,6 +233,12 @@ export default function JudgingPortalPage() {
               ) : (
                 /* Rubric Sliders */
                 <form onSubmit={handleScoreSubmit} className="space-y-6">
+                  {evalError && (
+                    <div className="p-3.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                      <span>{evalError}</span>
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <label className="text-xs font-mono text-slate-300 font-bold">Team Code *</label>

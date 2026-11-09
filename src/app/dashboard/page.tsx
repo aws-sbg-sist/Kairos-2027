@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { 
@@ -19,26 +20,37 @@ import {
   FileCode,
   QrCode,
   Copy,
-  Check
+  Check,
+  Search
 } from 'lucide-react';
 
-export default function DashboardPage() {
+function DashboardContent() {
+  const searchParams = useSearchParams();
+  const initialCode = searchParams.get('code') || searchParams.get('team') || 'KAIROS-T001';
+  
+  const [activeCode, setActiveCode] = useState(initialCode);
   const [selectedTeam, setSelectedTeam] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [copiedVoucher, setCopiedVoucher] = useState(false);
+  const [inputCode, setInputCode] = useState('');
 
-  useEffect(() => {
-    // Fetch default demo team or logged in team from API
-    fetch('/api/v1/team?code=KAIROS-T001')
+  const fetchTeam = (codeToFetch: string) => {
+    setLoading(true);
+    fetch(`/api/v1/team?code=${encodeURIComponent(codeToFetch.trim().toUpperCase())}`)
       .then(res => res.json())
       .then(data => {
-        if (data.team) {
+        if (data.success && data.team) {
           setSelectedTeam(data.team);
+          setActiveCode(data.team.teamCode || codeToFetch);
         }
       })
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchTeam(initialCode);
+  }, [initialCode]);
 
   const copyVoucher = (code: string) => {
     navigator.clipboard.writeText(code);
@@ -70,7 +82,7 @@ export default function DashboardPage() {
   };
 
   const team = selectedTeam || {
-    teamCode: 'KAIROS-T001',
+    teamCode: activeCode,
     teamName: 'Chronos Distributed',
     trackId: 'cloud-native',
     selectionStage: 'ON_CAMPUS_QUALIFIED',
@@ -94,6 +106,51 @@ export default function DashboardPage() {
       <main className="flex-grow pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
+          {/* Team Switcher & Status Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-md">
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
+              <span className="text-purple-400 font-bold">Roster Switcher:</span>
+              <button 
+                onClick={() => fetchTeam('KAIROS-T001')} 
+                className={`px-2.5 py-1 rounded-lg text-xs font-mono transition ${activeCode === 'KAIROS-T001' ? 'bg-purple-600 text-white font-bold' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+              >
+                KAIROS-T001 (Finalist)
+              </button>
+              <button 
+                onClick={() => fetchTeam('KAIROS-T002')} 
+                className={`px-2.5 py-1 rounded-lg text-xs font-mono transition ${activeCode === 'KAIROS-T002' ? 'bg-purple-600 text-white font-bold' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+              >
+                KAIROS-T002 (Finalist)
+              </button>
+              <button 
+                onClick={() => fetchTeam('KAIROS-T003')} 
+                className={`px-2.5 py-1 rounded-lg text-xs font-mono transition ${activeCode === 'KAIROS-T003' ? 'bg-purple-600 text-white font-bold' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+              >
+                KAIROS-T003 (Semi-Finalist)
+              </button>
+            </div>
+
+            <form 
+              onSubmit={(e) => { e.preventDefault(); if (inputCode.trim()) fetchTeam(inputCode); }}
+              className="flex items-center gap-2"
+            >
+              <input
+                type="text"
+                placeholder="Lookup code (e.g. KAIROS-T001)"
+                value={inputCode}
+                onChange={(e) => setInputCode(e.target.value.toUpperCase())}
+                className="px-3 py-1 rounded-xl bg-slate-950 border border-white/15 text-xs font-mono text-purple-300 placeholder:text-slate-500 uppercase focus:outline-none focus:border-purple-500"
+              />
+              <button 
+                type="submit" 
+                className="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition flex items-center gap-1"
+              >
+                <Search className="w-3.5 h-3.5" />
+                <span>Search</span>
+              </button>
+            </form>
+          </div>
+
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
@@ -117,7 +174,7 @@ export default function DashboardPage() {
               </Link>
               <Link
                 href="/online-qualifier"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:opacity-90 transition-opacity shadow-md flex items-center gap-1.5"
               >
                 <Video className="w-4 h-4" />
                 <span>Round 1 Qualifier Bay</span>
@@ -138,204 +195,178 @@ export default function DashboardPage() {
                 {team.deskBayAllocation && (
                   <p className="text-xs font-mono text-purple-300 flex items-center gap-1.5 pt-1">
                     <MapPin className="w-3.5 h-3.5 text-purple-400" />
-                    <span>Allocated Bay: <strong>{team.deskBayAllocation}</strong></span>
+                    <span>Assigned Physical Hacking Station: <strong className="text-white">{team.deskBayAllocation}</strong></span>
                   </p>
                 )}
               </div>
 
-              <div className="flex items-center gap-2 text-xs font-mono">
+              {team.selectionStage === 'ONLINE_SEMI_FINALIST' && (
                 <Link
-                  href="/on-campus"
-                  className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 transition-colors flex items-center gap-1"
+                  href="/online-qualifier"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 transition-colors shadow-lg flex items-center gap-2 shrink-0 self-start md:self-auto"
                 >
-                  <MapPin className="w-3.5 h-3.5 text-purple-400" />
-                  <span>Venue & Bus Fleet</span>
+                  <span>Upload Round 1 Deliverables</span>
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
-              </div>
+              )}
             </div>
           </div>
 
-          {/* 3 Column Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            {/* Left Column (8 cols): Roster & Checkpoints */}
-            <div className="lg:col-span-8 space-y-8">
+            {/* Left 2 Cols: Project Abstract & Hardware/Cloud Credentials */}
+            <div className="lg:col-span-2 space-y-6">
               
-              {/* Team Roster Card */}
-              <div className="p-6 rounded-3xl bg-aws-card border border-slate-700/60 space-y-4">
+              {/* Project Card */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Users className="w-5 h-5 text-purple-400" />
-                    <h3 className="text-base font-bold text-white font-display">
-                      Verified Team Roster ({team.members?.length || 0} / 6 Builders)
-                    </h3>
+                    <FileCode className="w-5 h-5 text-purple-400" />
+                    <h3 className="text-base font-bold text-white font-display">Submitted Problem & Solution</h3>
                   </div>
-                  <span className="text-xs font-mono text-emerald-400 font-semibold">
-                    100% Free • All Meals Included
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-slate-800 text-purple-300 border border-slate-700 uppercase">
+                    {team.trackId}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {team.members?.map((m: any, i: number) => (
-                    <div key={m.id || i} className="p-4 rounded-2xl bg-slate-900/90 border border-slate-700/60 flex items-start justify-between">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <h4 className="text-sm font-bold text-white">{m.name}</h4>
-                          {m.role === 'Leader' && (
-                            <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-purple-950/60 text-purple-400">
-                              LEAD
+                <div className="space-y-2">
+                  <h4 className="text-lg font-bold text-white">
+                    {team.problemTitle || 'Urban Telemetry Event Mesh'}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    {team.problemAbstract || 'Distributed low-latency stream processing pipeline handling 100k events/sec with consensus and telemetry streaming.'}
+                  </p>
+                </div>
+
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  {team.githubUrl && (
+                    <a
+                      href={team.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3.5 py-1.5 rounded-xl text-xs font-mono text-slate-300 bg-white/5 hover:bg-white/10 border border-white/10 flex items-center gap-1.5 transition-colors"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>GitHub Repo</span>
+                    </a>
+                  )}
+                  {team.loomVideoUrl && (
+                    <a
+                      href={team.loomVideoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3.5 py-1.5 rounded-xl text-xs font-mono text-purple-300 bg-purple-950/40 hover:bg-purple-900/50 border border-purple-500/30 flex items-center gap-1.5 transition-colors"
+                    >
+                      <Video className="w-3.5 h-3.5" />
+                      <span>Loom Defense Walkthrough</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* AWS Cloud Credits & Sandbox Infrastructure */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Cloud className="w-5 h-5 text-purple-400" />
+                    <h3 className="text-base font-bold text-white font-display">AWS Cloud Builder Credits</h3>
+                  </div>
+                  <span className="text-xs font-mono text-emerald-400 font-bold">100% SUBSIDIZED</span>
+                </div>
+
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Every shortlisted finalist team receives an AWS promotional credit voucher for spinning up EC2, Bedrock Claude models, and DynamoDB sandboxes during the 48-hour build cycle.
+                </p>
+
+                <div className="p-4 rounded-2xl bg-slate-900/80 border border-purple-500/30 flex items-center justify-between gap-4">
+                  <div>
+                    <span className="text-[10px] font-mono text-slate-400 block uppercase">Promotional Credit Voucher</span>
+                    <span className="text-base font-mono font-bold text-white tracking-wider">
+                      {team.awsCreditVoucher || 'AWS-KAIROS-100-CHRONOS'}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => copyVoucher(team.awsCreditVoucher || 'AWS-KAIROS-100-CHRONOS')}
+                    className="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-white/10 hover:bg-white/20 text-white flex items-center gap-1.5 transition-colors"
+                  >
+                    {copiedVoucher ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedVoucher ? 'Copied' : 'Copy'}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Col: Verified Roster */}
+            <div className="space-y-6">
+              <div className="p-6 sm:p-8 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <div className="flex items-center gap-2">
+                    <Users className="w-5 h-5 text-purple-400" />
+                    <h3 className="text-base font-bold text-white font-display">Verified Team Roster</h3>
+                  </div>
+                  <span className="text-xs font-mono text-purple-300">
+                    {team.members?.length || 4}/4 Members
+                  </span>
+                </div>
+
+                <div className="space-y-3">
+                  {team.members?.map((member: any, idx: number) => (
+                    <div 
+                      key={member.id || idx}
+                      className="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5 flex items-center justify-between gap-3"
+                    >
+                      <div className="space-y-0.5">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs font-bold text-white">{member.name}</span>
+                          {member.role === 'Leader' && (
+                            <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
+                              Lead
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-purple-300 font-mono">{m.role} • {m.college}</p>
-                        <p className="text-[11px] text-slate-400 font-mono truncate">{m.email}</p>
-                      </div>
-                      <div className="text-right">
-                        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                          🟢 RSVP
+                        <span className="text-[11px] text-slate-400 block font-mono">
+                          {member.college || 'Sathyabama'} • {member.role}
                         </span>
+                      </div>
+
+                      <div className="flex items-center gap-1 text-[11px] font-mono text-emerald-400">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>Meetup RSVP</span>
                       </div>
                     </div>
                   ))}
                 </div>
-              </div>
 
-              {/* Checkpoint Gates Progress Tracker */}
-              <div className="p-6 rounded-3xl bg-aws-card border border-slate-700/60 space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-purple-400" />
-                    <h3 className="text-base font-bold text-white font-display">
-                      Evaluation Gates & Normalized Z-Scores
-                    </h3>
-                  </div>
-                  <span className="text-xs font-mono text-slate-400">
-                    Max 100 Pts
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {/* Checkpoint 1 */}
-                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                    <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-purple-300 font-bold">GATE 1</span>
-                      <span className="text-slate-400">25 Pts</span>
-                    </div>
-                    <h4 className="text-sm font-bold text-white">Architecture & Cloud Feasibility</h4>
-                    <p className="text-xs text-slate-400">Friday, Jan 22 (04:00 PM – 06:30 PM)</p>
-                    <div className="pt-2 flex items-center gap-1.5 text-xs text-emerald-400 font-mono font-bold">
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span>Score: 24.5 / 25</span>
-                    </div>
-                  </div>
-
-                  {/* Checkpoint 2 */}
-                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                    <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-purple-300 font-bold">GATE 2</span>
-                      <span className="text-slate-400">35 Pts</span>
-                    </div>
-                    <h4 className="text-sm font-bold text-white">Code Velocity & API Integrations</h4>
-                    <p className="text-xs text-slate-400">Saturday, Jan 23 (02:00 PM – 05:30 PM)</p>
-                    <div className="pt-2 flex items-center gap-1.5 text-xs text-purple-300 font-mono">
-                      <Clock className="w-4 h-4" />
-                      <span>Pending Evaluation</span>
-                    </div>
-                  </div>
-
-                  {/* Checkpoint 3 */}
-                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                    <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-purple-300 font-bold">GATE 3</span>
-                      <span className="text-slate-400">40 Pts</span>
-                    </div>
-                    <h4 className="text-sm font-bold text-white">Grand Stage Live Demos</h4>
-                    <p className="text-xs text-slate-400">Sunday, Jan 24 (09:00 AM – 12:30 PM)</p>
-                    <div className="pt-2 flex items-center gap-1.5 text-xs text-slate-400 font-mono">
-                      <Clock className="w-4 h-4" />
-                      <span>7-Min Live Defense</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Right Column (4 cols): AWS Sandbox & Resources */}
-            <div className="lg:col-span-4 space-y-6">
-              
-              {/* AWS Sandbox Credits Card */}
-              <div className="p-6 rounded-3xl bg-aws-squidInk border border-purple-500/40 space-y-4">
-                <div className="flex items-center gap-2">
-                  <Cloud className="w-5 h-5 text-purple-400" />
-                  <h3 className="text-base font-bold text-white font-display">
-                    AWS Cloud Sandbox
-                  </h3>
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Complimentary promotional credit voucher allocated for deploying Bedrock models, serverless functions, and database instances.
-                </p>
-
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block">Promotional Voucher</span>
-                  <div className="flex items-center justify-between font-mono font-bold text-sm text-purple-400">
-                    <span>{team.awsCreditVoucher || 'AWS-KAIROS-PENDING'}</span>
-                    <button
-                      onClick={() => copyVoucher(team.awsCreditVoucher || '')}
-                      className="text-slate-400 hover:text-white"
-                      title="Copy Voucher Code"
-                    >
-                      {copiedVoucher ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="text-[11px] text-slate-400 space-y-1">
-                  <p>• Access to Amazon Bedrock (Claude 3.5 Sonnet, Titan)</p>
-                  <p>• OpenSearch Serverless Vector Store</p>
-                  <p>• Amazon Aurora Serverless v2</p>
-                </div>
-              </div>
-
-              {/* Turnkey Student Resources */}
-              <div className="p-6 rounded-3xl bg-aws-card border border-slate-700/60 space-y-3">
-                <h3 className="text-sm font-bold text-white font-display flex items-center gap-2">
-                  <Award className="w-4 h-4 text-purple-400" />
-                  <span>AWS SBG Learning Library</span>
-                </h3>
-                <p className="text-xs text-slate-400">
-                  Pre-event starter kits, Bedrock code templates, and interview storytelling modules.
-                </p>
-                <div className="space-y-2 pt-1 text-xs">
+                <div className="pt-2 border-t border-white/10">
                   <Link
-                    href="/resources"
-                    className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 block transition-colors"
+                    href={`/portal/pass?code=${team.teamCode}`}
+                    className="w-full py-2.5 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 text-white border border-white/10 flex items-center justify-center gap-2 transition-colors"
                   >
-                    🚀 Bedrock Foundation Model Starter Kit
-                  </Link>
-                  <Link
-                    href="/resources"
-                    className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 block transition-colors"
-                  >
-                    🏆 AWS Cloud Quest: Cloud Practitioner
-                  </Link>
-                  <Link
-                    href="/resources"
-                    className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 block transition-colors"
-                  >
-                    📖 Storytelling for Career Readiness
+                    <span>View Digital Security Badges</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
-
             </div>
 
           </div>
-
         </div>
       </main>
 
       <Footer />
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-aws-canvas text-white">
+        <div className="text-xs font-mono text-purple-400 animate-pulse">Loading Builder Command Central...</div>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
   );
 }

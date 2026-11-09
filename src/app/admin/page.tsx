@@ -50,10 +50,13 @@ export default function AdminDashboardPage() {
       const sData = await sRes.json();
       if (sData.success) setSponsors(sData.sponsors);
 
-      // 3. Flags
+      // 3. Flags & Audit Logs
       const fRes = await fetch('/api/admin/flags');
       const fData = await fRes.json();
-      if (fData.success) setFlags(fData.flags);
+      if (fData.success) {
+        setFlags(fData.flags);
+        if (fData.auditLogs) setAuditLogs(fData.auditLogs);
+      }
 
     } catch (err) {
       console.error('[Admin Load Error]:', err);
@@ -94,10 +97,23 @@ export default function AdminDashboardPage() {
   };
 
   const handleUpdateSponsorStatus = async (id: string, newStatus: any) => {
-    // In our implementation, updating local store or calling API
-    setSponsors(prev => prev.map(s => s.id === id ? { ...s, status: newStatus } : s));
-    setStatusMessage(`Sponsor status updated to ${newStatus}`);
-    setTimeout(() => setStatusMessage(''), 3000);
+    try {
+      const res = await fetch('/api/admin/sponsor/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status: newStatus }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSponsors(prev => prev.map(s => s.id === id ? { ...s, status: newStatus } : s));
+        setStatusMessage(`Sponsor status updated to ${newStatus}`);
+        setTimeout(() => setStatusMessage(''), 3000);
+      } else {
+        alert(data.error || 'Failed to update sponsor status.');
+      }
+    } catch (err) {
+      alert('Network error updating sponsor status.');
+    }
   };
 
   const handleUpdateWaitlistStatus = async (id: string, newStatus: NonNullable<WaitlistEntry['status']>) => {
@@ -315,6 +331,18 @@ export default function AdminDashboardPage() {
           >
             <Sliders className="w-4 h-4 text-purple-400" />
             <span>Content & Gating Flags</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('audit')}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
+              activeTab === 'audit'
+                ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <span>Audit Trail ({auditLogs.length})</span>
           </button>
         </div>
 
@@ -670,6 +698,73 @@ export default function AdminDashboardPage() {
               >
                 Launch Portal Demo →
               </Link>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: IMMUTABLE AUDIT LOGS */}
+        {activeTab === 'audit' && (
+          <div className="space-y-4">
+            <div className="p-4 rounded-2xl glass-panel border border-purple-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                  <span>Administrative Security & System Audit Trail</span>
+                </h3>
+                <p className="text-xs text-slate-400">Append-only immutable record of logins, status adjustments, and configuration changes.</p>
+              </div>
+              <span className="text-xs font-mono text-purple-300 px-3 py-1 rounded-full bg-slate-900 border border-purple-500/30">
+                {auditLogs.length} Recorded Events
+              </span>
+            </div>
+
+            <div className="rounded-2xl glass-panel border border-purple-500/20 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-950/80 border-b border-purple-500/20 text-slate-400 font-mono">
+                    <tr>
+                      <th className="px-4 py-3">Timestamp</th>
+                      <th className="px-4 py-3">Organizer / Identity</th>
+                      <th className="px-4 py-3">Action</th>
+                      <th className="px-4 py-3">Details</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 font-mono">
+                    {auditLogs.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="px-4 py-8 text-center text-slate-500">
+                          Zero administrative events recorded yet.
+                        </td>
+                      </tr>
+                    ) : (
+                      auditLogs.map((log) => (
+                        <tr key={log.id} className="hover:bg-white/5 transition-colors">
+                          <td className="px-4 py-3 text-slate-400 whitespace-nowrap">
+                            {new Date(log.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
+                          </td>
+                          <td className="px-4 py-3 text-white font-bold whitespace-nowrap">
+                            {log.organizerName}
+                          </td>
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                              log.action === 'AUTH_FAILURE' 
+                                ? 'bg-rose-950/80 text-rose-300 border border-rose-500/30' 
+                                : log.action === 'ADMIN_LOGIN'
+                                ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/30'
+                                : 'bg-purple-950/80 text-purple-300 border border-purple-500/30'
+                            }`}>
+                              {log.action}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3 text-slate-300 font-sans">
+                            {log.details}
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}

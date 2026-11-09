@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { getCurrentAdminSession } from '@/lib/auth';
 
+function sanitizeCSVCell(val: string | number | undefined | null): string {
+  if (val === undefined || val === null) return '""';
+  let str = String(val).replace(/"/g, '""');
+  if (/^[=+\-@\t\r]/.test(str)) {
+    str = `'` + str;
+  }
+  return `"${str}"`;
+}
+
 export async function GET(req: NextRequest) {
   const session = await getCurrentAdminSession();
   if (!session) {
@@ -15,15 +24,15 @@ export async function GET(req: NextRequest) {
     const list = db.getWaitlist();
     const headers = ['ID', 'Full Name', 'Email', 'Institution', 'Year', 'Department', 'Track', 'Portfolio', 'Registered At'];
     const rows = list.map(item => [
-      item.id,
-      `"${item.fullName.replace(/"/g, '""')}"`,
-      `"${item.email.replace(/"/g, '""')}"`,
-      `"${item.institution.replace(/"/g, '""')}"`,
-      `"${item.yearOfStudy}"`,
-      `"${item.department.replace(/"/g, '""')}"`,
-      `"${item.preferredTrack.replace(/"/g, '""')}"`,
-      `"${item.portfolioUrl || ''}"`,
-      item.createdAt
+      sanitizeCSVCell(item.id),
+      sanitizeCSVCell(item.fullName),
+      sanitizeCSVCell(item.email),
+      sanitizeCSVCell(item.institution),
+      sanitizeCSVCell(item.yearOfStudy),
+      sanitizeCSVCell(item.department),
+      sanitizeCSVCell(item.preferredTrack),
+      sanitizeCSVCell(item.portfolioUrl || ''),
+      sanitizeCSVCell(item.createdAt)
     ]);
 
     const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
@@ -39,15 +48,15 @@ export async function GET(req: NextRequest) {
     const sponsors = db.getSponsors();
     const headers = ['ID', 'Company', 'Contact Person', 'Email', 'Phone', 'Tier', 'Status', 'Requirements', 'Received At'];
     const rows = sponsors.map(s => [
-      s.id,
-      `"${s.companyName.replace(/"/g, '""')}"`,
-      `"${s.contactPerson.replace(/"/g, '""')}"`,
-      `"${s.contactEmail.replace(/"/g, '""')}"`,
-      `"${s.contactPhone || ''}"`,
-      `"${s.interestedTier}"`,
-      `"${s.status}"`,
-      `"${(s.customRequirements || '').replace(/"/g, '""')}"`,
-      s.createdAt
+      sanitizeCSVCell(s.id),
+      sanitizeCSVCell(s.companyName),
+      sanitizeCSVCell(s.contactPerson),
+      sanitizeCSVCell(s.contactEmail),
+      sanitizeCSVCell(s.contactPhone || ''),
+      sanitizeCSVCell(s.interestedTier),
+      sanitizeCSVCell(s.status),
+      sanitizeCSVCell(s.customRequirements || ''),
+      sanitizeCSVCell(s.createdAt)
     ]);
 
     const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');

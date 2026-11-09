@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { getCurrentAdminSession } from '@/lib/auth';
 
 export async function GET() {
+  const session = await getCurrentAdminSession();
+  if (!session) {
+    return NextResponse.json({ 
+      success: false, 
+      error: 'Unauthorized. Admin credentials required to export participant feedback.' 
+    }, { status: 401 });
+  }
+
   try {
     const csvContent = db.exportCSATCSV();
 

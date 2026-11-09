@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyAdminPasskey, createAdminToken, COOKIE_NAME } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { cookies } from 'next/headers';
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 5 attempts per minute per IP to defend against brute force
+  const rateLimitResult = checkRateLimit(req, { limit: 5, windowMs: 60_000 });
+  if (!rateLimitResult.allowed) {
+    return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
+  }
+
   try {
     const { passkey, organizerName, organizerRole } = await req.json();
 

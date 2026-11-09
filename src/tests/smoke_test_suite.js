@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = process.env.BASE_URL || (process.env.PORT ? 'http://localhost:' + process.env.PORT : 'http://localhost:3000');
 
 function fetchUrl(urlPath, options = {}) {
   return new Promise((resolve, reject) => {

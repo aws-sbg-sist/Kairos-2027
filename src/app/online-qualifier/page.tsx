@@ -173,6 +173,25 @@ export default function OnlineQualifierPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 
+                {/* Team Code Input */}
+                <div className="space-y-2">
+                  <label className="text-xs font-mono text-slate-300 flex items-center gap-1.5 font-bold">
+                    <ShieldCheck className="w-4 h-4 text-purple-400" />
+                    <span>Your Assigned Team Code *</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={teamCode}
+                    onChange={e => setTeamCode(e.target.value.toUpperCase())}
+                    placeholder="e.g. KAIROS-T001"
+                    className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono font-bold text-purple-400 uppercase"
+                  />
+                  <p className="text-[11px] text-slate-400">
+                    Enter the official Team Code assigned to your roster in Round 0.
+                  </p>
+                </div>
+
                 {/* Loom Video Input */}
                 <div className="space-y-2">
                   <label className="text-xs font-mono text-slate-300 flex items-center gap-1.5 font-bold">

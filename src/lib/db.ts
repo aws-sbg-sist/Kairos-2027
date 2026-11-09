@@ -891,25 +891,45 @@ export const db = {
     const store = readStore();
     const rawTotalScore = evalData.criterion1Score + evalData.criterion2Score + evalData.criterion3Score + evalData.criterion4Score;
     
-    // Existing evaluations for this judge to compute mean and stdev for Z-score
+    // Check if an evaluation already exists for this judge, team, and checkpoint
+    const existingIndex = store.evaluations.findIndex(
+      e => e.judgeId === evalData.judgeId && e.teamId === evalData.teamId && e.checkpointGate === evalData.checkpointGate
+    );
+
+    let targetEval: CheckpointEvaluation;
+    if (existingIndex >= 0) {
+      targetEval = {
+        ...store.evaluations[existingIndex],
+        ...evalData,
+        rawTotalScore,
+        evaluatedAt: new Date().toISOString()
+      };
+      store.evaluations[existingIndex] = targetEval;
+    } else {
+      targetEval = {
+        ...evalData,
+        id: `eval-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        rawTotalScore,
+        normalizedZScore: 0,
+        evaluatedAt: new Date().toISOString(),
+      };
+      store.evaluations.push(targetEval);
+    }
+
+    // Dynamic Gaussian Z-score recalculation across all evaluations for this judge
     const judgeEvals = store.evaluations.filter(e => e.judgeId === evalData.judgeId);
-    const allScores = [...judgeEvals.map(e => e.rawTotalScore), rawTotalScore];
+    const allScores = judgeEvals.map(e => e.rawTotalScore);
     const mean = allScores.reduce((acc, v) => acc + v, 0) / allScores.length;
     const variance = allScores.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / (allScores.length || 1);
-    const stdev = Math.sqrt(variance) || 1;
-    const normalizedZScore = Number(((rawTotalScore - mean) / stdev).toFixed(4));
+    const stdev = Math.sqrt(variance) > 0.001 ? Math.sqrt(variance) : 1;
 
-    const newEval: CheckpointEvaluation = {
-      ...evalData,
-      id: `eval-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-      rawTotalScore,
-      normalizedZScore,
-      evaluatedAt: new Date().toISOString(),
-    };
+    // Recalculate Z-scores dynamically for all evaluations of this judge so normalization remains fair and consistent
+    for (const ev of judgeEvals) {
+      ev.normalizedZScore = Number(((ev.rawTotalScore - mean) / stdev).toFixed(4));
+    }
 
-    store.evaluations.push(newEval);
     writeStore(store);
-    return newEval;
+    return targetEval;
   },
 
   // CSAT Survey
@@ -933,15 +953,24 @@ export const db = {
   exportCSATCSV(): string {
     const store = readStore();
     const headers = ['ID', 'Satisfaction (1-5)', 'NPS (0-10)', 'Cloud Services Used', 'Pursuing AWS Cert', 'Feedback', 'Testimonial', 'Submitted At'];
+    
+    const sanitizeCell = (val: string | number | undefined | null) => {
+      let str = String(val ?? '').replace(/"/g, '""');
+      if (/^[=+\-@\t\r]/.test(str)) {
+        str = `'` + str;
+      }
+      return `"${str}"`;
+    };
+
     const rows = store.csat.map(c => [
-      c.id,
+      sanitizeCell(c.id),
       c.overallSatisfaction,
       c.npsScore,
-      `"${c.cloudServicesUsed.join(', ')}"`,
-      c.pursuingAwsCertification,
-      `"${(c.eventFeedback || '').replace(/"/g, '""')}"`,
-      `"${(c.testimonialQuote || '').replace(/"/g, '""')}"`,
-      c.submittedAt
+      sanitizeCell(c.cloudServicesUsed.join(', ')),
+      sanitizeCell(c.pursuingAwsCertification),
+      sanitizeCell(c.eventFeedback || ''),
+      sanitizeCell(c.testimonialQuote || ''),
+      sanitizeCell(c.submittedAt)
     ]);
     return [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
   },
@@ -991,6 +1020,25 @@ export const db = {
     store.sponsors.push(newInquiry);
     writeStore(store);
     return newInquiry;
+  },
+
+  updateSponsorStatus(id: string, status: SponsorInquiry['status'], updatedBy?: string): boolean {
+    const store = readStore();
+    const sponsor = store.sponsors.find(s => s.id === id);
+    if (!sponsor) return false;
+    sponsor.status = status;
+    if (updatedBy) {
+      if (!store.auditLogs) store.auditLogs = [];
+      store.auditLogs.unshift({
+        id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        timestamp: new Date().toISOString(),
+        organizerName: updatedBy,
+        action: 'UPDATE_SPONSOR_STATUS',
+        details: `Updated sponsor ${sponsor.companyName} status to ${status}`
+      });
+    }
+    writeStore(store);
+    return true;
   },
 
   // Feature Flags

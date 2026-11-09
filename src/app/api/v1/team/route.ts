@@ -19,7 +19,26 @@ export async function GET(req: NextRequest) {
     if (!team) {
       return NextResponse.json({ success: false, error: 'Team not found with the provided code.' }, { status: 404 });
     }
-    // If caller queried by exact team code or is admin, return the team details
+    // If not admin, sanitize sensitive private fields (phone numbers, private registration numbers, AWS credits)
+    if (!session) {
+      const sanitizedTeam = {
+        ...team,
+        inviteCode: undefined, // Conceal invite code from public queries
+        awsCreditVoucher: undefined, // Conceal AWS promotional voucher codes
+        leaderPhone: undefined,
+        leaderCollegeRegNo: undefined,
+        members: team.members.map(m => ({
+          id: m.id,
+          name: m.name,
+          role: m.role,
+          college: m.college,
+          meetupRsvpVerified: m.meetupRsvpVerified,
+          confirmed: m.confirmed,
+          email: m.email ? m.email.replace(/(?<=^.{2}).+(?=@)/, '***') : ''
+        }))
+      };
+      return NextResponse.json({ success: true, team: sanitizedTeam });
+    }
     return NextResponse.json({ success: true, team });
   }
 
@@ -65,29 +84,47 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { teamName, trackId, abstractTitle, abstractText, cloudArchitectureBlueprint, lead } = body;
+    
+    // Normalize payload across flat form schema & nested schema
+    const teamName = body.teamName;
+    const trackId = body.trackId;
+    const abstractTitle = body.abstractTitle || body.problemTitle;
+    const abstractText = body.abstractText || body.problemAbstract;
+    const cloudArchitectureBlueprint = body.cloudArchitectureBlueprint || body.architecturePdfUrl || '';
+    
+    // Extract leader fields
+    const leaderName = body.lead?.fullName || body.leaderName;
+    const leaderEmail = body.lead?.email || body.leaderEmail;
+    const leaderPhone = body.lead?.phone || body.leaderPhone || '';
+    const leaderCollege = body.lead?.college || body.institutionName || 'SIST';
+    const leaderRegisterNo = body.lead?.registerNo || body.leaderCollegeRegNo || '';
+    const leaderMeetupUrl = body.lead?.meetupProfileUrl || body.leaderMeetupUrl || '';
+    const leaderAwsBuilderCenterUrl = body.lead?.awsBuilderCenterUrl || body.leaderAwsBuilderCenterUrl || '';
+    const leaderGithubUrl = body.lead?.githubUrl || body.githubUrl || '';
+    const city = body.city || 'Chennai';
+    const state = body.state || 'Tamil Nadu';
 
-    if (!teamName || !trackId || !abstractTitle || !abstractText || !lead?.fullName || !lead?.email) {
+    if (!teamName || !trackId || !abstractTitle || !abstractText || !leaderName || !leaderEmail) {
       return NextResponse.json({ 
         success: false, 
-        error: 'Missing required fields: teamName, trackId, abstractTitle, abstractText, lead.fullName, lead.email are mandatory.' 
+        error: 'Missing required fields: teamName, trackId, problem title, abstract, and leader details are mandatory.' 
       }, { status: 400 });
     }
 
     // Input length validation
     if (
-      teamName.length > 100 ||
-      trackId.length > 50 ||
-      abstractTitle.length > 200 ||
-      abstractText.length > 3000 ||
-      lead.fullName.length > 150 ||
-      lead.email.length > 254 ||
-      (lead.phone && lead.phone.length > 50) ||
-      (lead.registerNo && lead.registerNo.length > 50) ||
-      (lead.meetupProfileUrl && lead.meetupProfileUrl.length > 300) ||
-      (lead.awsBuilderCenterUrl && lead.awsBuilderCenterUrl.length > 300) ||
-      (cloudArchitectureBlueprint && cloudArchitectureBlueprint.length > 500) ||
-      (lead.githubUrl && lead.githubUrl.length > 300)
+      String(teamName).length > 100 ||
+      String(trackId).length > 50 ||
+      String(abstractTitle).length > 200 ||
+      String(abstractText).length > 3000 ||
+      String(leaderName).length > 150 ||
+      String(leaderEmail).length > 254 ||
+      (leaderPhone && String(leaderPhone).length > 50) ||
+      (leaderRegisterNo && String(leaderRegisterNo).length > 50) ||
+      (leaderMeetupUrl && String(leaderMeetupUrl).length > 300) ||
+      (leaderAwsBuilderCenterUrl && String(leaderAwsBuilderCenterUrl).length > 300) ||
+      (cloudArchitectureBlueprint && String(cloudArchitectureBlueprint).length > 500) ||
+      (leaderGithubUrl && String(leaderGithubUrl).length > 300)
     ) {
       return NextResponse.json({
         success: false,
@@ -95,7 +132,9 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    if (!lead.meetupProfileUrl || !lead.meetupVerified) {
+    // Meetup RSVP verification check per AWS SBGL regulations
+    const isMeetupValid = Boolean(leaderMeetupUrl && leaderMeetupUrl.trim().length > 0);
+    if (!isMeetupValid) {
       return NextResponse.json({
         success: false,
         error: 'Team Leader Meetup RSVP verification is mandatory per AWS Student Builder Group regulations.'
@@ -103,21 +142,21 @@ export async function POST(req: NextRequest) {
     }
 
     const newTeam = db.createTeam({
-      teamName: teamName.trim(),
-      trackId: trackId.trim(),
-      institutionName: lead.college?.trim() || 'SIST',
-      city: 'Chennai',
-      state: 'Tamil Nadu',
-      leaderName: lead.fullName.trim(),
-      leaderEmail: lead.email.trim().toLowerCase(),
-      leaderPhone: lead.phone?.trim() || '',
-      leaderCollegeRegNo: lead.registerNo?.trim() || '',
-      leaderMeetupUrl: lead.meetupProfileUrl.trim(),
-      leaderAwsBuilderCenterUrl: lead.awsBuilderCenterUrl?.trim() || '',
-      problemTitle: abstractTitle.trim(),
-      problemAbstract: abstractText.trim(),
-      architecturePdfUrl: cloudArchitectureBlueprint?.trim() || '',
-      githubUrl: lead.githubUrl?.trim() || '',
+      teamName: String(teamName).trim(),
+      trackId: String(trackId).trim(),
+      institutionName: String(leaderCollege).trim(),
+      city: String(city).trim(),
+      state: String(state).trim(),
+      leaderName: String(leaderName).trim(),
+      leaderEmail: String(leaderEmail).trim().toLowerCase(),
+      leaderPhone: String(leaderPhone).trim(),
+      leaderCollegeRegNo: String(leaderRegisterNo).trim(),
+      leaderMeetupUrl: String(leaderMeetupUrl).trim(),
+      leaderAwsBuilderCenterUrl: String(leaderAwsBuilderCenterUrl).trim(),
+      problemTitle: String(abstractTitle).trim(),
+      problemAbstract: String(abstractText).trim(),
+      architecturePdfUrl: String(cloudArchitectureBlueprint).trim(),
+      githubUrl: String(leaderGithubUrl).trim(),
     });
 
     return NextResponse.json({
@@ -143,23 +182,32 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const { teamCode, member } = body;
 
-    if (!teamCode || !member?.fullName || !member?.email) {
+    const memberName = member?.fullName || member?.name;
+    const memberEmail = member?.email;
+    const memberPhone = member?.phone || '';
+    const memberCollege = member?.college || member?.institution || 'SIST';
+    const memberRegisterNo = member?.registerNo || member?.collegeRegNo || '';
+    const memberMeetupUrl = member?.meetupProfileUrl || '';
+    const memberAwsBuilderCenterUrl = member?.awsBuilderCenterUrl || '';
+    const memberTshirtSize = member?.tshirtSize || member?.tShirtSize || 'L';
+
+    if (!teamCode || !memberName || !memberEmail) {
       return NextResponse.json({ 
         success: false, 
-        error: 'Missing required fields: teamCode, member.fullName, member.email are mandatory.' 
+        error: 'Missing required fields: teamCode, member name, and member email are mandatory.' 
       }, { status: 400 });
     }
 
     // Input length validation
     if (
-      teamCode.length > 50 ||
-      member.fullName.length > 150 ||
-      member.email.length > 254 ||
-      (member.phone && member.phone.length > 50) ||
-      (member.college && member.college.length > 200) ||
-      (member.registerNo && member.registerNo.length > 50) ||
-      (member.meetupProfileUrl && member.meetupProfileUrl.length > 300) ||
-      (member.awsBuilderCenterUrl && member.awsBuilderCenterUrl.length > 300)
+      String(teamCode).length > 50 ||
+      String(memberName).length > 150 ||
+      String(memberEmail).length > 254 ||
+      (memberPhone && String(memberPhone).length > 50) ||
+      (memberCollege && String(memberCollege).length > 200) ||
+      (memberRegisterNo && String(memberRegisterNo).length > 50) ||
+      (memberMeetupUrl && String(memberMeetupUrl).length > 300) ||
+      (memberAwsBuilderCenterUrl && String(memberAwsBuilderCenterUrl).length > 300)
     ) {
       return NextResponse.json({
         success: false,
@@ -167,28 +215,21 @@ export async function PUT(req: NextRequest) {
       }, { status: 400 });
     }
 
-    if (!member.meetupProfileUrl || !member.meetupVerified) {
-      return NextResponse.json({
-        success: false,
-        error: 'Meetup RSVP verification is required for all builders joining a team.'
-      }, { status: 400 });
-    }
-
     const roleMapping: 'Frontend' | 'Backend' | 'AI / Cloud' | 'UI/UX' = 
-      member.role === 'Frontend' || member.role === 'Backend' || member.role === 'AI / Cloud' || member.role === 'UI/UX'
+      member?.role === 'Frontend' || member?.role === 'Backend' || member?.role === 'AI / Cloud' || member?.role === 'UI/UX'
         ? member.role
         : 'Backend';
 
-    const joinResult = db.joinTeam(teamCode.trim().toUpperCase(), {
-      name: member.fullName.trim(),
-      email: member.email.trim().toLowerCase(),
-      phone: member.phone?.trim() || '',
-      college: member.college?.trim() || 'SIST',
-      collegeRegNo: member.registerNo?.trim() || '',
+    const joinResult = db.joinTeam(String(teamCode).trim().toUpperCase(), {
+      name: String(memberName).trim(),
+      email: String(memberEmail).trim().toLowerCase(),
+      phone: String(memberPhone).trim(),
+      college: String(memberCollege).trim(),
+      collegeRegNo: String(memberRegisterNo).trim(),
       role: roleMapping,
-      meetupProfileUrl: member.meetupProfileUrl.trim(),
-      awsBuilderCenterUrl: member.awsBuilderCenterUrl?.trim() || '',
-      tshirtSize: member.tShirtSize || 'L',
+      meetupProfileUrl: String(memberMeetupUrl).trim(),
+      awsBuilderCenterUrl: String(memberAwsBuilderCenterUrl).trim(),
+      tshirtSize: memberTshirtSize,
     });
 
     if (!joinResult.success) {

@@ -39,6 +39,7 @@ export default function RegisterPage() {
   const [meetupVerified, setMeetupVerified] = useState(false);
   const [verifyingMeetup, setVerifyingMeetup] = useState(false);
   const [meetupError, setMeetupError] = useState('');
+  const [formError, setFormError] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -83,6 +84,7 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
+    setFormError('');
 
     try {
       const res = await fetch('/api/v1/register', {
@@ -91,11 +93,14 @@ export default function RegisterPage() {
         body: JSON.stringify(formData),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+      if (res.ok && data.success) {
         setSubmitted(true);
+      } else {
+        setFormError(data.error || 'Failed to submit registration. Please verify your details.');
       }
-    } catch (err) {
-      setSubmitted(true);
+    } catch (err: any) {
+      setFormError(err.message || 'Error communicating with server.');
     } finally {
       setLoading(false);
     }
@@ -150,6 +155,13 @@ export default function RegisterPage() {
           {!submitted ? (
             <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl">
               <form onSubmit={handleProfileSubmit} className="space-y-6">
+                
+                {formError && (
+                  <div className="p-3.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                    <span>{formError}</span>
+                  </div>
+                )}
                 
                 {/* Step 1: Personal & College Details */}
                 <div className="space-y-4">

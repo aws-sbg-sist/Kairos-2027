@@ -20,10 +20,28 @@ export async function GET(req: NextRequest) {
         return sanitized;
       });
 
+  const sanitizedLeadership = session
+    ? HIGHER_MANAGEMENT
+    : {
+        ...HIGHER_MANAGEMENT,
+        apexLeader: {
+          ...HIGHER_MANAGEMENT.apexLeader,
+          registerNo: undefined,
+          contact: {
+            ...HIGHER_MANAGEMENT.apexLeader.contact,
+            phone: undefined
+          }
+        },
+        superHeads: HIGHER_MANAGEMENT.superHeads.map(sh => ({
+          ...sh,
+          registerNo: undefined
+        }))
+      };
+
   return NextResponse.json({
     success: true,
     batch: HIGHER_MANAGEMENT.batchTitle,
-    leadership: HIGHER_MANAGEMENT,
+    leadership: sanitizedLeadership,
     roster: sanitizedRoster
   });
 }

@@ -11,22 +11,24 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { 
-      fullName, 
-      email, 
-      phone, 
-      college, 
-      yearOfStudy, 
-      githubUrl, 
-      linkedinUrl, 
-      preferredTrack, 
-      teamStatus, 
-      teamCode, 
-      meetupProfileUrl, 
-      awsBuilderCenterUrl,
-      experienceLevel,
-      tShirtSize 
-    } = body;
+    const fullName = body.fullName;
+    const email = body.email;
+    const phone = body.phone || '';
+    const college = body.college || body.institution || 'SIST';
+    const yearOfStudy = body.yearOfStudy || '3rd Year';
+    const department = body.department || 'Computer Science & Engineering';
+    const collegeRegNo = body.collegeRegNo || '';
+    const city = body.city || 'Chennai';
+    const state = body.state || 'Tamil Nadu';
+    const githubUrl = body.githubUrl || (body.githubUsername ? `https://github.com/${body.githubUsername.replace(/^@/, '')}` : '');
+    const linkedinUrl = body.linkedinUrl || '';
+    const preferredTrack = body.preferredTrack || 'Agentic AI & Generative Intelligence';
+    const teamStatus = body.teamStatus || 'looking_for_team';
+    const teamCode = body.teamCode;
+    const meetupProfileUrl = body.meetupProfileUrl || '';
+    const awsBuilderCenterUrl = body.awsBuilderCenterUrl || '';
+    const experienceLevel = body.experienceLevel || 'Intermediate';
+    const tShirtSize = body.tShirtSize || body.tshirtSize || 'L';
 
     if (!fullName || !email) {
       return NextResponse.json({ 
@@ -37,15 +39,15 @@ export async function POST(req: NextRequest) {
 
     // Input length validation
     if (
-      fullName.length > 150 ||
-      email.length > 254 ||
-      (phone && phone.length > 50) ||
-      (college && college.length > 200) ||
-      (githubUrl && githubUrl.length > 300) ||
-      (linkedinUrl && linkedinUrl.length > 300) ||
-      (teamCode && teamCode.length > 50) ||
-      (meetupProfileUrl && meetupProfileUrl.length > 300) ||
-      (awsBuilderCenterUrl && awsBuilderCenterUrl.length > 300)
+      String(fullName).length > 150 ||
+      String(email).length > 254 ||
+      (phone && String(phone).length > 50) ||
+      (college && String(college).length > 200) ||
+      (githubUrl && String(githubUrl).length > 300) ||
+      (linkedinUrl && String(linkedinUrl).length > 300) ||
+      (teamCode && String(teamCode).length > 50) ||
+      (meetupProfileUrl && String(meetupProfileUrl).length > 300) ||
+      (awsBuilderCenterUrl && String(awsBuilderCenterUrl).length > 300)
     ) {
       return NextResponse.json({
         success: false,
@@ -59,22 +61,22 @@ export async function POST(req: NextRequest) {
     }
 
     const result = db.addWaitlistEntry({
-      fullName: fullName.trim(),
-      email: email.trim().toLowerCase(),
-      phone: phone?.trim() || '',
-      institution: college?.trim() || 'SIST',
-      college: college?.trim() || 'SIST',
-      department: 'Computer Science & Engineering',
-      yearOfStudy: yearOfStudy || '3rd Year',
-      githubUrl: githubUrl?.trim() || '',
-      linkedinUrl: linkedinUrl?.trim() || '',
-      preferredTrack: preferredTrack || 'Agentic AI & Generative Intelligence',
-      teamStatus: teamStatus || 'looking_for_team',
-      teamCode: teamCode?.trim().toUpperCase(),
-      meetupProfileUrl: meetupProfileUrl?.trim() || '',
-      awsBuilderCenterUrl: awsBuilderCenterUrl?.trim() || '',
-      experienceLevel: experienceLevel || 'Intermediate',
-      tShirtSize: tShirtSize || 'L'
+      fullName: String(fullName).trim(),
+      email: String(email).trim().toLowerCase(),
+      phone: String(phone).trim(),
+      institution: String(college).trim(),
+      college: String(college).trim(),
+      department: String(department).trim(),
+      yearOfStudy: String(yearOfStudy).trim(),
+      githubUrl: String(githubUrl).trim(),
+      linkedinUrl: String(linkedinUrl).trim(),
+      preferredTrack: String(preferredTrack).trim(),
+      teamStatus: String(teamStatus).trim(),
+      teamCode: teamCode ? String(teamCode).trim().toUpperCase() : undefined,
+      meetupProfileUrl: String(meetupProfileUrl).trim(),
+      awsBuilderCenterUrl: String(awsBuilderCenterUrl).trim(),
+      experienceLevel: String(experienceLevel).trim(),
+      tShirtSize: String(tShirtSize).trim()
     });
 
     if (!result.success) {

@@ -44,7 +44,7 @@ export const FactsStrip: React.FC = () => {
     },
     {
       id: '04',
-      tag: 'PRIZE POOL',
+      tag: 'BOUNTIES',
       image: '/assets/prizes.png',
       imageGlow: 'rgba(238,5,242,0.4)',
       numericValue: 175000,

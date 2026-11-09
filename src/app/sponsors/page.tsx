@@ -282,7 +282,7 @@ Target Domain: https://kairos.sathyabama.ac.in
                 className={`rounded-2xl p-7 transition flex flex-col justify-between border relative ${
                   tier.id === 'title' 
                     ? 'bg-gradient-to-b from-purple-950/30 via-slate-900 to-slate-950 border-purple-500 shadow-xl shadow-purple-900/30' 
-                    : tier.id === 'powered'
+                    : (tier.id === 'powered' || tier.id === 'powered_by')
                     ? 'bg-gradient-to-b from-[#0073BB]/10 via-slate-900 to-slate-950 border-[#0073BB] shadow-xl shadow-[#0073BB]/10'
                     : 'bg-slate-900/70 border-slate-800 hover:border-slate-700'
                 }`}
@@ -292,7 +292,7 @@ Target Domain: https://kairos.sathyabama.ac.in
                     Most Prestigious
                   </div>
                 )}
-                {tier.id === 'powered' && (
+                {(tier.id === 'powered' || tier.id === 'powered_by') && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#0073BB] text-white text-xs font-black tracking-wider uppercase shadow-md">
                     High Impact
                   </div>
@@ -336,7 +336,7 @@ Target Domain: https://kairos.sathyabama.ac.in
                     className={`w-full py-3 px-4 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 ${
                       tier.id === 'title'
                         ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500'
-                        : tier.id === 'powered'
+                        : (tier.id === 'powered' || tier.id === 'powered_by')
                         ? 'bg-[#0073BB] text-white hover:bg-blue-600'
                         : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
                     }`}

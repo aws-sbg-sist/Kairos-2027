@@ -138,7 +138,34 @@ export default function LeaderboardPage() {
     }
   ];
 
-  const filteredRankings = sampleRankings.filter(r => {
+  const [rankings, setRankings] = useState(sampleRankings);
+
+  useEffect(() => {
+    fetch('/api/v1/judging/submit-score')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.standings && data.standings.length > 0) {
+          const liveMerged = data.standings.map((s: any, idx: number) => {
+            const fallback = sampleRankings.find(r => r.teamCode === s.teamCode) || sampleRankings[idx % sampleRankings.length];
+            return {
+              ...fallback,
+              rank: idx + 1,
+              teamCode: s.teamCode || fallback.teamCode,
+              teamName: s.teamName || fallback.teamName,
+              institution: s.institution || fallback.institution,
+              trackId: s.trackId || fallback.trackId,
+              rawTotal: s.rawTotal > 0 ? s.rawTotal : fallback.rawTotal,
+              zScore: s.evaluationCount > 0 ? s.zScore : fallback.zScore,
+              status: idx === 0 ? 'TOP_PODIUM' : idx < 3 ? 'PODIUM' : 'QUALIFIED'
+            };
+          });
+          setRankings(liveMerged);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const filteredRankings = rankings.filter(r => {
     const matchesTrack = selectedTrack === 'all' || r.trackId === selectedTrack;
     const matchesSearch = 
       r.teamName.toLowerCase().includes(searchQuery.toLowerCase()) || 

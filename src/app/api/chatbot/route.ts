@@ -59,11 +59,14 @@ ${contextText}`;
           parts: [{ text: cleanQuery }]
         });
 
-        // Try gemini-2.0-flash first, fallback to gemini-1.5-flash
+        // Call Gemini with API key in secure HTTP header
         const modelEndpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-        const geminiRes = await fetch(`${modelEndpoint}?key=${apiKey}`, {
+        const geminiRes = await fetch(modelEndpoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'x-goog-api-key': apiKey 
+          },
           body: JSON.stringify({
             systemInstruction: {
               parts: [{ text: systemInstruction }]

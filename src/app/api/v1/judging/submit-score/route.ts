@@ -12,34 +12,47 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { 
+    let { 
       judgePin, 
       judgeId, 
       teamId, 
+      teamCode,
       checkpointGate, 
       criterion1Score, 
       criterion2Score, 
       criterion3Score, 
       criterion4Score, 
       qualitativeFeedback,
-      recusal 
+      recusal,
+      recusedConflict 
     } = body;
 
-    if (!judgeId || !judgePin) {
+    const isRecused = Boolean(recusal || recusedConflict);
+
+    if (!judgePin) {
       return NextResponse.json({
         success: false,
-        error: 'Missing required credentials: judgeId and judgePin.'
+        error: 'Missing required credentials: Jury Access PIN is mandatory.'
       }, { status: 400 });
     }
 
-    // Per-judge DB credential verification with constant-time PIN comparison
     const judges = db.getJudges();
-    const judge = judges.find(j => j.id === judgeId && j.isActive);
+    let judge: any = null;
+
+    // Resolve judge by ID or by PIN directly
+    if (judgeId) {
+      judge = judges.find(j => j.id === judgeId && j.isActive);
+    } else {
+      judge = judges.find(j => j.accessPin === String(judgePin).trim() && j.isActive);
+      if (judge) {
+        judgeId = judge.id;
+      }
+    }
 
     if (!judge) {
       return NextResponse.json({
         success: false,
-        error: 'Judge account not found or is currently inactive.'
+        error: 'Judge account not found or is currently inactive. Please verify your Jury Access PIN.'
       }, { status: 403 });
     }
 
@@ -53,7 +66,15 @@ export async function POST(req: NextRequest) {
       }, { status: 403 });
     }
 
-    if (recusal) {
+    // Resolve teamId from teamCode if needed
+    if (!teamId && teamCode) {
+      const team = db.getTeamByCode(String(teamCode).trim().toUpperCase());
+      if (team) {
+        teamId = team.id;
+      }
+    }
+
+    if (isRecused) {
       return NextResponse.json({
         success: true,
         message: 'Conflict of interest recusal logged. Evaluation skipped for this team.',
@@ -64,7 +85,7 @@ export async function POST(req: NextRequest) {
     if (!teamId || checkpointGate === undefined || checkpointGate === null) {
       return NextResponse.json({
         success: false,
-        error: 'Missing required evaluation fields: teamId, checkpointGate.'
+        error: 'Missing required evaluation fields: teamId/teamCode and checkpointGate are mandatory.'
       }, { status: 400 });
     }
 
@@ -101,11 +122,45 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Evaluation and Z-score recorded successfully!',
+      message: 'Evaluation and Gaussian Z-score recorded successfully!',
       evaluation
     }, { status: 201 });
   } catch (err: any) {
     console.error('[API Judging Submit Error]:', err);
     return NextResponse.json({ success: false, error: 'Failed to record judge score.' }, { status: 500 });
   }
+}
+
+export async function GET() {
+  const evaluations = db.getEvaluations();
+  const teams = db.getTeams();
+
+  const standings = teams.map(t => {
+    const teamEvals = evaluations.filter(e => e.teamId === t.id);
+    const avgZScore = teamEvals.length > 0
+      ? teamEvals.reduce((sum, e) => sum + (e.normalizedZScore ?? 0), 0) / teamEvals.length
+      : 0;
+    const rawTotal = teamEvals.length > 0
+      ? teamEvals.reduce((sum, e) => sum + e.rawTotalScore, 0) / teamEvals.length
+      : 0;
+
+    return {
+      teamId: t.id,
+      teamCode: t.teamCode,
+      teamName: t.teamName,
+      trackId: t.trackId,
+      institution: t.institutionName || 'SIST',
+      evaluationCount: teamEvals.length,
+      rawTotal: Math.round(rawTotal * 10) / 10,
+      zScore: `${avgZScore >= 0 ? '+' : ''}${avgZScore.toFixed(2)}σ`,
+      rawZScore: avgZScore
+    };
+  }).sort((a, b) => b.rawZScore - a.rawZScore);
+
+  return NextResponse.json({
+    success: true,
+    totalEvaluations: evaluations.length,
+    standings,
+    evaluations
+  });
 }

@@ -5,6 +5,14 @@ import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 
 export const dynamic = 'force-dynamic';
 
+const VALID_ROLES: TeamRadarSignal['role'][] = [
+  'AI / ML Specialist',
+  'Fullstack Engineer',
+  'Systems & DevOps',
+  'Web3 & Security',
+  'UI/UX & Frontend'
+];
+
 export async function GET(req: NextRequest) {
   try {
     const signals = db.getRadarSignals();
@@ -32,14 +40,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Role validation
+    const normalizedRole = VALID_ROLES.find(r => r.toLowerCase() === String(role).trim().toLowerCase());
+    if (!normalizedRole) {
+      return NextResponse.json(
+        { success: false, error: `Invalid role selected. Must be one of: ${VALID_ROLES.join(', ')}` },
+        { status: 400 }
+      );
+    }
+
+    // Contact URL security validation (prevent javascript: or bad protocol schemes)
+    const cleanContactUrl = String(contactUrl).trim();
+    if (!/^https?:\/\//i.test(cleanContactUrl) && !/^mailto:/i.test(cleanContactUrl)) {
+      return NextResponse.json(
+        { success: false, error: 'Contact URL must begin with https://, http://, or mailto:' },
+        { status: 400 }
+      );
+    }
+
     // Input length validation
     if (
       String(builderName).length > 100 ||
-      String(role).length > 50 ||
       String(trackId).length > 50 ||
       String(college || '').length > 150 ||
       String(seeking).length > 1000 ||
-      String(contactUrl).length > 300
+      cleanContactUrl.length > 300
     ) {
       return NextResponse.json(
         { success: false, error: 'One or more fields exceed maximum allowed character length.' },
@@ -53,12 +78,12 @@ export async function POST(req: NextRequest) {
 
     const newSignal = db.addRadarSignal({
       builderName: String(builderName).trim(),
-      role: role as TeamRadarSignal['role'],
+      role: normalizedRole,
       trackId: String(trackId).trim(),
       skills: cleanSkills.length > 0 ? cleanSkills : ['Builder'],
       college: String(college || 'Sathyabama Institute of Science and Technology').trim(),
       seeking: String(seeking).trim(),
-      contactUrl: String(contactUrl).trim(),
+      contactUrl: cleanContactUrl,
     });
 
     return NextResponse.json({ success: true, signal: newSignal });

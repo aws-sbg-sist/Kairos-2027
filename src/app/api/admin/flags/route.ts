@@ -4,7 +4,9 @@ import { getCurrentAdminSession } from '@/lib/auth';
 
 export async function GET() {
   const flags = db.getFeatureFlags();
-  return NextResponse.json({ success: true, flags });
+  const session = await getCurrentAdminSession();
+  const auditLogs = session ? db.getAuditLogs() : [];
+  return NextResponse.json({ success: true, flags, auditLogs });
 }
 
 export async function POST(req: NextRequest) {
