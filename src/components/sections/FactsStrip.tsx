@@ -59,7 +59,7 @@ export const FactsStrip: React.FC = () => {
       tag: 'LOCATION',
       image: '/assets/venue.png',
       imageGlow: 'rgba(56,189,248,0.35)',
-      customValue: 'Central Library',
+      customValue: 'Indoor Auditorium',
       label: 'Sathyabama University, Chennai',
       detail: '1Gbps Wi-Fi Mesh & Power Drops',
       badge: 'OMR Campus',

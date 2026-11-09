@@ -77,7 +77,7 @@ export default function ParticipantPortalPage() {
                 Builder Dashboard
               </span>
               <span className="text-[10px] font-mono text-purple-400 block">
-                KAIROS 2027 - SATHYABAMA INDOOR STADIUM
+                KAIROS 2027 - SATHYABAMA INDOOR AUDITORIUM
               </span>
             </div>
           </div>
@@ -235,7 +235,7 @@ export default function ParticipantPortalPage() {
         <div className="p-6 rounded-3xl glass-panel border border-purple-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1">
             <span className="text-xs font-mono text-purple-400 font-bold">VENUE CHECK-IN READY</span>
-            <h4 className="text-lg font-bold text-white">Sathyabama Indoor Stadium - Arena Bay B-14</h4>
+            <h4 className="text-lg font-bold text-white">Sathyabama Indoor Auditorium - Arena Bay B-14</h4>
             <p className="text-xs text-slate-400">
               Allocated 6 power outlets, surge suppressor board, and dual-band high-density Wi-Fi SSID.
             </p>

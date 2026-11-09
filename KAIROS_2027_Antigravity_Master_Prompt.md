@@ -23,7 +23,7 @@ If an asset or confirmed content item is absent, continue with a polished, edita
 **Organiser:** AWS Student Builder Group (AWS SBG) — SIST Chapter  
 **Academic unit:** Department of Computer Science & Engineering, School of Computing  
 **Institution:** Sathyabama Institute of Science and Technology, Chennai, India  
-**Venue:** Sathyabama Indoor Stadium  
+**Venue:** Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai - 600119  
 **Event dates:** 22–24 January 2027  
 **Competition clock:** 11:30 AM IST, Friday 22 January 2027 to 11:30 AM IST, Sunday 24 January 2027 — exactly 48 hours  
 **Registration fee:** ₹0 / free, according to the proposal  

@@ -232,7 +232,7 @@ export default function OnlineQualifierPage() {
               Advancement to On-Campus Grand Finale (Round 2)
             </span>
             <p className="leading-relaxed">
-              Following virtual evaluations across January 02 to 04, the <strong>Top 100 Elite Teams</strong> will receive official invitations to attend the 48-Hour On-Campus Grand Finale at Sathyabama Central Library, Chennai (January 22 to 24, 2027). All 100 teams receive complimentary on-campus stay, meals, builder kits, and transit bus pickups.
+              Following virtual evaluations across January 02 to 04, the <strong>Top 100 Elite Teams</strong> will receive official invitations to attend the 48-Hour On-Campus Grand Finale at Sathyabama Indoor Auditorium, Chennai (January 22 to 24, 2027). All 100 teams receive complimentary on-campus stay, meals, builder kits, and transit bus pickups.
             </p>
           </div>
 

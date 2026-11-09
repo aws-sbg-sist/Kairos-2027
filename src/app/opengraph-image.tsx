@@ -131,7 +131,7 @@ export default async function Image() {
             '₹0 Free Merit Entry',
             '75 Elite Teams',
             '5 Technical Tracks',
-            'Sathyabama Indoor Stadium',
+            'Sathyabama Indoor Auditorium',
           ].map((tag, i) => (
             <div key={i} style={styles.tag}>
               {tag}

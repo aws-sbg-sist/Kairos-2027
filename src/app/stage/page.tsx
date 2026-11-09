@@ -96,7 +96,7 @@ export default function StageScreenMode() {
               </span>
             </div>
             <p className="text-xs text-slate-400 font-mono">
-              AWS Student Builder Group (SIST Chapter) • Sathyabama Central Library Complex
+              AWS Student Builder Group (SIST Chapter) • Sathyabama Indoor Auditorium
             </p>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 > **Where Innovation Meets Its Moment.**  
 > 48 Hours. 75 Elite Teams. The National Arena for Emerging Builders.  
-> **Dates:** 22–24 January 2027 · **Venue:** Sathyabama Indoor Stadium, Chennai, India  
+> **Dates:** 22–24 January 2027 · **Venue:** Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai - 600119  
 > **Organized by:** AWS Student Builder Group (AWS SBG) — SIST Chapter  
 > **Academic Unit:** Department of Computer Science & Engineering, School of Computing  
 > **Institution:** Sathyabama Institute of Science and Technology, Chennai  
@@ -15,7 +15,7 @@
 | :--- | :--- |
 | **Event Name** | KAIROS 2027 (Grand Edition) |
 | **Duration & Clock** | **Exactly 48.0 Hours** (11:30 AM IST Fri 22 Jan – 11:30 AM IST Sun 24 Jan 2027) |
-| **Venue** | Sathyabama Indoor Stadium, Chennai, India |
+| **Venue** | Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai - 600119 |
 | **Scale** | Up to 75 teams (4–6 builders per team, ~400 on-campus contestants) |
 | **Registration Fee** | **₹0 / 100% Free Merit Admission** |
 | **Meals Provided** | 7 Scheduled Principal Meals & Continuous Refreshment Stations |

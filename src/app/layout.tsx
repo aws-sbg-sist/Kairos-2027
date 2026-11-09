@@ -94,7 +94,7 @@ const jsonLd = {
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   location: {
     '@type': 'Place',
-    name: 'Central Library & Campus Bays, Sathyabama Institute of Science and Technology',
+    name: 'Indoor Auditorium, Sathyabama Institute of Science and Technology',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR)',

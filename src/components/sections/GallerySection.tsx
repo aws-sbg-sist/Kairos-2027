@@ -11,7 +11,7 @@ import { GalleryLightbox, GalleryItem } from '@/components/animation/GalleryLigh
 const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'venue-main',
-    title: 'The Arena: Central Library & Indoor Complex',
+    title: 'The Arena: Indoor Auditorium',
     caption: 'Air-conditioned stadium with dedicated gigabit LAN drops, 24/7 power backups, and private team cubicles.',
     category: 'Arena',
     src: '/assets/venue-illustration.png',

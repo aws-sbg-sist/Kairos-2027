@@ -60,7 +60,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
     { number: '01', title: 'Early Interest', desc: 'Reserve your priority notification spot now. No fees, instant confirmation.', status: 'ACTIVE NOW', current: true },
     { number: '02', title: 'National Applications', desc: 'Submit abstract, proposed system architecture, and 4–6 builder team roster.', status: 'OPENS SOON' },
     { number: '03', title: 'Technical Screening', desc: 'Evaluation of abstracts by faculty & engineers to shortlist up to 75 teams.', status: 'PLANNED' },
-    { number: '04', title: 'On-Campus 48H Finale', desc: 'Build live in Chennai at Sathyabama Indoor Stadium with power, Wi-Fi & meals.', status: '22-24 JAN 2027' },
+    { number: '04', title: 'On-Campus 48H Finale', desc: 'Build live in Chennai at Sathyabama Indoor Auditorium with power, Wi-Fi & meals.', status: '22-24 JAN 2027' },
     { number: '05', title: 'Grand Stage Demos', desc: 'Top 20 teams demonstrate before the Grand Jury on the main auditorium stage.', status: 'VALEDICTORY' },
   ];
 

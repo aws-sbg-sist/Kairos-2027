@@ -82,7 +82,7 @@ Scale & Metrics:
 - 2,000+ Online Applications Nationwide
 - ₹1,75,000 Total Prize Pool
 - 100% Free Merit Hackathon :  Zero Entry Fee for Students
-- Venue: Central Library, Sathyabama IST, Chennai
+- Venue: Indoor Auditorium, Sathyabama IST, Chennai - 600119
 - Date: January 22 to 24, 2027 (48-Hour On-Campus Sprint)
 
 Corporate Partnership Tiers:

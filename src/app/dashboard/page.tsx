@@ -51,7 +51,7 @@ export default function DashboardPage() {
       case 'ON_CAMPUS_QUALIFIED':
         return {
           title: 'STAGE 2: ON-CAMPUS FINALIST (JAN 22–24)',
-          desc: 'Qualified for Physical Grand Finale at Sathyabama Central Library, Chennai.',
+          desc: 'Qualified for Physical Grand Finale at Sathyabama Indoor Auditorium, Chennai.',
           badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
         };
       case 'ONLINE_SEMI_FINALIST':
@@ -75,7 +75,7 @@ export default function DashboardPage() {
     trackId: 'cloud-native',
     selectionStage: 'ON_CAMPUS_QUALIFIED',
     problemTitle: 'Chronos Stream: Sub-millisecond Event Mesh for Urban Telemetry',
-    deskBayAllocation: 'BAY-A12 (Central Library LH1)',
+    deskBayAllocation: 'BAY-A12 (Indoor Auditorium Bay 1)',
     awsCreditVoucher: 'AWS-KAIROS-100-CHRONOS',
     members: [
       { id: '1', name: 'Pooja Venkatesh', role: 'Leader', college: 'SIST', meetupRsvpVerified: true, email: 'pooja.v@example.edu' },

@@ -49,21 +49,21 @@ export default function JudgingPortalPage() {
         name: 'Vikrant Roy',
         organization: 'Amazon Web Services',
         designation: 'Principal Solutions Architect',
-        assignedHall: 'Central Library Auditorium'
+        assignedHall: 'Indoor Auditorium - Main Stage'
       });
     } else if (pin === '202702') {
       setAuthenticatedJudge({
         name: 'Aishwarya Subramanian',
         organization: 'Peak Capital Partners',
         designation: 'General Partner & Tech Investor',
-        assignedHall: 'Central Library LH1'
+        assignedHall: 'Indoor Auditorium - Bay 1'
       });
     } else if (pin === '202703') {
       setAuthenticatedJudge({
         name: 'Dr. Rajesh Kannan',
         organization: 'Center for Distributed Computing',
         designation: 'Distinguished Professor',
-        assignedHall: 'Central Library LH2'
+        assignedHall: 'Indoor Auditorium - Bay 2'
       });
     } else {
       setAuthError('Invalid 6-digit Access PIN. (Demo Judge PIN: 202701)');

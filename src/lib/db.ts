@@ -189,7 +189,7 @@ const DEFAULT_MEMBERS: OrgMember[] = [
     division: 'Division 3: Ground Operations & Venue Logistics',
     displayOrder: 6,
     photoUrl: '/assets/members/viswanathan_ashok.webp',
-    bio: 'Spearheading on-ground logistics across Sathyabama Central Library, 100-team bay allocation, and Sathyabama transit bus fleet operations.',
+    bio: 'Spearheading on-ground logistics across Sathyabama Indoor Auditorium, 100-team bay allocation, and Sathyabama transit bus fleet operations.',
     academicDepartment: 'Department of Computer Science & Engineering, SIST',
     graduationYear: 2027,
     awsCertifications: ['AWS Cloud Practitioner'],
@@ -197,7 +197,7 @@ const DEFAULT_MEMBERS: OrgMember[] = [
     contributions: [
       {
         category: 'Ground Logistics',
-        title: 'Central Library Hacking Bay & Transit Fleet Mesh',
+        title: 'Indoor Auditorium Hacking Bay & Transit Fleet Mesh',
         description: 'Orchestrated chartered university buses and 100 team power/seating drops.',
         impact: 'Zero-downtime physical infrastructure',
         badgeTier: 'GOLD',
@@ -391,7 +391,7 @@ const DEFAULT_STORE: StoreSchema = {
       onlineQualifierScore: 94.5,
       onlineDefenseSlot: '2027-01-03T11:00:00+05:30',
       onlineMeetRoomId: 'Virtual-Meet-02',
-      deskBayAllocation: 'BAY-A12 (Central Library LH1)',
+      deskBayAllocation: 'BAY-A12 (Indoor Auditorium Bay 1)',
       checkedIn: true,
       awsCreditVoucher: 'AWS-KAIROS-100-CHRONOS',
       members: [
@@ -420,7 +420,7 @@ const DEFAULT_STORE: StoreSchema = {
       onlineQualifierScore: 96.0,
       onlineDefenseSlot: '2027-01-03T14:30:00+05:30',
       onlineMeetRoomId: 'Virtual-Meet-01',
-      deskBayAllocation: 'BAY-A08 (Central Library LH1)',
+      deskBayAllocation: 'BAY-A08 (Indoor Auditorium Bay 1)',
       checkedIn: true,
       awsCreditVoucher: 'AWS-KAIROS-100-AEGIS',
       members: [
@@ -513,7 +513,7 @@ const DEFAULT_STORE: StoreSchema = {
       organization: 'Amazon Web Services',
       designation: 'Principal Solutions Architect',
       trackSpecialization: 'Agentic AI & Cloud-Native',
-      assignedHall: 'Central Library Auditorium',
+      assignedHall: 'Indoor Auditorium - Main Stage',
       isActive: true
     },
     {
@@ -523,7 +523,7 @@ const DEFAULT_STORE: StoreSchema = {
       organization: 'Peak Capital Partners',
       designation: 'General Partner & Tech Investor',
       trackSpecialization: 'FinTech & Open Innovation',
-      assignedHall: 'Central Library LH1',
+      assignedHall: 'Indoor Auditorium - Bay 1',
       isActive: true
     },
     {
@@ -533,7 +533,7 @@ const DEFAULT_STORE: StoreSchema = {
       organization: 'Center for Distributed Computing',
       designation: 'Distinguished Professor & Systems Architect',
       trackSpecialization: 'Distributed Systems & Edge IoT',
-      assignedHall: 'Central Library LH2',
+      assignedHall: 'Indoor Auditorium - Bay 2',
       isActive: true
     }
   ],

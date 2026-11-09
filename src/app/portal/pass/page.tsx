@@ -170,7 +170,7 @@ export default function ParticipantPassPage() {
 
         {/* Security Watermark Footnote */}
         <div className="text-[9px] font-mono text-slate-500 text-center leading-tight">
-          Sathyabama Indoor Stadium - 22 to 24 Jan 2027 - Valid with Student ID Card
+          Sathyabama Indoor Auditorium - 22 to 24 Jan 2027 - Valid with Student ID Card
         </div>
       </div>
     </div>

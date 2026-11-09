@@ -19,7 +19,7 @@ export const EVENT_CONFIG = {
     targetDomain: 'https://kairos.sathyabama.ac.in',
   },
   venue: {
-    name: 'Central Library & Campus Bays',
+    name: 'Indoor Auditorium',
     campus: 'Sathyabama Institute of Science and Technology',
     address: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR), Chennai, Tamil Nadu - 600119',
     city: 'Chennai',
@@ -253,7 +253,7 @@ export const DUAL_PHASE_PIPELINE = [
     title: 'On-Campus 48-Hour Grand Finale',
     dates: '22 – 24 Jan 2027',
     scale: 'Top 100 Elite National Teams',
-    description: 'The Top 100 teams assemble at Sathyabama Central Library, Chennai for 48 hours of continuous hacking, 3 evaluation checkpoints, and ₹1,75,000 total prize pool.',
+    description: 'The Top 100 teams assemble at Sathyabama Indoor Auditorium, Chennai for 48 hours of continuous hacking, 3 evaluation checkpoints, and ₹1,75,000 total prize pool.',
     badge: 'Top 100 Physical Stage',
     status: 'UPCOMING'
   }
@@ -443,7 +443,7 @@ export const PROPOSED_SPONSOR_TIERS = [
     highlights: [
       'Naming rights: "KAIROS 2027 Presented by [Your Brand]"',
       'Prime 20-minute keynote address at inaugural plenary (11:15 AM)',
-      'Exclusive 10x10 ft demo booth in Central Library foyer',
+      'Exclusive 10x10 ft demo booth in Indoor Auditorium foyer',
       'Prime branding on chest of 106 organizer shirts & all 600 builder lanyards',
       '2 Grand Jury seats for final stage evaluation & awards conferral',
       'Access to opt-in developer database (2,000+ national applicants)',
@@ -693,7 +693,7 @@ export const HIGHER_MANAGEMENT = {
       leadName: 'Viswanathan Ashok',
       registerNo: '44110907',
       division: 'Division 3: Ground Operations, Venue & Transit Logistics',
-      mandate: 'Overseeing venue allocations in Central Library, 100-team bay setups, and Sathyabama transit bus fleet operations.'
+      mandate: 'Overseeing venue allocations in Indoor Auditorium, 100-team bay setups, and Sathyabama transit bus fleet operations.'
     },
     {
       code: 'SUPER_HEAD_4',
@@ -789,7 +789,7 @@ export const FAQS = [
   },
   {
     q: 'What are the grand finale dates and venue?',
-    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 (48 continuous non-stop hours) at Sathyabama Institute of Science and Technology, Chennai (Central Library & Indoor Stadium bays).'
+    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 (48 continuous non-stop hours) at Sathyabama Institute of Science and Technology, Chennai (Indoor Auditorium).'
   },
   {
     q: 'Who owns the intellectual property (IP)?',

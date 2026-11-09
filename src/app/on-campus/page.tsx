@@ -30,7 +30,7 @@ export default function OnCampusGuidePage() {
       hubName: 'Chennai Central Railway Station (MAS)',
       boardingPoint: 'Main Portico / Pillar 4 Pickup Bay',
       departureTimes: ['Friday, Jan 22 at 06:45 AM', 'Friday, Jan 22 at 07:30 AM'],
-      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Central Library Gate',
+      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Indoor Auditorium Gate',
       transitDuration: 'Approx. 55 mins via OMR Express Corridor',
       driverPOC: 'Bus Captain Murugan: +91 94441 23451'
     },
@@ -38,7 +38,7 @@ export default function OnCampusGuidePage() {
       hubName: 'Tambaram Railway Station (TBM)',
       boardingPoint: 'East Tambaram Bus Stand / Sathyabama Pickup Standee',
       departureTimes: ['Friday, Jan 22 at 07:00 AM', 'Friday, Jan 22 at 07:45 AM'],
-      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Central Library Gate',
+      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Indoor Auditorium Gate',
       transitDuration: 'Approx. 40 mins via Medavakkam Bypass',
       driverPOC: 'Bus Captain Velu: +91 94441 23452'
     },
@@ -46,7 +46,7 @@ export default function OnCampusGuidePage() {
       hubName: 'Chennai International Airport (MAA)',
       boardingPoint: 'Arrival Terminal T1: Pillar 12 Coach Bay',
       departureTimes: ['Friday, Jan 22 at 07:15 AM', 'Friday, Jan 22 at 08:00 AM'],
-      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Central Library Gate',
+      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Indoor Auditorium Gate',
       transitDuration: 'Approx. 45 mins via Radial Road',
       driverPOC: 'Bus Captain Sundar: +91 94441 23453'
     },
@@ -54,7 +54,7 @@ export default function OnCampusGuidePage() {
       hubName: 'CMBT Koyambedu Inter-State Bus Terminus',
       boardingPoint: 'Platform 3 Private Coach Drop / Sathyabama Standee',
       departureTimes: ['Friday, Jan 22 at 06:30 AM', 'Friday, Jan 22 at 07:15 AM'],
-      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Central Library Gate',
+      returnDeparture: 'Sunday, Jan 24 :  05:15 PM from Indoor Auditorium Gate',
       transitDuration: 'Approx. 60 mins via Inner Ring Road',
       driverPOC: 'Bus Captain Rajesh: +91 94441 23454'
     }
@@ -119,7 +119,7 @@ export default function OnCampusGuidePage() {
               On-Campus Venue & <span className="gradient-text-kairos">Logistics Guide</span>
             </h1>
             <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">
-              Everything the Top 100 Finalist Teams need to know regarding Sathyabama Central Library floorplans, university transit bus shuttles, builder streetwear kits, and 24/7 security.
+              Everything the Top 100 Finalist Teams need to know regarding Sathyabama Indoor Auditorium floorplans, university transit bus shuttles, builder streetwear kits, and 24/7 security.
             </p>
           </div>
 
@@ -138,7 +138,7 @@ export default function OnCampusGuidePage() {
                 <div>
                   <span role="status" className="text-xs font-mono text-purple-400 font-medium">Venue Layout</span>
                   <h2 className="text-xl sm:text-2xl font-display font-black text-white">
-                    Sathyabama Central Library Complex
+                    Sathyabama Indoor Auditorium
                   </h2>
                 </div>
               </div>
@@ -151,14 +151,14 @@ export default function OnCampusGuidePage() {
             <div className="relative rounded-2xl overflow-hidden border border-purple-500/30 bg-slate-950/80 aspect-[21/9] max-h-[320px] w-full flex items-center justify-center group shadow-xl">
               <Image
                 src="/assets/venue-illustration.png"
-                alt="Sathyabama Central Library Arena Architectural Illustration"
+                alt="Sathyabama Indoor Auditorium Architectural Illustration"
                 fill
                 className="object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
                 <span className="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700/60 backdrop-blur-md">
-                  Central Library Arena - 100 Hacking Bays & 24/7 Operations Hub
+                  Indoor Auditorium - 100 Hacking Bays & 24/7 Operations Hub
                 </span>
                 <span className="hidden sm:inline-block bg-gradient-to-r from-purple-700 to-purple-900/90 text-slate-950 font-bold px-3 py-1 rounded-lg shadow-md">
                   100 Elite National Teams
