@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://kairos.sathyabama.ac.in';
+  const baseUrl = (process.env.RENDER_EXTERNAL_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://kairos.sathyabama.ac.in').replace(/\/$/, '');
   const now = new Date();
 
   const publicRoutes = [

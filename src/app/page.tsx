@@ -18,7 +18,6 @@ import { CommitteeSection } from '@/components/sections/CommitteeSection';
 import { FAQSection } from '@/components/sections/FAQSection';
 import { FinalCTASection } from '@/components/sections/FinalCTASection';
 import { EntranceVideoReveal } from '@/components/animation/EntranceVideoReveal';
-import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
 import { WaitlistModal } from '@/components/modals/WaitlistModal';
 import { ProspectusModal } from '@/components/modals/ProspectusModal';
 import { TermsModal } from '@/components/modals/TermsModal';
@@ -28,7 +27,7 @@ export default function HomePage() {
   const [prospectusModalOpen, setProspectusModalOpen] = useState(false);
   const [termsModalOpen, setTermsModalOpen] = useState(false);
   const [selectedTrackForWaitlist, setSelectedTrackForWaitlist] = useState<string | undefined>(undefined);
-  
+
   // Real-time feature flags loaded from backend
   const [flags, setFlags] = useState<{
     registrationOpen: boolean;
@@ -39,7 +38,7 @@ export default function HomePage() {
     registrationOpen: true,
     prizePoolConfirmed: true,
     demoSandboxMode: true,
-    announcementBanner: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
+    announcementBanner: 'NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
   });
 
   useEffect(() => {
@@ -60,18 +59,15 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow relative overflow-x-hidden">
-      {/* Desktop Ambient Magnetic Glow Cursor */}
-      <MagneticGlowCursor />
-
       {/* Site Entrance Animation (KAIROS Logo Reveal) */}
       <EntranceVideoReveal />
-      
+
       {/* Sticky Navigation Bar */}
       <Navbar onOpenWaitlist={() => setWaitlistModalOpen(true)} />
 
       {/* Main Single-Page Journey */}
       <main id="main-content" className="flex-grow">
-        
+
         {/* Hero Section */}
         <HeroSection
           onOpenWaitlist={() => setWaitlistModalOpen(true)}

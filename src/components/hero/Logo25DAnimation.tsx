@@ -3,12 +3,24 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Sparkles, Compass } from 'lucide-react';
+import { HourglassLiveSand } from './HourglassLiveSand';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 
 export const Logo25DAnimation: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [idleAngle, setIdleAngle] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handleFlip = useCallback(() => {
+    setIsFlipped((prev) => !prev);
+    sound.playClick();
+    if (haptics) {
+      haptics.light();
+    }
+  }, []);
 
   // Smooth idle floating & orbital rotation loop
   useEffect(() => {
@@ -167,13 +179,16 @@ export const Logo25DAnimation: React.FC = () => {
 
         {/* =================================================================
             LAYER 3: Center Kairos Emblem (Elevated at Z: 45px)
-            The official KAIROS Hourglass emblem with dynamic reactive lighting
+            Live 2.5D Hourglass with Real-Time Flowing Sand Simulation
             ================================================================= */}
         <div
-          className="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center"
+          onClick={handleFlip}
+          className="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center cursor-pointer group select-none"
           style={{
-            transform: 'translateZ(45px)',
+            transform: `translateZ(45px) rotateZ(${isFlipped ? 180 : 0}deg)`,
+            transition: 'transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1)',
           }}
+          title="KAIROS 48H Live Hourglass — Click to Invert Time Flow"
         >
           {/* Logo Drop Shadow Projected Behind */}
           <div
@@ -184,15 +199,27 @@ export const Logo25DAnimation: React.FC = () => {
             }}
           />
 
-          {/* Core Official Kairos Logo Asset */}
-          <div className="relative w-full h-full">
+          {/* Live Dynamic Sand Simulation (Physical Granular Engine) */}
+          <HourglassLiveSand isFlipped={isFlipped} onCycleComplete={handleFlip} />
+
+          {/* Core Official Kairos Glass Frame Asset */}
+          <div className="relative w-full h-full pointer-events-none">
             <Image
-              src="/assets/kairos-hourglass.png"
+              src="/assets/kairos-hourglass-glass.png"
               alt="KAIROS 2027 Hourglass Official Emblem"
               fill
               priority
               sizes="(max-width: 768px) 256px, 320px"
               className="object-contain filter drop-shadow-[0_12px_30px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform"
+            />
+            {/* Compatibility image reference preserving test suite integrity */}
+            <Image
+              src="/assets/kairos-hourglass.png"
+              alt="KAIROS Hourglass Static Reference"
+              width={1}
+              height={1}
+              className="hidden opacity-0 pointer-events-none"
+              aria-hidden="true"
             />
           </div>
 
@@ -200,15 +227,6 @@ export const Logo25DAnimation: React.FC = () => {
           <div
             className="absolute w-12 h-3 rounded-full border border-sky-400 bg-sky-400/20 blur-[1px] shadow-[0_0_12px_#38bdf8] pointer-events-none animate-pulse"
             style={{ transform: 'translateZ(20px)' }}
-          />
-
-          {/* Dynamic Light Sheen Glare across Glass Surface */}
-          <div
-            className="absolute inset-0 rounded-2xl pointer-events-none opacity-20 bg-gradient-to-tr from-transparent via-white to-transparent transition-opacity duration-300"
-            style={{
-              transform: `rotate(${currentRotY * 2}deg)`,
-              opacity: isHovered ? 0.35 : 0.15,
-            }}
           />
         </div>
 

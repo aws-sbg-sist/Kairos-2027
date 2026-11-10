@@ -9,7 +9,7 @@ import { KineticText } from '@/components/animation/KineticText';
 
 export const MissionSection: React.FC = () => {
   return (
-    <section id="mission" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
+    <section id="mission" className="relative py-16 lg:py-24 overflow-hidden bg-aws-canvas">
       {/* Decorative cosmic background glow */}
       <div className="absolute top-1/2 left-0 w-[550px] h-[550px] bg-purple-950/20 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-purple-950/40 blur-[140px] rounded-full pointer-events-none" />

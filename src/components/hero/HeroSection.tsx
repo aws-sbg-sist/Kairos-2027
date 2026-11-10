@@ -63,7 +63,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
   }, []);
 
   return (
-    <section className="relative min-h-[96vh] pt-32 pb-20 lg:pt-40 lg:pb-28 flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-[92vh] pt-24 pb-16 lg:pt-28 lg:pb-24 flex flex-col justify-center overflow-hidden">
       {/* Cosmic Environment Background with Orbital Rings & Star Dust */}
       <CosmicBackground particleCount={50} interactive={true} />
 
@@ -86,11 +86,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                       window.dispatchEvent(new CustomEvent('kairos:replay-reveal'));
                     }
                   }}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-aws-orange/20 to-indigo-600/10 hover:from-aws-orange/30 hover:to-indigo-600/20 border border-purple-500/40 text-purple-300 text-xs font-mono font-semibold transition-all hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
-                  title="Replay cinematic entrance logo animation"
+                  aria-label="Watch KAIROS introduction video"
+                  className="inline-flex items-center gap-1.5 min-h-[40px] px-4 py-2 rounded-full bg-gradient-to-r from-aws-orange/20 to-indigo-600/10 hover:from-aws-orange/30 hover:to-indigo-600/20 border border-purple-500/40 text-purple-200 text-xs font-mono font-semibold transition-all hover:scale-105 active:scale-95 group shadow-sm cursor-pointer focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
+                  title="Watch cinematic introduction video"
                 >
-                  <Play className="w-3 h-3 text-purple-400 fill-purple-400 group-hover:scale-110 transition-transform" />
-                  <span>Watch Logo Reveal</span>
+                  <Play className="w-3 h-3 text-purple-400 fill-purple-400 group-hover:scale-110 transition-transform" aria-hidden="true" />
+                  <span>Watch KAIROS Teaser (0:30)</span>
                 </button>
               </div>
             </ScrollReveal>
@@ -125,20 +126,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
             {/* Event Details Chip */}
             <ScrollReveal direction="up" distance={16} delay={0.4}>
-              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 p-2.5 rounded-xl bg-slate-900/90 border border-purple-500/30 text-xs sm:text-sm text-slate-300 font-mono shadow-md backdrop-blur-md">
-                <span className="flex items-center gap-1.5 text-white font-semibold">
+              <div className="inline-flex flex-col sm:flex-row sm:flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-x-4 sm:gap-y-2 p-3 sm:px-4 sm:py-3 rounded-xl bg-slate-900/90 border border-purple-500/30 text-xs sm:text-sm text-slate-200 font-mono shadow-md backdrop-blur-md">
+                <span className="inline-flex items-center gap-1.5 text-white font-semibold">
                   <Calendar className="w-3.5 h-3.5 text-purple-400 shrink-0" />
-                  January 22–24, 2027
+                  <span>January 22–24, 2027</span>
                 </span>
-                <span className="text-slate-500">•</span>
-                <span className="flex items-center gap-1.5 text-white">
+                <span className="inline-flex items-center gap-1.5 text-white text-center sm:text-left">
                   <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                  Sathyabama Institute of Science and Technology, Chennai
+                  <span>Sathyabama Institute of Science and Technology, Chennai</span>
                 </span>
-                <span className="text-slate-500">•</span>
-                <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                <span className="inline-flex items-center gap-1.5 text-emerald-400 font-bold">
                   <Users className="w-3.5 h-3.5 shrink-0" />
-                  100 Elite National Teams
+                  <span>100 Elite National Teams</span>
                 </span>
               </div>
             </ScrollReveal>
@@ -164,8 +163,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                         {countdownStatus === 'upcoming'
                           ? 'Countdown to Clock Start (IST)'
                           : countdownStatus === 'live'
-                          ? '⚡ 48-Hour Clock Active!'
-                          : 'Competition Concluded'}
+                            ? 'LIVE: 48-Hour Clock Active'
+                            : 'Competition Concluded'}
                       </span>
                     </div>
                     <span className="text-slate-400">Chennai · Asia/Kolkata</span>
@@ -201,7 +200,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
               </div>
             </ScrollReveal>
 
-            {/* Primary & Secondary Call-to-Action Buttons with Island Button Trailing Icon Physics */}
+            {/* Primary & Secondary Call-to-Action Buttons */}
             <ScrollReveal direction="up" distance={20} delay={0.5}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
                 <MagneticButton pullStrength={10}>
@@ -215,16 +214,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                       sound?.playHover();
                       haptics?.light();
                     }}
-                    className="island-btn px-6 py-3 text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 group active:scale-[0.97] shine-hover"
+                    className="island-btn px-6 py-3 text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 group active:scale-[0.97] shine-hover focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                   >
-                    <span>Submit Round 0 Project Abstract (Free)</span>
-                    <span className="island-btn-icon w-8 h-8 rounded-full bg-white/20">
+                    <span>Register Team (100% Free)</span>
+                    <span className="island-btn-icon w-8 h-8 rounded-full bg-white/20" aria-hidden="true">
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                     </span>
                   </Link>
                 </MagneticButton>
 
                 <MagneticButton pullStrength={8}>
+                  <Link
+                    href="/tracks"
+                    onClick={() => {
+                      sound?.playClick();
+                      haptics?.medium();
+                    }}
+                    onMouseEnter={() => {
+                      sound?.playHover();
+                      haptics?.light();
+                    }}
+                    className="island-btn px-5 py-3 text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-all backdrop-blur-sm group active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
+                  >
+                    <span className="island-btn-icon w-7 h-7 rounded-full bg-purple-500/20 text-purple-300" aria-hidden="true">
+                      <Sparkles className="w-3.5 h-3.5" />
+                    </span>
+                    <span>Explore 5 Tracks</span>
+                  </Link>
+                </MagneticButton>
+
+                <MagneticButton pullStrength={6}>
                   <Link
                     href="/sponsors"
                     onClick={() => {
@@ -235,32 +254,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                       sound?.playHover();
                       haptics?.light();
                     }}
-                    className="island-btn px-5 py-3 text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-all backdrop-blur-sm group active:scale-[0.97]"
+                    className="island-btn px-4 py-3 text-xs font-semibold text-slate-300 hover:text-white bg-slate-900/60 border border-white/10 hover:border-purple-500/30 transition-all backdrop-blur-sm group active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                   >
-                    <span className="island-btn-icon w-7 h-7 rounded-full bg-purple-500/20 text-purple-300">
-                      <Download className="w-3.5 h-3.5" />
+                    <span className="island-btn-icon w-6 h-6 rounded-full bg-white/10 text-slate-300" aria-hidden="true">
+                      <Download className="w-3 h-3" />
                     </span>
-                    <span>View Sponsorship Prospectus (PDF)</span>
-                  </Link>
-                </MagneticButton>
-
-                <MagneticButton pullStrength={6}>
-                  <Link
-                    href="/refer-sponsor"
-                    onClick={() => {
-                      sound?.playClick();
-                      haptics?.medium();
-                    }}
-                    onMouseEnter={() => {
-                      sound?.playHover();
-                      haptics?.light();
-                    }}
-                    className="island-btn px-4 py-3 text-xs font-semibold text-emerald-400 hover:text-white bg-emerald-950/40 border border-emerald-500/30 hover:border-emerald-500/60 transition-all backdrop-blur-sm group active:scale-[0.97]"
-                  >
-                    <span className="island-btn-icon w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400">
-                      <Trophy className="w-3 h-3" />
-                    </span>
-                    <span>Earn 10%–15% Referral Cash</span>
+                    <span>Prospectus (PDF)</span>
                   </Link>
                 </MagneticButton>
               </div>
@@ -274,14 +273,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                 <Logo25DAnimation />
               </div>
 
-              {/* Interactive Status Indicator & Aerospace Telemetry */}
+              {/* Status Indicator & Live Telemetry */}
               <div className="mt-8 sm:mt-10 flex flex-col items-center gap-3">
-                <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400">
-                  <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-purple-500/40 text-purple-200 shadow-md backdrop-blur-md">
-                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-pulse" />
+                <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] font-mono text-slate-300">
+                  <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-purple-500/30 text-purple-200 shadow-md backdrop-blur-md">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Sathyabama Central Library</span>
+                  </span>
+                  <span className="hidden sm:inline text-slate-400">· 48H Non-Stop Arena</span>
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-purple-950/70 border border-purple-500/30 text-purple-300 shadow-md backdrop-blur-md">
+                    <Sparkles className="w-2.5 h-2.5 text-purple-400" />
                     <span>2.5D Hologram Active</span>
                   </span>
-                  <span className="hidden sm:inline text-slate-400">· Interactive Parallax Tilt</span>
                 </div>
 
                 {/* Aerospace Telemetry Mini Dock */}

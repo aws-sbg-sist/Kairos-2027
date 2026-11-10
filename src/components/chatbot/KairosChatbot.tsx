@@ -17,27 +17,27 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: 'welcome',
     role: 'assistant',
-    content: `👋 **Welcome to KAIROS 2027!**
+    content: `**KAIROS 2027 Event Specification & Technical Assistant**
 
-I am the official AWS Student Builder Group AI Assistant. Ask me anything about:
-• **₹1,75,000** Total Prize Pool & AWS cloud credits
+Query the verified event parameters directly:
+• **₹1,75,000** Total Prize Pool & AWS Cloud Credits
 • **5 Technical Tracks** (Agentic AI, Cloud-Native, IoT, FinTech, Open Enterprise)
 • **Dual-Phase Selection** & Free Round 0 Registration
-• **Complimentary Meals, Transit Bus Fleet & 48H Venue**
-• **Rainmaker Program** (Earn 10%–15% cash referring sponsors)
+• **On-Campus Facilities** (Complimentary meals, transit fleet & 48h bays)
+• **Rainmaker Program** (Earn 10%–15% cash referring corporate sponsors)
 
-What would you like to know?`,
-    time: 'Just now',
+Select a query chip below or submit your question.`,
+    time: 'Live',
   },
 ];
 
 const SUGGESTED_PROMPTS = [
-  '🏆 Cash prizes breakdown?',
-  '⚡ What are the 5 tracks?',
-  '🆓 Is registration 100% free?',
-  '📅 Full 48-hour schedule?',
-  '💰 How does referral cash work?',
-  '🏨 Meals, stay & transit buses?',
+  'Cash prizes breakdown',
+  'What are the 5 tracks?',
+  'Is registration 100% free?',
+  'Full 48-hour schedule',
+  'How referral rewards work',
+  'Meals, stay & transit buses',
 ];
 
 export const KairosChatbot: React.FC = () => {
@@ -116,7 +116,7 @@ export const KairosChatbot: React.FC = () => {
       const errorMsg: Message = {
         id: `err-${Date.now()}`,
         role: 'assistant',
-        content: `⚠️ Sorry, I could not complete that request right now. You can check the **FAQ** or **Rules** page, or email us at **sistawscc@gmail.com**.`,
+        content: `Notice: The request could not be completed at this moment. You can check the **FAQ** or **Rules** page, or email us at **sistawscc@gmail.com**.`,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -139,7 +139,7 @@ export const KairosChatbot: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 select-none">
+    <div className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-40 select-none print:hidden">
       {/* Floating Trigger Button */}
       {!isOpen && (
         <button
@@ -148,8 +148,10 @@ export const KairosChatbot: React.FC = () => {
             haptics?.medium();
             setIsOpen(true);
           }}
-          className="relative group flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-aws-orange via-fuchsia-400 to-yellow-500 hover:from-purple-500 hover:to-aws-orange text-slate-950 font-bold shadow-xl shadow-purple-900/40 hover:scale-105 active:scale-[0.97] transition-all duration-200 ease-entrance border border-purple-500/40"
-          aria-label="Open Kairos AI Chatbot"
+          className="relative group flex items-center justify-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-gradient-to-r from-purple-700 via-fuchsia-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-all duration-200 ease-entrance border border-purple-400/40 focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
+          aria-label="Open Kairos AI Assistant"
+          aria-expanded={isOpen}
+          aria-haspopup="dialog"
         >
           <div className="relative w-6 h-6 flex-shrink-0 animate-pulse">
             <Image
@@ -159,24 +161,22 @@ export const KairosChatbot: React.FC = () => {
               className="object-contain"
             />
           </div>
-          <span className="text-xs sm:text-sm font-sans tracking-wide">Ask Kairos AI</span>
-          <span className="flex h-2 w-2 relative">
+          <span className="hidden sm:inline text-xs sm:text-sm font-sans tracking-wide">Ask Kairos AI</span>
+          <span className="absolute -top-1 -right-1 sm:static sm:flex h-2.5 w-2.5 relative" aria-hidden="true">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-slate-950" />
           </span>
-
-          {/* Micro Tooltip */}
-          {!hasInteracted && (
-            <span className="absolute -top-10 right-0 bg-aws-canvas/95 border border-purple-500/40 text-purple-300 text-[10px] font-mono px-2.5 py-1 rounded-md shadow-lg pointer-events-none whitespace-nowrap">
-              ⚡ Instant RAG answers about Kairos 2027
-            </span>
-          )}
         </button>
       )}
 
       {/* Floating Chat Modal */}
       {isOpen && (
-        <div className="relative w-[92vw] sm:w-[390px] h-[580px] max-h-[85vh] rounded-2xl glass-panel-glow border border-purple-500/30 shadow-2xl shadow-black/80 flex flex-col overflow-hidden bg-aws-squidInk/95 origin-bottom-right animate-popover-in backdrop-blur-xl">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Kairos AI Chat Assistant"
+          className="relative w-[92vw] sm:w-[390px] h-[580px] max-h-[85vh] rounded-2xl glass-panel-glow border border-purple-500/30 shadow-2xl shadow-black/80 flex flex-col overflow-hidden bg-aws-squidInk/95 origin-bottom-right animate-popover-in backdrop-blur-xl"
+        >
           {/* Header */}
           <div className="p-3.5 border-b border-purple-500/20 bg-aws-canvas/90 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -207,20 +207,22 @@ export const KairosChatbot: React.FC = () => {
             <div className="flex items-center gap-1">
               <button
                 onClick={handleClearHistory}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-purple-400 hover:bg-purple-950/40 transition"
+                aria-label="Restart conversation"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-purple-400 hover:bg-purple-950/40 transition focus-visible:ring-1 focus-visible:ring-aws-orange focus-visible:outline-none"
                 title="Restart conversation"
               >
-                <RotateCcw className="w-3.5 h-3.5" />
+                <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
               <button
                 onClick={() => {
                   sound?.playClick();
                   setIsOpen(false);
                 }}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-purple-400 hover:bg-purple-950/40 transition"
+                aria-label="Close chat window"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-purple-400 hover:bg-purple-950/40 transition focus-visible:ring-1 focus-visible:ring-aws-orange focus-visible:outline-none"
                 title="Close chat"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -307,6 +309,7 @@ export const KairosChatbot: React.FC = () => {
             <input
               ref={inputRef}
               type="text"
+              aria-label="Ask a question about KAIROS 2027"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -318,10 +321,11 @@ export const KairosChatbot: React.FC = () => {
             <button
               onClick={() => handleSendMessage()}
               disabled={!inputValue.trim() || isLoading}
-              className="p-2 rounded-xl bg-gradient-to-r from-aws-orange via-fuchsia-400 to-yellow-500 hover:from-purple-500 hover:to-aws-orange text-slate-950 disabled:opacity-40 disabled:cursor-not-allowed transition font-bold shadow-md shadow-purple-900/30 flex-shrink-0"
+              aria-label="Send message to Kairos Assistant"
+              className="p-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white disabled:opacity-40 disabled:cursor-not-allowed transition font-bold shadow-md shadow-purple-900/30 flex-shrink-0 focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
               title="Send message"
             >
-              <Send className="w-3.5 h-3.5" />
+              <Send className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
           </div>
         </div>

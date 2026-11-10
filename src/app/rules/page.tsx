@@ -18,10 +18,14 @@ import {
   Building
 } from 'lucide-react';
 import { EVENT_CONFIG } from '@/lib/config';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 
 export default function RulesPage() {
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+      <Navbar />
+      <main className="flex-grow pt-28 pb-24 relative">
       {/* Background Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 right-1/4 w-[600px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
@@ -97,7 +101,7 @@ export default function RulesPage() {
           {/* Rule 1: Fresh Code & Commit Telemetry */}
           <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 rounded-xl bg-[#0073BB]/15 text-[#0073BB]">
+              <div className="p-3 rounded-xl bg-sky-500/15 text-sky-400">
                 <GitCommit className="w-6 h-6" />
               </div>
               <div>
@@ -222,10 +226,10 @@ export default function RulesPage() {
               <p>
                 <strong>Multi-Checkpoint Rubric:</strong> Evaluation is conducted across 3 rigorous gates:
               </p>
-              <ul className="list-disc list-inside space-y-1 text-slate-400 text-xs">
-                <li>Checkpoint 1: Architecture & Feasibility Gate (Friday 04:00 PM – Weight Sealed)</li>
-                <li>Checkpoint 2: Mid-Point Prototype & Security Audit (Saturday 11:30 AM – Weight Sealed)</li>
-                <li>Checkpoint 3: Final Code Review & Working Demo (Saturday 09:30 PM – Weight Sealed)</li>
+              <ul className="list-disc list-inside space-y-1 text-slate-300 text-xs">
+                <li>Checkpoint 1: Architecture & Feasibility Gate (Friday 04:00 PM – 06:30 PM IST · 25 Pts)</li>
+                <li>Checkpoint 2: Mid-Point Prototype & Security Audit (Saturday 02:00 PM – 05:30 PM IST · 35 Pts)</li>
+                <li>Checkpoint 3: Final Code Review & Working Demo (Sunday 09:00 AM – 12:30 PM IST · 40 Pts)</li>
               </ul>
               <p>
                 <strong>Gaussian Normalization:</strong> Scores across all 25+ industry evaluators are normalized using standard Gaussian Z-scores (<span className="font-mono text-white">Z = (X - μ) / σ</span>) to eliminate deviations between lenient and strict judges.
@@ -274,6 +278,8 @@ export default function RulesPage() {
         </div>
 
       </div>
+      </main>
+      <Footer />
     </div>
   );
 }

@@ -34,7 +34,7 @@ export const ScheduleSection: React.FC = () => {
   };
 
   return (
-    <section id="schedule" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
+    <section id="schedule" className="relative py-16 lg:py-24 overflow-hidden bg-aws-canvas">
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-950/40 blur-[170px] pointer-events-none rounded-full" />
 
@@ -139,7 +139,7 @@ export const ScheduleSection: React.FC = () => {
               <div className="flex items-center gap-2 text-slate-200">
                 <Calendar className="w-4 h-4 text-purple-400" />
                 <span className="font-bold text-white">{activeDay.dayName}</span>
-                <span className="text-slate-500">•</span>
+                <span className="hidden sm:inline text-slate-400" aria-hidden="true">•</span>
                 <span className="text-purple-300">{activeDay.title}</span>
               </div>
               <div className="flex items-center gap-2 text-slate-400">

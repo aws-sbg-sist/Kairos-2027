@@ -16,12 +16,16 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { HIGHER_MANAGEMENT, EVENT_CONFIG } from '@/lib/config';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 
 export default function LeadershipPage() {
   const apex = HIGHER_MANAGEMENT.apexLeader;
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+      <Navbar />
+      <main className="flex-grow pt-28 pb-24 relative">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[550px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
@@ -161,7 +165,7 @@ export default function LeadershipPage() {
         {/* The 6 Divisional Super Heads */}
         <div className="mb-20">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0073BB]/10 border border-[#0073BB]/30 text-[#0073BB] text-xs font-mono font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/15 border border-sky-400/30 text-sky-400 text-xs font-mono font-bold uppercase tracking-wider mb-3">
               <ShieldCheck className="w-3.5 h-3.5" />
               The 6 Operational Pillars
             </div>
@@ -175,11 +179,11 @@ export default function LeadershipPage() {
             {HIGHER_MANAGEMENT.superHeads.map((head, idx) => (
               <div 
                 key={idx}
-                className="p-7 rounded-3xl bg-slate-900/70 border border-slate-800 hover:border-[#0073BB]/50 transition shadow-xl flex flex-col justify-between"
+                className="p-7 rounded-3xl bg-slate-900/70 border border-slate-800 hover:border-sky-400/50 transition shadow-xl flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-[#0073BB]/20 text-[#0073BB] uppercase">
+                    <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded bg-sky-500/20 text-sky-300 uppercase">
                       {head.code.replace('_', ' ')}
                     </span>
                     <span className="text-[11px] font-mono text-slate-400">
@@ -219,6 +223,8 @@ export default function LeadershipPage() {
         </div>
 
       </div>
+      </main>
+      <Footer />
     </div>
   );
 }

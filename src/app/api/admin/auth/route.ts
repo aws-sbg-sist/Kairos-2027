@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAdminPasskey, createAdminToken, COOKIE_NAME } from '@/lib/auth';
+import { verifyAdminPasskey, createAdminToken, isAdminAuthConfigured, COOKIE_NAME } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { cookies } from 'next/headers';
@@ -18,6 +18,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { success: false, error: 'Passkey and organizer identity selection are required.' },
         { status: 400 }
+      );
+    }
+
+    if (!isAdminAuthConfigured()) {
+      return NextResponse.json(
+        { success: false, error: 'Organizer authentication is not configured on this server (missing ADMIN_MASTER_SECRET).' },
+        { status: 503 }
       );
     }
 

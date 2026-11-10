@@ -20,12 +20,7 @@ import {
 import { sound } from '@/lib/audio';
 import { haptics } from '@/lib/haptics';
 
-export default function LeaderboardPage() {
-  const [selectedTrack, setSelectedTrack] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-
-  // Sample real-time rankings pre-seeded with mathematically normalized Z-scores
-  const sampleRankings = [
+const SAMPLE_RANKINGS = [
     {
       rank: 1,
       teamCode: 'KAIROS-T002',
@@ -33,9 +28,9 @@ export default function LeaderboardPage() {
       institution: 'IIT Madras',
       track: 'Agentic AI & Generative Intelligence',
       trackId: 'agentic-ai',
-      cp1Score: 29.0, // /30
-      cp2Score: 34.5, // /35
-      cp3Score: 39.0, // /40
+      cp1Score: 24.0, // /25
+      cp2Score: 34.0, // /35
+      cp3Score: 38.5, // /40
       rawTotal: 96.5,
       zScore: '+2.14σ',
       commitCount: 84,
@@ -49,9 +44,9 @@ export default function LeaderboardPage() {
       institution: 'Sathyabama University',
       track: 'Cloud-Native, High-Throughput & Distributed Systems',
       trackId: 'cloud-native',
-      cp1Score: 28.5,
-      cp2Score: 34.0,
-      cp3Score: 38.5,
+      cp1Score: 23.5,
+      cp2Score: 33.5,
+      cp3Score: 38.0,
       rawTotal: 95.0,
       zScore: '+1.88σ',
       commitCount: 96,
@@ -65,8 +60,8 @@ export default function LeaderboardPage() {
       institution: 'BITS Pilani',
       track: 'Next-Gen FinTech, Trust & Cryptographic Security',
       trackId: 'fintech-trust',
-      cp1Score: 28.0,
-      cp2Score: 33.5,
+      cp1Score: 23.0,
+      cp2Score: 32.5,
       cp3Score: 37.5,
       rawTotal: 93.0,
       zScore: '+1.52σ',
@@ -81,8 +76,8 @@ export default function LeaderboardPage() {
       institution: 'NIT Tiruchirappalli',
       track: 'Autonomous Edge IoT & Sustainable Green Energy',
       trackId: 'edge-iot',
-      cp1Score: 27.5,
-      cp2Score: 32.0,
+      cp1Score: 22.0,
+      cp2Score: 31.5,
       cp3Score: 36.5,
       rawTotal: 90.0,
       zScore: '+1.18σ',
@@ -97,8 +92,8 @@ export default function LeaderboardPage() {
       institution: 'Anna University, CEG',
       track: 'Open Enterprise & Campus Life Innovation',
       trackId: 'open-enterprise',
-      cp1Score: 27.0,
-      cp2Score: 31.5,
+      cp1Score: 21.5,
+      cp2Score: 31.0,
       cp3Score: 36.0,
       rawTotal: 88.5,
       zScore: '+0.94σ',
@@ -113,8 +108,8 @@ export default function LeaderboardPage() {
       institution: 'PSG College of Technology',
       track: 'Cloud-Native, High-Throughput & Distributed Systems',
       trackId: 'cloud-native',
-      cp1Score: 26.5,
-      cp2Score: 31.0,
+      cp1Score: 21.0,
+      cp2Score: 30.5,
       cp3Score: 35.0,
       rawTotal: 86.5,
       zScore: '+0.71σ',
@@ -129,8 +124,8 @@ export default function LeaderboardPage() {
       institution: 'VIT Vellore',
       track: 'Agentic AI & Generative Intelligence',
       trackId: 'agentic-ai',
-      cp1Score: 26.0,
-      cp2Score: 30.5,
+      cp1Score: 20.5,
+      cp2Score: 30.0,
       cp3Score: 34.5,
       rawTotal: 85.0,
       zScore: '+0.55σ',
@@ -138,9 +133,13 @@ export default function LeaderboardPage() {
       velocity: 'Active',
       status: 'FINALIST'
     }
-  ];
+];
 
-  const [rankings, setRankings] = useState(sampleRankings);
+export default function LeaderboardPage() {
+  const [selectedTrack, setSelectedTrack] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const [rankings, setRankings] = useState(SAMPLE_RANKINGS);
 
   useEffect(() => {
     fetch('/api/v1/judging/submit-score')
@@ -148,7 +147,7 @@ export default function LeaderboardPage() {
       .then(data => {
         if (data.success && data.standings && data.standings.length > 0) {
           const liveMerged = data.standings.map((s: any, idx: number) => {
-            const fallback = sampleRankings.find(r => r.teamCode === s.teamCode) || sampleRankings[idx % sampleRankings.length];
+            const fallback = SAMPLE_RANKINGS.find(r => r.teamCode === s.teamCode) || SAMPLE_RANKINGS[idx % SAMPLE_RANKINGS.length];
             return {
               ...fallback,
               rank: idx + 1,
@@ -225,9 +224,9 @@ export default function LeaderboardPage() {
                   haptics?.selection();
                   setSelectedTrack('all');
                 }}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all active:scale-[0.97] ${
+                className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-[0.97] ${
                   selectedTrack === 'all'
-                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold shadow-md shadow-purple-900/40'
+                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40'
                     : 'bg-aws-card text-slate-300 hover:text-white border border-slate-700/60'
                 }`}
               >
@@ -241,9 +240,9 @@ export default function LeaderboardPage() {
                     haptics?.selection();
                     setSelectedTrack(t.id);
                   }}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all active:scale-[0.97] ${
+                  className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-[0.97] ${
                     selectedTrack === t.id
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold shadow-md shadow-purple-900/40'
+                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40'
                       : 'bg-aws-card text-slate-300 hover:text-white border border-slate-700/60'
                   }`}
                 >
@@ -295,10 +294,26 @@ export default function LeaderboardPage() {
                     >
                       <td className="py-4 px-3 font-mono font-bold">
                         <div className="flex items-center gap-1.5">
-                          {r.rank === 1 && <span className="text-purple-400 font-black">🥇 1</span>}
-                          {r.rank === 2 && <span className="text-slate-300 font-black">🥈 2</span>}
-                          {r.rank === 3 && <span className="text-amber-600 font-black">🥉 3</span>}
-                          {r.rank > 3 && <span className="text-slate-400">{r.rank}</span>}
+                          {r.rank === 1 && (
+                            <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 font-mono text-xs font-bold inline-flex items-center justify-center">
+                              1
+                            </span>
+                          )}
+                          {r.rank === 2 && (
+                            <span className="w-6 h-6 rounded-full bg-slate-400/20 text-slate-200 border border-slate-400/40 font-mono text-xs font-bold inline-flex items-center justify-center">
+                              2
+                            </span>
+                          )}
+                          {r.rank === 3 && (
+                            <span className="w-6 h-6 rounded-full bg-amber-600/20 text-amber-300 border border-amber-600/40 font-mono text-xs font-bold inline-flex items-center justify-center">
+                              3
+                            </span>
+                          )}
+                          {r.rank > 3 && (
+                            <span className="w-6 h-6 font-mono text-xs text-slate-400 inline-flex items-center justify-center">
+                              {r.rank}
+                            </span>
+                          )}
                         </div>
                       </td>
                       <td className="py-4 px-3 font-mono font-bold text-purple-400">

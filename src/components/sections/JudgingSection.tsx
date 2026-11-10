@@ -10,7 +10,7 @@ import { sound } from '@/lib/audio';
 
 export const JudgingSection: React.FC = () => {
   return (
-    <section id="judging" className="relative py-24 lg:py-32 overflow-hidden bg-kairos-bg/60">
+    <section id="judging" className="relative py-16 lg:py-24 overflow-hidden bg-kairos-bg/60">
       {/* Background illumination */}
       <div className="absolute top-1/2 right-10 w-[600px] h-[350px] bg-indigo-950/20 blur-[150px] rounded-full pointer-events-none" />
 

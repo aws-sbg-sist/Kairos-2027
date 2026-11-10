@@ -130,7 +130,7 @@ function DashboardContent() {
                   haptics?.selection();
                   fetchTeam('KAIROS-T001');
                 }} 
-                className={`px-3 py-1.5 rounded-xl text-xs font-mono transition active:scale-[0.97] ${activeCode === 'KAIROS-T001' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40' : 'bg-slate-800/80 text-slate-400 hover:text-white border border-white/5'}`}
+                className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-mono transition active:scale-[0.97] ${activeCode === 'KAIROS-T001' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40' : 'bg-slate-800/80 text-slate-300 hover:text-white border border-white/5'}`}
               >
                 KAIROS-T001 (Finalist)
               </button>
@@ -140,7 +140,7 @@ function DashboardContent() {
                   haptics?.selection();
                   fetchTeam('KAIROS-T002');
                 }} 
-                className={`px-3 py-1.5 rounded-xl text-xs font-mono transition active:scale-[0.97] ${activeCode === 'KAIROS-T002' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40' : 'bg-slate-800/80 text-slate-400 hover:text-white border border-white/5'}`}
+                className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-mono transition active:scale-[0.97] ${activeCode === 'KAIROS-T002' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40' : 'bg-slate-800/80 text-slate-300 hover:text-white border border-white/5'}`}
               >
                 KAIROS-T002 (Finalist)
               </button>
@@ -150,7 +150,7 @@ function DashboardContent() {
                   haptics?.selection();
                   fetchTeam('KAIROS-T003');
                 }} 
-                className={`px-3 py-1.5 rounded-xl text-xs font-mono transition active:scale-[0.97] ${activeCode === 'KAIROS-T003' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40' : 'bg-slate-800/80 text-slate-400 hover:text-white border border-white/5'}`}
+                className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-mono transition active:scale-[0.97] ${activeCode === 'KAIROS-T003' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40' : 'bg-slate-800/80 text-slate-300 hover:text-white border border-white/5'}`}
               >
                 KAIROS-T003 (Semi-Finalist)
               </button>
@@ -165,18 +165,19 @@ function DashboardContent() {
                   fetchTeam(inputCode);
                 }
               }}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 w-full sm:w-auto"
             >
               <input
                 type="text"
+                aria-label="Lookup Team Code"
                 placeholder="Lookup code (e.g. KAIROS-T001)"
                 value={inputCode}
                 onChange={(e) => setInputCode(e.target.value.toUpperCase())}
-                className="px-3.5 py-1.5 rounded-xl bg-slate-950 border border-white/15 text-xs font-mono text-purple-300 placeholder:text-slate-500 uppercase focus:outline-none focus:border-purple-500"
+                className="flex-1 sm:flex-initial min-h-[40px] px-3.5 py-2 rounded-xl bg-slate-950 border border-white/15 text-xs font-mono text-purple-300 placeholder:text-slate-400 uppercase focus:outline-none focus:border-purple-500"
               />
               <button 
                 type="submit" 
-                className="island-btn px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition flex items-center gap-1.5 active:scale-[0.97]"
+                className="island-btn min-h-[40px] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition flex items-center gap-1.5 active:scale-[0.97]"
               >
                 <Search className="w-3.5 h-3.5" />
                 <span>Search</span>
@@ -187,10 +188,10 @@ function DashboardContent() {
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex flex-wrap items-center gap-2 mb-1">
                 <span className="text-xs font-mono text-purple-400 font-bold tracking-wider">AEROSPACE TELEMETRY CENTRAL</span>
-                <span className="text-xs text-slate-500">•</span>
-                <span className="text-xs font-mono text-slate-400">Team Code: {team.teamCode}</span>
+                <span className="text-xs text-slate-400" aria-hidden="true">•</span>
+                <span className="text-xs font-mono text-slate-300">Team Code: {team.teamCode}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl font-display font-black text-white">
                 {team.teamName}
@@ -199,7 +200,7 @@ function DashboardContent() {
 
             <div className="flex items-center gap-3">
               <Link
-                href="/portal/pass"
+                href={`/portal/pass?code=${encodeURIComponent(team.teamCode || activeCode)}`}
                 onClick={() => { sound?.playClick(); haptics?.light(); }}
                 className="island-btn px-4 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 text-white border border-white/20 flex items-center gap-2 transition-all active:scale-[0.97]"
               >
@@ -273,12 +274,12 @@ function DashboardContent() {
                 <div className="p-4 rounded-2xl bg-slate-900/70 border border-white/5 space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-slate-300">CP1: Architecture Blueprint</span>
-                    <span className="text-xs font-mono font-bold text-purple-400">28.5 / 30</span>
+                    <span className="text-xs font-mono font-bold text-purple-400">23.5 / 25</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-slate-950 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-1000" style={{ width: '95%' }} />
+                    <div className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-1000" style={{ width: '94%' }} />
                   </div>
-                  <span className="text-[10px] font-mono text-emerald-400 block">✓ Evaluator Consensus Reached</span>
+                  <span className="text-[11px] font-mono text-emerald-400 block">✓ Evaluator Consensus Reached</span>
                 </div>
 
                 {/* CP2 */}
@@ -290,7 +291,7 @@ function DashboardContent() {
                   <div className="w-full h-2 rounded-full bg-slate-950 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-indigo-500 to-sky-500 rounded-full transition-all duration-1000" style={{ width: '91.4%' }} />
                   </div>
-                  <span className="text-[10px] font-mono text-emerald-400 block">✓ Evaluator Consensus Reached</span>
+                  <span className="text-[11px] font-mono text-emerald-400 block">✓ Evaluator Consensus Reached</span>
                 </div>
 
                 {/* CP3 */}
@@ -302,7 +303,7 @@ function DashboardContent() {
                   <div className="w-full h-2 rounded-full bg-slate-950 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-sky-500 to-teal-400 rounded-full transition-all duration-1000" style={{ width: '93.75%' }} />
                   </div>
-                  <span className="text-[10px] font-mono text-purple-300 block">● Scheduled for Final Stage Defense</span>
+                  <span className="text-[11px] font-mono text-purple-300 block">● Scheduled for Final Stage Defense</span>
                 </div>
               </div>
             </div>
@@ -379,19 +380,21 @@ function DashboardContent() {
 
                   <div className="p-4 rounded-2xl bg-slate-900/80 border border-purple-500/30 flex items-center justify-between gap-4">
                     <div>
-                      <span className="text-[10px] font-mono text-slate-400 block uppercase">Promotional Credit Voucher</span>
+                      <span className="text-[11px] font-mono text-slate-400 block uppercase">Promotional Credit Voucher</span>
                       <span className="text-base font-mono font-bold text-white tracking-wider">
-                        {team.awsCreditVoucher || 'AWS-KAIROS-100-CHRONOS'}
+                        {team.awsCreditVoucher || 'Unlocked via Organizer / Team Lead Portal'}
                       </span>
                     </div>
 
-                    <button
-                      onClick={() => copyVoucher(team.awsCreditVoucher || 'AWS-KAIROS-100-CHRONOS')}
-                      className="island-btn px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold bg-white/10 hover:bg-white/20 text-white flex items-center gap-1.5 transition-colors active:scale-[0.97]"
-                    >
-                      {copiedVoucher ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                      <span>{copiedVoucher ? 'Copied' : 'Copy'}</span>
-                    </button>
+                    {team.awsCreditVoucher && (
+                      <button
+                        onClick={() => copyVoucher(team.awsCreditVoucher)}
+                        className="island-btn px-3.5 py-2 rounded-xl text-xs font-mono font-semibold bg-white/10 hover:bg-white/20 text-white flex items-center gap-1.5 transition-colors active:scale-[0.97]"
+                      >
+                        {copiedVoucher ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                        <span>{copiedVoucher ? 'Copied' : 'Copy'}</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -407,7 +410,7 @@ function DashboardContent() {
                       <h3 className="text-base font-bold text-white font-display">Verified Team Roster</h3>
                     </div>
                     <span className="text-xs font-mono text-purple-300">
-                      {team.members?.length || 4}/4 Members
+                      {team.members?.length || 4}/6 Members
                     </span>
                   </div>
 
@@ -421,7 +424,7 @@ function DashboardContent() {
                           <div className="flex items-center gap-1.5">
                             <span className="text-xs font-bold text-white">{member.name}</span>
                             {member.role === 'Leader' && (
-                              <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
+                              <span className="text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
                                 Lead
                               </span>
                             )}

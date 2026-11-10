@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import { OrgMember } from '@/types';
 import { EVENT_CONFIG } from '@/lib/config';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 
 export default function MemberProfilePage() {
   const params = useParams();
@@ -85,34 +87,44 @@ Timestamp: ${new Date().toISOString()}
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-36 pb-24 text-center font-mono">
-        Loading verified builder portfolio dossier...
+      <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+        <Navbar />
+        <main className="flex-grow pt-36 pb-24 text-center font-mono">
+          Loading verified builder portfolio dossier...
+        </main>
+        <Footer />
       </div>
     );
   }
 
   if (!member) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-36 pb-24 text-center">
-        <div className="max-w-md mx-auto p-8 rounded-3xl bg-slate-900 border border-slate-800">
-          <h2 className="text-2xl font-bold text-white mb-2">Member Not Found</h2>
-          <p className="text-xs text-slate-400 mb-6">
-            The requested member profile could not be located in the official AWS SBGL organizing cadre.
-          </p>
-          <Link
-            href="/members"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            Back to Cadre Directory
-          </Link>
-        </div>
+      <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+        <Navbar />
+        <main className="flex-grow pt-36 pb-24 text-center px-4">
+          <div className="max-w-md mx-auto p-8 rounded-3xl bg-slate-900 border border-slate-800">
+            <h2 className="text-2xl font-bold text-white mb-2">Member Not Found</h2>
+            <p className="text-xs text-slate-400 mb-6">
+              The requested member profile could not be located in the official AWS SBGL organizing cadre.
+            </p>
+            <Link
+              href="/members"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Back to Cadre Directory
+            </Link>
+          </div>
+        </main>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+      <Navbar />
+      <main className="flex-grow pt-28 pb-24 relative">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
@@ -165,20 +177,20 @@ Timestamp: ${new Date().toISOString()}
             {/* Main Info */}
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2">
-                <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
-                  member.tier === 'APEX_PRESIDENT' ? 'bg-purple-950/80 text-purple-400 border border-purple-500/40' :
-                  member.tier === 'SUPER_HEAD' ? 'bg-[#0073BB]/20 text-[#0073BB] border border-[#0073BB]/40' :
-                  'bg-slate-800 text-slate-300'
+                <span className={`text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
+                  member.tier === 'APEX_PRESIDENT' ? 'bg-purple-950/80 text-purple-300 border border-purple-500/40' :
+                  member.tier === 'SUPER_HEAD' ? 'bg-sky-500/20 text-sky-300 border border-sky-400/40' :
+                  'bg-slate-800 text-slate-200'
                 }`}>
                   {member.tier.replace('_', ' ')}
                 </span>
                 {member.registerNo && (
-                  <span className="text-[10px] font-mono text-slate-400">
+                  <span className="text-[11px] font-mono text-slate-400">
                     Register No: {member.registerNo}
                   </span>
                 )}
                 {member.graduationYear && (
-                  <span className="text-[10px] font-mono text-slate-400">
+                  <span className="text-[11px] font-mono text-slate-400">
                     Class of {member.graduationYear}
                   </span>
                 )}
@@ -284,10 +296,10 @@ Timestamp: ${new Date().toISOString()}
                 className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                  <span className="text-xs font-mono text-[#0073BB] font-semibold">
+                  <span className="text-xs font-mono text-sky-400 font-semibold">
                     {item.category}
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold">
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-bold">
                     Impact: {item.impact}
                   </span>
                 </div>
@@ -321,6 +333,8 @@ Timestamp: ${new Date().toISOString()}
         </div>
 
       </div>
+      </main>
+      <Footer />
     </div>
   );
 }

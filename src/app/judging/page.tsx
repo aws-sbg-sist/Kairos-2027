@@ -7,7 +7,6 @@ import { Footer } from '@/components/navigation/Footer';
 import { JUDGING_CRITERIA } from '@/lib/config';
 import { 
   Lock, 
-  Unlock, 
   CheckCircle2, 
   AlertCircle, 
   Award, 
@@ -44,32 +43,23 @@ export default function JudgingPortalPage() {
     setLoading(true);
     setAuthError('');
 
-    // Pre-authorized PINs: 202701 (Vikrant Roy), 202702 (Aishwarya Subramanian), 202703 (Dr. Rajesh Kannan)
-    if (pin === '202701') {
-      setAuthenticatedJudge({
-        name: 'Vikrant Roy',
-        organization: 'Amazon Web Services',
-        designation: 'Principal Solutions Architect',
-        assignedHall: 'Central Library Auditorium'
+    try {
+      const res = await fetch('/api/v1/judging/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin }),
       });
-    } else if (pin === '202702') {
-      setAuthenticatedJudge({
-        name: 'Aishwarya Subramanian',
-        organization: 'Peak Capital Partners',
-        designation: 'General Partner & Tech Investor',
-        assignedHall: 'Central Library LH1'
-      });
-    } else if (pin === '202703') {
-      setAuthenticatedJudge({
-        name: 'Dr. Rajesh Kannan',
-        organization: 'Center for Distributed Computing',
-        designation: 'Distinguished Professor',
-        assignedHall: 'Central Library LH2'
-      });
-    } else {
-      setAuthError('Invalid 6-digit Access PIN. (Demo Judge PIN: 202701)');
+      const data = await res.json();
+      if (!res.ok || !data.success || !data.judge) {
+        setAuthError(data.error || 'Invalid evaluator Access PIN.');
+      } else {
+        setAuthenticatedJudge(data.judge);
+      }
+    } catch {
+      setAuthError('Unable to reach evaluator authentication service. Please retry.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleScoreSubmit = async (e: React.FormEvent) => {
@@ -156,23 +146,20 @@ export default function JudgingPortalPage() {
                 <input
                   type="password"
                   maxLength={6}
+                  aria-label="Evaluator 6-digit Access PIN"
                   value={pin}
                   onChange={e => setPin(e.target.value)}
                   placeholder="••••••"
-                  className="w-full text-center tracking-[0.5em] font-mono text-2xl px-4 py-3 rounded-xl glass-input text-purple-400 font-bold"
+                  className="w-full text-center tracking-[0.5em] font-mono text-2xl px-4 py-3 rounded-xl glass-input text-purple-300 font-bold"
                   autoFocus
                 />
-
-                <div className="text-[11px] font-mono text-slate-400">
-                  Quick Demo Evaluator PIN: <code className="text-purple-300 font-bold">202701</code>
-                </div>
 
                 <button
                   type="submit"
                   disabled={loading || pin.length < 4}
-                  className="w-full py-3.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md disabled:opacity-50"
+                  className="w-full py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition-colors shadow-md disabled:opacity-50"
                 >
-                  {loading ? 'Authenticating...' : 'Unlock Evaluation Terminal →'}
+                  {loading ? 'Authenticating...' : 'Open Evaluation Console →'}
                 </button>
               </form>
             </div>
@@ -218,7 +205,7 @@ export default function JudgingPortalPage() {
                   <div className="pt-2 flex items-center justify-center gap-3">
                     <button
                       onClick={() => { setSubmittedScore(null); setFeedback(''); }}
-                      className="px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors"
+                      className="px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition-colors"
                     >
                       Evaluate Next Team
                     </button>

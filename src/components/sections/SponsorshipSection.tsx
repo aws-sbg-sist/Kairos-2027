@@ -68,7 +68,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
   ];
 
   return (
-    <section id="sponsors" className="relative py-24 lg:py-32 overflow-hidden bg-kairos-darkest">
+    <section id="sponsors" className="relative py-16 lg:py-24 overflow-hidden bg-kairos-darkest">
       {/* Background illumination */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-purple-950/20 blur-[170px] pointer-events-none rounded-full" />
 

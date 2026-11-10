@@ -5,7 +5,7 @@ export const EVENT_CONFIG = {
   edition: 'Grand Edition',
   tagline: 'Where Architecture Meets Execution.',
   subtitle: '48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors.',
-  notificationBar: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
+  notificationBar: 'NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
   organizer: {
     name: 'AWS Student Builder Group (AWS SBG)',
     chapter: 'AWS Student Builder Group — SIST Chapter',
@@ -16,7 +16,7 @@ export const EVENT_CONFIG = {
     leadOrganizer: 'Thenappan T, President & Student Builder Group Leader (SBGL)',
     meetupUrl: 'https://meetup.com/aws-student-builder-group-sist',
     assetGeneratorUrl: 'https://aws-version-3--assets-generator.netlify.app/',
-    targetDomain: 'https://kairos.sathyabama.ac.in',
+    targetDomain: process.env.NEXT_PUBLIC_APP_URL || process.env.RENDER_EXTERNAL_URL || 'https://kairos.sathyabama.ac.in',
   },
   venue: {
     name: 'Central Library & Campus Bays',
@@ -85,7 +85,7 @@ export const TECHNICAL_TRACKS = [
     id: 'agentic-ai',
     number: '01',
     title: 'Agentic AI & Generative Intelligence',
-    
+    shortTitle: 'Agentic AI & GenAI',
     shortDescription: 'Architect autonomous multi-agent swarms, self-healing developer pipelines, and production generative AI workflows powered by Amazon Bedrock and Claude.',
     longDescription: 'Go beyond single prompt-response interfaces. Construct coordinated autonomous agent squads that interact with external tools, APIs, and real-time data environments to automate end-to-end multi-step reasoning while maintaining verifiable truthfulness and deterministic bounds.',
     themes: [
@@ -101,7 +101,7 @@ export const TECHNICAL_TRACKS = [
     id: 'cloud-native',
     number: '02',
     title: 'Cloud-Native, High-Throughput & Distributed Systems',
-    
+    shortTitle: 'Cloud-Native & Distributed',
     shortDescription: 'Build hyper-scale event-driven architectures, resilient distributed ledgers, and zero-downtime microservices capable of sustaining millions of concurrent events.',
     longDescription: 'Architect resilient backend systems built to withstand extreme traffic, network partitions, and cascading failures. Focus on serverless durability, low-latency stream processing, distributed transaction orchestration, and observable telemetry.',
     themes: [
@@ -117,7 +117,7 @@ export const TECHNICAL_TRACKS = [
     id: 'edge-iot',
     number: '03',
     title: 'Autonomous Edge IoT & Sustainable Green Energy',
-    
+    shortTitle: 'Edge IoT & Clean Energy',
     shortDescription: 'Deploy hardware microcontrollers, intelligent sensor networks, and edge inference systems optimizing renewable energy distribution and smart mobility.',
     longDescription: 'Solve urgent physical-world challenges through resilient software engineering and IoT telemetry integration. Tackle resource distribution, renewable energy microgrid balancing, environmental monitoring, and intelligent community utilities.',
     themes: [
@@ -133,7 +133,7 @@ export const TECHNICAL_TRACKS = [
     id: 'fintech-trust',
     number: '04',
     title: 'Next-Gen FinTech, Trust & Cryptographic Security',
-    
+    shortTitle: 'FinTech & Cryptography',
     shortDescription: 'Engineer low-latency settlement systems, real-time algorithmic fraud prevention, and zero-knowledge identity architectures.',
     longDescription: 'Re-engineer digital financial rails with mathematical integrity. Build high-volume transaction verification, instant anomaly and synthetic identity fraud detection, and automated audit trails while upholding privacy and regulatory compliance.',
     themes: [
@@ -149,7 +149,7 @@ export const TECHNICAL_TRACKS = [
     id: 'open-enterprise',
     number: '05',
     title: 'Open Enterprise & Campus Life Innovation',
-    
+    shortTitle: 'Open Enterprise & Campus',
     shortDescription: 'Tackle pressing institutional and societal bottlenecks across healthcare diagnostics, agricultural supply chains, and automated university operations.',
     longDescription: 'Engineer high-impact institutional and social systems. Transform enterprise workflows, automate campus student experiences, modernize medical diagnostics triage, and build accessible tools for underserved demographics.',
     themes: [
@@ -286,7 +286,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '12:15 PM',
-        title: '🚀 CLOCK STARTS: 48-HOUR SPRINT COMMENCES',
+        title: 'CLOCK STARTS: 48-HOUR SPRINT COMMENCES',
         desc: 'Official GitHub repository initialization with Kairos webhook listener. The 48-hour continuous countdown begins!',
         category: 'HACK LIVE',
         highlight: true
@@ -299,7 +299,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '04:00 PM – 06:30 PM',
-        title: '🔍 CHECKPOINT 1: Architecture & Cloud Feasibility Gate',
+        title: 'CHECKPOINT 1: Architecture & Cloud Feasibility Gate',
         desc: 'Table-side review with Senior AWS Solutions Architects & Industry Evaluators. Architecture blueprint, cloud service selection, and IAM security check (25 Pts).',
         category: 'EVALUATION',
         highlight: true
@@ -312,7 +312,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '10:00 PM',
-        title: '🔒 Campus Night Lock-In Activated',
+        title: 'Campus Night Lock-In Activated',
         desc: 'Campus perimeter doors secured for total builder safety. 24/7 Campus EV shuttles operating continuous loops across rest facilities and hostels.',
         category: 'SECURITY'
       }
@@ -344,7 +344,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '02:00 PM – 05:30 PM',
-        title: '⚡ CHECKPOINT 2: Code Velocity, API Integration & Authenticity Gate',
+        title: 'CHECKPOINT 2: Code Velocity, API Integration & Authenticity Gate',
         desc: 'Table-side review by Startup CTOs & Staff Engineers. Live testing of running frontend/backend endpoints, database schemas, and external APIs. Automated commit history verification (35 Pts).',
         category: 'EVALUATION',
         highlight: true
@@ -357,7 +357,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '10:00 PM',
-        title: '🔒 Night Lock-In Enforced',
+        title: 'Night Lock-In Enforced',
         desc: 'Night access protocols in place; quiet rest zones available.',
         category: 'SECURITY'
       },
@@ -390,14 +390,14 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '08:30 AM',
-        title: '🛑 HARD CODE FREEZE & GITHUB SUBMISSION LOCK',
+        title: 'HARD CODE FREEZE & GITHUB SUBMISSION LOCK',
         desc: 'Automated GitHub commit freeze via Kairos webhook listener. Final submission of working demo video link and pitch deck. Zero extensions.',
         category: 'DEADLINE',
         highlight: true
       },
       {
         time: '09:00 AM – 12:30 PM',
-        title: '🏆 CHECKPOINT 3: Grand Finale Live Demonstrations',
+        title: 'CHECKPOINT 3: Grand Finale Live Demonstrations',
         desc: 'Concurrent stage & bay jury evaluations. 7-minute live presentation: 4 minutes working demo + 3 minutes grilling by VC Partners, CTOs, and AWS Leaders (40 Pts). Real-time algorithmic Z-score normalization.',
         category: 'EVALUATION',
         highlight: true
@@ -416,7 +416,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '02:30 PM – 04:30 PM',
-        title: '🎆 Grand Valedictory, Award Ceremony & Finale',
+        title: 'Grand Valedictory, Award Ceremony & Finale',
         desc: 'Addresses by Keynote VIPs and University Leadership. Presentation of Track Awards & Special Innovation Honors. Grand Winner Announcement: 2nd Runner Up, 1st Runner Up, and Grand Champion (National Trophy & Awards Conferral).',
         category: 'CEREMONY',
         highlight: true
@@ -789,7 +789,7 @@ export const FAQS = [
   },
   {
     q: 'What are the grand finale dates and venue?',
-    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 (48 continuous non-stop hours) at Sathyabama Institute of Science and Technology, Chennai (Central Library & Indoor Stadium bays).'
+    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 (48 continuous non-stop hours) at Sathyabama Institute of Science and Technology, Chennai (Central Library & Campus Bays).'
   },
   {
     q: 'Who owns the intellectual property (IP)?',

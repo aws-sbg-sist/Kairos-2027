@@ -20,6 +20,8 @@ import { sound } from '@/lib/audio';
 import { haptics } from '@/lib/haptics';
 import { fireGoldMilestone } from '@/lib/confetti';
 import { EVENT_CONFIG, SPONSOR_REFERRAL_TIERS } from '@/lib/config';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 
 export default function ReferSponsorPage() {
   // Commission Calculator State
@@ -115,7 +117,9 @@ export default function ReferSponsorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+      <Navbar />
+      <main className="flex-grow pt-28 pb-24 relative">
       {/* Background glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/3 w-[600px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
@@ -488,7 +492,7 @@ export default function ReferSponsorPage() {
         {/* Lead Status Tracker Box */}
         <div className="max-w-3xl mx-auto rounded-3xl bg-slate-900/80 border border-slate-800 p-8 sm:p-10 shadow-xl mb-20">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2.5 rounded-xl bg-[#0073BB]/15 text-[#0073BB]">
+            <div className="p-2.5 rounded-xl bg-sky-500/15 text-sky-400">
               <Search className="w-5 h-5" />
             </div>
             <div>
@@ -569,6 +573,8 @@ export default function ReferSponsorPage() {
         </div>
 
       </div>
+      </main>
+      <Footer />
     </div>
   );
 }

@@ -59,13 +59,13 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
   const steps = [
     { number: '01', title: 'Early Interest', desc: 'Reserve your priority notification spot now. No fees, instant confirmation.', status: 'ACTIVE NOW', current: true },
     { number: '02', title: 'National Applications', desc: 'Submit abstract, proposed system architecture, and 4–6 builder team roster.', status: 'OPENS SOON' },
-    { number: '03', title: 'Technical Screening', desc: 'Evaluation of abstracts by faculty & engineers to shortlist up to 75 teams.', status: 'PLANNED' },
-    { number: '04', title: 'On-Campus 48H Finale', desc: 'Build live in Chennai at Sathyabama Indoor Stadium with power, Wi-Fi & meals.', status: '22-24 JAN 2027' },
-    { number: '05', title: 'Grand Stage Demos', desc: 'Top 20 teams demonstrate before the Grand Jury on the main auditorium stage.', status: 'VALEDICTORY' },
+    { number: '03', title: 'Technical Screening', desc: 'Evaluation of abstracts and Round 1 prototypes to shortlist up to 100 finalist teams.', status: 'PLANNED' },
+    { number: '04', title: 'On-Campus 48H Finale', desc: 'Build live in Chennai at Central Library & Campus Bays with power, Wi-Fi & meals.', status: '22-24 JAN 2027' },
+    { number: '05', title: 'Grand Stage Demos', desc: 'Top finalist squads demonstrate before the Grand Jury on the main stage.', status: 'VALEDICTORY' },
   ];
 
   return (
-    <section id="pathway" className="relative py-24 lg:py-32 overflow-hidden bg-kairos-bg">
+    <section id="pathway" className="relative py-16 lg:py-24 overflow-hidden bg-kairos-bg">
       {/* Background illumination */}
       <div className="absolute top-1/2 left-0 w-[600px] h-[350px] bg-purple-900/15 blur-[160px] pointer-events-none rounded-full" />
 
@@ -132,7 +132,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
 
                 <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-purple-300">
                   <span>Milestone</span>
-                  <span className="text-slate-500">0{i + 1}/05</span>
+                  <span className="text-slate-400">0{i + 1}/05</span>
                 </div>
               </div>
             </ScrollReveal>

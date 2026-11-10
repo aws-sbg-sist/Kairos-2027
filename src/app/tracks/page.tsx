@@ -6,17 +6,17 @@ import Image from 'next/image';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { TECHNICAL_TRACKS } from '@/lib/config';
-import { 
-  Cpu, 
-  Server, 
-  ShieldCheck, 
-  Leaf, 
-  ArrowRight, 
-  CheckCircle2, 
-  Layers, 
-  Code2, 
-  Trophy, 
-  FileText, 
+import {
+  Cpu,
+  Server,
+  ShieldCheck,
+  Leaf,
+  ArrowRight,
+  CheckCircle2,
+  Layers,
+  Code2,
+  Trophy,
+  FileText,
   Download,
   Terminal,
   Database,
@@ -128,32 +128,39 @@ export default function TracksPage() {
 
         {/* Track Pills */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3" role="tablist" aria-label="Hackathon Technical Tracks">
             {TECHNICAL_TRACKS.map((t) => {
               const Icon = getIcon(t.iconName);
               const isSelected = t.id === selectedTrack.id;
               return (
                 <button
                   key={t.id}
+                  role="tab"
+                  aria-selected={isSelected}
+                  aria-label={`Select Track ${t.number}: ${t.title}`}
                   onClick={() => setSelectedTrack(t)}
-                  className={`p-4 rounded-2xl text-left transition-all ${
-                    isSelected
+                  className={`p-4 rounded-2xl text-left transition-all focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none flex flex-col justify-between ${isSelected
                       ? 'bg-aws-squidInk border-2 border-purple-500 shadow-lg shadow-purple-900/30 scale-[1.02]'
-                      : 'bg-aws-card border border-slate-700/60 hover:bg-slate-900/80'
-                  }`}
+                      : 'bg-aws-card border border-slate-700/60 hover:bg-slate-900/80 hover:border-purple-500/40'
+                    }`}
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-mono text-purple-400 font-bold uppercase">
-                      TRACK {t.number}
-                    </span>
-                    <span className="text-[9px] font-mono text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
-                      ₹7K
-                    </span>
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-mono text-purple-400 font-bold uppercase">
+                        TRACK {t.number}
+                      </span>
+                      <span className="text-[9px] font-mono text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                        ₹7K
+                      </span>
+                    </div>
+                    <Icon className="w-5 h-5 text-purple-300 mb-2" aria-hidden="true" />
+                    <h3 className="text-xs sm:text-sm font-bold text-white leading-snug">
+                      {(t as any).shortTitle || t.title}
+                    </h3>
                   </div>
-                  <Icon className="w-5 h-5 text-purple-300 mb-2" />
-                  <h3 className="text-sm font-bold text-white line-clamp-2">
-                    {t.title}
-                  </h3>
+                  <div className="mt-3 pt-2 border-t border-white/5 text-[10px] font-mono text-slate-400">
+                    {isSelected ? '● Active Dossier' : 'View Blueprint'}
+                  </div>
                 </button>
               );
             })}
@@ -163,12 +170,12 @@ export default function TracksPage() {
         {/* Detailed Active Track Dossier */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 space-y-10">
-            
+
             {/* Top Bar with Title & Bounty Badge */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/10">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950">
+                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
                     TRACK {selectedTrack.number}
                   </span>
                   <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
@@ -287,7 +294,7 @@ export default function TracksPage() {
               <div className="flex items-center gap-3">
                 <Link
                   href="/register"
-                  className="px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors"
+                  className="px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition-colors"
                 >
                   Register Team Free →
                 </Link>

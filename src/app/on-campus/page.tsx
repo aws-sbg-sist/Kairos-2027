@@ -20,7 +20,10 @@ import {
   ShieldCheck,
   Compass,
   Wifi,
-  Sparkles
+  Sparkles,
+  Lock,
+  Moon,
+  HeartPulse
 } from 'lucide-react';
 
 export default function OnCampusGuidePage() {
@@ -331,8 +334,8 @@ export default function OnCampusGuidePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="hud-frame p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">
-                    🔒
+                  <div className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center">
+                    <Lock className="w-4 h-4" />
                   </div>
                   <h4 className="text-sm font-bold text-white">10 PM Night Lock-In Protocol</h4>
                   <p className="text-xs text-slate-300 leading-relaxed">
@@ -341,8 +344,8 @@ export default function OnCampusGuidePage() {
                 </div>
 
                 <div className="hud-frame p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
-                    🛏️
+                  <div className="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                    <Moon className="w-4 h-4" />
                   </div>
                   <h4 className="text-sm font-bold text-white">Segregated Rest Corridors</h4>
                   <p className="text-xs text-slate-300 leading-relaxed">
@@ -351,8 +354,8 @@ export default function OnCampusGuidePage() {
                 </div>
 
                 <div className="hud-frame p-5 rounded-2xl bg-slate-900/80 border border-slate-700/60 space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">
-                    🚑
+                  <div className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center">
+                    <HeartPulse className="w-4 h-4" />
                   </div>
                   <h4 className="text-sm font-bold text-white">24/7 Campus Medical Care</h4>
                   <p className="text-xs text-slate-300 leading-relaxed">

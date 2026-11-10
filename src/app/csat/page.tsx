@@ -15,6 +15,8 @@ import {
   FileSpreadsheet
 } from 'lucide-react';
 import { EVENT_CONFIG } from '@/lib/config';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 
 export default function CSATPage() {
   const [satisfaction, setSatisfaction] = useState<number>(5);
@@ -103,7 +105,9 @@ export default function CSATPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow overflow-x-hidden">
+      <Navbar />
+      <main className="flex-grow pt-28 pb-24 relative">
       {/* Background Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
@@ -142,13 +146,13 @@ export default function CSATPage() {
             </span>
           </h1>
           <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed">
-            Your honest evaluation helps our AWS Student Builder Group chapter continuously elevate standards for zero-fee builder events across India.
+            Your honest evaluation helps our AWS Student Builder Group chapter continuously improve standards for zero-fee builder events across India.
           </p>
         </div>
 
         {/* Live Metrics Ribbon if Available */}
         {stats && (
-          <div className="grid grid-cols-3 gap-4 mb-10 p-5 rounded-2xl bg-slate-900/60 border border-slate-800 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-10 p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800 text-center">
             <div>
               <div className="text-2xl font-black text-[#10B981] font-mono">{stats.netPromoterScore}</div>
               <div className="text-[11px] text-slate-400 uppercase font-mono mt-0.5">Net Promoter Score</div>
@@ -165,7 +169,7 @@ export default function CSATPage() {
         )}
 
         {/* Form Container */}
-        <div className="rounded-3xl bg-slate-900/90 border border-slate-800 p-8 sm:p-12 shadow-2xl backdrop-blur-xl">
+        <div className="rounded-3xl bg-slate-900/90 border border-slate-800 p-4 sm:p-8 md:p-12 shadow-2xl backdrop-blur-xl">
           {submitted ? (
             <div className="p-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-center">
               <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto mb-4" />
@@ -201,24 +205,26 @@ export default function CSATPage() {
                 <label className="block text-xs font-mono uppercase tracking-wider text-slate-300 font-bold mb-3">
                   1. Overall Event Satisfaction Rating *
                 </label>
-                <div className="flex items-center gap-3">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type="button"
-                      onClick={() => setSatisfaction(star)}
-                      className={`p-3 rounded-2xl border transition flex items-center gap-1.5 ${
-                        satisfaction >= star
-                          ? 'bg-purple-950/80 border-purple-500 text-purple-400'
-                          : 'bg-slate-950 border-slate-800 text-slate-600 hover:border-slate-700'
-                      }`}
-                    >
-                      <Star className={`w-6 h-6 ${satisfaction >= star ? 'fill-purple-400 text-purple-400' : ''}`} />
-                      <span className="text-xs font-mono font-bold">{star}</span>
-                    </button>
-                  ))}
-                  <span className="text-xs text-slate-400 ml-2 font-mono">
-                    {satisfaction === 5 ? '★ World-Class Experience' : satisfaction === 4 ? 'Very Good' : 'Needs Optimization'}
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setSatisfaction(star)}
+                        className={`p-2.5 sm:p-3 rounded-2xl border transition flex items-center gap-1 ${
+                          satisfaction >= star
+                            ? 'bg-purple-950/80 border-purple-500 text-purple-400'
+                            : 'bg-slate-950 border-slate-800 text-slate-600 hover:border-slate-700'
+                        }`}
+                      >
+                        <Star className={`w-5 h-5 sm:w-6 sm:h-6 ${satisfaction >= star ? 'fill-purple-400 text-purple-400' : ''}`} />
+                        <span className="text-xs font-mono font-bold">{star}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <span className="text-xs text-slate-400 ml-1 sm:ml-2 font-mono">
+                    {satisfaction === 5 ? 'Exceptional' : satisfaction === 4 ? 'Very Good' : 'Needs Optimization'}
                   </span>
                 </div>
               </div>
@@ -232,18 +238,18 @@ export default function CSATPage() {
                   How likely are you to recommend KAIROS & the AWS Student Builder Group to a friend or fellow builder? (0 = Not likely, 10 = Extremely likely)
                 </p>
 
-                <div className="grid grid-cols-11 gap-1.5 sm:gap-2">
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-11 gap-2">
                   {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                     <button
                       key={num}
                       type="button"
                       onClick={() => setNpsScore(num)}
-                      className={`py-3 rounded-xl font-mono text-xs font-bold border transition ${
+                      className={`min-h-[44px] py-2.5 rounded-xl font-mono text-xs font-bold border transition ${
                         npsScore === num
                           ? num >= 9 ? 'bg-emerald-500 border-emerald-400 text-slate-950 scale-105' :
                             num >= 7 ? 'bg-purple-600 border-purple-400 text-white scale-105' :
                             'bg-rose-500 border-rose-400 text-white scale-105'
-                          : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
+                          : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'
                       }`}
                     >
                       {num}
@@ -272,12 +278,12 @@ export default function CSATPage() {
                         onClick={() => toggleService(service)}
                         className={`p-3 rounded-xl border text-left text-xs font-mono flex items-center justify-between transition ${
                           isChecked
-                            ? 'bg-[#0073BB]/20 border-[#0073BB] text-blue-200'
-                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
+                            ? 'bg-sky-500/20 border-sky-400 text-sky-200'
+                            : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'
                         }`}
                       >
                         <span>{service}</span>
-                        {isChecked && <CheckCircle2 className="w-4 h-4 text-[#0073BB]" />}
+                        {isChecked && <CheckCircle2 className="w-4 h-4 text-sky-400" />}
                       </button>
                     );
                   })}
@@ -360,6 +366,8 @@ export default function CSATPage() {
         </div>
 
       </div>
+      </main>
+      <Footer />
     </div>
   );
 }

@@ -2,6 +2,31 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { getCurrentAdminSession } from '@/lib/auth';
+import type { ParticipantTeam } from '@/types';
+
+function sanitizeTeamPublic(team: ParticipantTeam) {
+  const {
+    inviteCode: _inviteCode,
+    awsCreditVoucher: _awsCreditVoucher,
+    commitWebhookSecret: _commitWebhookSecret,
+    leaderEmail,
+    ...rest
+  } = team;
+
+  return {
+    ...rest,
+    leaderEmail: leaderEmail ? leaderEmail.replace(/(?<=^.{2}).+(?=@)/, '***') : '',
+    members: team.members.map((m) => ({
+      id: m.id,
+      name: m.name,
+      role: m.role,
+      college: m.college,
+      meetupRsvpVerified: m.meetupRsvpVerified,
+      confirmed: m.confirmed,
+      email: m.email ? m.email.replace(/(?<=^.{2}).+(?=@)/, '***') : '',
+    })),
+  };
+}
 
 export async function GET(req: NextRequest) {
   const rateLimitResult = checkRateLimit(req, { limit: 30, windowMs: 60_000 });
@@ -19,25 +44,9 @@ export async function GET(req: NextRequest) {
     if (!team) {
       return NextResponse.json({ success: false, error: 'Team not found with the provided code.' }, { status: 404 });
     }
-    // If not admin, sanitize sensitive private fields (phone numbers, private registration numbers, AWS credits)
+    // If not admin, sanitize sensitive private fields (inviteCode, phone numbers, registration numbers, AWS credits)
     if (!session) {
-      const sanitizedTeam = {
-        ...team,
-        inviteCode: undefined, // Conceal invite code from public queries
-        awsCreditVoucher: undefined, // Conceal AWS promotional voucher codes
-        leaderPhone: undefined,
-        leaderCollegeRegNo: undefined,
-        members: team.members.map(m => ({
-          id: m.id,
-          name: m.name,
-          role: m.role,
-          college: m.college,
-          meetupRsvpVerified: m.meetupRsvpVerified,
-          confirmed: m.confirmed,
-          email: m.email ? m.email.replace(/(?<=^.{2}).+(?=@)/, '***') : ''
-        }))
-      };
-      return NextResponse.json({ success: true, team: sanitizedTeam });
+      return NextResponse.json({ success: true, team: sanitizeTeamPublic(team) });
     }
     return NextResponse.json({ success: true, team });
   }
@@ -239,7 +248,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({
       success: true,
       message: `Successfully joined ${joinResult.team?.teamName || 'team'}!`,
-      team: joinResult.team
+      team: joinResult.team ? sanitizeTeamPublic(joinResult.team) : undefined
     });
   } catch (err: any) {
     console.error('[API Team Join Error]:', err);

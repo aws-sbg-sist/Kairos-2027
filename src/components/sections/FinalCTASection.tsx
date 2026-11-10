@@ -10,7 +10,7 @@ import { ScrollReveal } from '@/components/animation/ScrollReveal';
 
 export const FinalCTASection: React.FC = () => {
   return (
-    <section className="relative py-28 lg:py-40 overflow-hidden bg-gradient-to-b from-aws-canvas via-[#0d091a] to-aws-canvas select-none">
+    <section className="relative py-16 lg:py-24 overflow-hidden bg-gradient-to-b from-aws-canvas via-[#0d091a] to-aws-canvas select-none">
       {/* Relativistic Radial Glows & Concentric Astrolabe Rings */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-gradient-to-r from-aws-orange/20 via-purple-900/30 to-aws-blue/20 blur-[180px] pointer-events-none rounded-full" />
       

@@ -36,12 +36,12 @@ Venue: Central Library & Campus Bays, Sathyabama Institute of Science and Techno
 - Round 2 Finalist Announcement (Top 100 Teams): January 08, 2027.
 - Grand Finale Check-In: Friday, January 22, 2027 at 09:30 AM IST (Red-carpet kit distribution, smart NFC badge, high-speed Wi-Fi onboarding).
 - Inauguration & Plenary: Jan 22, 2027 at 10:45 AM – 12:00 PM IST (Keynote by AWS Leadership).
-- 🚀 CLOCK STARTS: Friday, January 22, 2027 at 12:15 PM IST (48-Hour Sprint commences with GitHub webhook lock).
+- CLOCK STARTS: Friday, January 22, 2027 at 12:15 PM IST (48-Hour Sprint commences with GitHub webhook lock).
 - Checkpoint 1 (Architecture & Feasibility): Friday, Jan 22 at 04:00 PM – 06:30 PM (25 Points).
 - Campus Night Lock-In: Jan 22 & Jan 23 at 10:00 PM IST (Perimeter secured, EV shuttles active).
 - Checkpoint 2 (Code Velocity & APIs): Saturday, Jan 23 at 02:00 PM – 05:30 PM (35 Points).
 - Midnight Energy Drops: Saturday night / Sunday 01:30 AM (Snacks, filter coffee, energy boosters).
-- 🛑 HARD CODE FREEZE: Sunday, January 24, 2027 at 08:30 AM IST (Zero extensions, GitHub commit freeze).
+- HARD CODE FREEZE: Sunday, January 24, 2027 at 08:30 AM IST (Zero extensions, GitHub commit freeze).
 - Checkpoint 3 (Grand Finale Live Demos): Sunday, Jan 24 at 09:00 AM – 12:30 PM (40 Points; 4-min demo + 3-min jury Q&A).
 - Grand Valedictory & Awards Ceremony: Sunday, Jan 24 at 02:30 PM – 04:30 PM IST.
 - Return Bus Fleet Dispersal: Sunday, Jan 24 at 05:00 PM IST.`
@@ -259,9 +259,9 @@ export function synthesizeLocalAnswer(query: string, retrieved: KnowledgeChunk[]
 
   // 1. Referral & Sponsor Rainmaker
   if (q.includes('refer') || q.includes('rainmaker') || q.includes('commission') || (q.includes('sponsor') && (q.includes('earn') || q.includes('cash') || q.includes('money') || q.includes('lead')))) {
-    return `💰 **KAIROS Rainmaker Sponsor Referral Program (Earn 10%–15% Payout):**
+    return `**KAIROS Rainmaker Sponsor Referral Program (Earn 10%–15% Payout):**
 
-Students can connect corporate sponsors to KAIROS 2027 and earn direct payout payouts sent via UPI within 48 hours of closing:
+Students can connect corporate sponsors to KAIROS 2027 and earn direct payouts sent via UPI within 48 hours of closing:
 • **Title Presenting Partner (₹2,00,000):** You earn **₹20,000 – ₹30,000 Payout** + National Rainmaker Trophy on stage + VIP Pass!
 • **Co-Powered By Partner (₹1,00,000):** You earn **₹10,000 – ₹12,000 Payout** + VIP Lounge Pass.
 • **Associate / Gold Partner (₹50,000):** You earn **₹5,000 Payout** + Merch Kit.
@@ -273,7 +273,7 @@ Students can connect corporate sponsors to KAIROS 2027 and earn direct payout pa
 
   // 2. Payout Prize Pool
   if (q.includes('prize') || q.includes('cash') || q.includes('bounty') || q.includes('money') || q.includes('pool') || q.includes('champion')) {
-    return `🏆 **KAIROS 2027 Payout Prize Pool: ₹1,75,000 + $50,000+ AWS Credits**
+    return `**KAIROS 2027 Prize Pool: ₹1,75,000 + $50,000+ AWS Credits**
 
 • **1st Place (Grand Champion):** **₹60,000 Payout** + Brass Trophy + VC Incubation Fast-Track + $5,000 AWS Credits + Tier-1 Interview fast-track
 • **2nd Place (1st Runner-Up):** **₹35,000 Payout** + Trophy + $2,500 AWS Credits + Sponsor Interviews
@@ -289,7 +289,7 @@ Students can connect corporate sponsors to KAIROS 2027 and earn direct payout pa
 
   // 3. 5 Technical Tracks
   if (q.includes('track') || q.includes('theme') || q.includes('topic') || q.includes('problem')) {
-    return `⚡ **The 5 Grand Enterprise Technical Tracks at KAIROS 2027:**
+    return `**The 5 Grand Enterprise Technical Tracks at KAIROS 2027:**
 
 1. **Track 01: Agentic AI & Generative Intelligence** (Bounty: ₹7,000 Cash)
    - Multi-agent collaborative workflows, self-healing DevOps, hybrid RAG with reranking, multimodal models. Powered by Amazon Bedrock & Claude 3.5 Sonnet.
@@ -305,7 +305,7 @@ Students can connect corporate sponsors to KAIROS 2027 and earn direct payout pa
 
   // 4. Free Registration
   if (q.includes('free') || q.includes('fee') || q.includes('cost') || q.includes('price')) {
-    return `✨ **100% Free — Zero Registration Fee!**
+    return `**Zero Registration Fee: 100% Free Nationwide**
 
 KAIROS 2027 has **zero entry fee** for all students nationwide. Every qualified team receives:
 • Free campus access and 48 hours of continuous hacking
@@ -317,7 +317,7 @@ KAIROS 2027 has **zero entry fee** for all students nationwide. Every qualified 
 
   // 5. Dates & Schedule
   if (q.includes('date') || q.includes('when') || q.includes('schedule') || q.includes('time') || q.includes('timeline')) {
-    return `📅 **KAIROS 2027 Key Dates & Timetable:**
+    return `**KAIROS 2027 Key Dates & Timetable:**
 
 • **Round 0 Applications Close:** December 28, 2026 at 11:59 PM IST
 • **Round 1 Online Qualifier (Semi-Finals):** January 02–04, 2027 (GitHub POC & Loom demo + 7-min virtual defense)
@@ -329,7 +329,7 @@ KAIROS 2027 has **zero entry fee** for all students nationwide. Every qualified 
   }
 
   if (q.includes('food') || q.includes('meal') || q.includes('stay') || q.includes('accommodation') || q.includes('sleep') || q.includes('travel') || q.includes('bus')) {
-    return `🏨 **Food, Accommodation, Travel & Builder Amenities:**
+    return `**Food, Accommodation, Travel & Builder Amenities:**
 
 • **Complimentary Meals:** 7 complete hot meals (buffet style) served across the 48 hours + 24/7 filter coffee/tea bars and 01:30 AM midnight energy snack drops.
 • **Rest & Safety:** AC resting zones with segregated male & female campus resting facilities. Strict 10:00 PM night lock-in for safety, with 24/7 on-campus medical supervision and ambulances.
@@ -338,7 +338,7 @@ KAIROS 2027 has **zero entry fee** for all students nationwide. Every qualified 
   }
 
   if (q.includes('team') || q.includes('member') || q.includes('size') || q.includes('join') || q.includes('alone') || q.includes('solo')) {
-    return `👥 **Team Composition & Squad Matching:**
+    return `**Team Composition & Squad Matching:**
 
 • **Team Size:** Strictly **4 to 6 builders** per squad.
 • **Solo Builders:** If you don't have a team yet, register and broadcast your skills on the **Builder Squad Radar** on the homepage to match with fellow frontend, backend, or cloud engineers!
@@ -348,9 +348,9 @@ KAIROS 2027 has **zero entry fee** for all students nationwide. Every qualified 
 
   // General synthesized response using the top retrieved knowledge
   const topChunk = retrieved[0] || KAIROS_KNOWLEDGE_BASE[0];
-  return `ℹ️ **KAIROS 2027 Information:**
+  return `**KAIROS 2027 Information:**
 
 ${topChunk.content}
 
-💡 *Need more specific details? You can ask about prizes, tracks, the 48-hour schedule, rules, free food & stay, or the sponsor referral program!*`;
+*To explore further details, you can query prizes, technical tracks, the 48-hour schedule, rules, campus facilities, or the sponsor referral program.*`;
 }

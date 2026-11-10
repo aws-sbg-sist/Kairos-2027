@@ -21,6 +21,8 @@ import {
   FileText
 } from 'lucide-react';
 import { EVENT_CONFIG, SPONSOR_TIERS, HIGHER_MANAGEMENT } from '@/lib/config';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 
 export default function SponsorsPage() {
   const [selectedTier, setSelectedTier] = useState<string>('powered');
@@ -130,7 +132,9 @@ Target Domain: https://kairos.sathyabama.ac.in
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+      <Navbar />
+      <main className="flex-grow pt-28 pb-24 relative">
       {/* Background Decorative Ambient */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-purple-950/20 via-indigo-950/10 to-transparent blur-[140px]" />
@@ -170,13 +174,14 @@ Target Domain: https://kairos.sathyabama.ac.in
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <button 
-              onClick={handleDownloadDeck}
+            <a
+              href="/docs/KAIROS_2027_Sponsorship_Prospectus.pdf"
+              download="KAIROS_2027_Sponsorship_Prospectus.pdf"
               className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-600 text-white font-bold text-sm hover:brightness-110 transition shadow-lg shadow-purple-900/40"
             >
               <Download className="w-4 h-4" />
-              Download Partnership Deck (.txt / PDF)
-            </button>
+              Download Official Prospectus (PDF)
+            </a>
             <a 
               href="#inquiry-form"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-purple-500/50 text-slate-200 font-medium text-sm transition"
@@ -231,11 +236,11 @@ Target Domain: https://kairos.sathyabama.ac.in
           </div>
 
           <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="w-10 h-10 rounded-xl bg-[#0073BB]/10 flex items-center justify-center text-[#0073BB] mb-4">
+            <div className="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-400 mb-4">
               <Briefcase className="w-5 h-5" />
             </div>
             <div className="text-3xl font-black text-white font-mono mb-1">Opt-In</div>
-            <div className="text-xs text-[#0073BB] font-semibold uppercase tracking-wider mb-2">Pre-Screened Resumes</div>
+            <div className="text-xs text-sky-400 font-semibold uppercase tracking-wider mb-2">Pre-Screened Resumes</div>
             <p className="text-xs text-slate-400 leading-relaxed">
               Instant access to verified GitHub portfolios, AWS certification credentials, and code submissions of all 100 finalist teams.
             </p>
@@ -510,6 +515,8 @@ Target Domain: https://kairos.sathyabama.ac.in
         </div>
 
       </div>
+      </main>
+      <Footer />
     </div>
   );
 }

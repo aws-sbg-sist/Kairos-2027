@@ -14,7 +14,7 @@ import {
   OrgMember 
 } from '@/types';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+const DATA_DIR = process.env.KAIROS_DATA_DIR?.trim() || process.env.DATA_DIR?.trim() || path.join(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'kairos_store.json');
 
 interface StoreSchema {
@@ -360,7 +360,7 @@ const DEFAULT_STORE: StoreSchema = {
     registrationOpen: true,
     prizePoolConfirmed: true,
     demoSandboxMode: true,
-    announcementBanner: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
+    announcementBanner: 'NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
     registrationDeadline: '2026-12-28T23:59:59+05:30'
   },
   auditLogs: [
@@ -574,7 +574,7 @@ const DEFAULT_STORE: StoreSchema = {
       npsScore: 10,
       cloudServicesUsed: ['Amazon Bedrock', 'AWS Lambda', 'Amazon DynamoDB', 'Amazon OpenSearch'],
       pursuingAwsCertification: 'YES',
-      eventFeedback: 'The zero-fee model, seamless Wi-Fi, and live mentorship by AWS Solutions Architects made this the best hackathon in the country.',
+      eventFeedback: 'The zero-fee model, high-speed redundant Wi-Fi, and live mentorship by AWS Solutions Architects made this the best hackathon in the country.',
       testimonialQuote: 'KAIROS 2027 showed us what real cloud engineering at scale feels like.',
       submittedAt: '2027-01-24T16:00:00.000Z'
     }

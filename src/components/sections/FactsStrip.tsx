@@ -98,7 +98,7 @@ export const FactsStrip: React.FC = () => {
               >
                 <div
                   onMouseEnter={() => sound?.playHover()}
-                  className="group relative p-5 lg:p-6 transition-all duration-200 ease-entrance hover:bg-white/[0.035] flex flex-col justify-between h-full overflow-hidden"
+                  className="group relative p-4 sm:p-5 lg:p-6 transition-all duration-200 ease-entrance hover:bg-white/[0.035] flex flex-col justify-between h-full overflow-hidden"
                 >
                   {/* Top Glowing Beam on Hover */}
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-aws-orange to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -110,10 +110,10 @@ export const FactsStrip: React.FC = () => {
                     {/* Segment Telemetry Header */}
                     <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
                       <span className="flex items-center gap-1.5 font-bold tracking-wider group-hover:text-purple-400 transition-colors">
-                        <span className="text-[10px] text-slate-500 font-normal">[{item.id}]</span>
+                        <span className="text-[11px] text-slate-400 font-normal">[{item.id}]</span>
                         <span>{item.tag}</span>
                       </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400 group-hover:border-purple-500/30 group-hover:text-purple-300 transition-colors">
+                      <span className="text-[11px] px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300 group-hover:border-purple-500/30 group-hover:text-purple-300 transition-colors">
                         {item.badge}
                       </span>
                     </div>
@@ -149,7 +149,7 @@ export const FactsStrip: React.FC = () => {
                   </div>
 
                   {/* Micro Detail Technical Footnote */}
-                  <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-slate-400 truncate">
+                  <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-slate-400 leading-snug line-clamp-2">
                     {item.detail}
                   </div>
                 </div>

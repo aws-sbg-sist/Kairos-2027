@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Navbar } from '@/components/navigation/Navbar';
@@ -47,15 +47,8 @@ function JoinTeamContent() {
   const [joinedSuccess, setJoinedSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  // Fetch team details if code is provided
-  useEffect(() => {
-    if (initialCode) {
-      handleLookupTeam(initialCode);
-    }
-  }, [initialCode]);
-
-  const handleLookupTeam = async (codeToSearch?: string) => {
-    const code = (codeToSearch || teamCode).trim();
+  const lookupTeamByCode = useCallback(async (codeToSearch: string) => {
+    const code = codeToSearch.trim();
     if (!code) {
       sound?.playError();
       haptics?.error();
@@ -81,13 +74,24 @@ function JoinTeamContent() {
         setError(data.error || 'Team not found. Verify the Team Code with your team leader.');
         setTargetTeam(null);
       }
-    } catch (err) {
+    } catch {
       sound?.playError();
       haptics?.error();
       setError('Unable to reach server. Please try again.');
     } finally {
       setSearching(false);
     }
+  }, []);
+
+  // Fetch team details if code is provided
+  useEffect(() => {
+    if (initialCode) {
+      lookupTeamByCode(initialCode);
+    }
+  }, [initialCode, lookupTeamByCode]);
+
+  const handleLookupTeam = (codeToSearch?: string) => {
+    return lookupTeamByCode(codeToSearch || teamCode);
   };
 
   const handleJoinSubmit = async (e: React.FormEvent) => {
@@ -135,7 +139,7 @@ function JoinTeamContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow overflow-x-hidden">
       <Navbar />
 
       <main className="flex-grow pt-32 pb-24">
@@ -156,14 +160,14 @@ function JoinTeamContent() {
           </div>
 
           {!joinedSuccess ? (
-            <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-8">
+            <div className="p-4 sm:p-8 md:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-8">
               
               {/* Step A: Team Code Lookup */}
               <div className="space-y-3">
                 <label className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold block">
                   1. Enter Team Invite Code (Provided by Team Lead)
                 </label>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <input
                     type="text"
                     value={teamCode}
@@ -175,7 +179,7 @@ function JoinTeamContent() {
                     type="button"
                     onClick={() => handleLookupTeam()}
                     disabled={searching}
-                    className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors flex items-center gap-1.5 flex-shrink-0"
+                    className="px-5 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition-colors flex items-center justify-center gap-1.5 flex-shrink-0"
                   >
                     <Search className="w-4 h-4" />
                     <span>{searching ? 'Looking up...' : 'Verify Team'}</span>
@@ -194,7 +198,7 @@ function JoinTeamContent() {
               {targetTeam && (
                 <div className="p-5 rounded-2xl bg-aws-squidInk border border-purple-500/40 space-y-3 animate-fadeIn">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950">
+                    <span className="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
                       {targetTeam.teamCode}
                     </span>
                     <span className="text-xs font-mono text-emerald-400">
@@ -367,7 +371,7 @@ function JoinTeamContent() {
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/dashboard"
-                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md"
+                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition-colors shadow-md"
                 >
                   Go to Hacker Dashboard →
                 </Link>
@@ -391,7 +395,7 @@ function JoinTeamContent() {
 
 export default function JoinTeamPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-aws-canvas text-white pt-32 text-center font-mono">Loading team invitation...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-aws-canvas text-white pt-32 text-center font-mono"><h1 className="sr-only">Join an Existing Squad</h1>Loading team invitation...</div>}>
       <JoinTeamContent />
     </Suspense>
   );

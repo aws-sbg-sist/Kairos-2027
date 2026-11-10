@@ -15,7 +15,7 @@ interface AwardsSectionProps {
 
 export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed = true }) => {
   return (
-    <section id="awards" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
+    <section id="awards" className="relative py-16 lg:py-24 overflow-hidden bg-aws-canvas">
       {/* Background illumination */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[700px] h-[400px] bg-purple-950/40 blur-[160px] rounded-full pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-[500px] h-[350px] bg-purple-950/20 blur-[150px] rounded-full pointer-events-none" />
@@ -84,7 +84,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                   }`}
                 >
                   {isGrand && (
-                    <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-mono font-black text-xs rounded-bl-2xl uppercase tracking-wider shadow-md">
+                    <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-mono font-black text-xs rounded-bl-2xl uppercase tracking-wider shadow-md">
                       Apex Champion
                     </div>
                   )}

@@ -108,7 +108,7 @@ export default async function Image() {
               fontStyle: 'italic',
             }}
           >
-            &ldquo;Where Innovation Meets Its Moment&rdquo;
+            &ldquo;Where Architecture Meets Execution.&rdquo;
           </div>
         </div>
 
@@ -124,9 +124,9 @@ export default async function Image() {
         >
           {[
             '₹0 Free Merit Entry',
-            '75 Elite Teams',
+            '100 Elite Teams',
             '5 Technical Tracks',
-            'Sathyabama Indoor Stadium',
+            'Central Library · Sathyabama',
           ].map((tag, i) => (
             <div
               key={i}

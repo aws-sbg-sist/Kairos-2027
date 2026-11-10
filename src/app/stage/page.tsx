@@ -4,14 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { EVENT_CONFIG } from '@/lib/config';
-import { 
-  Clock, 
-  Maximize, 
-  Minimize, 
-  GitCommit, 
-  Trophy, 
-  Radio, 
-  Users, 
+import {
+  Clock,
+  Maximize,
+  Minimize,
+  GitCommit,
+  Trophy,
+  Radio,
+  Users,
   ShieldCheck,
   CheckCircle2
 } from 'lucide-react';
@@ -25,7 +25,7 @@ export default function StageScreenMode() {
   });
 
   const [activeAnnouncement, setActiveAnnouncement] = useState(
-    '★ CHECKPOINT 1 ACTIVE: Senior AWS Solutions Architects conducting table-side architecture evaluations across all 100 bays.'
+    'CHECKPOINT 1 ACTIVE: Senior AWS Solutions Architects conducting table-side architecture evaluations across all 100 bays.'
   );
 
   useEffect(() => {
@@ -48,10 +48,10 @@ export default function StageScreenMode() {
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
+      document.documentElement.requestFullscreen().catch(() => { });
       setIsFullscreen(true);
     } else {
-      document.exitFullscreen().catch(() => {});
+      document.exitFullscreen().catch(() => { });
       setIsFullscreen(false);
     }
   };
@@ -65,16 +65,16 @@ export default function StageScreenMode() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 sm:p-10 flex flex-col justify-between font-sans selection:bg-gradient-to-r from-purple-600 to-indigo-600 selection:text-black overflow-hidden relative">
-      
+    <div className="min-h-screen bg-black text-white p-4 sm:p-10 flex flex-col justify-between font-sans selection:bg-purple-600 selection:text-white overflow-x-hidden relative">
+
       {/* Background Subtle Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-purple-950/40 blur-[180px] pointer-events-none rounded-full" />
       <div className="absolute inset-0 tech-grid-pattern opacity-40 pointer-events-none" />
 
       {/* Top Header Bar */}
-      <header className="relative z-10 flex items-center justify-between border-b border-white/15 pb-6">
-        <div className="flex items-center gap-4">
-          <div className="relative w-12 h-12 flex-shrink-0">
+      <header className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-5 sm:pb-6">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
             <Image
               src="/assets/kairos-hourglass.png"
               alt="KAIROS 2027"
@@ -83,11 +83,11 @@ export default function StageScreenMode() {
             />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-display font-black text-2xl tracking-widest text-white">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="font-display font-black text-xl sm:text-2xl tracking-widest text-white">
                 KAIROS 2027
-              </span>
-              <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-black">
+              </h1>
+              <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
                 GRAND FINALE
               </span>
               <span className="px-2 py-0.5 rounded text-xs font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
@@ -124,7 +124,7 @@ export default function StageScreenMode() {
 
       {/* Main Center Display: Mega Countdown & Status */}
       <main className="relative z-10 py-8 text-center space-y-8 flex-grow flex flex-col justify-center">
-        
+
         {/* Stage Announcement Marquee */}
         <div className="max-w-4xl mx-auto w-full p-3.5 rounded-2xl bg-aws-squidInk/90 border border-purple-500/40 text-purple-300 font-mono text-xs sm:text-sm shadow-xl flex items-center justify-center gap-2.5">
           <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-ping" />
@@ -133,24 +133,24 @@ export default function StageScreenMode() {
 
         {/* Giant Countdown Clock */}
         <div className="space-y-4">
-          <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.3em] text-slate-400 block font-bold">
+          <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] sm:tracking-[0.3em] text-slate-300 block font-bold">
             COUNTDOWN TO HARD CODE FREEZE (08:30 AM IST)
           </span>
 
-          <div className="flex items-center justify-center gap-3 sm:gap-6 font-mono font-black text-6xl sm:text-8xl lg:text-9xl text-white tracking-wider">
-            <div className="p-4 sm:p-8 rounded-3xl bg-slate-950/90 border-2 border-purple-500/40 shadow-2xl shadow-purple-900/30 min-w-[130px] sm:min-w-[200px]">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-5 md:gap-6 font-mono font-black text-4xl sm:text-7xl lg:text-9xl text-white tracking-wider">
+            <div className="p-3 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-slate-950/90 border-2 border-purple-500/40 shadow-2xl shadow-purple-900/30 min-w-[82px] sm:min-w-[160px] lg:min-w-[200px]">
               <span className="block text-purple-400">{String(timeLeft.hours).padStart(2, '0')}</span>
-              <span className="text-xs sm:text-sm text-slate-500 font-sans tracking-widest block font-bold mt-2">HOURS</span>
+              <span className="text-[11px] sm:text-sm text-slate-400 font-sans tracking-widest block font-bold mt-1.5 sm:mt-2">HOURS</span>
             </div>
             <span className="text-purple-400/60 animate-pulse">:</span>
-            <div className="p-4 sm:p-8 rounded-3xl bg-slate-950/90 border-2 border-purple-500/40 shadow-2xl shadow-purple-900/30 min-w-[130px] sm:min-w-[200px]">
+            <div className="p-3 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-slate-950/90 border-2 border-purple-500/40 shadow-2xl shadow-purple-900/30 min-w-[82px] sm:min-w-[160px] lg:min-w-[200px]">
               <span className="block text-white">{String(timeLeft.minutes).padStart(2, '0')}</span>
-              <span className="text-xs sm:text-sm text-slate-500 font-sans tracking-widest block font-bold mt-2">MINUTES</span>
+              <span className="text-[11px] sm:text-sm text-slate-400 font-sans tracking-widest block font-bold mt-1.5 sm:mt-2">MINUTES</span>
             </div>
             <span className="text-purple-400/60 animate-pulse">:</span>
-            <div className="p-4 sm:p-8 rounded-3xl bg-slate-950/90 border-2 border-purple-500/40 shadow-2xl shadow-purple-900/30 min-w-[130px] sm:min-w-[200px]">
+            <div className="p-3 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-slate-950/90 border-2 border-purple-500/40 shadow-2xl shadow-purple-900/30 min-w-[82px] sm:min-w-[160px] lg:min-w-[200px]">
               <span className="block text-purple-300">{String(timeLeft.seconds).padStart(2, '0')}</span>
-              <span className="text-xs sm:text-sm text-slate-500 font-sans tracking-widest block font-bold mt-2">SECONDS</span>
+              <span className="text-[11px] sm:text-sm text-slate-400 font-sans tracking-widest block font-bold mt-1.5 sm:mt-2">SECONDS</span>
             </div>
           </div>
         </div>

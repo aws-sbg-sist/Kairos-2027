@@ -64,11 +64,10 @@ export default function OnlineQualifierPage() {
         haptics?.error();
         setError(data.error || 'Failed to submit qualifier deliverables.');
       }
-    } catch (err: any) {
-      setSubmitted(true);
-      sound?.playSuccess();
-      haptics?.celebration();
-      fireConfetti();
+    } catch {
+      sound?.playError();
+      haptics?.error();
+      setError('Network error submitting qualifier deliverables. Please check your connection and try again.');
     } finally {
       setSubmitting(false);
     }
@@ -111,20 +110,20 @@ export default function OnlineQualifierPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-mono pt-2">
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">DATE</span>
+                <span className="text-slate-400 block text-[11px] uppercase">DATE</span>
                 <span className="text-white font-bold block mt-0.5">{assignedSlot.date}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">TIME SLOT</span>
+                <span className="text-slate-400 block text-[11px] uppercase">TIME SLOT</span>
                 <span className="text-purple-300 font-bold block mt-0.5">{assignedSlot.time.split('(')[0]}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">VIRTUAL ROOM</span>
+                <span className="text-slate-400 block text-[11px] uppercase">VIRTUAL ROOM</span>
                 <span className="text-sky-300 font-bold block mt-0.5">{assignedSlot.room}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">LEAD EVALUATOR</span>
-                <span className="text-slate-200 block mt-0.5 truncate">{assignedSlot.leadArchitect}</span>
+                <span className="text-slate-400 block text-[11px] uppercase">LEAD EVALUATOR</span>
+                <span className="text-slate-200 block mt-0.5 break-words">{assignedSlot.leadArchitect}</span>
               </div>
             </div>
 
@@ -136,7 +135,7 @@ export default function OnlineQualifierPage() {
                 href={assignedSlot.meetUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors flex items-center gap-1.5 flex-shrink-0"
+                className="px-4 py-2.5 rounded-xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition-colors flex items-center gap-1.5 flex-shrink-0"
               >
                 <span>Launch Google Meet Room ↗</span>
                 <ExternalLink className="w-3.5 h-3.5" />

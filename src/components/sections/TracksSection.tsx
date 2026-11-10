@@ -33,7 +33,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
   const ActiveIcon = getIcon(activeTrack.iconName);
 
   return (
-    <section id="tracks" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
+    <section id="tracks" className="relative py-16 lg:py-24 overflow-hidden bg-aws-canvas">
       {/* Background illumination */}
       <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-purple-950/40 blur-[170px] pointer-events-none rounded-full" />
       <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-purple-950/20 blur-[160px] pointer-events-none rounded-full" />
@@ -95,12 +95,24 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                 className="h-full"
               >
                 <div
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={isActive}
+                  aria-label={`Inspect Track ${track.number}: ${track.title}`}
                   onClick={() => {
                     sound?.playClick();
                     haptics?.selection();
                     setActiveTrackId(track.id);
                   }}
-                  className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 h-full flex flex-col justify-between relative overflow-hidden group select-none active:scale-[0.98] ${
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      sound?.playClick();
+                      haptics?.selection();
+                      setActiveTrackId(track.id);
+                    }
+                  }}
+                  className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 h-full flex flex-col justify-between relative overflow-hidden group select-none active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none ${
                     isActive
                       ? 'bg-aws-squidInk/95 border-2 border-purple-500 shadow-xl shadow-purple-900/30 scale-[1.02]'
                       : 'bg-aws-card/70 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/80'
@@ -118,31 +130,31 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
                           isActive
-                            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 font-bold'
+                            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold'
                             : 'bg-white/5 text-slate-300 group-hover:text-purple-400 border border-white/10'
                         }`}
                       >
-                        <Icon className="w-4 h-4" />
+                        <Icon className="w-4 h-4" aria-hidden="true" />
                       </div>
                       <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-purple-300 transition-colors">
                         {track.number}
                       </span>
                     </div>
 
-                    <h3 className="font-display font-bold text-sm text-white mb-2 line-clamp-2 group-hover:text-purple-200 transition-colors">
-                      {track.title}
+                    <h3 className="font-display font-bold text-sm text-white mb-2 leading-snug group-hover:text-purple-200 transition-colors">
+                      {(track as any).shortTitle || track.title}
                     </h3>
                   </div>
 
                   <div className="pt-3 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-purple-300 font-bold">
+                    <span className="text-[11px] font-mono text-purple-300 font-bold">
                       48H Build
                     </span>
                     <span
-                      className={`text-[10px] font-mono px-2 py-0.5 rounded-full transition-colors ${
+                      className={`text-[11px] font-mono px-2 py-0.5 rounded-full transition-colors ${
                         isActive
                           ? 'bg-purple-950/60 text-white border border-purple-500/40'
-                          : 'text-slate-500 group-hover:text-slate-300'
+                          : 'text-slate-300 group-hover:text-white'
                       }`}
                     >
                       {isActive ? 'Active Inspect' : 'Select'}

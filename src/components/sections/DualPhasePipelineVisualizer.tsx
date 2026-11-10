@@ -75,7 +75,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                       <div
                         className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-all duration-300 ${
                           isSelected
-                            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 shadow-lg shadow-purple-900/40'
+                            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-900/40'
                             : 'bg-white/5 text-purple-400 border border-white/10'
                         }`}
                       >

@@ -6,12 +6,23 @@
 class HapticsEngine {
   private isSupported: boolean = false;
   private enabled: boolean = true;
+  private hasInteracted: boolean = false;
 
   constructor() {
     if (typeof window !== 'undefined') {
       this.isSupported = typeof navigator !== 'undefined' && 'vibrate' in navigator;
       const saved = localStorage.getItem('kairos_haptics_enabled');
       this.enabled = saved !== null ? saved === 'true' : true;
+
+      const setInteracted = () => {
+        this.hasInteracted = true;
+        window.removeEventListener('pointerdown', setInteracted);
+        window.removeEventListener('touchstart', setInteracted);
+        window.removeEventListener('keydown', setInteracted);
+      };
+      window.addEventListener('pointerdown', setInteracted, { passive: true });
+      window.addEventListener('touchstart', setInteracted, { passive: true });
+      window.addEventListener('keydown', setInteracted, { passive: true });
     }
   }
 
@@ -25,6 +36,7 @@ class HapticsEngine {
 
   public toggle(): boolean {
     this.enabled = !this.enabled;
+    this.hasInteracted = true;
     if (typeof window !== 'undefined') {
       localStorage.setItem('kairos_haptics_enabled', String(this.enabled));
     }
@@ -35,7 +47,7 @@ class HapticsEngine {
   }
 
   private trigger(pattern: number | number[]) {
-    if (!this.enabled || !this.isSupported || typeof navigator === 'undefined') return;
+    if (!this.enabled || !this.isSupported || !this.hasInteracted || typeof navigator === 'undefined') return;
     try {
       if (typeof navigator.vibrate === 'function') {
         navigator.vibrate(pattern);

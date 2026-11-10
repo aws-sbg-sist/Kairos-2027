@@ -59,7 +59,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-md animate-fadeIn">
       <div className="relative w-full max-w-lg rounded-3xl glass-panel-glow border border-purple-500/40 p-6 sm:p-8 my-8 text-left space-y-5">
-        
+
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -90,7 +90,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
             </div>
             <h4 className="text-xl font-bold text-white">Priority Recorded!</h4>
             <p className="text-xs text-slate-300 max-w-sm mx-auto leading-relaxed">
-              We have reserved your early-interest spot under <strong>{formData.email}</strong>. When national team applications unlock, you will receive primary notification.
+              We have reserved your early-interest spot under <strong>{formData.email}</strong>. When national team applications open, you will receive primary notification.
             </p>
             <button
               onClick={onClose}

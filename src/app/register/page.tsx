@@ -6,13 +6,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
-import { 
-  ShieldCheck, 
-  CheckCircle2, 
-  ArrowRight, 
-  Users, 
-  UserPlus, 
-  ExternalLink, 
+import {
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+  Users,
+  UserPlus,
+  ExternalLink,
   Lock,
   AlertCircle
 } from 'lucide-react';
@@ -45,6 +45,32 @@ export default function RegisterPage() {
   const [formError, setFormError] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const validateField = (name: string, value: string) => {
+    let error = '';
+    if (name === 'fullName' && value.trim().length < 2) {
+      error = 'Full name must be at least 2 characters.';
+    } else if (name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) {
+      error = 'Please enter a valid email address.';
+    } else if (name === 'phone' && !/^\+?[0-9\s-]{10,14}$/.test(value.trim())) {
+      error = 'Please enter a valid 10-digit mobile number.';
+    } else if (name === 'collegeRegNo' && value.trim().length < 2) {
+      error = 'Please enter your college register / roll number.';
+    } else if (name === 'institution' && value.trim().length < 3) {
+      error = 'Please enter your institution name.';
+    } else if (name === 'githubUsername' && value.trim().length < 2) {
+      error = 'Please enter your GitHub handle.';
+    }
+    setFieldErrors(prev => ({ ...prev, [name]: error }));
+    return error;
+  };
+
+  const handleBlur = (field: string) => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+    validateField(field, (formData as any)[field] || '');
+  };
 
   const handleVerifyMeetup = async () => {
     if (!formData.meetupProfileUrl.trim()) {
@@ -79,11 +105,10 @@ export default function RegisterPage() {
         haptics?.error();
         setMeetupError(data.message || 'Unable to verify RSVP. Please ensure you joined the SIST chapter on Meetup.com.');
       }
-    } catch (err) {
-      // Fallback local verification for demo resilience
-      sound?.playSuccess();
-      haptics?.success();
-      setMeetupVerified(true);
+    } catch {
+      sound?.playError();
+      haptics?.error();
+      setMeetupError('Network error while verifying Meetup profile. Please check your connection and try again.');
     } finally {
       setVerifyingMeetup(false);
     }
@@ -136,7 +161,7 @@ export default function RegisterPage() {
 
       <main className="flex-grow pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Header */}
           <div className="text-center space-y-3 mb-10">
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 shadow-md">
@@ -179,14 +204,14 @@ export default function RegisterPage() {
           {!submitted ? (
             <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl">
               <form onSubmit={handleProfileSubmit} className="space-y-6">
-                
+
                 {formError && (
                   <div className="p-3.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 flex-shrink-0" />
                     <span>{formError}</span>
                   </div>
                 )}
-                
+
                 {/* Step 1: Personal & College Details */}
                 <div className="space-y-4">
                   <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold border-b border-white/10 pb-2">
@@ -195,95 +220,165 @@ export default function RegisterPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">Full Name *</label>
+                      <label htmlFor="reg-fullName" className="text-xs font-mono text-slate-300">Full Name *</label>
                       <input
+                        id="reg-fullName"
                         type="text"
                         required
+                        aria-required="true"
+                        aria-invalid={touched.fullName && !!fieldErrors.fullName}
+                        aria-describedby={fieldErrors.fullName ? "fullName-error" : undefined}
                         value={formData.fullName}
-                        onChange={e => setFormData({ ...formData, fullName: e.target.value })}
+                        onBlur={() => handleBlur('fullName')}
+                        onChange={e => {
+                          setFormData({ ...formData, fullName: e.target.value });
+                          if (touched.fullName) validateField('fullName', e.target.value);
+                        }}
                         placeholder="e.g. Aarav Sharma"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                       />
+                      {touched.fullName && fieldErrors.fullName && (
+                        <p id="fullName-error" role="alert" className="text-[11px] text-rose-400 font-mono mt-0.5">
+                          {fieldErrors.fullName}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">College / Personal Email *</label>
+                      <label htmlFor="reg-email" className="text-xs font-mono text-slate-300">College / Personal Email *</label>
                       <input
+                        id="reg-email"
                         type="email"
                         required
+                        aria-required="true"
+                        aria-invalid={touched.email && !!fieldErrors.email}
+                        aria-describedby={fieldErrors.email ? "email-error" : undefined}
                         value={formData.email}
-                        onChange={e => setFormData({ ...formData, email: e.target.value })}
+                        onBlur={() => handleBlur('email')}
+                        onChange={e => {
+                          setFormData({ ...formData, email: e.target.value });
+                          if (touched.email) validateField('email', e.target.value);
+                        }}
                         placeholder="aarav@student.ac.in"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                       />
+                      {touched.email && fieldErrors.email && (
+                        <p id="email-error" role="alert" className="text-[11px] text-rose-400 font-mono mt-0.5">
+                          {fieldErrors.email}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">WhatsApp Mobile Number *</label>
+                      <label htmlFor="reg-phone" className="text-xs font-mono text-slate-300">WhatsApp Mobile Number *</label>
                       <input
+                        id="reg-phone"
                         type="tel"
                         required
+                        aria-required="true"
+                        aria-invalid={touched.phone && !!fieldErrors.phone}
+                        aria-describedby={fieldErrors.phone ? "phone-error" : undefined}
                         value={formData.phone}
-                        onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                        onBlur={() => handleBlur('phone')}
+                        onChange={e => {
+                          setFormData({ ...formData, phone: e.target.value });
+                          if (touched.phone) validateField('phone', e.target.value);
+                        }}
                         placeholder="+91 98765 43210"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                       />
+                      {touched.phone && fieldErrors.phone && (
+                        <p id="phone-error" role="alert" className="text-[11px] text-rose-400 font-mono mt-0.5">
+                          {fieldErrors.phone}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">College Register / Roll Number *</label>
+                      <label htmlFor="reg-rollno" className="text-xs font-mono text-slate-300">College Register / Roll Number *</label>
                       <input
+                        id="reg-rollno"
                         type="text"
                         required
+                        aria-required="true"
+                        aria-invalid={touched.collegeRegNo && !!fieldErrors.collegeRegNo}
+                        aria-describedby={fieldErrors.collegeRegNo ? "rollno-error" : undefined}
                         value={formData.collegeRegNo}
-                        onChange={e => setFormData({ ...formData, collegeRegNo: e.target.value })}
+                        onBlur={() => handleBlur('collegeRegNo')}
+                        onChange={e => {
+                          setFormData({ ...formData, collegeRegNo: e.target.value });
+                          if (touched.collegeRegNo) validateField('collegeRegNo', e.target.value);
+                        }}
                         placeholder="e.g. 44110855"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                       />
+                      {touched.collegeRegNo && fieldErrors.collegeRegNo && (
+                        <p id="rollno-error" role="alert" className="text-[11px] text-rose-400 font-mono mt-0.5">
+                          {fieldErrors.collegeRegNo}
+                        </p>
+                      )}
                     </div>
 
                     <div className="sm:col-span-2 space-y-1">
-                      <label className="text-xs font-mono text-slate-300">Institution / College Name *</label>
+                      <label htmlFor="reg-institution" className="text-xs font-mono text-slate-300">Institution / College Name *</label>
                       <input
+                        id="reg-institution"
                         type="text"
                         required
+                        aria-required="true"
+                        aria-invalid={touched.institution && !!fieldErrors.institution}
+                        aria-describedby={fieldErrors.institution ? "institution-error" : undefined}
                         value={formData.institution}
-                        onChange={e => setFormData({ ...formData, institution: e.target.value })}
+                        onBlur={() => handleBlur('institution')}
+                        onChange={e => {
+                          setFormData({ ...formData, institution: e.target.value });
+                          if (touched.institution) validateField('institution', e.target.value);
+                        }}
                         placeholder="e.g. Sathyabama Institute of Science and Technology"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                       />
+                      {touched.institution && fieldErrors.institution && (
+                        <p id="institution-error" role="alert" className="text-[11px] text-rose-400 font-mono mt-0.5">
+                          {fieldErrors.institution}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">City *</label>
+                      <label htmlFor="reg-city" className="text-xs font-mono text-slate-300">City *</label>
                       <input
+                        id="reg-city"
                         type="text"
                         required
+                        aria-required="true"
                         value={formData.city}
                         onChange={e => setFormData({ ...formData, city: e.target.value })}
                         placeholder="e.g. Chennai"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">State *</label>
+                      <label htmlFor="reg-state" className="text-xs font-mono text-slate-300">State *</label>
                       <input
+                        id="reg-state"
                         type="text"
                         required
+                        aria-required="true"
                         value={formData.state}
                         onChange={e => setFormData({ ...formData, state: e.target.value })}
                         placeholder="e.g. Tamil Nadu"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">Year of Study</label>
+                      <label htmlFor="reg-year" className="text-xs font-mono text-slate-300">Year of Study</label>
                       <select
+                        id="reg-year"
                         value={formData.yearOfStudy}
                         onChange={e => setFormData({ ...formData, yearOfStudy: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm bg-slate-900"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm bg-slate-900 focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                       >
                         <option value="1st Year">1st Year (Freshman / Debutant)</option>
                         <option value="2nd Year">2nd Year</option>
@@ -294,15 +389,40 @@ export default function RegisterPage() {
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">GitHub Username *</label>
+                      <label htmlFor="reg-dept" className="text-xs font-mono text-slate-300">Department / Specialization</label>
                       <input
+                        id="reg-dept"
+                        type="text"
+                        value={formData.department}
+                        onChange={e => setFormData({ ...formData, department: e.target.value })}
+                        placeholder="e.g. B.E. Computer Science & Engineering"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label htmlFor="reg-github" className="text-xs font-mono text-slate-300">GitHub Username *</label>
+                      <input
+                        id="reg-github"
                         type="text"
                         required
+                        aria-required="true"
+                        aria-invalid={touched.githubUsername && !!fieldErrors.githubUsername}
+                        aria-describedby={fieldErrors.githubUsername ? "github-error" : undefined}
                         value={formData.githubUsername}
-                        onChange={e => setFormData({ ...formData, githubUsername: e.target.value })}
+                        onBlur={() => handleBlur('githubUsername')}
+                        onChange={e => {
+                          setFormData({ ...formData, githubUsername: e.target.value });
+                          if (touched.githubUsername) validateField('githubUsername', e.target.value);
+                        }}
                         placeholder="e.g. aarav-sharma"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                       />
+                      {touched.githubUsername && fieldErrors.githubUsername && (
+                        <p id="github-error" role="alert" className="text-[11px] text-rose-400 font-mono mt-0.5">
+                          {fieldErrors.githubUsername}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -329,26 +449,29 @@ export default function RegisterPage() {
 
                   <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-700/60 space-y-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">
+                      <label htmlFor="reg-meetup" className="text-xs font-mono text-slate-300">
                         Your Meetup Profile URL *
                       </label>
                       <div className="flex flex-col sm:flex-row gap-2">
                         <input
-                          type="url"
+                          id="reg-meetup"
+                          type="text"
                           required
+                          aria-required="true"
                           value={formData.meetupProfileUrl}
                           onChange={e => {
                             setFormData({ ...formData, meetupProfileUrl: e.target.value });
                             setMeetupVerified(false);
                           }}
                           placeholder="https://www.meetup.com/members/12345678/ or username"
-                          className="flex-grow px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono"
+                          className="flex-grow px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                         />
                         <button
                           type="button"
                           onClick={handleVerifyMeetup}
                           disabled={verifyingMeetup}
-                          className="px-4 py-2.5 rounded-xl text-xs font-bold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/40 text-purple-300 flex items-center justify-center gap-1.5 transition-all flex-shrink-0"
+                          aria-label="Verify Meetup RSVP status"
+                          className="px-4 py-2.5 rounded-xl text-xs font-bold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/40 text-purple-300 flex items-center justify-center gap-1.5 transition-all flex-shrink-0 focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                         >
                           {verifyingMeetup ? 'Verifying...' : 'Verify Meetup RSVP'}
                         </button>
@@ -356,14 +479,14 @@ export default function RegisterPage() {
                     </div>
 
                     {meetupVerified ? (
-                      <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                        <span className="font-semibold">🟢 Meetup RSVP Verified for AWS Student Builder Group SIST</span>
+                      <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2" role="status">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" aria-hidden="true" />
+                        <span className="font-semibold">Meetup RSVP Verified for AWS Student Builder Group SIST</span>
                       </div>
                     ) : (
                       meetupError && (
-                        <div className="p-2.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2">
-                          <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0" />
+                        <div className="p-2.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2" role="alert">
+                          <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0" aria-hidden="true" />
                           <span>{meetupError}</span>
                         </div>
                       )
@@ -379,12 +502,14 @@ export default function RegisterPage() {
                   <p className="text-xs text-slate-300">
                     Fosters continuous engagement beyond the hackathon, directly connecting your projects to the AWS global student network.
                   </p>
+                  <label htmlFor="reg-awsbuilder" className="sr-only">AWS Builder Center Profile URL</label>
                   <input
+                    id="reg-awsbuilder"
                     type="url"
                     value={formData.awsBuilderCenterUrl}
                     onChange={e => setFormData({ ...formData, awsBuilderCenterUrl: e.target.value })}
                     placeholder="https://community.aws/@username"
-                    className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono"
+                    className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                   />
                 </div>
 
@@ -400,7 +525,7 @@ export default function RegisterPage() {
                   </button>
                   {!meetupVerified && (
                     <p className="text-[11px] font-mono text-center text-slate-400 mt-2">
-                      * Please click "Verify Meetup RSVP" to unlock team formation.
+                      * Please click "Verify Meetup RSVP" to proceed to team formation.
                     </p>
                   )}
                 </div>
@@ -430,7 +555,7 @@ export default function RegisterPage() {
                   href={`/team/create?name=${encodeURIComponent(formData.fullName)}&email=${encodeURIComponent(formData.email)}&college=${encodeURIComponent(formData.institution)}&meetup=${encodeURIComponent(formData.meetupProfileUrl)}`}
                   className="p-6 rounded-2xl bg-aws-squidInk border-2 border-purple-500 hover:bg-slate-800 transition-all text-left space-y-3 group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 flex items-center justify-center font-bold">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold">
                     <UserPlus className="w-5 h-5" />
                   </div>
                   <h3 className="text-lg font-bold text-white group-hover:text-purple-400 transition-colors">
@@ -457,7 +582,7 @@ export default function RegisterPage() {
                     Join an Existing Team
                   </h3>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    Your team lead already created the squad? Enter their <strong>Team Code (e.g. KAIROS-T042)</strong> and confirm your roster spot.
+                    Your team lead already created the squad? Enter their <strong>Private Invite Code (e.g. KAIROS-7721)</strong> and confirm your roster spot.
                   </p>
                   <div className="pt-2 flex items-center gap-1.5 text-xs font-bold text-slate-300 group-hover:text-white">
                     <span>Enter Team Code</span>

@@ -97,7 +97,8 @@ function CreateTeamContent() {
 
   const copyInviteLink = () => {
     if (!createdTeam) return;
-    const link = `${window.location.origin}/team/join?code=${createdTeam.teamCode}`;
+    const joinCode = createdTeam.inviteCode || createdTeam.teamCode;
+    const link = `${window.location.origin}/team/join?code=${joinCode}`;
     navigator.clipboard.writeText(link);
     sound?.playClick();
     haptics?.medium();
@@ -331,7 +332,7 @@ function CreateTeamContent() {
           ) : (
             /* Success Screen with Team Code & Invite Link */
             <div className="p-8 sm:p-12 rounded-3xl bg-aws-card border-2 border-purple-500 shadow-2xl space-y-8 animate-fadeIn text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 mx-auto flex items-center justify-center font-bold shadow-lg shadow-purple-900/40">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white mx-auto flex items-center justify-center font-bold shadow-lg shadow-purple-900/40">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
 
@@ -343,23 +344,29 @@ function CreateTeamContent() {
                   Team {createdTeam.teamName} Created!
                 </h2>
                 <p className="text-sm text-slate-300 max-w-md mx-auto">
-                  Share this unique Team Code with 3 to 5 teammates so they can join your official roster before the Round 0 deadline.
+                  Share your private Invite Code with 3 to 5 teammates so they can join your roster before the Round 0 deadline.
                 </p>
               </div>
 
-              {/* Team Code Display Box */}
-              <div className="p-6 rounded-2xl bg-aws-squidInk border border-purple-500/40 max-w-md mx-auto space-y-3">
-                <span className="text-xs font-mono text-slate-400 block uppercase">Your Official Team Code</span>
-                <div className="text-4xl font-mono font-black text-purple-400 tracking-widest selection:bg-white">
-                  {createdTeam.teamCode}
+              {/* Team Code & Private Invite Code Display Box */}
+              <div className="p-6 rounded-2xl bg-aws-squidInk border border-purple-500/40 max-w-md mx-auto space-y-4">
+                <div>
+                  <span className="text-xs font-mono text-slate-400 block uppercase">Private Squad Invite Code (For Teammates)</span>
+                  <div className="text-4xl font-mono font-black text-purple-300 tracking-widest selection:bg-white mt-1">
+                    {createdTeam.inviteCode}
+                  </div>
                 </div>
-                <div className="pt-2 flex items-center justify-center gap-2">
+                <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+                  <span className="text-slate-400 uppercase">Official Team ID:</span>
+                  <span className="font-bold text-white">{createdTeam.teamCode}</span>
+                </div>
+                <div className="pt-1 flex items-center justify-center gap-2">
                   <button
                     onClick={copyInviteLink}
-                    className="px-4 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white flex items-center gap-1.5 transition-colors"
+                    className="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white flex items-center gap-1.5 transition-colors"
                   >
                     {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copied ? 'Link Copied!' : 'Copy Teammate Invite Link'}</span>
+                    <span>{copied ? 'Invite Link Copied!' : 'Copy Teammate Invite Link'}</span>
                   </button>
                 </div>
               </div>
@@ -372,19 +379,22 @@ function CreateTeamContent() {
                 </div>
                 <div className="p-2.5 rounded-lg bg-slate-950 flex items-center justify-between text-xs">
                   <span className="font-bold text-white">{formData.leaderName} (Team Leader)</span>
-                  <span className="text-emerald-400 font-mono text-[11px]">🟢 Meetup Verified</span>
+                  <span className="text-emerald-400 font-mono text-[11px] flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                    Meetup Verified
+                  </span>
                 </div>
               </div>
 
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/dashboard"
-                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-slate-950 hover:bg-purple-600 transition-colors shadow-md"
+                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition-colors shadow-md"
                 >
                   Enter Hacker Dashboard →
                 </Link>
                 <Link
-                  href={`/team/join?code=${createdTeam.teamCode}`}
+                  href={`/team/join?code=${createdTeam.inviteCode || createdTeam.teamCode}`}
                   className="px-6 py-3 rounded-xl font-semibold text-xs bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors"
                 >
                   Preview Join Page
@@ -404,7 +414,7 @@ function CreateTeamContent() {
 
 export default function CreateTeamPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-aws-canvas text-white pt-32 text-center font-mono">Loading team registration...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-aws-canvas text-white pt-32 text-center font-mono"><h1 className="sr-only">Create Team & Submit Abstract</h1>Loading team registration...</div>}>
       <CreateTeamContent />
     </Suspense>
   );

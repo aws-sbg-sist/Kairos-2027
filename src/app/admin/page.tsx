@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   ShieldCheck, Users, Briefcase, Sliders, FileText, Download,
   Search, RefreshCw, LogOut, CheckCircle, AlertCircle, ArrowLeft,
-  Lock, Eye, Trophy, Calendar, Activity
+  Lock, Unlock, Eye, Trophy, Calendar, Activity
 } from 'lucide-react';
 import { WaitlistEntry, SponsorInquiry, FeatureFlags, AuditLog } from '@/types';
 import { TECHNICAL_TRACKS } from '@/lib/config';
@@ -14,7 +14,7 @@ import { TECHNICAL_TRACKS } from '@/lib/config';
 export default function AdminDashboardPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'waitlist' | 'sponsors' | 'flags' | 'audit'>('waitlist');
-  
+
   const [waitlist, setWaitlist] = useState<WaitlistEntry[]>([]);
   const [sponsors, setSponsors] = useState<SponsorInquiry[]>([]);
   const [flags, setFlags] = useState<FeatureFlags>({
@@ -32,7 +32,7 @@ export default function AdminDashboardPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [trackFilter, setTrackFilter] = useState('ALL');
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     setStatusMessage('');
     try {
@@ -64,11 +64,11 @@ export default function AdminDashboardPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   const handleLogout = async () => {
     await fetch('/api/admin/auth', { method: 'DELETE' });
@@ -89,8 +89,9 @@ export default function AdminDashboardPage() {
         setStatusMessage('Configuration updated and audit record logged.');
         setTimeout(() => setStatusMessage(''), 3000);
       }
-    } catch (err) {
-      alert('Failed to save settings');
+    } catch {
+      setStatusMessage('Error: Failed to save configuration settings.');
+      setTimeout(() => setStatusMessage(''), 4000);
     } finally {
       setSavingFlags(false);
     }
@@ -109,10 +110,12 @@ export default function AdminDashboardPage() {
         setStatusMessage(`Sponsor status updated to ${newStatus}`);
         setTimeout(() => setStatusMessage(''), 3000);
       } else {
-        alert(data.error || 'Failed to update sponsor status.');
+        setStatusMessage(`Error: ${data.error || 'Failed to update sponsor status.'}`);
+        setTimeout(() => setStatusMessage(''), 4000);
       }
-    } catch (err) {
-      alert('Network error updating sponsor status.');
+    } catch {
+      setStatusMessage('Error: Network error updating sponsor status.');
+      setTimeout(() => setStatusMessage(''), 4000);
     }
   };
 
@@ -129,10 +132,12 @@ export default function AdminDashboardPage() {
         setStatusMessage(`Candidate status updated to "${newStatus.toUpperCase()}".`);
         setTimeout(() => setStatusMessage(''), 3000);
       } else {
-        alert(data.error || 'Failed to update candidate status');
+        setStatusMessage(`Error: ${data.error || 'Failed to update candidate status.'}`);
+        setTimeout(() => setStatusMessage(''), 4000);
       }
     } catch {
-      alert('Network error updating status');
+      setStatusMessage('Error: Network error updating candidate status.');
+      setTimeout(() => setStatusMessage(''), 4000);
     }
   };
 
@@ -161,7 +166,7 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="min-h-screen bg-kairos-darkest text-slate-100 flex flex-col">
-      
+
       {/* Top Admin Header */}
       <header className="border-b border-purple-500/20 bg-slate-950/80 px-6 py-4 sticky top-0 z-30 backdrop-blur-md">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -204,7 +209,7 @@ export default function AdminDashboardPage() {
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow space-y-6">
-        
+
         {/* Toast Status */}
         {statusMessage && (
           <div className="p-3.5 rounded-xl bg-purple-950/80 border border-purple-500/40 text-purple-200 text-xs flex items-center justify-between animate-fadeIn">
@@ -229,16 +234,36 @@ export default function AdminDashboardPage() {
 
           <div className="p-4 rounded-2xl glass-panel border border-purple-500/20">
             <span className="text-xs font-mono text-purple-300 block mb-1">REGISTRATION GATE</span>
-            <span className={`text-base font-bold block mt-2 ${flags.registrationOpen ? 'text-emerald-400' : 'text-purple-300'}`}>
-              {flags.registrationOpen ? '🔓 Publicly Active' : '🔒 Early-Interest Only'}
+            <span className={`text-base font-bold flex items-center gap-1.5 mt-2 ${flags.registrationOpen ? 'text-emerald-400' : 'text-purple-300'}`}>
+              {flags.registrationOpen ? (
+                <>
+                  <Unlock className="w-4 h-4" />
+                  <span>Publicly Active</span>
+                </>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4" />
+                  <span>Early-Interest Only</span>
+                </>
+              )}
             </span>
             <span className="text-[11px] text-slate-400 block mt-0.5">Feature flag controlled</span>
           </div>
 
           <div className="p-4 rounded-2xl glass-panel border border-purple-500/20">
             <span className="text-xs font-mono text-emerald-300 block mb-1">PRIZE POOL VISIBILITY</span>
-            <span className={`text-base font-bold block mt-2 ${flags.prizePoolConfirmed ? 'text-emerald-400' : 'text-purple-400'}`}>
-              {flags.prizePoolConfirmed ? '✓ Published Confirmed' : '⏳ Draft / Hidden'}
+            <span className={`text-base font-bold flex items-center gap-1.5 mt-2 ${flags.prizePoolConfirmed ? 'text-emerald-400' : 'text-purple-400'}`}>
+              {flags.prizePoolConfirmed ? (
+                <>
+                  <CheckCircle className="w-4 h-4" />
+                  <span>Published Confirmed</span>
+                </>
+              ) : (
+                <>
+                  <Calendar className="w-4 h-4" />
+                  <span>Draft / Hidden</span>
+                </>
+              )}
             </span>
             <span className="text-[11px] text-slate-400 block mt-0.5">Publication rule compliant</span>
           </div>
@@ -299,11 +324,10 @@ export default function AdminDashboardPage() {
         <div className="flex flex-wrap items-center gap-2 border-b border-purple-500/20 pb-2">
           <button
             onClick={() => setActiveTab('waitlist')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
-              activeTab === 'waitlist'
-                ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${activeTab === 'waitlist'
+              ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
+              : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
           >
             <Users className="w-4 h-4 text-purple-400" />
             <span>Early-Interest Waitlist ({waitlist.length})</span>
@@ -311,11 +335,10 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab('sponsors')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
-              activeTab === 'sponsors'
-                ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${activeTab === 'sponsors'
+              ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
+              : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
           >
             <Briefcase className="w-4 h-4 text-sky-400" />
             <span>Sponsor Leads ({sponsors.length})</span>
@@ -323,11 +346,10 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab('flags')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
-              activeTab === 'flags'
-                ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${activeTab === 'flags'
+              ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
+              : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
           >
             <Sliders className="w-4 h-4 text-purple-400" />
             <span>Content & Gating Flags</span>
@@ -335,11 +357,10 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab('audit')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
-              activeTab === 'audit'
-                ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${activeTab === 'audit'
+              ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
+              : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
           >
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>Audit Trail ({auditLogs.length})</span>
@@ -349,7 +370,7 @@ export default function AdminDashboardPage() {
         {/* TAB 1: WAITLIST CRM */}
         {activeTab === 'waitlist' && (
           <div className="space-y-4">
-            
+
             {/* Filter & Export Bar */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 rounded-2xl glass-panel">
               <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
@@ -460,7 +481,7 @@ export default function AdminDashboardPage() {
                               <button
                                 onClick={() => handleUpdateWaitlistStatus(w.id, 'shortlisted')}
                                 className="px-2 py-1 rounded bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-[10px] font-semibold transition-all"
-                                title="Shortlist for 75-team arena"
+                                title="Shortlist for 100-team arena"
                               >
                                 Shortlist
                               </button>
@@ -496,7 +517,7 @@ export default function AdminDashboardPage() {
         {/* TAB 2: SPONSOR LEADS CRM */}
         {activeTab === 'sponsors' && (
           <div className="space-y-4">
-            
+
             <div className="flex items-center justify-between p-3 rounded-2xl glass-panel">
               <span className="text-xs text-slate-300 font-medium">
                 Inquiries received through KAIROS public prospectus & sponsorship portal
@@ -577,7 +598,7 @@ export default function AdminDashboardPage() {
         {/* TAB 3: FEATURE FLAGS & CONTENT CONTROLS */}
         {activeTab === 'flags' && (
           <div className="max-w-3xl space-y-6">
-            
+
             <div className="p-6 rounded-2xl glass-panel border border-purple-500/25 space-y-6">
               <div className="border-b border-purple-500/15 pb-4">
                 <h3 className="text-lg font-display font-bold text-white">
@@ -599,11 +620,10 @@ export default function AdminDashboardPage() {
                 <button
                   onClick={() => handleUpdateFlags({ registrationOpen: !flags.registrationOpen })}
                   disabled={savingFlags}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                    flags.registrationOpen
-                      ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-md'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                  }`}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${flags.registrationOpen
+                    ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-md'
+                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                    }`}
                 >
                   {flags.registrationOpen ? 'ENABLED (OPEN)' : 'DISABLED (GATED)'}
                 </button>
@@ -620,11 +640,10 @@ export default function AdminDashboardPage() {
                 <button
                   onClick={() => handleUpdateFlags({ prizePoolConfirmed: !flags.prizePoolConfirmed })}
                   disabled={savingFlags}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                    flags.prizePoolConfirmed
-                      ? 'bg-purple-700 hover:bg-purple-600 text-white shadow-md'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                  }`}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${flags.prizePoolConfirmed
+                    ? 'bg-purple-700 hover:bg-purple-600 text-white shadow-md'
+                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                    }`}
                 >
                   {flags.prizePoolConfirmed ? 'PUBLISHED (₹1,75,000)' : 'UNPUBLISHED (DRAFT)'}
                 </button>
@@ -641,11 +660,10 @@ export default function AdminDashboardPage() {
                 <button
                   onClick={() => handleUpdateFlags({ demoSandboxMode: !flags.demoSandboxMode })}
                   disabled={savingFlags}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                    flags.demoSandboxMode
-                      ? 'bg-purple-600 hover:bg-purple-500 text-white shadow-md'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                  }`}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${flags.demoSandboxMode
+                    ? 'bg-purple-600 hover:bg-purple-500 text-white shadow-md'
+                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                    }`}
                 >
                   {flags.demoSandboxMode ? 'SANDBOX ACTIVE' : 'SANDBOX OFF'}
                 </button>
@@ -656,7 +674,7 @@ export default function AdminDashboardPage() {
                 <label className="text-xs font-mono text-purple-300 block">
                   Global Hero Announcement Banner Message
                 </label>
-                
+
                 {/* Live Preview Bar */}
                 <div className="p-3 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center gap-2 shadow-inner">
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/40 text-purple-200 uppercase font-bold shrink-0">
@@ -746,13 +764,12 @@ export default function AdminDashboardPage() {
                             {log.organizerName}
                           </td>
                           <td className="px-4 py-3 whitespace-nowrap">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              log.action === 'AUTH_FAILURE' 
-                                ? 'bg-rose-950/80 text-rose-300 border border-rose-500/30' 
-                                : log.action === 'ADMIN_LOGIN'
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${log.action === 'AUTH_FAILURE'
+                              ? 'bg-rose-950/80 text-rose-300 border border-rose-500/30'
+                              : log.action === 'ADMIN_LOGIN'
                                 ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/30'
                                 : 'bg-purple-950/80 text-purple-300 border border-purple-500/30'
-                            }`}>
+                              }`}>
                               {log.action}
                             </span>
                           </td>
