@@ -55,6 +55,8 @@ export type KairosPermission =
   | 'checkin:manage'
   | 'submissions:manage'
   | 'audit:log'
+  | 'notifications:read'
+  | 'notifications:broadcast'
   // Super Admin Permissions
   | 'waitlist:export'
   | 'sponsors:export'
@@ -108,6 +110,8 @@ export const ROLE_PERMISSIONS: Record<KairosRole, Set<KairosPermission>> = {
     'checkin:manage',
     'submissions:manage',
     'audit:log',
+    'notifications:read',
+    'notifications:broadcast',
     'event:view_public'
   ]),
 
@@ -139,6 +143,8 @@ export const ROLE_PERMISSIONS: Record<KairosRole, Set<KairosPermission>> = {
     'organizers:manage',
     'audit:log',
     'audit:read',
+    'notifications:read',
+    'notifications:broadcast',
     'system:admin'
   ])
 };

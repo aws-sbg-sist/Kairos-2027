@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { getCurrentStudentSession } from '@/lib/student_auth';
+import { sendTransactionalEmail, buildRegistrationConfirmationEmail } from '@/lib/email';
 
 export async function POST(req: NextRequest) {
   // Rate limit: 10 registrations per minute per IP
@@ -151,6 +152,18 @@ export async function POST(req: NextRequest) {
         error: result.error || 'Registration failed',
         code: 'REGISTRATION_FAILED'
       }, { status: 409 });
+    }
+
+    // Non-blocking confirmation notification dispatch
+    try {
+      sendTransactionalEmail(buildRegistrationConfirmationEmail({
+        to: normEmail,
+        fullName: fullName.trim(),
+        track: preferredTrack || 'Agentic AI & Generative Intelligence',
+        registrationId: result.entry?.id
+      })).catch(err => console.warn('[Register Notification Warning]:', err));
+    } catch (e) {
+      console.warn('[Register Notification Warning]:', e);
     }
 
     return NextResponse.json({

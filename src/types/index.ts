@@ -288,3 +288,25 @@ export interface StudentAccount {
   createdAt: string;
   lastLoginAt?: string;
 }
+
+export interface NotificationLog {
+  id: string;
+  to: string;
+  subject: string;
+  template: string;
+  status: 'DELIVERED' | 'SIMULATED' | 'FAILED' | 'SUPPRESSED_DUPLICATE';
+  messageId?: string;
+  attempts: number;
+  idempotencyKey?: string;
+  error?: string;
+  timestamp: string;
+}
+
+export interface EmailPayload {
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
+  template?: string;
+  idempotencyKey?: string;
+}

@@ -5,6 +5,7 @@ import { getCurrentAdminSession } from '@/lib/auth';
 import { getCurrentStudentSession } from '@/lib/student_auth';
 import { verifyTeamLeader } from '@/lib/rbac';
 import { TECHNICAL_TRACKS } from '@/lib/config';
+import { sendTransactionalEmail, buildTeamCreationEmail, buildTeamJoiningConfirmationEmail } from '@/lib/email';
 
 export async function GET(req: NextRequest) {
   const rateLimitResult = checkRateLimit(req, { limit: 30, windowMs: 60_000 });
@@ -225,6 +226,16 @@ export async function POST(req: NextRequest) {
       githubUrl: github.trim(),
     });
 
+    // Non-blocking notification to team leader
+    sendTransactionalEmail(buildTeamCreationEmail({
+      to: newTeam.leaderEmail,
+      leaderName: newTeam.leaderName || leadName.trim(),
+      teamName: newTeam.teamName || teamName.trim(),
+      teamCode: newTeam.teamCode || newTeam.id || 'KAIROS-SQUAD',
+      inviteCode: newTeam.inviteCode || 'KAIROS-JOIN',
+      trackName: newTeam.trackId || trackId.trim(),
+    })).catch(err => console.error('[Email Dispatch Team Create Error]:', err));
+
     return NextResponse.json({
       success: true,
       message: 'Team successfully registered with 100% Zero Entry Fee!',
@@ -340,6 +351,18 @@ export async function PUT(req: NextRequest) {
     if (!joinResult.success) {
       const statusCode = joinResult.error?.includes('already registered') ? 409 : 400;
       return NextResponse.json({ success: false, error: joinResult.error }, { status: statusCode });
+    }
+
+    // Non-blocking notification to joining member
+    if (joinResult.team) {
+      sendTransactionalEmail(buildTeamJoiningConfirmationEmail({
+        to: memberEmail,
+        memberName: memberName.trim(),
+        teamName: joinResult.team.teamName || 'Kairos Squad',
+        teamCode: joinResult.team.teamCode || joinResult.team.id || 'KAIROS-SQUAD',
+        role: roleMapping,
+        trackName: joinResult.team.trackId,
+      })).catch(err => console.error('[Email Dispatch Team Join Error]:', err));
     }
 
     return NextResponse.json({

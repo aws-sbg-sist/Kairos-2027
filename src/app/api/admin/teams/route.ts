@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { resolveAuthContext, hasPermission } from '@/lib/rbac';
 import { ParticipantTeam } from '@/types';
+import { sendTransactionalEmail, buildAbstractReviewEmail } from '@/lib/email';
 
 export async function GET(req: NextRequest) {
   try {
@@ -139,6 +140,19 @@ export async function PATCH(req: NextRequest) {
     const result = db.updateTeamAdmin(identifier, updates, organizerName);
     if (!result.success || !result.team) {
       return NextResponse.json({ success: false, error: result.error || 'Failed to update team' }, { status: 404 });
+    }
+
+    if (body.selectionStage !== undefined && result.team?.leaderEmail) {
+      const isShortlisted = result.team.selectionStage === 'ON_CAMPUS_QUALIFIED' || result.team.selectionStage === 'ONLINE_SEMI_FINALIST';
+      sendTransactionalEmail(buildAbstractReviewEmail({
+        to: result.team.leaderEmail,
+        leaderName: result.team.leaderName || 'Team Leader',
+        teamName: result.team.teamName || 'Kairos Squad',
+        teamCode: result.team.teamCode || result.team.id || 'KAIROS-SQUAD',
+        status: isShortlisted ? 'SHORTLISTED' : (result.team.selectionStage === 'DISQUALIFIED' ? 'REJECTED' : 'UNDER_REVIEW'),
+        notes: updates.reviewerNotes || result.team.reviewerNotes,
+        trackName: result.team.trackId,
+      })).catch(err => console.error('[Email Abstract Review Error]:', err));
     }
 
     return NextResponse.json({

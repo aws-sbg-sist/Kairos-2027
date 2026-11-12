@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { getCurrentStudentSession } from '@/lib/student_auth';
 import { verifyTeamLeader } from '@/lib/rbac';
+import { sendTransactionalEmail, buildQualifierSubmissionEmail } from '@/lib/email';
 
 /**
  * PHASE 03 RBAC ENFORCEMENT (VULN-01 Resolved):
@@ -46,6 +47,22 @@ export async function POST(req: NextRequest) {
     // 4. Process validated submission
     const result = await processQualifierSubmission(body);
     const statusCode = result.status || (result.success ? 200 : 400);
+
+    if (result.success) {
+      const team = db.getTeamByCode(teamCode.trim().toUpperCase());
+      if (team) {
+        sendTransactionalEmail(buildQualifierSubmissionEmail({
+          to: team.leaderEmail || studentSession.email,
+          leaderName: team.leaderName || studentSession.fullName || 'Team Leader',
+          teamName: team.teamName || 'Kairos Squad',
+          teamCode: team.teamCode || team.id || 'KAIROS-SQUAD',
+          githubUrl: body.githubUrl.trim(),
+          loomVideoUrl: body.loomVideoUrl.trim(),
+          defenseSlot: result.submission?.defenseSlot,
+        })).catch(err => console.error('[Email Qualifier Submit Error]:', err));
+      }
+    }
+
     return NextResponse.json(result, { status: statusCode });
   } catch (err: any) {
     console.error('[API Qualifier Submit Error]:', err);

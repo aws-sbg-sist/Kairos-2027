@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
-import { sendTransactionalEmail } from '@/lib/email';
+import { sendTransactionalEmail, buildEmailVerificationEmail } from '@/lib/email';
 
 export async function POST(req: NextRequest) {
   // Rate limit: 5 registration requests per minute per IP
@@ -67,17 +67,11 @@ export async function POST(req: NextRequest) {
     // Attempt to send verification email (truthful local simulation or live AWS SES)
     const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000'}/auth/verify?token=${result.verificationToken}`;
     try {
-      await sendTransactionalEmail({
+      sendTransactionalEmail(buildEmailVerificationEmail({
         to: email.trim().toLowerCase(),
-        subject: 'Verify Your KAIROS 2027 Builder Identity',
-        html: `
-          <h2>Welcome to KAIROS 2027, ${fullName}!</h2>
-          <p>Please click the button below to verify your student email address and activate your builder pass:</p>
-          <p><a href="${verificationUrl}" style="background-color: #9333ea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Verify Email Address</a></p>
-          <p>Or paste this URL in your browser: ${verificationUrl}</p>
-        `,
-        text: `Welcome to KAIROS 2027, ${fullName}!\n\nVerify your email address here: ${verificationUrl}`
-      });
+        fullName,
+        verificationUrl
+      })).catch(emailErr => console.warn('[Register Email Warning]:', emailErr));
     } catch (emailErr) {
       console.warn('[Register Email Warning]:', emailErr);
     }

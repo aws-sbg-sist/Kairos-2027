@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.1167.0",
     "@supabase/supabase-js": "^2.119.0",
     "canvas-confetti": "^1.9.3",
     "framer-motion": "^11.11.9",

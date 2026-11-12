@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { resolveAuthContext, hasPermission } from '@/lib/rbac';
 import { verifyPassToken } from '@/lib/pass';
+import { sendTransactionalEmail, buildCheckinConfirmationEmail } from '@/lib/email';
 
 export async function GET(req: NextRequest) {
   try {
@@ -103,6 +104,20 @@ export async function POST(req: NextRequest) {
         success: false,
         error: result.error || 'Check-in validation failed.'
       }, { status: 400 });
+    }
+
+    // Non-blocking check-in confirmation email dispatch
+    const recipientEmail = verifiedParticipant?.email || result.team.leaderEmail;
+    const recipientName = verifiedParticipant?.name || result.team.leaderName || 'Builder';
+    if (recipientEmail) {
+      sendTransactionalEmail(buildCheckinConfirmationEmail({
+        to: recipientEmail,
+        participantName: recipientName,
+        teamName: result.team.teamName || 'Kairos Squad',
+        teamCode: result.team.teamCode || result.team.id || 'KAIROS-SQUAD',
+        deskBayAllocation: result.team.deskBayAllocation,
+        awsCreditVoucher: result.team.awsCreditVoucher,
+      })).catch(err => console.error('[Email Check-in Error]:', err));
     }
 
     return NextResponse.json({

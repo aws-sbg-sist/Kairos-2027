@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
-import { sendTransactionalEmail } from '@/lib/email';
+import { sendTransactionalEmail, buildPasswordResetEmail } from '@/lib/email';
 
 export async function POST(req: NextRequest) {
   // Rate limit: 5 requests per minute per IP
@@ -26,17 +26,11 @@ export async function POST(req: NextRequest) {
     if (result.resetToken) {
       const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000'}/auth/reset-password?token=${result.resetToken}`;
       try {
-        await sendTransactionalEmail({
+        sendTransactionalEmail(buildPasswordResetEmail({
           to: email.trim().toLowerCase(),
-          subject: 'Reset Your KAIROS 2027 Builder Password',
-          html: `
-            <h2>Password Reset Request</h2>
-            <p>We received a request to reset your password for KAIROS 2027. Click the link below to set a new password:</p>
-            <p><a href="${resetUrl}" style="background-color: #9333ea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Reset Password</a></p>
-            <p>This recovery link will expire in 1 hour. If you did not request this, you can safely ignore this email.</p>
-          `,
-          text: `Reset your KAIROS 2027 password: ${resetUrl}\nThis link expires in 1 hour.`
-        });
+          fullName: 'Student Builder',
+          resetUrl
+        })).catch(emailErr => console.warn('[Forgot Password Email Warning]:', emailErr));
       } catch (emailErr) {
         console.warn('[Forgot Password Email Warning]:', emailErr);
       }

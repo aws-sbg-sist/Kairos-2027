@@ -16,7 +16,8 @@ import {
   CSATResponse, 
   OrgMember,
   StudentAccount,
-  LeaderboardEntry
+  LeaderboardEntry,
+  NotificationLog
 } from '../types';
 import { hashPassword, verifyPassword, generateVerificationToken, verifyEmailToken, generatePasswordResetToken, verifyPasswordResetToken } from './student_auth';
 
@@ -36,6 +37,7 @@ interface StoreSchema {
   csat: CSATResponse[];
   members: OrgMember[];
   studentAccounts?: StudentAccount[];
+  notificationLogs?: NotificationLog[];
 }
 
 const DEFAULT_MEMBERS: OrgMember[] = [
@@ -587,7 +589,8 @@ const DEFAULT_STORE: StoreSchema = {
     }
   ],
   members: DEFAULT_MEMBERS,
-  studentAccounts: []
+  studentAccounts: [],
+  notificationLogs: []
 };
 
 // In-memory cache and serialized write queue to prevent concurrency race conditions
@@ -625,6 +628,7 @@ function readStore(): StoreSchema {
         evaluations: parsed.evaluations || DEFAULT_STORE.evaluations,
         csat: parsed.csat || DEFAULT_STORE.csat,
         studentAccounts: parsed.studentAccounts || [],
+        notificationLogs: parsed.notificationLogs || [],
       };
       cachedStore = store;
       return store;
@@ -1972,6 +1976,33 @@ export const db = {
     const norm = email.trim().toLowerCase();
     const entry = store.waitlist.find(w => w.email.trim().toLowerCase() === norm);
     return entry || null;
+  },
+
+  // Notification Logs Operations
+  getNotificationLogs(limit = 100): NotificationLog[] {
+    const store = readStore();
+    return (store.notificationLogs || []).slice(0, limit);
+  },
+
+  addNotificationLog(log: Omit<NotificationLog, 'id' | 'timestamp'>): NotificationLog {
+    const store = readStore();
+    const newLog: NotificationLog = {
+      ...log,
+      id: `notif-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      timestamp: new Date().toISOString()
+    };
+    if (!store.notificationLogs) store.notificationLogs = [];
+    store.notificationLogs.unshift(newLog);
+    if (store.notificationLogs.length > 1000) {
+      store.notificationLogs = store.notificationLogs.slice(0, 1000);
+    }
+    writeStore(store);
+    return newLog;
+  },
+
+  getNotificationByIdempotencyKey(key: string): NotificationLog | undefined {
+    const store = readStore();
+    return (store.notificationLogs || []).find(l => l.idempotencyKey === key);
   },
 
   // PostgreSQL Architecture Access
