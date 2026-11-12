@@ -230,3 +230,23 @@ export interface OrgMember {
     verificationHash: string;
   }[];
 }
+
+export interface StudentAccount {
+  id: string; // Unique student Profile ID
+  email: string; // Unique normalized email
+  fullName: string;
+  passwordHash: string;
+  emailVerified: boolean;
+  emailVerifiedAt?: string;
+  institution: string;
+  phone?: string;
+  collegeRegNo?: string;
+  yearOfStudy?: string;
+  department?: string;
+  portfolioUrl?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  tshirtSize?: string;
+  createdAt: string;
+  lastLoginAt?: string;
+}

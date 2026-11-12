@@ -1,5 +1,6 @@
 import { sanitizeCsvCell } from './csv';
 import { postgresDb } from './postgres_repository';
+import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { 
@@ -13,8 +14,10 @@ import {
   Judge, 
   CheckpointEvaluation, 
   CSATResponse, 
-  OrgMember 
+  OrgMember,
+  StudentAccount
 } from '../types';
+import { hashPassword, verifyPassword, generateVerificationToken, verifyEmailToken, generatePasswordResetToken, verifyPasswordResetToken } from './student_auth';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'kairos_store.json');
@@ -31,6 +34,7 @@ interface StoreSchema {
   evaluations: CheckpointEvaluation[];
   csat: CSATResponse[];
   members: OrgMember[];
+  studentAccounts?: StudentAccount[];
 }
 
 const DEFAULT_MEMBERS: OrgMember[] = [
@@ -581,7 +585,8 @@ const DEFAULT_STORE: StoreSchema = {
       submittedAt: '2027-01-24T16:00:00.000Z'
     }
   ],
-  members: DEFAULT_MEMBERS
+  members: DEFAULT_MEMBERS,
+  studentAccounts: []
 };
 
 // In-memory cache and serialized write queue to prevent concurrency race conditions
@@ -614,6 +619,7 @@ function readStore(): StoreSchema {
       judges: parsed.judges || DEFAULT_STORE.judges,
       evaluations: parsed.evaluations || DEFAULT_STORE.evaluations,
       csat: parsed.csat || DEFAULT_STORE.csat,
+      studentAccounts: parsed.studentAccounts || [],
     };
     cachedStore = store;
     return store;
@@ -1071,6 +1077,189 @@ export const db = {
       totalRadarSignals: radar.length,
       totalCSATResponses: store.csat.length,
     };
+  },
+
+
+  // --------------------------------------------------------------------------
+  // STUDENT AUTHENTICATION & IDENTITY MANAGEMENT
+  // --------------------------------------------------------------------------
+  getStudentByEmail(email: string): StudentAccount | undefined {
+    const store = readStore();
+    const norm = email.trim().toLowerCase();
+    return (store.studentAccounts || []).find(s => s.email.toLowerCase() === norm);
+  },
+
+  getStudentById(id: string): StudentAccount | undefined {
+    const store = readStore();
+    return (store.studentAccounts || []).find(s => s.id === id);
+  },
+
+  registerStudent(data: {
+    email: string;
+    password: string;
+    fullName: string;
+    institution?: string;
+    phone?: string;
+    department?: string;
+    yearOfStudy?: string;
+    tshirtSize?: string;
+  }): { success: boolean; account?: StudentAccount; verificationToken?: string; error?: string } {
+    const store = readStore();
+    const norm = data.email.trim().toLowerCase();
+
+    if (!store.studentAccounts) {
+      store.studentAccounts = [];
+    }
+
+    if (store.studentAccounts.some(s => s.email.toLowerCase() === norm)) {
+      return { success: false, error: 'EMAIL_ALREADY_REGISTERED' };
+    }
+
+    const id = `prof-${crypto.createHash('sha256').update(norm).digest('hex').substring(0, 16)}`;
+    const passwordHash = hashPassword(data.password);
+    const verificationToken = generateVerificationToken(norm);
+
+    const newAccount: StudentAccount = {
+      id,
+      email: norm,
+      fullName: data.fullName.trim(),
+      passwordHash,
+      emailVerified: false,
+      institution: (data.institution || 'Sathyabama Institute of Science and Technology').trim(),
+      phone: data.phone?.trim(),
+      department: data.department?.trim(),
+      yearOfStudy: data.yearOfStudy,
+      tshirtSize: data.tshirtSize,
+      createdAt: new Date().toISOString()
+    };
+
+    store.studentAccounts.push(newAccount);
+    writeStore(store);
+
+    return {
+      success: true,
+      account: newAccount,
+      verificationToken
+    };
+  },
+
+  verifyStudentEmail(token: string): { success: boolean; account?: StudentAccount; error?: string } {
+    const verification = verifyEmailToken(token);
+    if (!verification.valid || !verification.email) {
+      return { success: false, error: verification.expired ? 'TOKEN_EXPIRED' : 'INVALID_TOKEN' };
+    }
+
+    const store = readStore();
+    if (!store.studentAccounts) store.studentAccounts = [];
+
+    const norm = verification.email.toLowerCase();
+    const account = store.studentAccounts.find(s => s.email.toLowerCase() === norm);
+
+    if (!account) {
+      return { success: false, error: 'ACCOUNT_NOT_FOUND' };
+    }
+
+    account.emailVerified = true;
+    account.emailVerifiedAt = new Date().toISOString();
+
+    // Link existing waitlist registration now that email identity is verified
+    for (const w of store.waitlist) {
+      if (w.email.trim().toLowerCase() === norm) {
+        (w as any).profile_id = account.id;
+      }
+    }
+
+    writeStore(store);
+    return { success: true, account };
+  },
+
+  authenticateStudent(email: string, password: string): { success: boolean; account?: StudentAccount; error?: string } {
+    const store = readStore();
+    const norm = email.trim().toLowerCase();
+    const account = (store.studentAccounts || []).find(s => s.email.toLowerCase() === norm);
+
+    if (!account) {
+      return { success: false, error: 'INVALID_CREDENTIALS' };
+    }
+
+    const isValid = verifyPassword(password, account.passwordHash);
+    if (!isValid) {
+      return { success: false, error: 'INVALID_CREDENTIALS' };
+    }
+
+    account.lastLoginAt = new Date().toISOString();
+    writeStore(store);
+
+    return { success: true, account };
+  },
+
+  requestPasswordReset(email: string): { success: boolean; resetToken?: string; error?: string } {
+    const student = this.getStudentByEmail(email);
+    if (!student) {
+      // Security: Never reveal whether an email is registered
+      return { success: true };
+    }
+    const resetToken = generatePasswordResetToken(student.email);
+    return { success: true, resetToken };
+  },
+
+  resetStudentPassword(token: string, newPassword: string): { success: boolean; error?: string } {
+    const result = verifyPasswordResetToken(token);
+    if (!result.valid || !result.email) {
+      return { success: false, error: result.expired ? 'TOKEN_EXPIRED' : 'INVALID_TOKEN' };
+    }
+
+    const store = readStore();
+    const norm = result.email.toLowerCase();
+    const account = (store.studentAccounts || []).find(s => s.email.toLowerCase() === norm);
+
+    if (!account) {
+      return { success: false, error: 'ACCOUNT_NOT_FOUND' };
+    }
+
+    account.passwordHash = hashPassword(newPassword);
+    writeStore(store);
+
+    return { success: true };
+  },
+
+  updateStudentProfile(id: string, updates: Partial<StudentAccount>): { success: boolean; account?: StudentAccount; error?: string } {
+    const store = readStore();
+    const account = (store.studentAccounts || []).find(s => s.id === id);
+
+    if (!account) {
+      return { success: false, error: 'ACCOUNT_NOT_FOUND' };
+    }
+
+    if (updates.fullName) account.fullName = updates.fullName.trim();
+    if (updates.phone !== undefined) account.phone = updates.phone;
+    if (updates.institution) account.institution = updates.institution.trim();
+    if (updates.department !== undefined) account.department = updates.department;
+    if (updates.yearOfStudy !== undefined) account.yearOfStudy = updates.yearOfStudy;
+    if (updates.portfolioUrl !== undefined) account.portfolioUrl = updates.portfolioUrl;
+    if (updates.githubUrl !== undefined) account.githubUrl = updates.githubUrl;
+    if (updates.linkedinUrl !== undefined) account.linkedinUrl = updates.linkedinUrl;
+    if (updates.tshirtSize !== undefined) account.tshirtSize = updates.tshirtSize;
+
+    writeStore(store);
+    return { success: true, account };
+  },
+
+  getStudentTeam(email: string): ParticipantTeam | null {
+    const store = readStore();
+    const norm = email.trim().toLowerCase();
+    const team = store.teams.find(t => 
+      t.leaderEmail.toLowerCase() === norm ||
+      (t.members || []).some(m => m.email.toLowerCase() === norm)
+    );
+    return team || null;
+  },
+
+  getStudentWaitlist(email: string): WaitlistEntry | null {
+    const store = readStore();
+    const norm = email.trim().toLowerCase();
+    const entry = store.waitlist.find(w => w.email.trim().toLowerCase() === norm);
+    return entry || null;
   },
 
   // PostgreSQL Architecture Access
