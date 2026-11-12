@@ -1,3 +1,4 @@
+import { sanitizeCsvCell } from '@/lib/auth';
 import fs from 'fs';
 import path from 'path';
 import { 
@@ -934,16 +935,16 @@ export const db = {
     const store = readStore();
     const headers = ['ID', 'Satisfaction (1-5)', 'NPS (0-10)', 'Cloud Services Used', 'Pursuing AWS Cert', 'Feedback', 'Testimonial', 'Submitted At'];
     const rows = store.csat.map(c => [
-      c.id,
-      c.overallSatisfaction,
-      c.npsScore,
-      `"${c.cloudServicesUsed.join(', ')}"`,
-      c.pursuingAwsCertification,
-      `"${(c.eventFeedback || '').replace(/"/g, '""')}"`,
-      `"${(c.testimonialQuote || '').replace(/"/g, '""')}"`,
-      c.submittedAt
+      sanitizeCsvCell(c.id),
+      sanitizeCsvCell(c.overallSatisfaction),
+      sanitizeCsvCell(c.npsScore),
+      sanitizeCsvCell((c.cloudServicesUsed || []).join(', ')),
+      sanitizeCsvCell(c.pursuingAwsCertification),
+      sanitizeCsvCell(c.eventFeedback || ''),
+      sanitizeCsvCell(c.testimonialQuote || ''),
+      sanitizeCsvCell(c.submittedAt)
     ]);
-    return [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    return [headers.map(sanitizeCsvCell).join(','), ...rows.map(r => r.join(','))].join('\n');
   },
 
   // Members & Leadership

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { getCurrentAdminSession } from '@/lib/auth';
+import { getCurrentAdminSession, sanitizeCsvCell } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {
   const session = await getCurrentAdminSession();
@@ -15,18 +15,18 @@ export async function GET(req: NextRequest) {
     const list = db.getWaitlist();
     const headers = ['ID', 'Full Name', 'Email', 'Institution', 'Year', 'Department', 'Track', 'Portfolio', 'Registered At'];
     const rows = list.map(item => [
-      item.id,
-      `"${item.fullName.replace(/"/g, '""')}"`,
-      `"${item.email.replace(/"/g, '""')}"`,
-      `"${item.institution.replace(/"/g, '""')}"`,
-      `"${item.yearOfStudy}"`,
-      `"${item.department.replace(/"/g, '""')}"`,
-      `"${item.preferredTrack.replace(/"/g, '""')}"`,
-      `"${item.portfolioUrl || ''}"`,
-      item.createdAt
+      sanitizeCsvCell(item.id),
+      sanitizeCsvCell(item.fullName),
+      sanitizeCsvCell(item.email),
+      sanitizeCsvCell(item.institution),
+      sanitizeCsvCell(item.yearOfStudy),
+      sanitizeCsvCell(item.department),
+      sanitizeCsvCell(item.preferredTrack),
+      sanitizeCsvCell(item.portfolioUrl || ''),
+      sanitizeCsvCell(item.createdAt)
     ]);
 
-    const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const csvContent = [headers.map(sanitizeCsvCell).join(','), ...rows.map(r => r.join(','))].join('\n');
     return new NextResponse(csvContent, {
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
@@ -39,18 +39,18 @@ export async function GET(req: NextRequest) {
     const sponsors = db.getSponsors();
     const headers = ['ID', 'Company', 'Contact Person', 'Email', 'Phone', 'Tier', 'Status', 'Requirements', 'Received At'];
     const rows = sponsors.map(s => [
-      s.id,
-      `"${s.companyName.replace(/"/g, '""')}"`,
-      `"${s.contactPerson.replace(/"/g, '""')}"`,
-      `"${s.contactEmail.replace(/"/g, '""')}"`,
-      `"${s.contactPhone || ''}"`,
-      `"${s.interestedTier}"`,
-      `"${s.status}"`,
-      `"${(s.customRequirements || '').replace(/"/g, '""')}"`,
-      s.createdAt
+      sanitizeCsvCell(s.id),
+      sanitizeCsvCell(s.companyName),
+      sanitizeCsvCell(s.contactPerson),
+      sanitizeCsvCell(s.contactEmail),
+      sanitizeCsvCell(s.contactPhone || ''),
+      sanitizeCsvCell(s.interestedTier),
+      sanitizeCsvCell(s.status),
+      sanitizeCsvCell(s.customRequirements || ''),
+      sanitizeCsvCell(s.createdAt)
     ]);
 
-    const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const csvContent = [headers.map(sanitizeCsvCell).join(','), ...rows.map(r => r.join(','))].join('\n');
     return new NextResponse(csvContent, {
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
