@@ -155,6 +155,26 @@
       "status": "pending",
       "id": "w-1794480960434-rc1gh",
       "createdAt": "2026-11-12T10:56:00.434Z"
+    },
+    {
+      "fullName": "Ravi Chandran",
+      "email": "ravi.chandran.1794481647677@sathyabama.ac.in",
+      "phone": "+91 97403 99001",
+      "institution": "SIST",
+      "college": "SIST",
+      "department": "Computer Science & Engineering",
+      "yearOfStudy": "3rd Year",
+      "githubUrl": "",
+      "linkedinUrl": "",
+      "preferredTrack": "track-quantum",
+      "teamStatus": "seeking_team",
+      "meetupProfileUrl": "",
+      "awsBuilderCenterUrl": "",
+      "experienceLevel": "Intermediate",
+      "tShirtSize": "L",
+      "status": "pending",
+      "id": "w-1794481652888-dqkxi",
+      "createdAt": "2026-11-12T11:07:32.888Z"
     }
   ],
   "sponsors": [
@@ -216,6 +236,27 @@
     "registrationDeadline": "2027-01-06T23:59:59+05:30"
   },
   "auditLogs": [
+    {
+      "id": "log-1794481652581-m18s",
+      "timestamp": "2026-11-12T11:07:32.581Z",
+      "organizerName": "Ravi Chandran",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [ravi.chandran.1794481647677@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794481651969-2a1m",
+      "timestamp": "2026-11-12T11:07:31.969Z",
+      "organizerName": "Meera Krishnan",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [meera.krish.1794481647677@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794481650315-jnu0",
+      "timestamp": "2026-11-12T11:07:30.315Z",
+      "organizerName": "Arjun Ramanathan",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [arjun.raman.1794481647677@sathyabama.ac.in]"
+    },
     {
       "id": "log-1794480965531-jpkv",
       "timestamp": "2026-11-12T10:56:05.531Z",
@@ -1255,6 +1296,52 @@
         }
       ],
       "createdAt": "2026-11-12T10:56:09.400Z"
+    },
+    {
+      "id": "team-1794481651425",
+      "teamCode": "KAIROS-T009",
+      "teamName": "Titan Mesh 1794481647677",
+      "inviteCode": "KAIROS-7542",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "arjun.raman.1794481647677@sathyabama.ac.in",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "Self-Organizing Drone Swarms using Amazon Bedrock",
+      "problemAbstract": "A decentralized swarm routing protocol built on AWS IoT Greengrass and Amazon Bedrock Titan models to negotiate dynamic mesh pathways.",
+      "architecturePdfUrl": "",
+      "githubUrl": "https://github.com/kairos2027/titan-mesh",
+      "members": [
+        {
+          "id": "m-lead-1794481651425",
+          "name": "Arjun Ramanathan",
+          "email": "arjun.raman.1794481647677@sathyabama.ac.in",
+          "phone": "+91 99401 55667",
+          "collegeRegNo": "44112233",
+          "role": "Leader",
+          "college": "SIST Chennai",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        },
+        {
+          "id": "m-1794481652050",
+          "name": "Meera Krishnan",
+          "email": "meera.krish.1794481647677@sathyabama.ac.in",
+          "phone": "+91 98402 77889",
+          "collegeRegNo": "44113344",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "tshirtSize": "L",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:07:31.425Z"
     }
   ],
   "radarSignals": [
@@ -1482,6 +1569,20 @@
       "rawTotalScore": 91,
       "normalizedZScore": -0.6155,
       "evaluatedAt": "2026-11-12T10:54:24.363Z"
+    },
+    {
+      "teamId": "KAIROS-T009",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 26,
+      "criterion2Score": 23,
+      "criterion3Score": 22,
+      "criterion4Score": 18,
+      "qualitativeFeedback": "Exceptional autonomous agent consensus. Real-time telemetry is robust.",
+      "id": "eval-1794481654226-dcvo",
+      "rawTotalScore": 89,
+      "normalizedZScore": -1.2247,
+      "evaluatedAt": "2026-11-12T11:07:34.226Z"
     }
   ],
   "csat": [
@@ -2011,6 +2112,43 @@
       "createdAt": "2026-11-12T10:56:05.173Z",
       "emailVerifiedAt": "2026-11-12T10:56:05.283Z",
       "lastLoginAt": "2026-11-12T10:56:05.531Z"
+    },
+    {
+      "id": "prof-59819c90d377c5e6",
+      "email": "arjun.raman.1794481647677@sathyabama.ac.in",
+      "fullName": "Arjun Ramanathan",
+      "passwordHash": "208b79770cd4d1d0e1e035e2f2b67f71:c8e8499bff790edd0d249a922839a96ca1d606623cb66242c7712888d3755a188702e113fd606d198ade95253cbdc8d00533a085deb8092a914bcb5aa73f8b34",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:07:29.309Z",
+      "emailVerifiedAt": "2026-11-12T11:07:29.767Z",
+      "lastLoginAt": "2026-11-12T11:07:30.314Z"
+    },
+    {
+      "id": "prof-2b6f11772ceecd48",
+      "email": "meera.krish.1794481647677@sathyabama.ac.in",
+      "fullName": "Meera Krishnan",
+      "passwordHash": "87dfe6d68611225b0d131b7d704023ae:8111adf25c8344c238a12c519fc8962db39b122e216785d2010128835c5267099d057af71caa78c4ab40a59b9114d21c48940568655e52e7a81175b68da20fc5",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:07:31.635Z",
+      "emailVerifiedAt": "2026-11-12T11:07:31.733Z",
+      "lastLoginAt": "2026-11-12T11:07:31.968Z"
+    },
+    {
+      "id": "prof-c56021cd5c6e55fb",
+      "email": "ravi.chandran.1794481647677@sathyabama.ac.in",
+      "fullName": "Ravi Chandran",
+      "passwordHash": "5cf1553f5626d73e782a1c00c7cbddc0:352c23f2289c3511f805dc377b1586a098a5d16e0c7bdd230c6b312106e7b44070e50dd60a0a9ffe89673a8e48f838fd2084986b96b1befdc5bb46fdd71dd87c",
+      "emailVerified": true,
+      "institution": "SIST",
+      "createdAt": "2026-11-12T11:07:32.281Z",
+      "emailVerifiedAt": "2026-11-12T11:07:32.363Z",
+      "lastLoginAt": "2026-11-12T11:07:32.581Z",
+      "phone": "+91 97403 99001",
+      "department": "School of Computing",
+      "yearOfStudy": "3rd Year",
+      "tshirtSize": "L"
     }
   ]
 }

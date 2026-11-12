@@ -1024,6 +1024,22 @@ export const db = {
     return store.evaluations;
   },
 
+  getTeamEvaluations(teamIdOrCode: string): CheckpointEvaluation[] {
+    const store = readStore();
+    const clean = teamIdOrCode.trim().toLowerCase();
+    const targetIds = new Set<string>([clean]);
+    const team = store.teams.find(t => 
+      t.id.toLowerCase() === clean || 
+      (t.teamCode && t.teamCode.toLowerCase() === clean) ||
+      (t.inviteCode && t.inviteCode.toLowerCase() === clean)
+    );
+    if (team) {
+      targetIds.add(team.id.toLowerCase());
+      if (team.teamCode) targetIds.add(team.teamCode.toLowerCase());
+    }
+    return store.evaluations.filter(e => targetIds.has(e.teamId.toLowerCase()));
+  },
+
   addEvaluation(evalData: Omit<CheckpointEvaluation, 'id' | 'rawTotalScore' | 'normalizedZScore' | 'evaluatedAt'>): CheckpointEvaluation {
     const store = readStore();
     const rawTotalScore = evalData.criterion1Score + evalData.criterion2Score + evalData.criterion3Score + evalData.criterion4Score;

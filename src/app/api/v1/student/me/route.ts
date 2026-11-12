@@ -22,6 +22,7 @@ export async function GET() {
   // Derive associated team and waitlist records
   const team = db.getStudentTeam(account.email);
   const waitlist = db.getStudentWaitlist(account.email);
+  const evaluations = team ? db.getTeamEvaluations(team.id) : [];
 
   return NextResponse.json({
     success: true,
@@ -43,7 +44,8 @@ export async function GET() {
       lastLoginAt: account.lastLoginAt
     },
     team,
-    waitlist
+    waitlist,
+    evaluations
   });
 }
 

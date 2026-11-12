@@ -160,6 +160,13 @@ export default function ParticipantPortalPage() {
 
           <div className="flex items-center gap-3">
             <Link
+              href="/dashboard"
+              className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-slate-700 transition-colors flex items-center gap-1.5"
+            >
+              <span>Dashboard</span>
+            </Link>
+
+            <Link
               href="/portal/pass"
               className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-colors flex items-center gap-1.5 shadow-sm"
             >
@@ -323,11 +330,15 @@ export default function ParticipantPortalPage() {
                   </div>
                 </div>
 
-                {/* Project Blueprint */}
-                {team.projectTitle && (
+                {/* Project Abstract */}
+                {(team.problemTitle || (team as any).projectTitle) && (
                   <div className="p-4 rounded-xl bg-slate-950/40 border border-purple-500/15 space-y-2">
-                    <span className="text-xs font-bold text-purple-300 block">{team.projectTitle}</span>
-                    <p className="text-xs text-slate-400 leading-relaxed">{team.projectAbstract}</p>
+                    <span className="text-xs font-bold text-purple-300 block">
+                      {team.problemTitle || (team as any).projectTitle}
+                    </span>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      {team.problemAbstract || (team as any).projectAbstract}
+                    </p>
                   </div>
                 )}
               </div>
