@@ -156,6 +156,12 @@ export interface ParticipantTeam {
   deskBayAllocation?: string;
   checkedIn?: boolean;
   checkedInAt?: string;
+  checkedInBy?: string;
+
+  // Review & Evaluation
+  reviewerNotes?: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
   
   // AWS Credits
   awsCreditVoucher?: string;
@@ -169,8 +175,10 @@ export interface Judge {
   organization: string;
   designation: string;
   trackSpecialization?: string;
+  assignedTracks?: string[];
   assignedHall?: string;
   isActive: boolean;
+  createdAt?: string;
 }
 
 export interface CheckpointEvaluation {

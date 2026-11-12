@@ -264,6 +264,10 @@ export const postgresDb = {
       deskBayAllocation: t.desk_bay_allocation,
       checkedIn: t.checked_in,
       checkedInAt: t.checked_in_at,
+      checkedInBy: t.checked_in_by,
+      reviewerNotes: t.reviewer_notes,
+      reviewedBy: t.reviewed_by,
+      reviewedAt: t.reviewed_at,
       awsCreditVoucher: t.aws_credit_voucher,
       createdAt: t.created_at
     }));
@@ -321,6 +325,10 @@ export const postgresDb = {
       deskBayAllocation: data.desk_bay_allocation,
       checkedIn: data.checked_in,
       checkedInAt: data.checked_in_at,
+      checkedInBy: data.checked_in_by,
+      reviewerNotes: data.reviewer_notes,
+      reviewedBy: data.reviewed_by,
+      reviewedAt: data.reviewed_at,
       awsCreditVoucher: data.aws_credit_voucher,
       createdAt: data.created_at
     };
@@ -490,6 +498,100 @@ export const postgresDb = {
 
     const updated = await this.getTeamByCode(team.teamCode || team.id || '');
     return { success: true, team: updated || undefined };
+  },
+
+  async updateTeamAdmin(teamCodeOrId: string, updates: Partial<ParticipantTeam>, organizerName?: string): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const team = await this.getTeamByCode(teamCodeOrId);
+    if (!team) return { success: false, error: `Team ${teamCodeOrId} not found.` };
+
+    const pgUpdates: any = {};
+    if (updates.teamName) pgUpdates.team_name = updates.teamName.trim();
+    if (updates.trackId) pgUpdates.track_id = updates.trackId.trim();
+    if (updates.problemTitle) pgUpdates.problem_title = updates.problemTitle.trim();
+    if (updates.problemAbstract) pgUpdates.problem_abstract = updates.problemAbstract.trim();
+    if (updates.selectionStage !== undefined) pgUpdates.selection_stage = updates.selectionStage;
+    if (updates.status !== undefined) pgUpdates.status = updates.status;
+    if (updates.deskBayAllocation !== undefined) pgUpdates.desk_bay_allocation = updates.deskBayAllocation.trim();
+    if (updates.awsCreditVoucher !== undefined) pgUpdates.aws_credit_voucher = updates.awsCreditVoucher.trim();
+    if (updates.githubUrl !== undefined) pgUpdates.github_url = updates.githubUrl.trim();
+    if (updates.loomVideoUrl !== undefined) pgUpdates.loom_video_url = updates.loomVideoUrl.trim();
+
+    if (updates.reviewerNotes !== undefined) {
+      pgUpdates.reviewer_notes = updates.reviewerNotes.trim();
+      pgUpdates.reviewed_by = updates.reviewedBy || organizerName || 'ORGANIZER';
+      pgUpdates.reviewed_at = updates.reviewedAt || new Date().toISOString();
+    }
+
+    if (updates.checkedIn !== undefined) {
+      pgUpdates.checked_in = updates.checkedIn;
+      if (updates.checkedIn) {
+        pgUpdates.checked_in_at = updates.checkedInAt || new Date().toISOString();
+        pgUpdates.checked_in_by = updates.checkedInBy || organizerName || 'ORGANIZER';
+      } else {
+        pgUpdates.checked_in_at = null;
+        pgUpdates.checked_in_by = null;
+      }
+    }
+
+    const { error } = await supabase.from('teams').update(pgUpdates).eq('id', team.id);
+    if (error) return { success: false, error: error.message };
+
+    const logOrg = organizerName || 'ORGANIZER';
+    await this.addAuditLog(
+      logOrg,
+      'UPDATE_TEAM',
+      `Team [${team.teamCode || team.teamName}] updated by ${logOrg} (Stage: ${updates.selectionStage || team.selectionStage || 'ROUND_0_APPLICANT'})`
+    );
+
+    const updated = await this.getTeamByCode(team.teamCode || team.id || '');
+    return { success: true, team: updated || undefined };
+  },
+
+  async checkInTeam(teamCodeOrId: string, organizerName?: string): Promise<{ success: boolean; alreadyCheckedIn?: boolean; team?: ParticipantTeam; error?: string; message?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const team = await this.getTeamByCode(teamCodeOrId);
+    if (!team) return { success: false, error: `Team ${teamCodeOrId} not found in database.` };
+
+    if (team.selectionStage === 'DISQUALIFIED') {
+      return { success: false, error: `Team ${team.teamCode} (${team.teamName}) has been DISQUALIFIED and is ineligible for event check-in.` };
+    }
+
+    if (team.checkedIn) {
+      return {
+        success: false,
+        alreadyCheckedIn: true,
+        team,
+        message: `Duplicate check-in prevented: Team ${team.teamName} (${team.teamCode}) was already checked in on ${team.checkedInAt || 'today'} by ${team.checkedInBy || 'Staff'}.`
+      };
+    }
+
+    const logOrg = organizerName || 'ORGANIZER';
+    const checkedAt = new Date().toISOString();
+    const { error } = await supabase.from('teams').update({
+      checked_in: true,
+      checked_in_at: checkedAt,
+      checked_in_by: logOrg
+    }).eq('id', team.id);
+
+    if (error) return { success: false, error: error.message };
+
+    await this.addAuditLog(
+      logOrg,
+      'CHECK_IN_TEAM',
+      `Checked in team ${team.teamCode} (${team.teamName}) at desk bay [${team.deskBayAllocation || 'Unassigned'}] by ${logOrg}`
+    );
+
+    const updated = await this.getTeamByCode(team.teamCode || team.id || '');
+    return {
+      success: true,
+      team: updated || undefined,
+      message: `Verified and checked in: ${team.teamName} (${team.teamCode}). Desk Bay: ${team.deskBayAllocation || 'Unassigned'}.`
+    };
   },
 
   async removeTeamMember(teamCode: string, memberEmail: string): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
@@ -880,6 +982,97 @@ export const postgresDb = {
     };
   },
 
+  async addJudge(judgeData: Omit<Judge, 'id'>, organizerName?: string): Promise<Judge> {
+    const supabase = getSupabaseAdminClient();
+    const id = `judge-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
+    const accessPin = judgeData.accessPin?.trim() || String(Math.floor(100000 + Math.random() * 900000));
+    const judge: Judge = {
+      ...judgeData,
+      id,
+      accessPin,
+      isActive: judgeData.isActive ?? true,
+      createdAt: new Date().toISOString()
+    };
+
+    if (supabase) {
+      await supabase.from('judges').insert({
+        id,
+        access_pin: accessPin,
+        full_name: judgeData.fullName.trim(),
+        organization: judgeData.organization.trim(),
+        designation: judgeData.designation.trim(),
+        track_specialization: judgeData.trackSpecialization?.trim() || null,
+        assigned_hall: judgeData.assignedHall?.trim() || null,
+        is_active: judgeData.isActive ?? true,
+        created_at: judge.createdAt
+      });
+    }
+
+    const logOrg = organizerName || 'ORGANIZER';
+    await this.addAuditLog(
+      logOrg,
+      'CREATE_JUDGE',
+      `Added new judge ${judge.fullName} (${judge.organization}) by ${logOrg}`
+    );
+
+    return judge;
+  },
+
+  async updateJudge(judgeId: string, updates: Partial<Judge>, organizerName?: string): Promise<Judge | null> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return null;
+
+    const pgUpdates: any = {};
+    if (updates.fullName !== undefined) pgUpdates.full_name = updates.fullName.trim();
+    if (updates.organization !== undefined) pgUpdates.organization = updates.organization.trim();
+    if (updates.designation !== undefined) pgUpdates.designation = updates.designation.trim();
+    if (updates.trackSpecialization !== undefined) pgUpdates.track_specialization = updates.trackSpecialization.trim();
+    if (updates.assignedHall !== undefined) pgUpdates.assigned_hall = updates.assignedHall.trim();
+    if (updates.accessPin !== undefined) pgUpdates.access_pin = updates.accessPin.trim();
+    if (updates.isActive !== undefined) pgUpdates.is_active = updates.isActive;
+
+    const { error } = await supabase.from('judges').update(pgUpdates).eq('id', judgeId);
+    if (error) return null;
+
+    const { data } = await supabase.from('judges').select('*').eq('id', judgeId).single();
+    if (!data) return null;
+
+    const logOrg = organizerName || 'ORGANIZER';
+    await this.addAuditLog(
+      logOrg,
+      'UPDATE_JUDGE',
+      `Updated judge [${data.full_name}] (Active: ${data.is_active}) by ${logOrg}`
+    );
+
+    return {
+      id: data.id,
+      accessPin: data.access_pin,
+      fullName: data.full_name,
+      organization: data.organization,
+      designation: data.designation,
+      trackSpecialization: data.track_specialization,
+      assignedHall: data.assigned_hall,
+      isActive: data.is_active
+    };
+  },
+
+  async deleteJudge(judgeId: string, organizerName?: string): Promise<boolean> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return false;
+
+    const { error } = await supabase.from('judges').delete().eq('id', judgeId);
+    if (error) return false;
+
+    const logOrg = organizerName || 'ORGANIZER';
+    await this.addAuditLog(
+      logOrg,
+      'DELETE_JUDGE',
+      `Removed judge [${judgeId}] by ${logOrg}`
+    );
+
+    return true;
+  },
+
   async addEvaluation(evalData: Omit<CheckpointEvaluation, 'id' | 'rawTotalScore' | 'normalizedZScore' | 'evaluatedAt'>): Promise<CheckpointEvaluation> {
     const supabase = getSupabaseAdminClient();
     if (!supabase) throw new Error('Database not configured');
@@ -1051,5 +1244,77 @@ export const postgresDb = {
     }
 
     return members;
+  },
+
+  async getAdminAnalytics() {
+    const [waitlist, teams, judges, evaluations, sponsors, logs] = await Promise.all([
+      this.getWaitlist(),
+      this.getTeams(),
+      this.getJudges(),
+      (async () => {
+        const supabase = getSupabaseAdminClient();
+        if (!supabase) return [];
+        const { data } = await supabase.from('evaluations').select('*');
+        return data || [];
+      })(),
+      this.getSponsors(),
+      this.getAuditLogs()
+    ]);
+
+    const teamsByTrack: Record<string, number> = {};
+    teams.forEach(t => {
+      const tid = t.trackId || 'general';
+      teamsByTrack[tid] = (teamsByTrack[tid] || 0) + 1;
+    });
+
+    const submissionsWithGithub = teams.filter(t => !!t.githubUrl).length;
+    const submissionsWithLoom = teams.filter(t => !!t.loomVideoUrl).length;
+    const submissionsComplete = teams.filter(t => !!t.githubUrl && !!t.loomVideoUrl).length;
+    const submissionsMissing = teams.filter(t => !t.githubUrl || !t.loomVideoUrl).length;
+
+    const checkedInTeams = teams.filter(t => t.checkedIn).length;
+    const checkInRate = teams.length > 0 ? Math.round((checkedInTeams / teams.length) * 100) : 0;
+
+    const pendingReviews = teams.filter(t => !t.reviewerNotes && t.selectionStage === 'ROUND_0_APPLICANT').length;
+    const semiFinalists = teams.filter(t => t.selectionStage === 'ONLINE_SEMI_FINALIST').length;
+    const finalists = teams.filter(t => t.selectionStage === 'ON_CAMPUS_QUALIFIED').length;
+    const disqualified = teams.filter(t => t.selectionStage === 'DISQUALIFIED').length;
+
+    const totalBuilders = teams.reduce((acc, t) => acc + (t.members ? t.members.length : 0), 0);
+    const confirmedBuilders = teams.reduce((acc, t) => acc + (t.members ? t.members.filter(m => m.confirmed).length : 0), 0);
+
+    return {
+      totalRegistrations: waitlist.length,
+      totalWaitlist: waitlist.length,
+      totalTeams: teams.length,
+      totalBuilders,
+      confirmedBuilders,
+      teamsByTrack,
+      pendingReviews,
+      semiFinalists,
+      finalists,
+      disqualified,
+      submissions: {
+        total: teams.length,
+        withGithub: submissionsWithGithub,
+        withLoom: submissionsWithLoom,
+        complete: submissionsComplete,
+        missing: submissionsMissing,
+      },
+      checkin: {
+        totalTeams: teams.length,
+        checkedInTeams,
+        rate: checkInRate,
+      },
+      judges: {
+        total: judges.length,
+        active: judges.filter(j => j.isActive).length,
+        evaluationsCount: evaluations.length,
+      },
+      sponsors: {
+        total: sponsors.length,
+      },
+      recentLogs: logs.slice(0, 20),
+    };
   }
 };

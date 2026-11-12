@@ -48,6 +48,11 @@ export type KairosPermission =
   | 'sponsors:read'
   | 'referrals:read'
   | 'teams:read_all'
+  | 'teams:manage'
+  | 'abstracts:review'
+  | 'judges:manage'
+  | 'checkin:manage'
+  | 'submissions:manage'
   | 'audit:log'
   // Super Admin Permissions
   | 'waitlist:export'
@@ -96,6 +101,11 @@ export const ROLE_PERMISSIONS: Record<KairosRole, Set<KairosPermission>> = {
     'sponsors:read',
     'referrals:read',
     'teams:read_all',
+    'teams:manage',
+    'abstracts:review',
+    'judges:manage',
+    'checkin:manage',
+    'submissions:manage',
     'audit:log',
     'event:view_public'
   ]),
@@ -117,6 +127,11 @@ export const ROLE_PERMISSIONS: Record<KairosRole, Set<KairosPermission>> = {
     'sponsors:export',
     'referrals:read',
     'teams:read_all',
+    'teams:manage',
+    'abstracts:review',
+    'judges:manage',
+    'checkin:manage',
+    'submissions:manage',
     'csat:read',
     'csat:export',
     'flags:update',

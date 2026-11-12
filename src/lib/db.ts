@@ -964,6 +964,116 @@ export const db = {
     return true;
   },
 
+  updateTeamAdmin(teamIdOrCode: string, updates: Partial<ParticipantTeam>, organizerName?: string): { success: boolean; team?: ParticipantTeam; error?: string } {
+    const store = readStore();
+    const clean = teamIdOrCode.trim().toUpperCase();
+    const team = store.teams.find(t => 
+      (t.teamCode && t.teamCode.toUpperCase() === clean) || 
+      (t.id && t.id.toUpperCase() === clean) || 
+      (t.inviteCode && t.inviteCode.toUpperCase() === clean)
+    );
+    if (!team) {
+      return { success: false, error: `Team "${teamIdOrCode}" was not found in the database.` };
+    }
+
+    if (updates.teamName !== undefined) team.teamName = updates.teamName.trim();
+    if (updates.trackId !== undefined) team.trackId = updates.trackId.trim();
+    if (updates.problemTitle !== undefined) team.problemTitle = updates.problemTitle.trim();
+    if (updates.problemAbstract !== undefined) team.problemAbstract = updates.problemAbstract.trim();
+    if (updates.selectionStage !== undefined) team.selectionStage = updates.selectionStage;
+    if (updates.status !== undefined) team.status = updates.status;
+    if (updates.deskBayAllocation !== undefined) team.deskBayAllocation = updates.deskBayAllocation.trim();
+    if (updates.awsCreditVoucher !== undefined) team.awsCreditVoucher = updates.awsCreditVoucher.trim();
+    if (updates.githubUrl !== undefined) team.githubUrl = updates.githubUrl.trim();
+    if (updates.loomVideoUrl !== undefined) team.loomVideoUrl = updates.loomVideoUrl.trim();
+
+    if (updates.reviewerNotes !== undefined) {
+      team.reviewerNotes = updates.reviewerNotes.trim();
+      team.reviewedBy = updates.reviewedBy || organizerName || 'ORGANIZER';
+      team.reviewedAt = updates.reviewedAt || new Date().toISOString();
+    }
+
+    if (updates.checkedIn !== undefined) {
+      team.checkedIn = updates.checkedIn;
+      if (updates.checkedIn) {
+        team.checkedInAt = updates.checkedInAt || new Date().toISOString();
+        team.checkedInBy = updates.checkedInBy || organizerName || 'ORGANIZER';
+      } else {
+        team.checkedInAt = undefined;
+        team.checkedInBy = undefined;
+      }
+    }
+
+    const logOrg = organizerName || 'ORGANIZER';
+    const changedFields = Object.keys(updates).join(', ');
+    if (!store.auditLogs) store.auditLogs = [];
+    store.auditLogs.unshift({
+      id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      timestamp: new Date().toISOString(),
+      organizerName: logOrg,
+      action: 'UPDATE_TEAM',
+      details: `Team [${team.teamCode || team.teamName}] updated by ${logOrg}: ${changedFields} (Stage: ${team.selectionStage || 'ROUND_0_APPLICANT'})`
+    });
+
+    writeStore(store);
+    return { success: true, team };
+  },
+
+  checkInTeam(teamIdOrCode: string, organizerName?: string): { success: boolean; alreadyCheckedIn?: boolean; team?: ParticipantTeam; error?: string; message?: string } {
+    const store = readStore();
+    const clean = teamIdOrCode.trim().toUpperCase();
+    const team = store.teams.find(t => 
+      (t.teamCode && t.teamCode.toUpperCase() === clean) || 
+      (t.id && t.id.toUpperCase() === clean) || 
+      (t.inviteCode && t.inviteCode.toUpperCase() === clean) ||
+      (t.leaderEmail && t.leaderEmail.toUpperCase() === clean) ||
+      (t.members && t.members.some(m => m.email.toUpperCase() === clean))
+    );
+
+    if (!team) {
+      return { success: false, error: `Team or builder "${teamIdOrCode}" was not found in the verified registry.` };
+    }
+
+    if (team.selectionStage === 'DISQUALIFIED') {
+      return { success: false, error: `Team ${team.teamCode} (${team.teamName}) has been DISQUALIFIED and is ineligible for event check-in.` };
+    }
+
+    if (team.checkedIn) {
+      return {
+        success: false,
+        alreadyCheckedIn: true,
+        team,
+        message: `Duplicate check-in prevented: Team ${team.teamName} (${team.teamCode}) was already checked in on ${team.checkedInAt || 'today'} by ${team.checkedInBy || 'Staff'}.`
+      };
+    }
+
+    const logOrg = organizerName || 'ORGANIZER';
+    const checkedAt = new Date().toISOString();
+    team.checkedIn = true;
+    team.checkedInAt = checkedAt;
+    team.checkedInBy = logOrg;
+
+    if (team.members) {
+      team.members.forEach(m => { m.confirmed = true; });
+    }
+
+    if (!store.auditLogs) store.auditLogs = [];
+    store.auditLogs.unshift({
+      id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      timestamp: checkedAt,
+      organizerName: logOrg,
+      action: 'CHECK_IN_TEAM',
+      details: `Checked in team ${team.teamCode} (${team.teamName}) at desk bay [${team.deskBayAllocation || 'Unassigned'}] by ${logOrg}`
+    });
+
+    writeStore(store);
+    return {
+      success: true,
+      team,
+      message: `Verified and checked in: ${team.teamName} (${team.teamCode}). Desk Bay: ${team.deskBayAllocation || 'Unassigned'}.`
+    };
+  },
+
   // Sponsor Referrals (Rainmaker Hub)
   getReferrals(): SponsorReferralLead[] {
     const store = readStore();
@@ -1017,6 +1127,82 @@ export const db = {
   verifyJudgePin(pin: string): Judge | undefined {
     const store = readStore();
     return store.judges.find(j => j.accessPin === pin.trim() && j.isActive);
+  },
+
+  addJudge(judgeData: Omit<Judge, 'id'>, organizerName?: string): Judge {
+    const store = readStore();
+    const newJudge: Judge = {
+      ...judgeData,
+      id: `judge-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      accessPin: judgeData.accessPin?.trim() || String(Math.floor(100000 + Math.random() * 900000)),
+      isActive: judgeData.isActive ?? true,
+      createdAt: new Date().toISOString(),
+    };
+    if (!store.judges) store.judges = [];
+    store.judges.push(newJudge);
+
+    const logOrg = organizerName || 'ORGANIZER';
+    if (!store.auditLogs) store.auditLogs = [];
+    store.auditLogs.unshift({
+      id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      timestamp: new Date().toISOString(),
+      organizerName: logOrg,
+      action: 'CREATE_JUDGE',
+      details: `Added new judge ${newJudge.fullName} (${newJudge.organization}) specializing in ${newJudge.trackSpecialization || 'General'} by ${logOrg}`
+    });
+
+    writeStore(store);
+    return newJudge;
+  },
+
+  updateJudge(judgeId: string, updates: Partial<Judge>, organizerName?: string): Judge | null {
+    const store = readStore();
+    const judge = (store.judges || []).find(j => j.id === judgeId);
+    if (!judge) return null;
+
+    if (updates.fullName !== undefined) judge.fullName = updates.fullName.trim();
+    if (updates.organization !== undefined) judge.organization = updates.organization.trim();
+    if (updates.designation !== undefined) judge.designation = updates.designation.trim();
+    if (updates.trackSpecialization !== undefined) judge.trackSpecialization = updates.trackSpecialization.trim();
+    if (updates.assignedTracks !== undefined) judge.assignedTracks = updates.assignedTracks;
+    if (updates.assignedHall !== undefined) judge.assignedHall = updates.assignedHall.trim();
+    if (updates.accessPin !== undefined) judge.accessPin = updates.accessPin.trim();
+    if (updates.isActive !== undefined) judge.isActive = updates.isActive;
+
+    const logOrg = organizerName || 'ORGANIZER';
+    if (!store.auditLogs) store.auditLogs = [];
+    store.auditLogs.unshift({
+      id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      timestamp: new Date().toISOString(),
+      organizerName: logOrg,
+      action: 'UPDATE_JUDGE',
+      details: `Updated judge [${judge.fullName}] status (Active: ${judge.isActive}) by ${logOrg}`
+    });
+
+    writeStore(store);
+    return judge;
+  },
+
+  deleteJudge(judgeId: string, organizerName?: string): boolean {
+    const store = readStore();
+    const idx = (store.judges || []).findIndex(j => j.id === judgeId);
+    if (idx === -1) return false;
+
+    const judge = store.judges[idx];
+    store.judges.splice(idx, 1);
+
+    const logOrg = organizerName || 'ORGANIZER';
+    if (!store.auditLogs) store.auditLogs = [];
+    store.auditLogs.unshift({
+      id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      timestamp: new Date().toISOString(),
+      organizerName: logOrg,
+      action: 'DELETE_JUDGE',
+      details: `Removed judge [${judge.fullName}] by ${logOrg}`
+    });
+
+    writeStore(store);
+    return true;
   },
 
   getEvaluations(): CheckpointEvaluation[] {
@@ -1221,6 +1407,79 @@ export const db = {
       totalReferrals: store.referrals.length,
       totalRadarSignals: radar.length,
       totalCSATResponses: store.csat.length,
+    };
+  },
+
+  getAdminAnalytics() {
+    const store = readStore();
+    const waitlist = store.waitlist || [];
+    const studentAccounts = store.studentAccounts || [];
+    const teams = store.teams || [];
+    const judges = store.judges || [];
+    const evaluations = store.evaluations || [];
+    const sponsors = store.sponsors || [];
+    const auditLogs = store.auditLogs || [];
+
+    // Track breakdown
+    const teamsByTrack: Record<string, number> = {};
+    teams.forEach(t => {
+      const tid = t.trackId || 'general';
+      teamsByTrack[tid] = (teamsByTrack[tid] || 0) + 1;
+    });
+
+    // Submissions
+    const submissionsWithGithub = teams.filter(t => !!t.githubUrl).length;
+    const submissionsWithLoom = teams.filter(t => !!t.loomVideoUrl).length;
+    const submissionsComplete = teams.filter(t => !!t.githubUrl && !!t.loomVideoUrl).length;
+    const submissionsMissing = teams.filter(t => !t.githubUrl || !t.loomVideoUrl).length;
+
+    // Check-in
+    const checkedInTeams = teams.filter(t => t.checkedIn).length;
+    const checkInRate = teams.length > 0 ? Math.round((checkedInTeams / teams.length) * 100) : 0;
+
+    // Abstract review stage
+    const pendingReviews = teams.filter(t => !t.reviewerNotes && t.selectionStage === 'ROUND_0_APPLICANT').length;
+    const semiFinalists = teams.filter(t => t.selectionStage === 'ONLINE_SEMI_FINALIST').length;
+    const finalists = teams.filter(t => t.selectionStage === 'ON_CAMPUS_QUALIFIED').length;
+    const disqualified = teams.filter(t => t.selectionStage === 'DISQUALIFIED').length;
+
+    // Total participants
+    const totalBuilders = teams.reduce((acc, t) => acc + (t.members ? t.members.length : 0), 0);
+    const confirmedBuilders = teams.reduce((acc, t) => acc + (t.members ? t.members.filter(m => m.confirmed).length : 0), 0);
+
+    return {
+      totalRegistrations: studentAccounts.length + waitlist.length,
+      totalStudentAccounts: studentAccounts.length,
+      totalWaitlist: waitlist.length,
+      totalTeams: teams.length,
+      totalBuilders,
+      confirmedBuilders,
+      teamsByTrack,
+      pendingReviews,
+      semiFinalists,
+      finalists,
+      disqualified,
+      submissions: {
+        total: teams.length,
+        withGithub: submissionsWithGithub,
+        withLoom: submissionsWithLoom,
+        complete: submissionsComplete,
+        missing: submissionsMissing,
+      },
+      checkin: {
+        totalTeams: teams.length,
+        checkedInTeams,
+        rate: checkInRate,
+      },
+      judges: {
+        total: judges.length,
+        active: judges.filter(j => j.isActive).length,
+        evaluationsCount: evaluations.length,
+      },
+      sponsors: {
+        total: sponsors.length,
+      },
+      recentLogs: auditLogs.slice(0, 20),
     };
   },
 

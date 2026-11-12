@@ -2,6 +2,101 @@
   "waitlist": [
     {
       "fullName": "Varun Nair",
+      "email": "reg.builder.1794482611880@sathyabama.ac.in",
+      "phone": "+91 98401 22334",
+      "institution": "Sathyabama Institute of Science and Technology",
+      "college": "Sathyabama Institute of Science and Technology",
+      "department": "Computer Science and Engineering",
+      "yearOfStudy": "3rd Year",
+      "githubUrl": "https://github.com/varun-nair-cloud",
+      "linkedinUrl": "https://linkedin.com/in/varun-nair",
+      "preferredTrack": "track-cloud-native",
+      "teamStatus": "looking_for_team",
+      "meetupProfileUrl": "https://meetup.com/members/varun-nair",
+      "awsBuilderCenterUrl": "https://community.aws/@varun",
+      "experienceLevel": "Intermediate",
+      "tShirtSize": "XL",
+      "status": "pending",
+      "id": "w-1794482612902-jndtb",
+      "createdAt": "2026-11-12T11:23:32.902Z"
+    },
+    {
+      "fullName": "Ravi Chandran",
+      "email": "ravi.chandran.1794482584063@sathyabama.ac.in",
+      "phone": "+91 97403 99001",
+      "institution": "SIST",
+      "college": "SIST",
+      "department": "Computer Science & Engineering",
+      "yearOfStudy": "3rd Year",
+      "githubUrl": "",
+      "linkedinUrl": "",
+      "preferredTrack": "track-quantum",
+      "teamStatus": "seeking_team",
+      "meetupProfileUrl": "",
+      "awsBuilderCenterUrl": "",
+      "experienceLevel": "Intermediate",
+      "tShirtSize": "L",
+      "status": "pending",
+      "id": "w-1794482590185-4s5sd",
+      "createdAt": "2026-11-12T11:23:10.185Z"
+    },
+    {
+      "fullName": "Ravi Chandran",
+      "email": "ravi.chandran.1794481647677@sathyabama.ac.in",
+      "phone": "+91 97403 99001",
+      "institution": "SIST",
+      "college": "SIST",
+      "department": "Computer Science & Engineering",
+      "yearOfStudy": "3rd Year",
+      "githubUrl": "",
+      "linkedinUrl": "",
+      "preferredTrack": "track-quantum",
+      "teamStatus": "seeking_team",
+      "meetupProfileUrl": "",
+      "awsBuilderCenterUrl": "",
+      "experienceLevel": "Intermediate",
+      "tShirtSize": "L",
+      "status": "pending",
+      "id": "w-1794481652888-dqkxi",
+      "createdAt": "2026-11-12T11:07:32.888Z"
+    },
+    {
+      "fullName": "Varun Nair",
+      "email": "reg.builder.1794480958468@sathyabama.ac.in",
+      "phone": "+91 98401 22334",
+      "institution": "Sathyabama Institute of Science and Technology",
+      "college": "Sathyabama Institute of Science and Technology",
+      "department": "Computer Science and Engineering",
+      "yearOfStudy": "3rd Year",
+      "githubUrl": "https://github.com/varun-nair-cloud",
+      "linkedinUrl": "https://linkedin.com/in/varun-nair",
+      "preferredTrack": "track-cloud-native",
+      "teamStatus": "looking_for_team",
+      "meetupProfileUrl": "https://meetup.com/members/varun-nair",
+      "awsBuilderCenterUrl": "https://community.aws/@varun",
+      "experienceLevel": "Intermediate",
+      "tShirtSize": "XL",
+      "status": "pending",
+      "id": "w-1794480960434-rc1gh",
+      "createdAt": "2026-11-12T10:56:00.434Z"
+    },
+    {
+      "fullName": "Ananya Sathyabama Builder",
+      "email": "builder.1794480869457@sathyabama.ac.in",
+      "institution": "Sathyabama Institute of Science and Technology",
+      "yearOfStudy": "Undergraduate",
+      "department": "Engineering",
+      "preferredTrack": "Agentic AI & Generative Workflows",
+      "portfolioUrl": "",
+      "motivation": "Building autonomous consensus agents",
+      "ipAddress": "::1",
+      "userAgent": "Unknown",
+      "id": "w-1794480869903-9my84",
+      "createdAt": "2026-11-12T10:54:29.903Z",
+      "profile_id": "prof-450a6cdace83804f"
+    },
+    {
+      "fullName": "Varun Nair",
       "email": "reg.builder.1794480847598@sathyabama.ac.in",
       "phone": "+91 98401 22334",
       "institution": "Sathyabama Institute of Science and Technology",
@@ -120,61 +215,6 @@
       "portfolioUrl": "https://github.com/aarav",
       "motivation": "Building autonomous distributed agent systems for verifiable research synthesis.",
       "createdAt": "2026-10-24T10:15:00.000Z"
-    },
-    {
-      "fullName": "Ananya Sathyabama Builder",
-      "email": "builder.1794480869457@sathyabama.ac.in",
-      "institution": "Sathyabama Institute of Science and Technology",
-      "yearOfStudy": "Undergraduate",
-      "department": "Engineering",
-      "preferredTrack": "Agentic AI & Generative Workflows",
-      "portfolioUrl": "",
-      "motivation": "Building autonomous consensus agents",
-      "ipAddress": "::1",
-      "userAgent": "Unknown",
-      "id": "w-1794480869903-9my84",
-      "createdAt": "2026-11-12T10:54:29.903Z",
-      "profile_id": "prof-450a6cdace83804f"
-    },
-    {
-      "fullName": "Varun Nair",
-      "email": "reg.builder.1794480958468@sathyabama.ac.in",
-      "phone": "+91 98401 22334",
-      "institution": "Sathyabama Institute of Science and Technology",
-      "college": "Sathyabama Institute of Science and Technology",
-      "department": "Computer Science and Engineering",
-      "yearOfStudy": "3rd Year",
-      "githubUrl": "https://github.com/varun-nair-cloud",
-      "linkedinUrl": "https://linkedin.com/in/varun-nair",
-      "preferredTrack": "track-cloud-native",
-      "teamStatus": "looking_for_team",
-      "meetupProfileUrl": "https://meetup.com/members/varun-nair",
-      "awsBuilderCenterUrl": "https://community.aws/@varun",
-      "experienceLevel": "Intermediate",
-      "tShirtSize": "XL",
-      "status": "pending",
-      "id": "w-1794480960434-rc1gh",
-      "createdAt": "2026-11-12T10:56:00.434Z"
-    },
-    {
-      "fullName": "Ravi Chandran",
-      "email": "ravi.chandran.1794481647677@sathyabama.ac.in",
-      "phone": "+91 97403 99001",
-      "institution": "SIST",
-      "college": "SIST",
-      "department": "Computer Science & Engineering",
-      "yearOfStudy": "3rd Year",
-      "githubUrl": "",
-      "linkedinUrl": "",
-      "preferredTrack": "track-quantum",
-      "teamStatus": "seeking_team",
-      "meetupProfileUrl": "",
-      "awsBuilderCenterUrl": "",
-      "experienceLevel": "Intermediate",
-      "tShirtSize": "L",
-      "status": "pending",
-      "id": "w-1794481652888-dqkxi",
-      "createdAt": "2026-11-12T11:07:32.888Z"
     }
   ],
   "sponsors": [
@@ -191,24 +231,6 @@
     }
   ],
   "referrals": [
-    {
-      "referrerName": "Ephemeral Smoke Test Referrer",
-      "referrerEmail": "referrer@test.com",
-      "referrerPhone": "9876543210",
-      "referrerCollege": "SIST Chennai",
-      "referrerUpiId": "referrer@upi",
-      "companyName": "Cloud Corp",
-      "decisionMakerName": "Jane Doe",
-      "decisionMakerEmail": "jane@cloudcorp.com",
-      "decisionMakerDesignation": "Head of Developer Relations",
-      "estimatedDealTier": "POWERED_100K",
-      "notes": "Smoke test verification",
-      "id": "ref-1794480923229-52mc",
-      "referralCode": "RAIN-4891",
-      "lockExpiryDate": "2026-12-03T10:55:23.229Z",
-      "status": "PENDING_REVIEW",
-      "submittedAt": "2026-11-12T10:55:23.229Z"
-    },
     {
       "id": "ref-1",
       "studentName": "Rohan Deshmukh",
@@ -236,6 +258,440 @@
     "registrationDeadline": "2027-01-06T23:59:59+05:30"
   },
   "auditLogs": [
+    {
+      "id": "log-1794482732324-x08w",
+      "timestamp": "2026-11-12T11:25:32.324Z",
+      "organizerName": "Formula Tester",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [fi.lead.1794482700408@example.edu]"
+    },
+    {
+      "id": "log-1794482730387-wzvl",
+      "timestamp": "2026-11-12T11:25:30.387Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794482729823-glx8",
+      "timestamp": "2026-11-12T11:25:29.823Z",
+      "organizerName": "Hemavarshine S",
+      "action": "CHECK_IN_TEAM",
+      "details": "Checked in team KAIROS-T017 (Neural Apex 1794482700408) at desk bay [BAY-C09] by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482729698-8rax",
+      "timestamp": "2026-11-12T11:25:29.698Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T017] updated by Hemavarshine S: checkedIn (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794482727180-4yb7",
+      "timestamp": "2026-11-12T11:25:27.180Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T018] updated by Hemavarshine S: selectionStage (Stage: DISQUALIFIED)"
+    },
+    {
+      "id": "log-1794482726939-wvb2",
+      "timestamp": "2026-11-12T11:25:26.939Z",
+      "organizerName": "DQ Leader",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [dq.lead.1794482700408@example.edu]"
+    },
+    {
+      "id": "log-1794482726136-3vb4",
+      "timestamp": "2026-11-12T11:25:26.136Z",
+      "organizerName": "Hemavarshine S",
+      "action": "CHECK_IN_TEAM",
+      "details": "Checked in team KAIROS-T017 (Neural Apex 1794482700408) at desk bay [BAY-C09] by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482725869-hk0c",
+      "timestamp": "2026-11-12T11:25:25.869Z",
+      "organizerName": "Hemavarshine S",
+      "action": "DELETE_JUDGE",
+      "details": "Removed judge [Dr. Vikram Raman 1794482700408] by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482725725-4ge1",
+      "timestamp": "2026-11-12T11:25:25.725Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_JUDGE",
+      "details": "Updated judge [Dr. Vikram Raman 1794482700408] status (Active: false) by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482725535-wgin",
+      "timestamp": "2026-11-12T11:25:25.535Z",
+      "organizerName": "Hemavarshine S",
+      "action": "CREATE_JUDGE",
+      "details": "Added new judge Dr. Vikram Raman 1794482700408 (Intel Distributed Systems Lab) specializing in AI & Machine Learning Systems by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482725133-cl0r",
+      "timestamp": "2026-11-12T11:25:25.133Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T017] updated by Hemavarshine S: reviewerNotes, reviewedBy, reviewedAt (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794482724577-5rao",
+      "timestamp": "2026-11-12T11:25:24.577Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T017] updated by Hemavarshine S: deskBayAllocation (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794482724444-8c1j",
+      "timestamp": "2026-11-12T11:25:24.444Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T017] updated by Hemavarshine S: selectionStage (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794482722223-bqlo",
+      "timestamp": "2026-11-12T11:25:22.223Z",
+      "organizerName": "Team Leader P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [lead.p6.1794482700408@example.edu]"
+    },
+    {
+      "id": "log-1794482721527-uort",
+      "timestamp": "2026-11-12T11:25:21.527Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794482721389",
+      "timestamp": "2026-11-12T11:25:21.389Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":true,\"registrationDeadline\":\"2027-01-06T23:59:59+05:30\"}"
+    },
+    {
+      "id": "log-1794482720260-f76g",
+      "timestamp": "2026-11-12T11:25:20.260Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794482715669-rhmd",
+      "timestamp": "2026-11-12T11:25:15.669Z",
+      "organizerName": "Student Builder P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [student.p6.1794482700408@example.edu]"
+    },
+    {
+      "id": "log-1794482634172-pp1r",
+      "timestamp": "2026-11-12T11:23:54.172Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to reviewed"
+    },
+    {
+      "id": "log-1794482633742",
+      "timestamp": "2026-11-12T11:23:53.742Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"demoSandboxMode\":true}"
+    },
+    {
+      "id": "log-1794482633557-28mo",
+      "timestamp": "2026-11-12T11:23:53.557Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794482633275-1s3u",
+      "timestamp": "2026-11-12T11:23:53.275Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to shortlisted"
+    },
+    {
+      "id": "log-1794482632841-wjnc",
+      "timestamp": "2026-11-12T11:23:52.841Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794482631515-r9d2",
+      "timestamp": "2026-11-12T11:23:51.515Z",
+      "organizerName": "Pooja Venkatesh",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [pooja.v@example.edu]"
+    },
+    {
+      "id": "log-1794482631107-z3wt",
+      "timestamp": "2026-11-12T11:23:51.107Z",
+      "organizerName": "Rohan Gupta",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [rohan.g@example.edu]"
+    },
+    {
+      "id": "log-1794482630090-cybo",
+      "timestamp": "2026-11-12T11:23:50.090Z",
+      "organizerName": "Independent Builder",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [builder.outsider.1794482625896@test.edu]"
+    },
+    {
+      "id": "log-1794482616635-d7qe",
+      "timestamp": "2026-11-12T11:23:36.635Z",
+      "organizerName": "Priya Dharshini",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [member1.1794482611880@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794482614903-uhwy",
+      "timestamp": "2026-11-12T11:23:34.903Z",
+      "organizerName": "Karthik Subramanian",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [leader.1794482611880@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794482614170",
+      "timestamp": "2026-11-12T11:23:34.170Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":true,\"registrationDeadline\":\"2027-01-06T23:59:59+05:30\"}"
+    },
+    {
+      "id": "log-1794482613893",
+      "timestamp": "2026-11-12T11:23:33.893Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":true,\"registrationDeadline\":\"2026-01-01T00:00:00Z\"}"
+    },
+    {
+      "id": "log-1794482613514",
+      "timestamp": "2026-11-12T11:23:33.514Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":false}"
+    },
+    {
+      "id": "log-1794482612786-hq6n",
+      "timestamp": "2026-11-12T11:23:32.786Z",
+      "organizerName": "Varun Nair",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [reg.builder.1794482611880@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794482612159",
+      "timestamp": "2026-11-12T11:23:32.159Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":true,\"registrationDeadline\":\"2027-01-06T23:59:59+05:30\"}"
+    },
+    {
+      "id": "log-1794482612054-r7ax",
+      "timestamp": "2026-11-12T11:23:32.054Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794482589776-fhty",
+      "timestamp": "2026-11-12T11:23:09.776Z",
+      "organizerName": "Ravi Chandran",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [ravi.chandran.1794482584063@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794482589035-n5k7",
+      "timestamp": "2026-11-12T11:23:09.035Z",
+      "organizerName": "Meera Krishnan",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [meera.krish.1794482584063@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794482587848-usmg",
+      "timestamp": "2026-11-12T11:23:07.848Z",
+      "organizerName": "Arjun Ramanathan",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [arjun.raman.1794482584063@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794482577950-mhkq",
+      "timestamp": "2026-11-12T11:22:57.951Z",
+      "organizerName": "Formula Tester",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [fi.lead.1794482569558@example.edu]"
+    },
+    {
+      "id": "log-1794482576518-8u5p",
+      "timestamp": "2026-11-12T11:22:56.518Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794482576104-i1fx",
+      "timestamp": "2026-11-12T11:22:56.104Z",
+      "organizerName": "Hemavarshine S",
+      "action": "CHECK_IN_TEAM",
+      "details": "Checked in team KAIROS-T011 (Neural Apex 1794482569558) at desk bay [BAY-C09] by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482576006-vir3",
+      "timestamp": "2026-11-12T11:22:56.006Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T011] updated by Hemavarshine S: checkedIn (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794482575356-uxvg",
+      "timestamp": "2026-11-12T11:22:55.356Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T012] updated by Hemavarshine S: selectionStage (Stage: DISQUALIFIED)"
+    },
+    {
+      "id": "log-1794482575114-adyg",
+      "timestamp": "2026-11-12T11:22:55.114Z",
+      "organizerName": "DQ Leader",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [dq.lead.1794482569558@example.edu]"
+    },
+    {
+      "id": "log-1794482574314-zi26",
+      "timestamp": "2026-11-12T11:22:54.314Z",
+      "organizerName": "Hemavarshine S",
+      "action": "CHECK_IN_TEAM",
+      "details": "Checked in team KAIROS-T011 (Neural Apex 1794482569558) at desk bay [BAY-C09] by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482574016-mizb",
+      "timestamp": "2026-11-12T11:22:54.016Z",
+      "organizerName": "Hemavarshine S",
+      "action": "DELETE_JUDGE",
+      "details": "Removed judge [Dr. Vikram Raman 1794482569558] by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482573921-nq5u",
+      "timestamp": "2026-11-12T11:22:53.921Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_JUDGE",
+      "details": "Updated judge [Dr. Vikram Raman 1794482569558] status (Active: false) by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482573834-wxmo",
+      "timestamp": "2026-11-12T11:22:53.834Z",
+      "organizerName": "Hemavarshine S",
+      "action": "CREATE_JUDGE",
+      "details": "Added new judge Dr. Vikram Raman 1794482569558 (Intel Distributed Systems Lab) specializing in AI & Machine Learning Systems by Hemavarshine S"
+    },
+    {
+      "id": "log-1794482573670-hy04",
+      "timestamp": "2026-11-12T11:22:53.670Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T011] updated by Hemavarshine S: reviewerNotes, reviewedBy, reviewedAt (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794482573551-1z2c",
+      "timestamp": "2026-11-12T11:22:53.551Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T011] updated by Hemavarshine S: deskBayAllocation (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794482573458-gvfs",
+      "timestamp": "2026-11-12T11:22:53.458Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T011] updated by Hemavarshine S: selectionStage (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794482572911-hgce",
+      "timestamp": "2026-11-12T11:22:52.911Z",
+      "organizerName": "Team Leader P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [lead.p6.1794482569558@example.edu]"
+    },
+    {
+      "id": "log-1794482572371-k6sy",
+      "timestamp": "2026-11-12T11:22:52.371Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794482572293",
+      "timestamp": "2026-11-12T11:22:52.293Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":true,\"registrationDeadline\":\"2027-01-06T23:59:59+05:30\"}"
+    },
+    {
+      "id": "log-1794482572200-sdr0",
+      "timestamp": "2026-11-12T11:22:52.200Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794482571417-3jvj",
+      "timestamp": "2026-11-12T11:22:51.417Z",
+      "organizerName": "Student Builder P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [student.p6.1794482569558@example.edu]"
+    },
+    {
+      "id": "log-1794482550104-l6nu",
+      "timestamp": "2026-11-12T11:22:30.104Z",
+      "organizerName": "Team Leader P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [lead.p6.1794482545766@example.edu]"
+    },
+    {
+      "id": "log-1794482549557-4yv8",
+      "timestamp": "2026-11-12T11:22:29.557Z",
+      "organizerName": "Failed Login Attempt",
+      "action": "AUTH_FAILURE",
+      "details": "Invalid passkey attempted for identity [Hemavarshine S]"
+    },
+    {
+      "id": "log-1794482548153-b9qt",
+      "timestamp": "2026-11-12T11:22:28.153Z",
+      "organizerName": "Failed Login Attempt",
+      "action": "AUTH_FAILURE",
+      "details": "Invalid passkey attempted for identity [Thenappan T]"
+    },
+    {
+      "id": "log-1794482547420-8jpa",
+      "timestamp": "2026-11-12T11:22:27.420Z",
+      "organizerName": "Student Builder P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [student.p6.1794482545766@example.edu]"
+    },
+    {
+      "id": "log-1794482471431-f1mk",
+      "timestamp": "2026-11-12T11:21:11.431Z",
+      "organizerName": "Team Leader P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [lead.p6.1794482464273@example.edu]"
+    },
+    {
+      "id": "log-1794482470796-9w5f",
+      "timestamp": "2026-11-12T11:21:10.796Z",
+      "organizerName": "Failed Login Attempt",
+      "action": "AUTH_FAILURE",
+      "details": "Invalid passkey attempted for identity [Nangaiyar M (Nikki)]"
+    },
+    {
+      "id": "log-1794482469783-j6p1",
+      "timestamp": "2026-11-12T11:21:09.783Z",
+      "organizerName": "Student Builder P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [student.p6.1794482464273@example.edu]"
+    },
     {
       "id": "log-1794481652581-m18s",
       "timestamp": "2026-11-12T11:07:32.581Z",
@@ -1342,24 +1798,401 @@
         }
       ],
       "createdAt": "2026-11-12T11:07:31.425Z"
+    },
+    {
+      "id": "team-1794482550824",
+      "teamCode": "KAIROS-T010",
+      "teamName": "Neural Apex 1794482545766",
+      "inviteCode": "KAIROS-3159",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "lead.p6.1794482545766@example.edu",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "Decentralized Edge LLM Orchestrator",
+      "problemAbstract": "Scalable distributed consensus architecture for latency-sensitive model inference using AWS Bedrock and Step Functions.",
+      "architecturePdfUrl": "https://aws.amazon.com/architecture/neural-apex",
+      "githubUrl": "https://github.com/kairos2027/neural-apex",
+      "members": [
+        {
+          "id": "m-lead-1794482550824",
+          "name": "Team Leader P6",
+          "email": "lead.p6.1794482545766@example.edu",
+          "phone": "+91 99401 11223",
+          "collegeRegNo": "44118877",
+          "role": "Leader",
+          "college": "SIST Chennai",
+          "meetupProfileUrl": "https://meetup.com/members/leader-p6",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "https://community.aws/@leaderp6",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:22:30.824Z"
+    },
+    {
+      "id": "team-1794482573041",
+      "teamCode": "KAIROS-T011",
+      "teamName": "Neural Apex 1794482569558",
+      "inviteCode": "KAIROS-7867",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "lead.p6.1794482569558@example.edu",
+      "selectionStage": "ON_CAMPUS_QUALIFIED",
+      "problemTitle": "Decentralized Edge LLM Orchestrator",
+      "problemAbstract": "Scalable distributed consensus architecture for latency-sensitive model inference using AWS Bedrock and Step Functions.",
+      "architecturePdfUrl": "https://aws.amazon.com/architecture/neural-apex",
+      "githubUrl": "https://github.com/kairos2027/neural-apex",
+      "members": [
+        {
+          "id": "m-lead-1794482573041",
+          "name": "Team Leader P6",
+          "email": "lead.p6.1794482569558@example.edu",
+          "phone": "+91 99401 11223",
+          "collegeRegNo": "44118877",
+          "role": "Leader",
+          "college": "SIST Chennai",
+          "meetupProfileUrl": "https://meetup.com/members/leader-p6",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "https://community.aws/@leaderp6",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:22:53.041Z",
+      "deskBayAllocation": "BAY-C09",
+      "reviewerNotes": "Approved for on-campus finals. High architectural novelty in serverless edge design.",
+      "reviewedBy": "Hemavarshine S",
+      "reviewedAt": "2026-11-12T11:22:53.670Z",
+      "checkedIn": true,
+      "checkedInAt": "2026-11-12T11:22:56.104Z",
+      "checkedInBy": "Hemavarshine S"
+    },
+    {
+      "id": "team-1794482575225",
+      "teamCode": "KAIROS-T012",
+      "teamName": "Disqualified Team 1794482569558",
+      "inviteCode": "KAIROS-4402",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "dq.lead.1794482569558@example.edu",
+      "selectionStage": "DISQUALIFIED",
+      "problemTitle": "Test Disqualification",
+      "problemAbstract": "Test abstract",
+      "architecturePdfUrl": "https://aws.amazon.com/test",
+      "githubUrl": "https://github.com/kairos2027/test-dq",
+      "members": [
+        {
+          "id": "m-lead-1794482575225",
+          "name": "DQ Leader",
+          "email": "dq.lead.1794482569558@example.edu",
+          "phone": "+91 99999 88888",
+          "collegeRegNo": "44119999",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "https://meetup.com/members/dq-leader",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:22:55.225Z"
+    },
+    {
+      "id": "team-1794482578068",
+      "teamCode": "KAIROS-T013",
+      "teamName": "FI Test Team 1794482569558",
+      "inviteCode": "KAIROS-1425",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "fi.lead.1794482569558@example.edu",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "=cmd|' /C calc'!A0",
+      "problemAbstract": "@SUM(1,2,3) and +cmd|test",
+      "architecturePdfUrl": "https://aws.amazon.com/test",
+      "githubUrl": "https://github.com/kairos2027/test-fi",
+      "members": [
+        {
+          "id": "m-lead-1794482578068",
+          "name": "Formula Tester",
+          "email": "fi.lead.1794482569558@example.edu",
+          "phone": "+91 99999 77777",
+          "collegeRegNo": "44117777",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "https://meetup.com/members/fi-tester",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:22:58.068Z"
+    },
+    {
+      "id": "team-1794482588008",
+      "teamCode": "KAIROS-T014",
+      "teamName": "Titan Mesh 1794482584063",
+      "inviteCode": "KAIROS-3285",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "arjun.raman.1794482584063@sathyabama.ac.in",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "Self-Organizing Drone Swarms using Amazon Bedrock",
+      "problemAbstract": "A decentralized swarm routing protocol built on AWS IoT Greengrass and Amazon Bedrock Titan models to negotiate dynamic mesh pathways.",
+      "architecturePdfUrl": "",
+      "githubUrl": "https://github.com/kairos2027/titan-mesh",
+      "members": [
+        {
+          "id": "m-lead-1794482588008",
+          "name": "Arjun Ramanathan",
+          "email": "arjun.raman.1794482584063@sathyabama.ac.in",
+          "phone": "+91 99401 55667",
+          "collegeRegNo": "44112233",
+          "role": "Leader",
+          "college": "SIST Chennai",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        },
+        {
+          "id": "m-1794482589171",
+          "name": "Meera Krishnan",
+          "email": "meera.krish.1794482584063@sathyabama.ac.in",
+          "phone": "+91 98402 77889",
+          "collegeRegNo": "44113344",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "tshirtSize": "L",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:23:08.008Z"
+    },
+    {
+      "id": "team-1794482615012",
+      "teamCode": "KAIROS-T015",
+      "teamName": "NeuralMesh Alpha 1794482611880",
+      "inviteCode": "KAIROS-1047",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "member1.1794482611880@sathyabama.ac.in",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "NeuralMesh V3: Led by Priya Dharshini",
+      "problemAbstract": "Updated production-grade architecture utilizing AWS Nitro Enclaves and DynamoDB Global Tables for distributed resilience.",
+      "architecturePdfUrl": "https://aws.amazon.com/architecture/neural-mesh",
+      "githubUrl": "https://github.com/kairos2027/neural-mesh-alpha",
+      "members": [
+        {
+          "id": "m-1794482616786",
+          "name": "Priya Dharshini",
+          "email": "member1.1794482611880@sathyabama.ac.in",
+          "phone": "+91 98402 33445",
+          "collegeRegNo": "44117766",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "https://meetup.com/members/priya-dharshini",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "https://community.aws/@priya",
+          "tshirtSize": "M",
+          "confirmed": true
+        },
+        {
+          "id": "m-1794482617226",
+          "name": "Builder 3",
+          "email": "builder3.1794482611880@sathyabama.ac.in",
+          "phone": "",
+          "collegeRegNo": "",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "tshirtSize": "L",
+          "confirmed": true
+        },
+        {
+          "id": "m-1794482617321",
+          "name": "Builder 4",
+          "email": "builder4.1794482611880@sathyabama.ac.in",
+          "phone": "",
+          "collegeRegNo": "",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "tshirtSize": "L",
+          "confirmed": true
+        },
+        {
+          "id": "m-1794482617413",
+          "name": "Builder 5",
+          "email": "builder5.1794482611880@sathyabama.ac.in",
+          "phone": "",
+          "collegeRegNo": "",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "tshirtSize": "L",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:23:35.012Z",
+      "leaderName": "Priya Dharshini"
+    },
+    {
+      "id": "team-1794482620756",
+      "teamCode": "KAIROS-T016",
+      "teamName": "Karthik Solo Squad 1794482611880",
+      "inviteCode": "KAIROS-6842",
+      "trackId": "track-fintech-trust",
+      "institutionName": "SIST",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "leader.1794482611880@sathyabama.ac.in",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "Decentralized Attestation Engine",
+      "problemAbstract": "Provable cryptographic zero-knowledge proof validator on AWS Nitro Enclaves.",
+      "architecturePdfUrl": "",
+      "githubUrl": "",
+      "members": [
+        {
+          "id": "m-lead-1794482620756",
+          "name": "Karthik Subramanian",
+          "email": "leader.1794482611880@sathyabama.ac.in",
+          "phone": "",
+          "collegeRegNo": "",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:23:40.756Z"
+    },
+    {
+      "id": "team-1794482723793",
+      "teamCode": "KAIROS-T017",
+      "teamName": "Neural Apex 1794482700408",
+      "inviteCode": "KAIROS-5029",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "lead.p6.1794482700408@example.edu",
+      "selectionStage": "ON_CAMPUS_QUALIFIED",
+      "problemTitle": "Decentralized Edge LLM Orchestrator",
+      "problemAbstract": "Scalable distributed consensus architecture for latency-sensitive model inference using AWS Bedrock and Step Functions.",
+      "architecturePdfUrl": "https://aws.amazon.com/architecture/neural-apex",
+      "githubUrl": "https://github.com/kairos2027/neural-apex",
+      "members": [
+        {
+          "id": "m-lead-1794482723793",
+          "name": "Team Leader P6",
+          "email": "lead.p6.1794482700408@example.edu",
+          "phone": "+91 99401 11223",
+          "collegeRegNo": "44118877",
+          "role": "Leader",
+          "college": "SIST Chennai",
+          "meetupProfileUrl": "https://meetup.com/members/leader-p6",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "https://community.aws/@leaderp6",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:25:23.793Z",
+      "deskBayAllocation": "BAY-C09",
+      "reviewerNotes": "Approved for on-campus finals. High architectural novelty in serverless edge design.",
+      "reviewedBy": "Hemavarshine S",
+      "reviewedAt": "2026-11-12T11:25:25.132Z",
+      "checkedIn": true,
+      "checkedInAt": "2026-11-12T11:25:29.823Z",
+      "checkedInBy": "Hemavarshine S"
+    },
+    {
+      "id": "team-1794482727062",
+      "teamCode": "KAIROS-T018",
+      "teamName": "Disqualified Team 1794482700408",
+      "inviteCode": "KAIROS-6395",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "dq.lead.1794482700408@example.edu",
+      "selectionStage": "DISQUALIFIED",
+      "problemTitle": "Test Disqualification",
+      "problemAbstract": "Test abstract",
+      "architecturePdfUrl": "https://aws.amazon.com/test",
+      "githubUrl": "https://github.com/kairos2027/test-dq",
+      "members": [
+        {
+          "id": "m-lead-1794482727062",
+          "name": "DQ Leader",
+          "email": "dq.lead.1794482700408@example.edu",
+          "phone": "+91 99999 88888",
+          "collegeRegNo": "44119999",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "https://meetup.com/members/dq-leader",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:25:27.062Z"
+    },
+    {
+      "id": "team-1794482732545",
+      "teamCode": "KAIROS-T019",
+      "teamName": "FI Test Team 1794482700408",
+      "inviteCode": "KAIROS-5684",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "fi.lead.1794482700408@example.edu",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "=cmd|' /C calc'!A0",
+      "problemAbstract": "@SUM(1,2,3) and +cmd|test",
+      "architecturePdfUrl": "https://aws.amazon.com/test",
+      "githubUrl": "https://github.com/kairos2027/test-fi",
+      "members": [
+        {
+          "id": "m-lead-1794482732545",
+          "name": "Formula Tester",
+          "email": "fi.lead.1794482700408@example.edu",
+          "phone": "+91 99999 77777",
+          "collegeRegNo": "44117777",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "https://meetup.com/members/fi-tester",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:25:32.545Z"
     }
   ],
   "radarSignals": [
-    {
-      "builderName": "Ephemeral Smoke Test Builder",
-      "role": "Fullstack Engineer",
-      "trackId": "agentic-ai",
-      "skills": [
-        "TypeScript",
-        "Next.js",
-        "AWS Lambda"
-      ],
-      "college": "Sathyabama Institute of Science and Technology",
-      "seeking": "Smoke test verification of broadcast beacon button",
-      "contactUrl": "https://github.com/smoketest",
-      "id": "sig-1794480913037-32c2",
-      "createdAt": "2026-11-12T10:55:13.037Z"
-    },
     {
       "id": "sig-1",
       "builderName": "Vikram Sundaram",
@@ -1583,6 +2416,34 @@
       "rawTotalScore": 89,
       "normalizedZScore": -1.2247,
       "evaluatedAt": "2026-11-12T11:07:34.226Z"
+    },
+    {
+      "teamId": "KAIROS-T014",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 26,
+      "criterion2Score": 23,
+      "criterion3Score": 22,
+      "criterion4Score": 18,
+      "qualitativeFeedback": "Exceptional autonomous agent consensus. Real-time telemetry is robust.",
+      "id": "eval-1794482591890-q0wv",
+      "rawTotalScore": 89,
+      "normalizedZScore": -1.069,
+      "evaluatedAt": "2026-11-12T11:23:11.890Z"
+    },
+    {
+      "teamId": "team-k75-01",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 28,
+      "criterion2Score": 22,
+      "criterion3Score": 23,
+      "criterion4Score": 18,
+      "qualitativeFeedback": "Robust event streaming and resilient AWS architecture.",
+      "id": "eval-1794482632518-0par",
+      "rawTotalScore": 91,
+      "normalizedZScore": -0.2526,
+      "evaluatedAt": "2026-11-12T11:23:52.518Z"
     }
   ],
   "csat": [
@@ -1929,7 +2790,7 @@
       "institution": "Sathyabama Institute of Science and Technology",
       "createdAt": "2026-11-12T10:37:43.001Z",
       "emailVerifiedAt": "2026-11-12T10:37:43.073Z",
-      "lastLoginAt": "2026-11-12T10:54:23.137Z"
+      "lastLoginAt": "2026-11-12T11:23:51.107Z"
     },
     {
       "id": "prof-4f5ec056ed16eb76",
@@ -1940,7 +2801,7 @@
       "institution": "Sathyabama Institute of Science and Technology",
       "createdAt": "2026-11-12T10:37:43.634Z",
       "emailVerifiedAt": "2026-11-12T10:37:43.695Z",
-      "lastLoginAt": "2026-11-12T10:54:23.379Z"
+      "lastLoginAt": "2026-11-12T11:23:51.515Z"
     },
     {
       "id": "prof-28e66ae1e7108868",
@@ -2149,6 +3010,225 @@
       "department": "School of Computing",
       "yearOfStudy": "3rd Year",
       "tshirtSize": "L"
+    },
+    {
+      "id": "prof-02595ac2bea7b1ca",
+      "email": "student.p6.1794482464273@example.edu",
+      "fullName": "Student Builder P6",
+      "passwordHash": "073b0a2859f0935691e26108fe970f42:f78828602260383d720d06f510c169274679252f6ebaa7463ea75d06c6e376cec36e94f1a4b9dad6a97a40d62933300b71205220e6c6674d17764981487500d8",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:21:09.108Z",
+      "emailVerifiedAt": "2026-11-12T11:21:09.381Z",
+      "lastLoginAt": "2026-11-12T11:21:09.782Z"
+    },
+    {
+      "id": "prof-48c8b43037f51805",
+      "email": "lead.p6.1794482464273@example.edu",
+      "fullName": "Team Leader P6",
+      "passwordHash": "b6bf2210732b3757d99116b5d43f8b5e:09f668bc3a07fe8e0658bc86f41556a10ecd7c7434d0d8da1eb6e3a36271c742788a5a11619754509ff2d3fd74e279daac68bb03a8bc3daad927bc750915852c",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:21:11.096Z",
+      "emailVerifiedAt": "2026-11-12T11:21:11.208Z",
+      "lastLoginAt": "2026-11-12T11:21:11.431Z"
+    },
+    {
+      "id": "prof-d69094dfcbe28642",
+      "email": "student.p6.1794482545766@example.edu",
+      "fullName": "Student Builder P6",
+      "passwordHash": "75d2d3a68ba37b1ed79a64f5bd79e332:ee63b85d0d9f196de9cb4a3279c23ad0674ff9ecb7d18e0e3b6252d927ace4ec3f49f722855a08c69596339fdd592e29cf85708f0c4b3b19b10b58a6ff07e44a",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:22:27.058Z",
+      "emailVerifiedAt": "2026-11-12T11:22:27.183Z",
+      "lastLoginAt": "2026-11-12T11:22:27.419Z"
+    },
+    {
+      "id": "prof-dbfb4610a59a6fbd",
+      "email": "lead.p6.1794482545766@example.edu",
+      "fullName": "Team Leader P6",
+      "passwordHash": "3490a00505adb2b2116490de4739904e:fedf082e1275210919741183b8c5b92bdd7cb5635faa24186363cf0f52da9ad311b43c5c1cb17992ee58cf5b2f9101c2d75a68db5bed59541ea7aeede716e27e",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:22:29.809Z",
+      "emailVerifiedAt": "2026-11-12T11:22:29.899Z",
+      "lastLoginAt": "2026-11-12T11:22:30.103Z"
+    },
+    {
+      "id": "prof-174539bfa2ab05ae",
+      "email": "student.p6.1794482569558@example.edu",
+      "fullName": "Student Builder P6",
+      "passwordHash": "37eb3cf9fe88aa97e04faa61dcffad16:50e30555320e13c19504ea29a04d24d9f9f686333d1c2bb691bb7624308279603c04097d7284d3f47ac9d2ca1abb02d2149e77a66996ec150192600e39724b09",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:22:51.098Z",
+      "emailVerifiedAt": "2026-11-12T11:22:51.193Z",
+      "lastLoginAt": "2026-11-12T11:22:51.417Z"
+    },
+    {
+      "id": "prof-3e056a8312672c66",
+      "email": "lead.p6.1794482569558@example.edu",
+      "fullName": "Team Leader P6",
+      "passwordHash": "e25758cb8065893a035f7339dfea1a17:466cfc1db99bce0e6217d0c38fa9915a9e4510d0917765e5c6512144c505fd84f52f4a6e2d8c1527cd46ba2861b1a1098c934c17f3a59129ecf6e7a08390570c",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:22:52.596Z",
+      "emailVerifiedAt": "2026-11-12T11:22:52.694Z",
+      "lastLoginAt": "2026-11-12T11:22:52.911Z"
+    },
+    {
+      "id": "prof-5c1d20133de8d932",
+      "email": "dq.lead.1794482569558@example.edu",
+      "fullName": "DQ Leader",
+      "passwordHash": "f923ffff80ad598a8ca54fd7df3ff3c0:046f1350d5a0771a635c1d6cafa90868ddaee0e412c398770941ae988885be841953575170098907e60b8ca26384649f7162c961e7e93642664e6bff6c46faf0",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:22:54.666Z",
+      "emailVerifiedAt": "2026-11-12T11:22:54.764Z",
+      "lastLoginAt": "2026-11-12T11:22:55.113Z"
+    },
+    {
+      "id": "prof-6c8259f4e845301c",
+      "email": "fi.lead.1794482569558@example.edu",
+      "fullName": "Formula Tester",
+      "passwordHash": "d5d68bb4343f850e4e47d17424aee39b:c260be6d4bb9474c1d8486d0e02028f7a9629e8e99b02140f08ae6273b24d5890bc84246ecd25d0bc203390bad527c657babee0e579fe6f24028e5bf615d431b",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:22:57.550Z",
+      "emailVerifiedAt": "2026-11-12T11:22:57.658Z",
+      "lastLoginAt": "2026-11-12T11:22:57.950Z"
+    },
+    {
+      "id": "prof-e0affc4d91f8e090",
+      "email": "arjun.raman.1794482584063@sathyabama.ac.in",
+      "fullName": "Arjun Ramanathan",
+      "passwordHash": "beaa9072049da773297f3b18cfa510dc:fd0e896fcb67cfc79bf5da84a7482d99e6deffe576fba80f42f3460ebe8cb667b229da12135b7bff5b6094b637d83aa1c457b03fe71bc0f956ea76660636740b",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:23:07.368Z",
+      "emailVerifiedAt": "2026-11-12T11:23:07.505Z",
+      "lastLoginAt": "2026-11-12T11:23:07.847Z"
+    },
+    {
+      "id": "prof-3896e404542ad86f",
+      "email": "meera.krish.1794482584063@sathyabama.ac.in",
+      "fullName": "Meera Krishnan",
+      "passwordHash": "5e8504f51d2683b549682f4f406c5f93:e3fcfd0a3d4a4b5041e6b226bee8e992c4eca7c97127a5a9c721b29b224a40f2c21cb974cc2f8259edd6f857c5fbb90373ffe8f899dde6f8a2d0f0e7dcdc3a59",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:23:08.429Z",
+      "emailVerifiedAt": "2026-11-12T11:23:08.589Z",
+      "lastLoginAt": "2026-11-12T11:23:09.035Z"
+    },
+    {
+      "id": "prof-ef09afaabe2772ca",
+      "email": "ravi.chandran.1794482584063@sathyabama.ac.in",
+      "fullName": "Ravi Chandran",
+      "passwordHash": "725b37545d647fe8dd1dac4ccf4fd977:6a48e9e6d64fea2e56a4967af8e8bcc446ed871565ff41650136832694735af47be09261c8eb3f808e12105626dddf8241afe1c9617fd27932811c118ab87061",
+      "emailVerified": true,
+      "institution": "SIST",
+      "createdAt": "2026-11-12T11:23:09.453Z",
+      "emailVerifiedAt": "2026-11-12T11:23:09.538Z",
+      "lastLoginAt": "2026-11-12T11:23:09.776Z",
+      "phone": "+91 97403 99001",
+      "department": "School of Computing",
+      "yearOfStudy": "3rd Year",
+      "tshirtSize": "L"
+    },
+    {
+      "id": "prof-0ef9234e445cc96b",
+      "email": "reg.builder.1794482611880@sathyabama.ac.in",
+      "fullName": "Varun Nair",
+      "passwordHash": "8592104e1935662d7bf1b57edde22584:c34463298088981221588a6fa298b8bd75cbdf41c5bed390b7dff974fb43b64352f02e0a0276b2067109a2dd5980123954aa4f587952bea2d417d788b824110f",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "phone": "+91 98401 22334",
+      "department": "Computer Science and Engineering",
+      "yearOfStudy": "3rd Year",
+      "tshirtSize": "XL",
+      "createdAt": "2026-11-12T11:23:32.421Z",
+      "emailVerifiedAt": "2026-11-12T11:23:32.535Z",
+      "lastLoginAt": "2026-11-12T11:23:32.786Z",
+      "githubUrl": "https://github.com/varun-nair-cloud",
+      "linkedinUrl": "https://linkedin.com/in/varun-nair"
+    },
+    {
+      "id": "prof-fee0ccbfac5207c5",
+      "email": "leader.1794482611880@sathyabama.ac.in",
+      "fullName": "Karthik Subramanian",
+      "passwordHash": "35d28464998a3d997284da69c7f702bb:e51bc8652f78e1937243491508544d443cb36fb0c32f64aade48da6b33894c7e05405997e21fd2d6f30959d8f1d39a0a2c287a9bd95d6be95c3a62e4bb5b6a02",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:23:34.491Z",
+      "emailVerifiedAt": "2026-11-12T11:23:34.624Z",
+      "lastLoginAt": "2026-11-12T11:23:34.902Z"
+    },
+    {
+      "id": "prof-3d6673c59b558922",
+      "email": "member1.1794482611880@sathyabama.ac.in",
+      "fullName": "Priya Dharshini",
+      "passwordHash": "0761f04e2a2d0213181ea1592af761ab:1e0a31c5befb4b45e6a83c83629b0964336fe7d0e6332477f952afac64d1b5a5b31ce55111eba63881bc3dc323e7174053869e389e00fed50f642f6cbb8077ee",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:23:35.720Z",
+      "emailVerifiedAt": "2026-11-12T11:23:35.806Z",
+      "lastLoginAt": "2026-11-12T11:23:36.634Z"
+    },
+    {
+      "id": "prof-178cb5b1c367827c",
+      "email": "builder.outsider.1794482625896@test.edu",
+      "fullName": "Malicious Escalator",
+      "passwordHash": "0870dbf97952c0365b4793f8384ac23e:b9756a0c8ae775e306503f9f94a9f664a6d4595e305ab6ef175ec58ea299394793ab7b36bfac847a6593e6f6766a87ace52893beb7c34c124639a53960c078b1",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:23:49.694Z",
+      "emailVerifiedAt": "2026-11-12T11:23:49.792Z",
+      "lastLoginAt": "2026-11-12T11:23:50.090Z"
+    },
+    {
+      "id": "prof-833b9dfa1776f708",
+      "email": "student.p6.1794482700408@example.edu",
+      "fullName": "Student Builder P6",
+      "passwordHash": "cac95d255765dcd4157a2f81ebd111eb:135eee7d4fb4a58583aa727f99ca62d696d8434f893456f326c09d0fb10a77214637e883031d74e4aba1be96de4bbc564b1d040c579f9d24577ea8ec2eb01526",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:25:11.793Z",
+      "emailVerifiedAt": "2026-11-12T11:25:13.374Z",
+      "lastLoginAt": "2026-11-12T11:25:15.668Z"
+    },
+    {
+      "id": "prof-9ef6efd984f0c3c7",
+      "email": "lead.p6.1794482700408@example.edu",
+      "fullName": "Team Leader P6",
+      "passwordHash": "22514621f15345240ed949e0d9980db1:221dfed25edc54f4034687991618a07f8657936c1e099de082889e5ee620fe16cbb93e58ad07bac8f7aaa8a750d4c1ea045df225768c4a6434f154af03db2bba",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:25:21.824Z",
+      "emailVerifiedAt": "2026-11-12T11:25:21.951Z",
+      "lastLoginAt": "2026-11-12T11:25:22.223Z"
+    },
+    {
+      "id": "prof-15ad5ff9eca02b8e",
+      "email": "dq.lead.1794482700408@example.edu",
+      "fullName": "DQ Leader",
+      "passwordHash": "1b21836f890c1f4315e4865a25da4e6b:65cf7f7efd07d0c7a759cf961fa76a186f0bece75d2354ce368c824712528890b1e5e64df58e95538768f5923b72fdb6c3d5342bea578d23d402e2b6a54fce92",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:25:26.516Z",
+      "emailVerifiedAt": "2026-11-12T11:25:26.653Z",
+      "lastLoginAt": "2026-11-12T11:25:26.938Z"
+    },
+    {
+      "id": "prof-6a299ef47f54a152",
+      "email": "fi.lead.1794482700408@example.edu",
+      "fullName": "Formula Tester",
+      "passwordHash": "bbddf00da826ba1f57376dd5c5f9ea31:60557bde3007e04f0c79102b8ee6428bd2b9cbae76cd083516f886f93b8f6ce0365907cc7f753d880d8f912b5d177e1e7b134f9118f64d247aeff72e2d10e587",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:25:31.894Z",
+      "emailVerifiedAt": "2026-11-12T11:25:32.020Z",
+      "lastLoginAt": "2026-11-12T11:25:32.323Z"
     }
   ]
 }
