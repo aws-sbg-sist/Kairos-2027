@@ -1,14 +1,22 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { getCurrentAdminSession } from '@/lib/auth';
+import { resolveAuthContext, hasPermission } from '@/lib/rbac';
 
 export async function GET() {
-  const session = await getCurrentAdminSession();
-  if (!session) {
+  const authCtx = await resolveAuthContext();
+  if (authCtx.role === 'ANONYMOUS') {
     return NextResponse.json({
       success: false,
       error: 'Unauthorized. Valid organizer administrator session is required to export CSAT survey feedback.'
     }, { status: 401 });
+  }
+
+  if (!hasPermission(authCtx.role, 'csat:export')) {
+    return NextResponse.json({
+      success: false,
+      error: 'Forbidden: Super Administrator privileges required to export CSAT survey feedback.',
+      code: 'FORBIDDEN_SUPER_ADMIN_REQUIRED'
+    }, { status: 403 });
   }
 
   try {

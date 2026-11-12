@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-12T10:28:50.329Z",
+  "timestamp": "2026-11-12T10:39:54.684Z",
   "sourceFile": "E:\\AWS SBGL\\Events\\Kairos\\Git Site\\Kairos-2027\\data\\kairos_store.json",
   "recordsRead": {
     "waitlist": 3,
@@ -8,9 +8,9 @@
     "teams": 1,
     "radarSignals": 4,
     "judges": 3,
-    "evaluations": 2,
+    "evaluations": 6,
     "csat": 1,
-    "auditLogs": 11,
+    "auditLogs": 34,
     "members": 9,
     "featureFlags": 1
   },
@@ -24,10 +24,10 @@
     "sponsors": 1,
     "referrals": 1,
     "featureFlags": 1,
-    "auditLogs": 11,
+    "auditLogs": 34,
     "radarSignals": 4,
     "judges": 3,
-    "evaluations": 2,
+    "evaluations": 6,
     "csatResponses": 1,
     "orgMembers": 9
   },

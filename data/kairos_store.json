@@ -1,6 +1,20 @@
 {
   "waitlist": [
     {
+      "id": "demo-w2",
+      "fullName": "Pooja Venkatesh",
+      "email": "pooja.v@example.edu",
+      "institution": "Sathyabama Institute of Science and Technology",
+      "yearOfStudy": "4th Year",
+      "department": "School of Computing",
+      "preferredTrack": "Cloud-Native Distributed Systems",
+      "portfolioUrl": "https://github.com/pooja-v",
+      "motivation": "Exploring high-throughput distributed transaction settlement with event-driven consensus.",
+      "createdAt": "2026-10-24T14:30:00.000Z",
+      "status": "reviewed",
+      "profile_id": "prof-4f5ec056ed16eb76"
+    },
+    {
       "id": "demo-w1",
       "fullName": "Aarav Sharma",
       "email": "aarav.sharma@example.edu",
@@ -13,17 +27,19 @@
       "createdAt": "2026-10-24T10:15:00.000Z"
     },
     {
-      "id": "demo-w2",
-      "fullName": "Pooja Venkatesh",
-      "email": "pooja.v@example.edu",
+      "fullName": "Ananya Sathyabama Builder",
+      "email": "builder.1794479985606@sathyabama.ac.in",
       "institution": "Sathyabama Institute of Science and Technology",
-      "yearOfStudy": "4th Year",
-      "department": "School of Computing",
-      "preferredTrack": "Cloud-Native Distributed Systems",
-      "portfolioUrl": "https://github.com/pooja-v",
-      "motivation": "Exploring high-throughput distributed transaction settlement with event-driven consensus.",
-      "createdAt": "2026-10-24T14:30:00.000Z",
-      "status": "shortlisted"
+      "yearOfStudy": "Undergraduate",
+      "department": "Engineering",
+      "preferredTrack": "Agentic AI & Generative Workflows",
+      "portfolioUrl": "",
+      "motivation": "Building autonomous consensus agents",
+      "ipAddress": "::1",
+      "userAgent": "Unknown",
+      "id": "w-1794479985925-qbzk9",
+      "createdAt": "2026-11-12T10:39:45.925Z",
+      "profile_id": "prof-79afbf9887984722"
     }
   ],
   "sponsors": [
@@ -67,6 +83,216 @@
     "registrationDeadline": "2027-01-06T23:59:59+05:30"
   },
   "auditLogs": [
+    {
+      "id": "log-1794480031163-fa9f",
+      "timestamp": "2026-11-12T10:40:31.163Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794480014633-s9x1",
+      "timestamp": "2026-11-12T10:40:14.633Z",
+      "organizerName": "Security Containment Tester",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Organizer Lead"
+    },
+    {
+      "id": "log-1794479994872-muap",
+      "timestamp": "2026-11-12T10:39:54.872Z",
+      "organizerName": "Database Architecture Tester",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Organizer Lead"
+    },
+    {
+      "id": "log-1794479988197-g7x4",
+      "timestamp": "2026-11-12T10:39:48.197Z",
+      "organizerName": "Ananya Sathyabama Builder",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [builder.1794479985606@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794479987977-hqnt",
+      "timestamp": "2026-11-12T10:39:47.977Z",
+      "organizerName": "Anonymous Caller",
+      "action": "STUDENT_AUTH_FAILURE",
+      "details": "Failed login attempt for [builder.1794479985606@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794479986587-s9gs",
+      "timestamp": "2026-11-12T10:39:46.587Z",
+      "organizerName": "Ananya Sathyabama Builder",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [builder.1794479985606@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794479986389-l1e0",
+      "timestamp": "2026-11-12T10:39:46.389Z",
+      "organizerName": "Anonymous Caller",
+      "action": "STUDENT_AUTH_FAILURE",
+      "details": "Failed login attempt for [builder.1794479985606@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794479978074-0z27",
+      "timestamp": "2026-11-12T10:39:38.074Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to reviewed"
+    },
+    {
+      "id": "log-1794479977907",
+      "timestamp": "2026-11-12T10:39:37.907Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"demoSandboxMode\":true}"
+    },
+    {
+      "id": "log-1794479977832-2dfw",
+      "timestamp": "2026-11-12T10:39:37.832Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794479977770-r83e",
+      "timestamp": "2026-11-12T10:39:37.770Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to shortlisted"
+    },
+    {
+      "id": "log-1794479977546-jm87",
+      "timestamp": "2026-11-12T10:39:37.546Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794479976612-5kdy",
+      "timestamp": "2026-11-12T10:39:36.612Z",
+      "organizerName": "Pooja Venkatesh",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [pooja.v@example.edu]"
+    },
+    {
+      "id": "log-1794479976395-oq9z",
+      "timestamp": "2026-11-12T10:39:36.395Z",
+      "organizerName": "Rohan Gupta",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [rohan.g@example.edu]"
+    },
+    {
+      "id": "log-1794479975734-ppyv",
+      "timestamp": "2026-11-12T10:39:35.734Z",
+      "organizerName": "Independent Builder",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [builder.outsider.1794479973997@test.edu]"
+    },
+    {
+      "id": "log-1794479943314-9kp1",
+      "timestamp": "2026-11-12T10:39:03.314Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to reviewed"
+    },
+    {
+      "id": "log-1794479943060-wcpp",
+      "timestamp": "2026-11-12T10:39:03.060Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794479935262-txqo",
+      "timestamp": "2026-11-12T10:38:55.262Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794479927846-lzx1",
+      "timestamp": "2026-11-12T10:38:47.846Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794479927775-00cx",
+      "timestamp": "2026-11-12T10:38:47.775Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794479916293-gdap",
+      "timestamp": "2026-11-12T10:38:36.293Z",
+      "organizerName": "Rohan Gupta",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [rohan.g@example.edu]"
+    },
+    {
+      "id": "log-1794479885925-zrxs",
+      "timestamp": "2026-11-12T10:38:05.925Z",
+      "organizerName": "Pooja Venkatesh",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [pooja.v@example.edu]"
+    },
+    {
+      "id": "log-1794479863963-x4gh",
+      "timestamp": "2026-11-12T10:37:43.963Z",
+      "organizerName": "Pooja Venkatesh",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [pooja.v@example.edu]"
+    },
+    {
+      "id": "log-1794479863417-a9s7",
+      "timestamp": "2026-11-12T10:37:43.417Z",
+      "organizerName": "Rohan Gupta",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [rohan.g@example.edu]"
+    },
+    {
+      "id": "log-1794479862651-j3qw",
+      "timestamp": "2026-11-12T10:37:42.651Z",
+      "organizerName": "Outsider Test",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [outsider101@example.edu]"
+    },
+    {
+      "id": "log-1794479819563",
+      "timestamp": "2026-11-12T10:36:59.563Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"demoSandboxMode\":true}"
+    },
+    {
+      "id": "log-1794479819487-u47r",
+      "timestamp": "2026-11-12T10:36:59.487Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794479813886-bbzv",
+      "timestamp": "2026-11-12T10:36:53.886Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794479807857-t2g1",
+      "timestamp": "2026-11-12T10:36:47.857Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794479802844-9287",
+      "timestamp": "2026-11-12T10:36:42.844Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
     {
       "id": "log-1792936952854",
       "timestamp": "2026-10-25T14:02:32.854Z",
@@ -162,7 +388,8 @@
       "projectTitle": "Chronos Stream: Sub-millisecond Event Mesh for Urban Telemetry",
       "projectAbstract": "A fault-tolerant stream processing engine handling 100k events/sec with distributed consensus and zero data loss.",
       "githubUrl": "https://github.com/kairos2027/chronos-stream",
-      "createdAt": "2026-10-25T08:00:00.000Z"
+      "createdAt": "2026-10-25T08:00:00.000Z",
+      "loomVideoUrl": "https://loom.com/share/chronos-demo"
     }
   ],
   "radarSignals": [
@@ -291,6 +518,62 @@
       "normalizedZScore": 1.72,
       "qualitativeFeedback": "Brilliant Bedrock multi-agent orchestration. Hallucination guardrails are tightly implemented.",
       "evaluatedAt": "2027-01-22T18:00:00.000Z"
+    },
+    {
+      "teamId": "team-k75-01",
+      "judgeId": "judge-2",
+      "checkpointGate": 1,
+      "criterion1Score": 25,
+      "criterion2Score": 20,
+      "criterion3Score": 20,
+      "criterion4Score": 15,
+      "qualitativeFeedback": "Good architecture",
+      "id": "eval-1794479892737-kdlv",
+      "rawTotalScore": 80,
+      "normalizedZScore": 0,
+      "evaluatedAt": "2026-11-12T10:38:12.737Z"
+    },
+    {
+      "teamId": "team-k75-01",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 28,
+      "criterion2Score": 22,
+      "criterion3Score": 23,
+      "criterion4Score": 18,
+      "qualitativeFeedback": "Outstanding distributed event streaming design on AWS!",
+      "id": "eval-1794479892792-f15o",
+      "rawTotalScore": 91,
+      "normalizedZScore": -1.3363,
+      "evaluatedAt": "2026-11-12T10:38:12.792Z"
+    },
+    {
+      "teamId": "team-k75-01",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 28,
+      "criterion2Score": 22,
+      "criterion3Score": 23,
+      "criterion4Score": 18,
+      "qualitativeFeedback": "Outstanding distributed event streaming design on AWS!",
+      "id": "eval-1794479909192-l1jx",
+      "rawTotalScore": 91,
+      "normalizedZScore": -0.9623,
+      "evaluatedAt": "2026-11-12T10:38:29.192Z"
+    },
+    {
+      "teamId": "team-k75-01",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 28,
+      "criterion2Score": 22,
+      "criterion3Score": 23,
+      "criterion4Score": 18,
+      "qualitativeFeedback": "Robust event streaming and resilient AWS architecture.",
+      "id": "eval-1794479977359-xyhm",
+      "rawTotalScore": 91,
+      "normalizedZScore": -0.7906,
+      "evaluatedAt": "2026-11-12T10:39:37.359Z"
     }
   ],
   "csat": [
@@ -605,6 +888,77 @@
           "verificationHash": "0x8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f"
         }
       ]
+    }
+  ],
+  "studentAccounts": [
+    {
+      "id": "prof-865807860dee8760",
+      "email": "outsider.student@example.edu",
+      "fullName": "Outsider Student",
+      "passwordHash": "18efb0f45a3b3c8bdc103c649034874e:1f69c0c3e3a6d735182b893da8990fbc559d16f7949e6247927b4ac62262e4bd62be31592675434ef45ceb723f51a21383b457014b17aa441b46411cfe6161bc",
+      "emailVerified": false,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T10:37:21.041Z"
+    },
+    {
+      "id": "prof-e619d2dff05fa446",
+      "email": "outsider101@example.edu",
+      "fullName": "Outsider Test",
+      "passwordHash": "a87a458bf7c3368a57c2a62609193e74:85535085db406934d389141c2eb880529b921725ba16234cf0feab5813a89db459bcf3ef8cde3eb86a99eb691d9e64ba88e1865dfab72fd337fa7d8434b84667",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T10:37:41.915Z",
+      "emailVerifiedAt": "2026-11-12T10:37:42.177Z",
+      "lastLoginAt": "2026-11-12T10:37:42.650Z"
+    },
+    {
+      "id": "prof-715418675ff78b8f",
+      "email": "rohan.g@example.edu",
+      "fullName": "Rohan Gupta",
+      "passwordHash": "db4621a0e8e6f89344143b5537f7c0cd:5c1e70d0126a38321ec37487075836a86c3be40cafb9e0f194f4b3578a7eb3ee4c514922336bf11134fc72cf25549dae71ab6ed90f14a766525bb4073fa52a8b",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T10:37:43.001Z",
+      "emailVerifiedAt": "2026-11-12T10:37:43.073Z",
+      "lastLoginAt": "2026-11-12T10:39:36.394Z"
+    },
+    {
+      "id": "prof-4f5ec056ed16eb76",
+      "email": "pooja.v@example.edu",
+      "fullName": "Pooja Venkatesh",
+      "passwordHash": "cfadef769ee8a50fd356d8fc9dc2a5b0:3fb7f94295e7820585dc08b431a7b0cee5a8e340f543693917786c50ba3109ccf35befb044091ef9e54056b486a7727e105dd96e1ed380b12bc0faaf950336a7",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T10:37:43.634Z",
+      "emailVerifiedAt": "2026-11-12T10:37:43.695Z",
+      "lastLoginAt": "2026-11-12T10:39:36.612Z"
+    },
+    {
+      "id": "prof-28e66ae1e7108868",
+      "email": "builder.outsider.1794479973997@test.edu",
+      "fullName": "Malicious Escalator",
+      "passwordHash": "ab8255b7365a17454ec5dba75638b59a:271564d0d0fca7e02c7807917a7b8321e7bef4ddc88a6829c37a8232011572fc0013a2732d792d529d5c4d25be13e11d83391be6fe39207a95bfb98df9a6e686",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T10:39:35.378Z",
+      "emailVerifiedAt": "2026-11-12T10:39:35.572Z",
+      "lastLoginAt": "2026-11-12T10:39:35.734Z"
+    },
+    {
+      "id": "prof-79afbf9887984722",
+      "email": "builder.1794479985606@sathyabama.ac.in",
+      "fullName": "Ananya Sathyabama Builder",
+      "passwordHash": "1bd9811756e78993781155def19a7ee4:e851d9ea527b5d9062c1301eae510514d2337474b3aecc979784674fcef5ba7833271f1738b7b98679cf6702ee6b290c853ab5413171514c74cb934fd908acbc",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "phone": "+91 98401 88888",
+      "department": "School of Computing - Advanced Cloud Lab",
+      "yearOfStudy": "3rd Year",
+      "tshirtSize": "XL",
+      "createdAt": "2026-11-12T10:39:46.173Z",
+      "lastLoginAt": "2026-11-12T10:39:48.196Z",
+      "emailVerifiedAt": "2026-11-12T10:39:46.767Z",
+      "githubUrl": "https://github.com/ananya-builder"
     }
   ]
 }

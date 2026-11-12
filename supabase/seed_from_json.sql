@@ -1,19 +1,12 @@
 -- ==============================================================================
 -- KAIROS 2027: AUTOMATED DATA SEED FROM FLAT JSON STORE
--- Generated: 2026-11-12T10:28:50.332Z
+-- Generated: 2026-11-12T10:39:54.686Z
 -- Target: Supabase PostgreSQL (Idempotent ON CONFLICT Upserts)
 -- ==============================================================================
 
 BEGIN;
 
 -- 1. PROFILES
-INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, created_at)
-VALUES ('prof-e4150b989184dd23', 'aarav.sharma@example.edu', 'Aarav Sharma', NULL, 'IIT Madras', NULL, '3rd Year', 'Computer Science & Engineering', 'https://github.com/aarav', NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-10-24T10:15:00.000Z')
-ON CONFLICT (email) DO UPDATE SET
-  full_name = EXCLUDED.full_name,
-  phone = COALESCE(EXCLUDED.phone, public.profiles.phone),
-  institution = EXCLUDED.institution,
-  updated_at = timezone('utc'::text, now());
 INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, created_at)
 VALUES ('prof-4f5ec056ed16eb76', 'pooja.v@example.edu', 'Pooja Venkatesh', NULL, 'Sathyabama Institute of Science and Technology', NULL, '4th Year', 'School of Computing', 'https://github.com/pooja-v', NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-10-24T14:30:00.000Z')
 ON CONFLICT (email) DO UPDATE SET
@@ -22,35 +15,42 @@ ON CONFLICT (email) DO UPDATE SET
   institution = EXCLUDED.institution,
   updated_at = timezone('utc'::text, now());
 INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, created_at)
-VALUES ('prof-a554da56f65e8f97', 'builder.1794479318479@sathyabama.ac.in', 'Ananya Sathyabama Builder', NULL, 'Sathyabama Institute of Science and Technology', NULL, 'Undergraduate', 'Engineering', NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:28:40.294Z')
+VALUES ('prof-e4150b989184dd23', 'aarav.sharma@example.edu', 'Aarav Sharma', NULL, 'IIT Madras', NULL, '3rd Year', 'Computer Science & Engineering', 'https://github.com/aarav', NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-10-24T10:15:00.000Z')
 ON CONFLICT (email) DO UPDATE SET
   full_name = EXCLUDED.full_name,
   phone = COALESCE(EXCLUDED.phone, public.profiles.phone),
   institution = EXCLUDED.institution,
   updated_at = timezone('utc'::text, now());
 INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, created_at)
-VALUES ('prof-715418675ff78b8f', 'rohan.g@example.edu', 'Rohan Gupta', NULL, 'SIST', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:28:50.332Z')
+VALUES ('prof-79afbf9887984722', 'builder.1794479985606@sathyabama.ac.in', 'Ananya Sathyabama Builder', NULL, 'Sathyabama Institute of Science and Technology', NULL, 'Undergraduate', 'Engineering', NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:39:45.925Z')
 ON CONFLICT (email) DO UPDATE SET
   full_name = EXCLUDED.full_name,
   phone = COALESCE(EXCLUDED.phone, public.profiles.phone),
   institution = EXCLUDED.institution,
   updated_at = timezone('utc'::text, now());
 INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, created_at)
-VALUES ('prof-b8e0c531efc1e58f', 'swetha.k@example.edu', 'Swetha K', NULL, 'SIST', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:28:50.332Z')
+VALUES ('prof-715418675ff78b8f', 'rohan.g@example.edu', 'Rohan Gupta', NULL, 'SIST', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:39:54.686Z')
 ON CONFLICT (email) DO UPDATE SET
   full_name = EXCLUDED.full_name,
   phone = COALESCE(EXCLUDED.phone, public.profiles.phone),
   institution = EXCLUDED.institution,
   updated_at = timezone('utc'::text, now());
 INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, created_at)
-VALUES ('prof-278d739700f96ca6', 'aditya.n@example.edu', 'Aditya Nair', NULL, 'SIST', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:28:50.332Z')
+VALUES ('prof-b8e0c531efc1e58f', 'swetha.k@example.edu', 'Swetha K', NULL, 'SIST', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:39:54.686Z')
 ON CONFLICT (email) DO UPDATE SET
   full_name = EXCLUDED.full_name,
   phone = COALESCE(EXCLUDED.phone, public.profiles.phone),
   institution = EXCLUDED.institution,
   updated_at = timezone('utc'::text, now());
 INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, created_at)
-VALUES ('prof-309272e9f24a5917', 'rohan.d@student.sathyabama.ac.in', 'Rohan Deshmukh', '+91 98401 23456', 'Sathyabama Institute of Science and Technology', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:28:50.332Z')
+VALUES ('prof-278d739700f96ca6', 'aditya.n@example.edu', 'Aditya Nair', NULL, 'SIST', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:39:54.686Z')
+ON CONFLICT (email) DO UPDATE SET
+  full_name = EXCLUDED.full_name,
+  phone = COALESCE(EXCLUDED.phone, public.profiles.phone),
+  institution = EXCLUDED.institution,
+  updated_at = timezone('utc'::text, now());
+INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, created_at)
+VALUES ('prof-309272e9f24a5917', 'rohan.d@student.sathyabama.ac.in', 'Rohan Deshmukh', '+91 98401 23456', 'Sathyabama Institute of Science and Technology', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, FALSE, NULL, NULL, NULL, '2026-11-12T10:39:54.686Z')
 ON CONFLICT (email) DO UPDATE SET
   full_name = EXCLUDED.full_name,
   phone = COALESCE(EXCLUDED.phone, public.profiles.phone),
@@ -59,24 +59,24 @@ ON CONFLICT (email) DO UPDATE SET
 
 -- 2. WAITLIST
 INSERT INTO public.waitlist (id, profile_id, full_name, email, phone, institution, year_of_study, department, preferred_track, portfolio_url, motivation, team_status, team_code, experience_level, tshirt_size, status, created_at)
+VALUES ('demo-w2', 'prof-4f5ec056ed16eb76', 'Pooja Venkatesh', 'pooja.v@example.edu', NULL, 'Sathyabama Institute of Science and Technology', '4th Year', 'School of Computing', 'Cloud-Native Distributed Systems', 'https://github.com/pooja-v', 'Exploring high-throughput distributed transaction settlement with event-driven consensus.', 'seeking_team', NULL, NULL, NULL, 'reviewed', '2026-10-24T14:30:00.000Z')
+ON CONFLICT (id) DO UPDATE SET
+  status = EXCLUDED.status,
+  updated_at = timezone('utc'::text, now());
+INSERT INTO public.waitlist (id, profile_id, full_name, email, phone, institution, year_of_study, department, preferred_track, portfolio_url, motivation, team_status, team_code, experience_level, tshirt_size, status, created_at)
 VALUES ('demo-w1', 'prof-e4150b989184dd23', 'Aarav Sharma', 'aarav.sharma@example.edu', NULL, 'IIT Madras', '3rd Year', 'Computer Science & Engineering', 'Agentic AI & Generative Workflows', 'https://github.com/aarav', 'Building autonomous distributed agent systems for verifiable research synthesis.', 'seeking_team', NULL, NULL, NULL, 'pending', '2026-10-24T10:15:00.000Z')
 ON CONFLICT (id) DO UPDATE SET
   status = EXCLUDED.status,
   updated_at = timezone('utc'::text, now());
 INSERT INTO public.waitlist (id, profile_id, full_name, email, phone, institution, year_of_study, department, preferred_track, portfolio_url, motivation, team_status, team_code, experience_level, tshirt_size, status, created_at)
-VALUES ('demo-w2', 'prof-4f5ec056ed16eb76', 'Pooja Venkatesh', 'pooja.v@example.edu', NULL, 'Sathyabama Institute of Science and Technology', '4th Year', 'School of Computing', 'Cloud-Native Distributed Systems', 'https://github.com/pooja-v', 'Exploring high-throughput distributed transaction settlement with event-driven consensus.', 'seeking_team', NULL, NULL, NULL, 'shortlisted', '2026-10-24T14:30:00.000Z')
-ON CONFLICT (id) DO UPDATE SET
-  status = EXCLUDED.status,
-  updated_at = timezone('utc'::text, now());
-INSERT INTO public.waitlist (id, profile_id, full_name, email, phone, institution, year_of_study, department, preferred_track, portfolio_url, motivation, team_status, team_code, experience_level, tshirt_size, status, created_at)
-VALUES ('w-1794479320294-7f5br', 'prof-a554da56f65e8f97', 'Ananya Sathyabama Builder', 'builder.1794479318479@sathyabama.ac.in', NULL, 'Sathyabama Institute of Science and Technology', 'Undergraduate', 'Engineering', 'Agentic AI & Generative Workflows', '', 'Building autonomous consensus agents', 'seeking_team', NULL, NULL, NULL, 'pending', '2026-11-12T10:28:40.294Z')
+VALUES ('w-1794479985925-qbzk9', 'prof-79afbf9887984722', 'Ananya Sathyabama Builder', 'builder.1794479985606@sathyabama.ac.in', NULL, 'Sathyabama Institute of Science and Technology', 'Undergraduate', 'Engineering', 'Agentic AI & Generative Workflows', '', 'Building autonomous consensus agents', 'seeking_team', NULL, NULL, NULL, 'pending', '2026-11-12T10:39:45.925Z')
 ON CONFLICT (id) DO UPDATE SET
   status = EXCLUDED.status,
   updated_at = timezone('utc'::text, now());
 
 -- 3. TEAMS
 INSERT INTO public.teams (id, team_code, team_name, invite_code, track_id, institution_name, city, state, leader_profile_id, leader_email, selection_stage, status, project_title, project_abstract, github_url, loom_video_url, created_at)
-VALUES ('team-k75-01', NULL, 'Chronos Distributed', 'KAIROS-7721', 'cloud-native', NULL, NULL, NULL, 'prof-4f5ec056ed16eb76', 'pooja.v@example.edu', 'ROUND_0_APPLICANT', 'shortlisted', 'Chronos Stream: Sub-millisecond Event Mesh for Urban Telemetry', 'A fault-tolerant stream processing engine handling 100k events/sec with distributed consensus and zero data loss.', 'https://github.com/kairos2027/chronos-stream', NULL, '2026-10-25T08:00:00.000Z')
+VALUES ('team-k75-01', NULL, 'Chronos Distributed', 'KAIROS-7721', 'cloud-native', NULL, NULL, NULL, 'prof-4f5ec056ed16eb76', 'pooja.v@example.edu', 'ROUND_0_APPLICANT', 'shortlisted', 'Chronos Stream: Sub-millisecond Event Mesh for Urban Telemetry', 'A fault-tolerant stream processing engine handling 100k events/sec with distributed consensus and zero data loss.', 'https://github.com/kairos2027/chronos-stream', 'https://loom.com/share/chronos-demo', '2026-10-25T08:00:00.000Z')
 ON CONFLICT (id) DO UPDATE SET
   team_name = EXCLUDED.team_name,
   selection_stage = EXCLUDED.selection_stage,
@@ -86,7 +86,7 @@ ON CONFLICT (id) DO UPDATE SET
   loom_video_url = EXCLUDED.loom_video_url,
   updated_at = timezone('utc'::text, now());
 INSERT INTO public.teams (id, team_code, team_name, invite_code, track_id, institution_name, city, state, leader_profile_id, leader_email, selection_stage, status, project_title, project_abstract, github_url, loom_video_url, created_at)
-VALUES ('team-k100-01', 'KAIROS-TEAMK10001', 'Contender Squad team-k100-01', 'INV-TEAM-K100-01', 'cloud-native', NULL, NULL, NULL, NULL, 'placeholder-leader@kairos2027.local', 'ON_CAMPUS_QUALIFIED', 'evaluated', NULL, NULL, NULL, NULL, '2026-11-12T10:28:50.332Z')
+VALUES ('team-k100-01', 'KAIROS-TEAMK10001', 'Contender Squad team-k100-01', 'INV-TEAM-K100-01', 'cloud-native', NULL, NULL, NULL, NULL, 'placeholder-leader@kairos2027.local', 'ON_CAMPUS_QUALIFIED', 'evaluated', NULL, NULL, NULL, NULL, '2026-11-12T10:39:54.686Z')
 ON CONFLICT (id) DO UPDATE SET
   team_name = EXCLUDED.team_name,
   selection_stage = EXCLUDED.selection_stage,
@@ -96,7 +96,7 @@ ON CONFLICT (id) DO UPDATE SET
   loom_video_url = EXCLUDED.loom_video_url,
   updated_at = timezone('utc'::text, now());
 INSERT INTO public.teams (id, team_code, team_name, invite_code, track_id, institution_name, city, state, leader_profile_id, leader_email, selection_stage, status, project_title, project_abstract, github_url, loom_video_url, created_at)
-VALUES ('team-k100-02', 'KAIROS-TEAMK10002', 'Contender Squad team-k100-02', 'INV-TEAM-K100-02', 'cloud-native', NULL, NULL, NULL, NULL, 'placeholder-leader@kairos2027.local', 'ON_CAMPUS_QUALIFIED', 'evaluated', NULL, NULL, NULL, NULL, '2026-11-12T10:28:50.332Z')
+VALUES ('team-k100-02', 'KAIROS-TEAMK10002', 'Contender Squad team-k100-02', 'INV-TEAM-K100-02', 'cloud-native', NULL, NULL, NULL, NULL, 'placeholder-leader@kairos2027.local', 'ON_CAMPUS_QUALIFIED', 'evaluated', NULL, NULL, NULL, NULL, '2026-11-12T10:39:54.686Z')
 ON CONFLICT (id) DO UPDATE SET
   team_name = EXCLUDED.team_name,
   selection_stage = EXCLUDED.selection_stage,
@@ -155,16 +155,85 @@ ON CONFLICT (id) DO UPDATE SET
 
 -- 8. AUDIT LOGS
 INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
-VALUES ('log-1794479322403-ihvf', '2026-11-12T10:28:42.403Z', 'Ananya Sathyabama Builder', 'STUDENT_LOGIN', 'Student logged in successfully [builder.1794479318479@sathyabama.ac.in]')
+VALUES ('log-1794479988197-g7x4', '2026-11-12T10:39:48.197Z', 'Ananya Sathyabama Builder', 'STUDENT_LOGIN', 'Student logged in successfully [builder.1794479985606@sathyabama.ac.in]')
 ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
-VALUES ('log-1794479322217-f240', '2026-11-12T10:28:42.217Z', 'Anonymous Caller', 'STUDENT_AUTH_FAILURE', 'Failed login attempt for [builder.1794479318479@sathyabama.ac.in]')
+VALUES ('log-1794479987977-hqnt', '2026-11-12T10:39:47.977Z', 'Anonymous Caller', 'STUDENT_AUTH_FAILURE', 'Failed login attempt for [builder.1794479985606@sathyabama.ac.in]')
 ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
-VALUES ('log-1794479321202-0k89', '2026-11-12T10:28:41.202Z', 'Ananya Sathyabama Builder', 'STUDENT_LOGIN', 'Student logged in successfully [builder.1794479318479@sathyabama.ac.in]')
+VALUES ('log-1794479986587-s9gs', '2026-11-12T10:39:46.587Z', 'Ananya Sathyabama Builder', 'STUDENT_LOGIN', 'Student logged in successfully [builder.1794479985606@sathyabama.ac.in]')
 ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
-VALUES ('log-1794479321016-po5l', '2026-11-12T10:28:41.016Z', 'Anonymous Caller', 'STUDENT_AUTH_FAILURE', 'Failed login attempt for [builder.1794479318479@sathyabama.ac.in]')
+VALUES ('log-1794479986389-l1e0', '2026-11-12T10:39:46.389Z', 'Anonymous Caller', 'STUDENT_AUTH_FAILURE', 'Failed login attempt for [builder.1794479985606@sathyabama.ac.in]')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479978074-0z27', '2026-11-12T10:39:38.074Z', 'Thenappan T', 'UPDATE_WAITLIST_STATUS', 'Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to reviewed')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479977907', '2026-11-12T10:39:37.907Z', 'Thenappan T', 'UPDATE_FLAGS', 'Updated feature flags: {"demoSandboxMode":true}')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479977832-2dfw', '2026-11-12T10:39:37.832Z', 'Thenappan T', 'ADMIN_LOGIN', 'Logged in successfully as President & Student Builder Group Leader (SBGL)')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479977770-r83e', '2026-11-12T10:39:37.770Z', 'Hemavarshine S', 'UPDATE_WAITLIST_STATUS', 'Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to shortlisted')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479977546-jm87', '2026-11-12T10:39:37.546Z', 'Hemavarshine S', 'ADMIN_LOGIN', 'Logged in successfully as Chief Experience Officer (CXO)')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479976612-5kdy', '2026-11-12T10:39:36.612Z', 'Pooja Venkatesh', 'STUDENT_LOGIN', 'Student logged in successfully [pooja.v@example.edu]')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479976395-oq9z', '2026-11-12T10:39:36.395Z', 'Rohan Gupta', 'STUDENT_LOGIN', 'Student logged in successfully [rohan.g@example.edu]')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479975734-ppyv', '2026-11-12T10:39:35.734Z', 'Independent Builder', 'STUDENT_LOGIN', 'Student logged in successfully [builder.outsider.1794479973997@test.edu]')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479943314-9kp1', '2026-11-12T10:39:03.314Z', 'Hemavarshine S', 'UPDATE_WAITLIST_STATUS', 'Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to reviewed')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479943060-wcpp', '2026-11-12T10:39:03.060Z', 'Hemavarshine S', 'ADMIN_LOGIN', 'Logged in successfully as Chief Experience Officer (CXO)')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479935262-txqo', '2026-11-12T10:38:55.262Z', 'Hemavarshine S', 'ADMIN_LOGIN', 'Logged in successfully as Chief Experience Officer (CXO)')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479927846-lzx1', '2026-11-12T10:38:47.846Z', 'Thenappan T', 'ADMIN_LOGIN', 'Logged in successfully as President & Student Builder Group Leader (SBGL)')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479927775-00cx', '2026-11-12T10:38:47.775Z', 'Hemavarshine S', 'ADMIN_LOGIN', 'Logged in successfully as Chief Experience Officer (CXO)')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479916293-gdap', '2026-11-12T10:38:36.293Z', 'Rohan Gupta', 'STUDENT_LOGIN', 'Student logged in successfully [rohan.g@example.edu]')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479885925-zrxs', '2026-11-12T10:38:05.925Z', 'Pooja Venkatesh', 'STUDENT_LOGIN', 'Student logged in successfully [pooja.v@example.edu]')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479863963-x4gh', '2026-11-12T10:37:43.963Z', 'Pooja Venkatesh', 'STUDENT_LOGIN', 'Student logged in successfully [pooja.v@example.edu]')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479863417-a9s7', '2026-11-12T10:37:43.417Z', 'Rohan Gupta', 'STUDENT_LOGIN', 'Student logged in successfully [rohan.g@example.edu]')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479862651-j3qw', '2026-11-12T10:37:42.651Z', 'Outsider Test', 'STUDENT_LOGIN', 'Student logged in successfully [outsider101@example.edu]')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479819563', '2026-11-12T10:36:59.563Z', 'Thenappan T', 'UPDATE_FLAGS', 'Updated feature flags: {"demoSandboxMode":true}')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479819487-u47r', '2026-11-12T10:36:59.487Z', 'Thenappan T', 'ADMIN_LOGIN', 'Logged in successfully as President & Student Builder Group Leader (SBGL)')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479813886-bbzv', '2026-11-12T10:36:53.886Z', 'Hemavarshine S', 'ADMIN_LOGIN', 'Logged in successfully as Chief Experience Officer (CXO)')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479807857-t2g1', '2026-11-12T10:36:47.857Z', 'Hemavarshine S', 'ADMIN_LOGIN', 'Logged in successfully as Chief Experience Officer (CXO)')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
+VALUES ('log-1794479802844-9287', '2026-11-12T10:36:42.844Z', 'Thenappan T', 'ADMIN_LOGIN', 'Logged in successfully as President & Student Builder Group Leader (SBGL)')
 ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.audit_logs (id, timestamp, organizer_name, action, details)
 VALUES ('log-1792936952854', '2026-10-25T14:02:32.854Z', 'Rikish B', 'ADMIN_LOGIN', 'Logged in successfully as Head of Design & Branding')
@@ -229,6 +298,46 @@ ON CONFLICT (team_id, judge_id, checkpoint_gate) DO UPDATE SET
   qualitative_feedback = EXCLUDED.qualitative_feedback;
 INSERT INTO public.evaluations (id, team_id, judge_id, checkpoint_gate, criterion1_score, criterion2_score, criterion3_score, criterion4_score, raw_total_score, normalized_z_score, qualitative_feedback, recused_conflict, evaluated_at)
 VALUES ('eval-2', 'team-k100-02', 'judge-1', 1, 29, 25, 24, 19, 97, 1.72, 'Brilliant Bedrock multi-agent orchestration. Hallucination guardrails are tightly implemented.', FALSE, '2027-01-22T18:00:00.000Z')
+ON CONFLICT (team_id, judge_id, checkpoint_gate) DO UPDATE SET
+  criterion1_score = EXCLUDED.criterion1_score,
+  criterion2_score = EXCLUDED.criterion2_score,
+  criterion3_score = EXCLUDED.criterion3_score,
+  criterion4_score = EXCLUDED.criterion4_score,
+  raw_total_score = EXCLUDED.raw_total_score,
+  normalized_z_score = EXCLUDED.normalized_z_score,
+  qualitative_feedback = EXCLUDED.qualitative_feedback;
+INSERT INTO public.evaluations (id, team_id, judge_id, checkpoint_gate, criterion1_score, criterion2_score, criterion3_score, criterion4_score, raw_total_score, normalized_z_score, qualitative_feedback, recused_conflict, evaluated_at)
+VALUES ('eval-1794479892737-kdlv', 'team-k75-01', 'judge-2', 1, 25, 20, 20, 15, 80, 0, 'Good architecture', FALSE, '2026-11-12T10:38:12.737Z')
+ON CONFLICT (team_id, judge_id, checkpoint_gate) DO UPDATE SET
+  criterion1_score = EXCLUDED.criterion1_score,
+  criterion2_score = EXCLUDED.criterion2_score,
+  criterion3_score = EXCLUDED.criterion3_score,
+  criterion4_score = EXCLUDED.criterion4_score,
+  raw_total_score = EXCLUDED.raw_total_score,
+  normalized_z_score = EXCLUDED.normalized_z_score,
+  qualitative_feedback = EXCLUDED.qualitative_feedback;
+INSERT INTO public.evaluations (id, team_id, judge_id, checkpoint_gate, criterion1_score, criterion2_score, criterion3_score, criterion4_score, raw_total_score, normalized_z_score, qualitative_feedback, recused_conflict, evaluated_at)
+VALUES ('eval-1794479892792-f15o', 'team-k75-01', 'judge-1', 1, 28, 22, 23, 18, 91, -1.3363, 'Outstanding distributed event streaming design on AWS!', FALSE, '2026-11-12T10:38:12.792Z')
+ON CONFLICT (team_id, judge_id, checkpoint_gate) DO UPDATE SET
+  criterion1_score = EXCLUDED.criterion1_score,
+  criterion2_score = EXCLUDED.criterion2_score,
+  criterion3_score = EXCLUDED.criterion3_score,
+  criterion4_score = EXCLUDED.criterion4_score,
+  raw_total_score = EXCLUDED.raw_total_score,
+  normalized_z_score = EXCLUDED.normalized_z_score,
+  qualitative_feedback = EXCLUDED.qualitative_feedback;
+INSERT INTO public.evaluations (id, team_id, judge_id, checkpoint_gate, criterion1_score, criterion2_score, criterion3_score, criterion4_score, raw_total_score, normalized_z_score, qualitative_feedback, recused_conflict, evaluated_at)
+VALUES ('eval-1794479909192-l1jx', 'team-k75-01', 'judge-1', 1, 28, 22, 23, 18, 91, -0.9623, 'Outstanding distributed event streaming design on AWS!', FALSE, '2026-11-12T10:38:29.192Z')
+ON CONFLICT (team_id, judge_id, checkpoint_gate) DO UPDATE SET
+  criterion1_score = EXCLUDED.criterion1_score,
+  criterion2_score = EXCLUDED.criterion2_score,
+  criterion3_score = EXCLUDED.criterion3_score,
+  criterion4_score = EXCLUDED.criterion4_score,
+  raw_total_score = EXCLUDED.raw_total_score,
+  normalized_z_score = EXCLUDED.normalized_z_score,
+  qualitative_feedback = EXCLUDED.qualitative_feedback;
+INSERT INTO public.evaluations (id, team_id, judge_id, checkpoint_gate, criterion1_score, criterion2_score, criterion3_score, criterion4_score, raw_total_score, normalized_z_score, qualitative_feedback, recused_conflict, evaluated_at)
+VALUES ('eval-1794479977359-xyhm', 'team-k75-01', 'judge-1', 1, 28, 22, 23, 18, 91, -0.7906, 'Robust event streaming and resilient AWS architecture.', FALSE, '2026-11-12T10:39:37.359Z')
 ON CONFLICT (team_id, judge_id, checkpoint_gate) DO UPDATE SET
   criterion1_score = EXCLUDED.criterion1_score,
   criterion2_score = EXCLUDED.criterion2_score,

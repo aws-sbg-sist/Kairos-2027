@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
+import { verifyJudgeAuthorization } from '@/lib/rbac';
 
 export async function POST(req: NextRequest) {
   // Rate limiting to prevent brute force on judge PINs
@@ -25,32 +26,14 @@ export async function POST(req: NextRequest) {
       recusal 
     } = body;
 
-    if (!judgeId || !judgePin) {
+    // RBAC: Verify judge credentials and track specialization assignment
+    const authResult = verifyJudgeAuthorization(judgeId, judgePin, teamId);
+    if (!authResult.authorized) {
       return NextResponse.json({
         success: false,
-        error: 'Missing required credentials: judgeId and judgePin.'
-      }, { status: 400 });
-    }
-
-    // Per-judge DB credential verification with constant-time PIN comparison
-    const judges = db.getJudges();
-    const judge = judges.find(j => j.id === judgeId && j.isActive);
-
-    if (!judge) {
-      return NextResponse.json({
-        success: false,
-        error: 'Judge account not found or is currently inactive.'
-      }, { status: 403 });
-    }
-
-    const pinBuffer = Buffer.from(String(judgePin).trim());
-    const expectedBuffer = Buffer.from(String(judge.accessPin).trim());
-
-    if (pinBuffer.length !== expectedBuffer.length || !crypto.timingSafeEqual(pinBuffer, expectedBuffer)) {
-      return NextResponse.json({
-        success: false,
-        error: 'Invalid Jury Access PIN for this judge account.'
-      }, { status: 403 });
+        error: authResult.error,
+        code: authResult.statusCode === 400 ? 'BAD_REQUEST' : 'FORBIDDEN_JUDGE'
+      }, { status: authResult.statusCode });
     }
 
     if (recusal) {

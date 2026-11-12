@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { getCurrentAdminSession, sanitizeCsvCell } from '@/lib/auth';
+import { sanitizeCsvCell } from '@/lib/auth';
+import { resolveAuthContext, hasPermission } from '@/lib/rbac';
 
 export async function GET(req: NextRequest) {
-  const session = await getCurrentAdminSession();
-  if (!session) {
-    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  const authCtx = await resolveAuthContext();
+  if (authCtx.role === 'ANONYMOUS') {
+    return NextResponse.json({ success: false, error: 'Unauthorized: Admin session required' }, { status: 401 });
+  }
+
+  if (!hasPermission(authCtx.role, 'waitlist:export')) {
+    return NextResponse.json({
+      success: false,
+      error: 'Forbidden: Super Administrator privileges required for mass participant data export.',
+      code: 'FORBIDDEN_SUPER_ADMIN_REQUIRED'
+    }, { status: 403 });
   }
 
   const { searchParams } = new URL(req.url);

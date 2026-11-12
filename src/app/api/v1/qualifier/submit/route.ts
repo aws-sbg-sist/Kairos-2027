@@ -1,25 +1,60 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { getCurrentStudentSession } from '@/lib/student_auth';
+import { verifyTeamLeader } from '@/lib/rbac';
 
 /**
- * PHASE 00 SECURITY CONTAINMENT (VULN-01 IDOR Mitigation):
- * Unauthenticated qualifier submission writes are suspended pending the rollout of
- * authenticated student/team session infrastructure. Team codes cannot be used as credentials.
- * The legacy write handler is preserved below as processQualifierSubmission for Phase 01 integration.
+ * PHASE 03 RBAC ENFORCEMENT (VULN-01 Resolved):
+ * Qualifier submission writes require an authenticated student session AND verified
+ * Team Leader status for the target team. Unauthenticated requests are rejected with 401,
+ * and unauthorized members / non-leaders are rejected with 403 Forbidden.
  */
 export async function POST(req: NextRequest) {
-  // Reject all unauthenticated submission writes with HTTP 503 Service Unavailable
-  return NextResponse.json({
-    success: false,
-    error: 'Round 1 Qualifier submission writes are temporarily locked pending participant authentication infrastructure deployment. Submission writes are suspended to protect team deliverable integrity.',
-    code: 'QUALIFIER_SUBMISSIONS_LOCKED',
-    retryAfter: 'Phase 01 Auth Rollout',
-  }, { 
-    status: 503,
-    headers: {
-      'Retry-After': '86400',
+  try {
+    // 1. Verify Student Authentication
+    const studentSession = await getCurrentStudentSession();
+    if (!studentSession) {
+      return NextResponse.json({
+        success: false,
+        error: 'Authentication required. Please sign in to submit qualifier deliverables.',
+        code: 'UNAUTHORIZED'
+      }, { status: 401 });
     }
-  });
+
+    // 2. Parse submission payload
+    const body = await req.json();
+    const { teamCode } = body;
+
+    if (!teamCode) {
+      return NextResponse.json({
+        success: false,
+        error: 'Team code is required.',
+        code: 'BAD_REQUEST'
+      }, { status: 400 });
+    }
+
+    // 3. Verify Team Leader Role Authorization
+    const leaderCheck = verifyTeamLeader(studentSession.email, teamCode);
+    if (!leaderCheck.authorized) {
+      return NextResponse.json({
+        success: false,
+        error: leaderCheck.error || 'Only the designated Team Leader can submit official team deliverables.',
+        code: leaderCheck.statusCode === 404 ? 'TEAM_NOT_FOUND' : 'FORBIDDEN_LEADER_ONLY'
+      }, { status: leaderCheck.statusCode });
+    }
+
+    // 4. Process validated submission
+    const result = await processQualifierSubmission(body);
+    const statusCode = result.status || (result.success ? 200 : 400);
+    return NextResponse.json(result, { status: statusCode });
+  } catch (err: any) {
+    console.error('[API Qualifier Submit Error]:', err);
+    return NextResponse.json({
+      success: false,
+      error: 'An unexpected server error occurred while processing qualifier submission.',
+      code: 'INTERNAL_ERROR'
+    }, { status: 500 });
+  }
 }
 
 /**

@@ -1,15 +1,23 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { getCurrentAdminSession } from '@/lib/auth';
+import { resolveAuthContext, hasPermission } from '@/lib/rbac';
 import { WaitlistEntry } from '@/types';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   try {
-    const session = await getCurrentAdminSession();
-    if (!session) {
-      return NextResponse.json({ success: false, error: 'Unauthorized organizer session' }, { status: 401 });
+    const authCtx = await resolveAuthContext();
+    if (authCtx.role === 'ANONYMOUS') {
+      return NextResponse.json({ success: false, error: 'Unauthorized: Organizer session required' }, { status: 401 });
+    }
+
+    if (!hasPermission(authCtx.role, 'waitlist:update_status')) {
+      return NextResponse.json({
+        success: false,
+        error: 'Forbidden: Organizer permissions required to update candidate status.',
+        code: 'FORBIDDEN'
+      }, { status: 403 });
     }
 
     const body = await request.json();
@@ -24,12 +32,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: 'Invalid candidate status' }, { status: 400 });
     }
 
-    const success = db.updateWaitlistStatus(id, status, session.organizerName);
+    const updaterName = authCtx.adminSession?.organizerName || 'Organizer';
+    const success = db.updateWaitlistStatus(id, status, updaterName);
     if (!success) {
       return NextResponse.json({ success: false, error: 'Candidate not found in waitlist' }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, id, status, updatedBy: session.organizerName });
+    return NextResponse.json({ success: true, id, status, updatedBy: updaterName });
   } catch (error) {
     console.error('Error updating waitlist candidate status:', error);
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });

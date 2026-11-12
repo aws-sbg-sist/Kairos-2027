@@ -823,7 +823,7 @@ export const db = {
   submitRound1Qualifier(teamCode: string, data: { loomVideoUrl: string; githubUrl: string }): boolean {
     const store = readStore();
     const clean = teamCode.trim().toUpperCase();
-    const team = store.teams.find(t => (t.teamCode && t.teamCode.toUpperCase() === clean) || t.inviteCode.toUpperCase() === clean);
+    const team = store.teams.find(t => (t.teamCode && t.teamCode.toUpperCase() === clean) || (t.id && t.id.toUpperCase() === clean) || (t.inviteCode && t.inviteCode.toUpperCase() === clean));
     if (!team) return false;
 
     team.loomVideoUrl = data.loomVideoUrl;

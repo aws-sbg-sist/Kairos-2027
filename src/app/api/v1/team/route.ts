@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { getCurrentAdminSession } from '@/lib/auth';
+import { getCurrentStudentSession } from '@/lib/student_auth';
 
 export async function GET(req: NextRequest) {
   const rateLimitResult = checkRateLimit(req, { limit: 30, windowMs: 60_000 });
@@ -13,14 +14,50 @@ export async function GET(req: NextRequest) {
   const code = searchParams.get('code');
   const trackId = searchParams.get('trackId');
   const session = await getCurrentAdminSession();
+  const studentSession = await getCurrentStudentSession();
 
   if (code) {
-    const team = db.getTeamByCode(code.trim().toUpperCase());
+    const cleanCode = code.trim().toUpperCase();
+    const team = db.getTeamByCode(cleanCode) || db.getTeams().find(t => (t.id && t.id.toUpperCase() === cleanCode) || (t.teamCode && t.teamCode.toUpperCase() === cleanCode));
     if (!team) {
       return NextResponse.json({ success: false, error: 'Team not found with the provided code.' }, { status: 404 });
     }
-    // If caller queried by exact team code or is admin, return the team details
-    return NextResponse.json({ success: true, team });
+
+    // RBAC: Verify if caller is an organizer or a registered member of this team
+    const isMember = studentSession && (
+      (team.leaderEmail && team.leaderEmail.toLowerCase() === studentSession.email.toLowerCase()) ||
+      (team.members || []).some(m => m.email.toLowerCase() === studentSession.email.toLowerCase())
+    );
+
+    if (session || isMember) {
+      // Full details with invite code and personal contact details for authorized members and admins
+      return NextResponse.json({ success: true, team });
+    }
+
+    // Public / third-party view: sanitize sensitive PII and confidential invite code
+    const sanitizedTeam = {
+      id: team.id,
+      teamCode: team.teamCode,
+      teamName: team.teamName,
+      trackId: team.trackId,
+      institutionName: team.institutionName,
+      city: team.city,
+      state: team.state,
+      selectionStage: team.selectionStage,
+      problemTitle: team.problemTitle,
+      problemAbstract: team.problemAbstract,
+      memberCount: team.members.length,
+      members: team.members.map(m => ({
+        id: m.id,
+        name: m.name,
+        role: m.role,
+        college: m.college,
+        confirmed: m.confirmed
+      })),
+      createdAt: team.createdAt
+    };
+
+    return NextResponse.json({ success: true, team: sanitizedTeam });
   }
 
   let teams = db.getTeams();
