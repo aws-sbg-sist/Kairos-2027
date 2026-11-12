@@ -1,4 +1,5 @@
-import { sanitizeCsvCell } from '@/lib/auth';
+import { sanitizeCsvCell } from './csv';
+import { postgresDb } from './postgres_repository';
 import fs from 'fs';
 import path from 'path';
 import { 
@@ -13,7 +14,7 @@ import {
   CheckpointEvaluation, 
   CSATResponse, 
   OrgMember 
-} from '@/types';
+} from '../types';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'kairos_store.json');
@@ -1070,5 +1071,13 @@ export const db = {
       totalRadarSignals: radar.length,
       totalCSATResponses: store.csat.length,
     };
+  },
+
+  // PostgreSQL Architecture Access
+  pg: postgresDb,
+  getDriver(): 'json' | 'supabase' {
+    return process.env.KAIROS_DB_DRIVER === 'supabase' && postgresDb.isAvailable() ? 'supabase' : 'json';
   }
 };
+
+export { postgresDb };

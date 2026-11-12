@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-11-12T10:20:54.711Z",
+  "sourceFile": "E:\\AWS SBGL\\Events\\Kairos\\Git Site\\Kairos-2027\\data\\kairos_store.json",
+  "recordsRead": {
+    "waitlist": 2,
+    "sponsors": 1,
+    "referrals": 1,
+    "teams": 1,
+    "radarSignals": 4,
+    "judges": 3,
+    "evaluations": 2,
+    "csat": 1,
+    "auditLogs": 7,
+    "members": 9,
+    "featureFlags": 1
+  },
+  "profilesSynthesized": 6,
+  "duplicateEmailsMerged": 2,
+  "recordsToInsert": {
+    "profiles": 6,
+    "waitlist": 2,
+    "teams": 3,
+    "teamMembers": 4,
+    "sponsors": 1,
+    "referrals": 1,
+    "featureFlags": 1,
+    "auditLogs": 7,
+    "radarSignals": 4,
+    "judges": 3,
+    "evaluations": 2,
+    "csatResponses": 1,
+    "orgMembers": 9
+  },
+  "validationWarnings": [
+    "Evaluations reference unlisted teams: team-k100-01, team-k100-02. Creating placeholder teams to satisfy FK constraints."
+  ],
+  "status": "SUCCESS"
+}

@@ -74,31 +74,4 @@ export async function getCurrentAdminSession(): Promise<AdminSession | null> {
 }
 
 export { COOKIE_NAME };
-
-/**
- * Sanitizes a cell value to prevent CSV / Spreadsheet Formula Injection (CWE-1236).
- * Prepends a single quote (') if the value begins with formula triggers:
- * '=', '+', '-', '@', '\t', '\r', '%' or similar characters.
- * Properly escapes internal quotation marks and wraps in quotes.
- */
-export function sanitizeCsvCell(value: any): string {
-  if (value === null || value === undefined) {
-    return '""';
-  }
-  let str = String(value);
-  // Detect if trimmed value begins with any spreadsheet formula indicator
-  const trimmed = str.trimStart();
-  if (
-    trimmed.startsWith('=') ||
-    trimmed.startsWith('+') ||
-    trimmed.startsWith('-') ||
-    trimmed.startsWith('@') ||
-    trimmed.startsWith('\t') ||
-    trimmed.startsWith('\r') ||
-    trimmed.startsWith('%')
-  ) {
-    str = `'${str}`;
-  }
-  // Standard CSV escaping: escape quotes and wrap in double quotes
-  return `"${str.replace(/"/g, '""')}"`;
-}
+export { sanitizeCsvCell } from './csv';
