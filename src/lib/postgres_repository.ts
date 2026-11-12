@@ -326,6 +326,239 @@ export const postgresDb = {
     };
   },
 
+  async createTeam(teamData: {
+    teamName: string;
+    trackId: string;
+    institutionName: string;
+    city: string;
+    state: string;
+    leaderName: string;
+    leaderEmail: string;
+    leaderPhone?: string;
+    leaderCollegeRegNo?: string;
+    leaderMeetupUrl: string;
+    leaderMeetupMemberId?: string;
+    leaderAwsBuilderCenterUrl?: string;
+    problemTitle: string;
+    problemAbstract: string;
+    architecturePdfUrl?: string;
+    githubUrl?: string;
+  }): Promise<ParticipantTeam> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) throw new Error('Supabase client unconfigured');
+
+    const normLeader = teamData.leaderEmail.trim().toLowerCase();
+    const { data: existingMembers } = await supabase
+      .from('team_members')
+      .select('team_id')
+      .eq('email', normLeader);
+
+    if (existingMembers && existingMembers.length > 0) {
+      throw new Error('Builder is already registered on a team. Event regulations prohibit multiple team memberships.');
+    }
+
+    const { count } = await supabase.from('teams').select('*', { count: 'exact', head: true });
+    const teamNum = (count || 0) + 1;
+    const teamCode = `KAIROS-T${String(teamNum).padStart(3, '0')}`;
+    const inviteCode = `KAIROS-${Math.floor(1000 + Math.random() * 9000)}`;
+    const teamId = `team-${Date.now()}`;
+
+    const { error: teamErr } = await supabase
+      .from('teams')
+      .insert({
+        id: teamId,
+        team_code: teamCode,
+        team_name: teamData.teamName.trim(),
+        invite_code: inviteCode,
+        track_id: teamData.trackId.trim(),
+        institution_name: teamData.institutionName.trim(),
+        city: teamData.city.trim(),
+        state: teamData.state.trim(),
+        leader_email: normLeader,
+        selection_stage: 'ROUND_0_APPLICANT',
+        problem_title: teamData.problemTitle.trim(),
+        problem_abstract: teamData.problemAbstract.trim(),
+        architecture_pdf_url: teamData.architecturePdfUrl?.trim() || '',
+        github_url: teamData.githubUrl?.trim() || ''
+      });
+
+    if (teamErr) throw new Error(`Create team error: ${teamErr.message}`);
+
+    await supabase.from('team_members').insert({
+      id: `m-lead-${Date.now()}`,
+      team_id: teamId,
+      name: teamData.leaderName.trim(),
+      email: normLeader,
+      phone: teamData.leaderPhone?.trim() || '',
+      college_reg_no: teamData.leaderCollegeRegNo?.trim() || '',
+      role: 'Leader',
+      college: teamData.institutionName.trim(),
+      meetup_profile_url: teamData.leaderMeetupUrl.trim(),
+      meetup_member_id: teamData.leaderMeetupMemberId?.trim() || '',
+      meetup_rsvp_verified: true,
+      aws_builder_center_url: teamData.leaderAwsBuilderCenterUrl?.trim() || '',
+      confirmed: true
+    });
+
+    const created = await this.getTeamByCode(teamCode);
+    return created!;
+  },
+
+  async joinTeam(teamCode: string, member: {
+    name: string;
+    email: string;
+    phone?: string;
+    collegeRegNo?: string;
+    role: 'Frontend' | 'Backend' | 'AI / Cloud' | 'UI/UX';
+    college: string;
+    meetupProfileUrl: string;
+    meetupMemberId?: string;
+    awsBuilderCenterUrl?: string;
+    tshirtSize?: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+    hoodieSize?: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+  }): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const team = await this.getTeamByCode(teamCode);
+    if (!team) {
+      return { success: false, error: 'Invalid Team Code. Please verify your team invitation code.' };
+    }
+
+    if (team.members.length >= 6) {
+      return { success: false, error: 'Team roster is full (maximum 6 builders allowed per team).' };
+    }
+
+    const normEmail = member.email.trim().toLowerCase();
+    const { data: existingMembers } = await supabase
+      .from('team_members')
+      .select('team_id')
+      .eq('email', normEmail);
+
+    if (existingMembers && existingMembers.length > 0) {
+      return { success: false, error: 'Builder is already registered on a team. Event regulations prohibit multiple team memberships.' };
+    }
+
+    const { error: joinErr } = await supabase.from('team_members').insert({
+      id: `m-${Date.now()}`,
+      team_id: team.id,
+      name: member.name.trim(),
+      email: normEmail,
+      phone: member.phone?.trim() || '',
+      college_reg_no: member.collegeRegNo?.trim() || '',
+      role: member.role,
+      college: member.college.trim(),
+      meetup_profile_url: member.meetupProfileUrl.trim(),
+      meetup_member_id: member.meetupMemberId?.trim() || '',
+      meetup_rsvp_verified: true,
+      aws_builder_center_url: member.awsBuilderCenterUrl?.trim() || '',
+      tshirt_size: member.tshirtSize || 'L',
+      hoodie_size: member.hoodieSize || 'L',
+      confirmed: true
+    });
+
+    if (joinErr) return { success: false, error: joinErr.message };
+
+    const updated = await this.getTeamByCode(team.teamCode || team.id || '');
+    return { success: true, team: updated || undefined };
+  },
+
+  async updateTeamDetails(teamCode: string, details: {
+    teamName?: string;
+    trackId?: string;
+    problemTitle?: string;
+    problemAbstract?: string;
+    architecturePdfUrl?: string;
+    githubUrl?: string;
+  }): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const team = await this.getTeamByCode(teamCode);
+    if (!team) return { success: false, error: `Team ${teamCode} not found.` };
+
+    const updates: any = {};
+    if (details.teamName) updates.team_name = details.teamName.trim();
+    if (details.trackId) updates.track_id = details.trackId.trim();
+    if (details.problemTitle) updates.problem_title = details.problemTitle.trim();
+    if (details.problemAbstract) updates.problem_abstract = details.problemAbstract.trim();
+    if (details.architecturePdfUrl !== undefined) updates.architecture_pdf_url = details.architecturePdfUrl.trim();
+    if (details.githubUrl !== undefined) updates.github_url = details.githubUrl.trim();
+
+    const { error } = await supabase.from('teams').update(updates).eq('id', team.id);
+    if (error) return { success: false, error: error.message };
+
+    const updated = await this.getTeamByCode(team.teamCode || team.id || '');
+    return { success: true, team: updated || undefined };
+  },
+
+  async removeTeamMember(teamCode: string, memberEmail: string): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const team = await this.getTeamByCode(teamCode);
+    if (!team) return { success: false, error: `Team ${teamCode} not found.` };
+
+    const normEmail = memberEmail.trim().toLowerCase();
+    if (team.leaderEmail.toLowerCase() === normEmail) {
+      return { success: false, error: 'Cannot remove the Team Leader. Please transfer leadership to another member before leaving or removing.' };
+    }
+
+    const { error } = await supabase
+      .from('team_members')
+      .delete()
+      .eq('team_id', team.id)
+      .eq('email', normEmail);
+
+    if (error) return { success: false, error: error.message };
+
+    const updated = await this.getTeamByCode(team.teamCode || team.id || '');
+    return { success: true, team: updated || undefined };
+  },
+
+  async transferTeamLeadership(teamCode: string, currentLeaderEmail: string, newLeaderEmail: string): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const team = await this.getTeamByCode(teamCode);
+    if (!team) return { success: false, error: `Team ${teamCode} not found.` };
+
+    const normCurrent = currentLeaderEmail.trim().toLowerCase();
+    const normNew = newLeaderEmail.trim().toLowerCase();
+
+    if (team.leaderEmail.toLowerCase() !== normCurrent) {
+      return { success: false, error: 'Action requires verified authorization from the current Team Leader.' };
+    }
+
+    const newLeaderMember = team.members.find(m => m.email.toLowerCase() === normNew);
+    if (!newLeaderMember) {
+      return { success: false, error: `Prospective leader ${newLeaderEmail} is not a member of this team.` };
+    }
+
+    // Demote current leader
+    await supabase
+      .from('team_members')
+      .update({ role: 'Backend' })
+      .eq('team_id', team.id)
+      .eq('email', normCurrent);
+
+    // Promote new leader
+    await supabase
+      .from('team_members')
+      .update({ role: 'Leader' })
+      .eq('team_id', team.id)
+      .eq('email', normNew);
+
+    // Update team leader
+    await supabase
+      .from('teams')
+      .update({ leader_email: normNew })
+      .eq('id', team.id);
+
+    const updated = await this.getTeamByCode(team.teamCode || team.id || '');
+    return { success: true, team: updated || undefined };
+  },
+
   // --------------------------------------------------------------------------
   // 4. SPONSORS
   // --------------------------------------------------------------------------

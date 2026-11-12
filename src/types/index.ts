@@ -134,6 +134,7 @@ export interface ParticipantTeam {
   city?: string;
   state?: string;
   leaderEmail: string;
+  leaderName?: string;
   selectionStage?: 'ROUND_0_APPLICANT' | 'ONLINE_SEMI_FINALIST' | 'ON_CAMPUS_QUALIFIED' | 'DISQUALIFIED';
   status?: string;
   members: TeamMember[];

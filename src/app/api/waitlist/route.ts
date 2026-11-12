@@ -11,6 +11,27 @@ export async function POST(req: NextRequest) {
     return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
   }
 
+  // Feature Flag Enforcement: Registration Open & Deadline
+  const flags = db.getFeatureFlags();
+  if (!flags.registrationOpen) {
+    return NextResponse.json({
+      success: false,
+      error: 'Registration is currently closed by the organizing committee.',
+      code: 'REGISTRATION_CLOSED'
+    }, { status: 403 });
+  }
+
+  if (flags.registrationDeadline) {
+    const deadline = new Date(flags.registrationDeadline).getTime();
+    if (!isNaN(deadline) && Date.now() > deadline) {
+      return NextResponse.json({
+        success: false,
+        error: 'The registration deadline has passed. Early-interest submissions are closed.',
+        code: 'REGISTRATION_DEADLINE_EXCEEDED'
+      }, { status: 403 });
+    }
+  }
+
   try {
     const body = await req.json();
     const { fullName, email, institution, yearOfStudy, department, preferredTrack, portfolioUrl, motivation } = body;

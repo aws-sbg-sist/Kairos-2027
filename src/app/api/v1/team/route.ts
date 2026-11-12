@@ -3,6 +3,8 @@ import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { getCurrentAdminSession } from '@/lib/auth';
 import { getCurrentStudentSession } from '@/lib/student_auth';
+import { verifyTeamLeader } from '@/lib/rbac';
+import { TECHNICAL_TRACKS } from '@/lib/config';
 
 export async function GET(req: NextRequest) {
   const rateLimitResult = checkRateLimit(req, { limit: 30, windowMs: 60_000 });
@@ -100,14 +102,58 @@ export async function POST(req: NextRequest) {
     return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
   }
 
+  // 1. Enforce Registration Open / Deadline Feature Flags
+  const flags = db.getFeatureFlags();
+  if (!flags.registrationOpen) {
+    return NextResponse.json({
+      success: false,
+      error: 'Team registration is currently closed by the organizing committee.',
+      code: 'REGISTRATION_CLOSED'
+    }, { status: 403 });
+  }
+
+  if (flags.registrationDeadline) {
+    const deadline = new Date(flags.registrationDeadline).getTime();
+    if (!isNaN(deadline) && Date.now() > deadline) {
+      return NextResponse.json({
+        success: false,
+        error: 'Team registration deadline has passed. New team creations are locked.',
+        code: 'REGISTRATION_DEADLINE_EXCEEDED'
+      }, { status: 403 });
+    }
+  }
+
   try {
     const body = await req.json();
-    const { teamName, trackId, abstractTitle, abstractText, cloudArchitectureBlueprint, lead } = body;
+    const { 
+      teamName, 
+      trackId, 
+      abstractTitle, 
+      abstractText, 
+      cloudArchitectureBlueprint, 
+      lead 
+    } = body;
 
-    if (!teamName || !trackId || !abstractTitle || !abstractText || !lead?.fullName || !lead?.email) {
+    // Support both nested lead object and flat leader properties
+    const leadName = lead?.fullName || body.leaderName;
+    const leadEmail = (lead?.email || body.leaderEmail || '').trim().toLowerCase();
+    const leadPhone = lead?.phone || body.leaderPhone || '';
+    const leadCollegeRegNo = lead?.registerNo || body.leaderCollegeRegNo || '';
+    const leadCollege = lead?.college || body.institutionName || 'SIST';
+    const leadCity = body.city || 'Chennai';
+    const leadState = body.state || 'Tamil Nadu';
+    const leadMeetupUrl = lead?.meetupProfileUrl || body.leaderMeetupUrl || '';
+    const leadMeetupVerified = lead?.meetupVerified ?? body.meetupVerified ?? true;
+    const leadAwsUrl = lead?.awsBuilderCenterUrl || body.leaderAwsBuilderCenterUrl || '';
+    const title = abstractTitle || body.problemTitle;
+    const text = abstractText || body.problemAbstract;
+    const blueprint = cloudArchitectureBlueprint || body.architecturePdfUrl || '';
+    const github = lead?.githubUrl || body.githubUrl || '';
+
+    if (!teamName || !trackId || !title || !text || !leadName || !leadEmail) {
       return NextResponse.json({ 
         success: false, 
-        error: 'Missing required fields: teamName, trackId, abstractTitle, abstractText, lead.fullName, lead.email are mandatory.' 
+        error: 'Missing required fields: teamName, trackId, problemTitle, problemAbstract, leaderName, leaderEmail are mandatory.' 
       }, { status: 400 });
     }
 
@@ -115,16 +161,16 @@ export async function POST(req: NextRequest) {
     if (
       teamName.length > 100 ||
       trackId.length > 50 ||
-      abstractTitle.length > 200 ||
-      abstractText.length > 3000 ||
-      lead.fullName.length > 150 ||
-      lead.email.length > 254 ||
-      (lead.phone && lead.phone.length > 50) ||
-      (lead.registerNo && lead.registerNo.length > 50) ||
-      (lead.meetupProfileUrl && lead.meetupProfileUrl.length > 300) ||
-      (lead.awsBuilderCenterUrl && lead.awsBuilderCenterUrl.length > 300) ||
-      (cloudArchitectureBlueprint && cloudArchitectureBlueprint.length > 500) ||
-      (lead.githubUrl && lead.githubUrl.length > 300)
+      title.length > 200 ||
+      text.length > 3000 ||
+      leadName.length > 150 ||
+      leadEmail.length > 254 ||
+      leadPhone.length > 50 ||
+      leadCollegeRegNo.length > 50 ||
+      leadMeetupUrl.length > 300 ||
+      leadAwsUrl.length > 300 ||
+      blueprint.length > 500 ||
+      github.length > 300
     ) {
       return NextResponse.json({
         success: false,
@@ -132,29 +178,51 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    if (!lead.meetupProfileUrl || !lead.meetupVerified) {
+    // Abstract word count validation (maximum 300 words)
+    const wordCount = text.trim().split(/\s+/).length;
+    if (wordCount > 300) {
       return NextResponse.json({
         success: false,
-        error: 'Team Leader Meetup RSVP verification is mandatory per AWS Student Builder Group regulations.'
+        error: `Project abstract exceeds maximum 300 words (provided: ${wordCount} words).`
       }, { status: 400 });
+    }
+
+    // Track ID validation
+    const validTracks = TECHNICAL_TRACKS.map(t => t.id);
+    const trackExists = validTracks.includes(trackId) || validTracks.some(vt => vt.includes(trackId) || trackId.includes(vt));
+    if (!trackExists) {
+      return NextResponse.json({
+        success: false,
+        error: `Invalid track selected: ${trackId}. Must be a valid KAIROS 2027 technical track.`
+      }, { status: 400 });
+    }
+
+    // Multi-team membership prevention: Builder cannot lead or join multiple teams
+    const existingTeam = db.getStudentTeam(leadEmail);
+    if (existingTeam) {
+      return NextResponse.json({
+        success: false,
+        error: `Builder is already registered on team "${existingTeam.teamName}". Event regulations strictly prohibit multi-team registration.`,
+        code: 'MULTI_TEAM_FORBIDDEN'
+      }, { status: 409 });
     }
 
     const newTeam = db.createTeam({
       teamName: teamName.trim(),
       trackId: trackId.trim(),
-      institutionName: lead.college?.trim() || 'SIST',
-      city: 'Chennai',
-      state: 'Tamil Nadu',
-      leaderName: lead.fullName.trim(),
-      leaderEmail: lead.email.trim().toLowerCase(),
-      leaderPhone: lead.phone?.trim() || '',
-      leaderCollegeRegNo: lead.registerNo?.trim() || '',
-      leaderMeetupUrl: lead.meetupProfileUrl.trim(),
-      leaderAwsBuilderCenterUrl: lead.awsBuilderCenterUrl?.trim() || '',
-      problemTitle: abstractTitle.trim(),
-      problemAbstract: abstractText.trim(),
-      architecturePdfUrl: cloudArchitectureBlueprint?.trim() || '',
-      githubUrl: lead.githubUrl?.trim() || '',
+      institutionName: leadCollege.trim(),
+      city: leadCity.trim(),
+      state: leadState.trim(),
+      leaderName: leadName.trim(),
+      leaderEmail: leadEmail,
+      leaderPhone: leadPhone.trim(),
+      leaderCollegeRegNo: leadCollegeRegNo.trim(),
+      leaderMeetupUrl: leadMeetupUrl.trim(),
+      leaderAwsBuilderCenterUrl: leadAwsUrl.trim(),
+      problemTitle: title.trim(),
+      problemAbstract: text.trim(),
+      architecturePdfUrl: blueprint.trim(),
+      githubUrl: github.trim(),
     });
 
     return NextResponse.json({
@@ -166,7 +234,9 @@ export async function POST(req: NextRequest) {
     }, { status: 201 });
   } catch (err: any) {
     console.error('[API Team Create Error]:', err);
-    return NextResponse.json({ success: false, error: 'Failed to create team. Please try again.' }, { status: 500 });
+    const msg = err.message || 'Failed to create team. Please try again.';
+    const statusCode = msg.includes('already registered') ? 409 : 500;
+    return NextResponse.json({ success: false, error: msg }, { status: statusCode });
   }
 }
 
@@ -176,22 +246,46 @@ export async function PUT(req: NextRequest) {
     return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
   }
 
+  // Enforce Registration Open / Deadline Feature Flags
+  const flags = db.getFeatureFlags();
+  if (!flags.registrationOpen) {
+    return NextResponse.json({
+      success: false,
+      error: 'Team registration is currently closed by the organizing committee.',
+      code: 'REGISTRATION_CLOSED'
+    }, { status: 403 });
+  }
+
+  if (flags.registrationDeadline) {
+    const deadline = new Date(flags.registrationDeadline).getTime();
+    if (!isNaN(deadline) && Date.now() > deadline) {
+      return NextResponse.json({
+        success: false,
+        error: 'Team registration deadline has passed. Joining teams is currently closed.',
+        code: 'REGISTRATION_DEADLINE_EXCEEDED'
+      }, { status: 403 });
+    }
+  }
+
   try {
     const body = await req.json();
     const { teamCode, member } = body;
 
-    if (!teamCode || !member?.fullName || !member?.email) {
+    if (!teamCode || !member?.fullName && !member?.name || !member?.email) {
       return NextResponse.json({ 
         success: false, 
         error: 'Missing required fields: teamCode, member.fullName, member.email are mandatory.' 
       }, { status: 400 });
     }
 
+    const memberName = member.fullName || member.name;
+    const memberEmail = member.email.trim().toLowerCase();
+
     // Input length validation
     if (
       teamCode.length > 50 ||
-      member.fullName.length > 150 ||
-      member.email.length > 254 ||
+      memberName.length > 150 ||
+      memberEmail.length > 254 ||
       (member.phone && member.phone.length > 50) ||
       (member.college && member.college.length > 200) ||
       (member.registerNo && member.registerNo.length > 50) ||
@@ -204,11 +298,26 @@ export async function PUT(req: NextRequest) {
       }, { status: 400 });
     }
 
-    if (!member.meetupProfileUrl || !member.meetupVerified) {
+    // Multi-team check: ensure member is not already in another squad
+    const existingTeam = db.getStudentTeam(memberEmail);
+    if (existingTeam) {
+      const cleanCode = teamCode.trim().toUpperCase();
+      if (
+        (existingTeam.teamCode && existingTeam.teamCode.toUpperCase() === cleanCode) ||
+        existingTeam.id.toUpperCase() === cleanCode ||
+        existingTeam.inviteCode.toUpperCase() === cleanCode
+      ) {
+        return NextResponse.json({
+          success: false,
+          error: 'A member with this email is already on this team roster.',
+          code: 'DUPLICATE_MEMBERSHIP'
+        }, { status: 400 });
+      }
       return NextResponse.json({
         success: false,
-        error: 'Meetup RSVP verification is required for all builders joining a team.'
-      }, { status: 400 });
+        error: `Builder is already registered on team "${existingTeam.teamName}". Event regulations strictly prohibit multi-team registration.`,
+        code: 'MULTI_TEAM_FORBIDDEN'
+      }, { status: 409 });
     }
 
     const roleMapping: 'Frontend' | 'Backend' | 'AI / Cloud' | 'UI/UX' = 
@@ -217,19 +326,20 @@ export async function PUT(req: NextRequest) {
         : 'Backend';
 
     const joinResult = db.joinTeam(teamCode.trim().toUpperCase(), {
-      name: member.fullName.trim(),
-      email: member.email.trim().toLowerCase(),
+      name: memberName.trim(),
+      email: memberEmail,
       phone: member.phone?.trim() || '',
       college: member.college?.trim() || 'SIST',
-      collegeRegNo: member.registerNo?.trim() || '',
+      collegeRegNo: member.registerNo?.trim() || member.collegeRegNo?.trim() || '',
       role: roleMapping,
-      meetupProfileUrl: member.meetupProfileUrl.trim(),
+      meetupProfileUrl: member.meetupProfileUrl?.trim() || '',
       awsBuilderCenterUrl: member.awsBuilderCenterUrl?.trim() || '',
-      tshirtSize: member.tShirtSize || 'L',
+      tshirtSize: member.tShirtSize || member.tshirtSize || 'L',
     });
 
     if (!joinResult.success) {
-      return NextResponse.json({ success: false, error: joinResult.error }, { status: 400 });
+      const statusCode = joinResult.error?.includes('already registered') ? 409 : 400;
+      return NextResponse.json({ success: false, error: joinResult.error }, { status: statusCode });
     }
 
     return NextResponse.json({
@@ -240,5 +350,67 @@ export async function PUT(req: NextRequest) {
   } catch (err: any) {
     console.error('[API Team Join Error]:', err);
     return NextResponse.json({ success: false, error: 'Failed to join team. Please try again.' }, { status: 500 });
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const studentSession = await getCurrentStudentSession();
+    if (!studentSession) {
+      return NextResponse.json({
+        success: false,
+        error: 'Authentication required. Please sign in to edit team details.',
+        code: 'UNAUTHORIZED'
+      }, { status: 401 });
+    }
+
+    const body = await req.json();
+    const { teamCode, teamName, trackId, problemTitle, problemAbstract, architecturePdfUrl, githubUrl } = body;
+
+    if (!teamCode) {
+      return NextResponse.json({ success: false, error: 'Team code is required.' }, { status: 400 });
+    }
+
+    // RBAC: Verify that the caller is the authorized Team Leader
+    const leaderCheck = verifyTeamLeader(studentSession.email, teamCode);
+    if (!leaderCheck.authorized) {
+      return NextResponse.json({
+        success: false,
+        error: leaderCheck.error || 'Only the designated Team Leader can edit team details.',
+        code: leaderCheck.statusCode === 404 ? 'TEAM_NOT_FOUND' : 'FORBIDDEN_LEADER_ONLY'
+      }, { status: leaderCheck.statusCode });
+    }
+
+    if (problemAbstract) {
+      const wordCount = problemAbstract.trim().split(/\s+/).length;
+      if (wordCount > 300) {
+        return NextResponse.json({
+          success: false,
+          error: `Project abstract exceeds maximum 300 words (provided: ${wordCount} words).`
+        }, { status: 400 });
+      }
+    }
+
+    const updateResult = db.updateTeamDetails(teamCode, {
+      teamName,
+      trackId,
+      problemTitle,
+      problemAbstract,
+      architecturePdfUrl,
+      githubUrl
+    });
+
+    if (!updateResult.success) {
+      return NextResponse.json({ success: false, error: updateResult.error }, { status: 400 });
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Team details successfully updated!',
+      team: updateResult.team
+    });
+  } catch (err: any) {
+    console.error('[API Team Patch Error]:', err);
+    return NextResponse.json({ success: false, error: 'Failed to update team details.' }, { status: 500 });
   }
 }

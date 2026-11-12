@@ -726,9 +726,28 @@ export const db = {
     githubUrl?: string;
   }): ParticipantTeam {
     const store = readStore();
-    const count = store.teams.length + 1;
-    const teamCode = `KAIROS-T${String(count).padStart(3, '0')}`;
-    const inviteCode = `KAIROS-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    // Data Consistency: Verify leader is not already on any team
+    const normLeader = teamData.leaderEmail.trim().toLowerCase();
+    const existing = store.teams.find(t => 
+      t.leaderEmail.toLowerCase() === normLeader || 
+      (t.members || []).some(m => m.email.toLowerCase() === normLeader)
+    );
+    if (existing) {
+      throw new Error(`Builder is already registered on team "${existing.teamName}". Event regulations prohibit multiple team memberships.`);
+    }
+
+    let count = store.teams.length + 1;
+    let teamCode = `KAIROS-T${String(count).padStart(3, '0')}`;
+    while (store.teams.some(t => t.teamCode === teamCode)) {
+      count++;
+      teamCode = `KAIROS-T${String(count).padStart(3, '0')}`;
+    }
+
+    let inviteCode = `KAIROS-${Math.floor(1000 + Math.random() * 9000)}`;
+    while (store.teams.some(t => t.inviteCode === inviteCode)) {
+      inviteCode = `KAIROS-${Math.floor(1000 + Math.random() * 9000)}`;
+    }
 
     const newTeam: ParticipantTeam = {
       id: `team-${Date.now()}`,
@@ -784,7 +803,7 @@ export const db = {
   }): { success: boolean; team?: ParticipantTeam; error?: string } {
     const store = readStore();
     const clean = teamCode.trim().toUpperCase();
-    const team = store.teams.find(t => (t.teamCode && t.teamCode.toUpperCase() === clean) || t.inviteCode.toUpperCase() === clean);
+    const team = store.teams.find(t => (t.teamCode && t.teamCode.toUpperCase() === clean) || (t.id && t.id.toUpperCase() === clean) || (t.inviteCode && t.inviteCode.toUpperCase() === clean));
 
     if (!team) {
       return { success: false, error: 'Invalid Team Code. Please verify your team invitation code.' };
@@ -794,9 +813,17 @@ export const db = {
       return { success: false, error: 'Team roster is full (maximum 6 builders allowed per team).' };
     }
 
-    const emailExists = team.members.some(m => m.email.toLowerCase() === member.email.toLowerCase());
-    if (emailExists) {
-      return { success: false, error: 'A member with this email is already on the team roster.' };
+    const normEmail = member.email.trim().toLowerCase();
+    const existingTeam = store.teams.find(t => 
+      (t.leaderEmail && t.leaderEmail.toLowerCase() === normEmail) ||
+      (t.members || []).some(m => m.email.toLowerCase() === normEmail)
+    );
+
+    if (existingTeam) {
+      if (existingTeam.id === team.id || (existingTeam.teamCode && team.teamCode && existingTeam.teamCode.toUpperCase() === team.teamCode.toUpperCase())) {
+        return { success: false, error: 'A member with this email is already on this team roster.' };
+      }
+      return { success: false, error: `Builder is already registered on team "${existingTeam.teamName}". Event regulations prohibit multiple team memberships.` };
     }
 
     team.members.push({
@@ -815,6 +842,108 @@ export const db = {
       hoodieSize: member.hoodieSize,
       confirmed: true,
     });
+
+    writeStore(store);
+    return { success: true, team };
+  },
+
+  updateTeamDetails(teamCode: string, details: {
+    teamName?: string;
+    trackId?: string;
+    problemTitle?: string;
+    problemAbstract?: string;
+    architecturePdfUrl?: string;
+    githubUrl?: string;
+  }): { success: boolean; team?: ParticipantTeam; error?: string } {
+    const store = readStore();
+    const clean = teamCode.trim().toUpperCase();
+    const team = store.teams.find(t => 
+      (t.teamCode && t.teamCode.toUpperCase() === clean) || 
+      (t.id && t.id.toUpperCase() === clean) || 
+      (t.inviteCode && t.inviteCode.toUpperCase() === clean)
+    );
+    if (!team) {
+      return { success: false, error: `Team ${teamCode} not found.` };
+    }
+
+    if (details.teamName) team.teamName = details.teamName.trim();
+    if (details.trackId) team.trackId = details.trackId.trim();
+    if (details.problemTitle) team.problemTitle = details.problemTitle.trim();
+    if (details.problemAbstract) team.problemAbstract = details.problemAbstract.trim();
+    if (details.architecturePdfUrl !== undefined) team.architecturePdfUrl = details.architecturePdfUrl.trim();
+    if (details.githubUrl !== undefined) team.githubUrl = details.githubUrl.trim();
+
+    writeStore(store);
+    return { success: true, team };
+  },
+
+  removeTeamMember(teamCode: string, memberEmail: string): { success: boolean; team?: ParticipantTeam; error?: string } {
+    const store = readStore();
+    const clean = teamCode.trim().toUpperCase();
+    const team = store.teams.find(t => 
+      (t.teamCode && t.teamCode.toUpperCase() === clean) || 
+      (t.id && t.id.toUpperCase() === clean) || 
+      (t.inviteCode && t.inviteCode.toUpperCase() === clean)
+    );
+    if (!team) {
+      return { success: false, error: `Team ${teamCode} not found.` };
+    }
+
+    const normEmail = memberEmail.trim().toLowerCase();
+    const memberIndex = team.members.findIndex(m => m.email.toLowerCase() === normEmail);
+    if (memberIndex === -1) {
+      return { success: false, error: `Member ${memberEmail} not found in this team.` };
+    }
+
+    const targetMember = team.members[memberIndex];
+    if (targetMember.role === 'Leader' || (team.leaderEmail && team.leaderEmail.toLowerCase() === normEmail)) {
+      return { success: false, error: 'Cannot remove the Team Leader. Please transfer leadership to another member before leaving or removing.' };
+    }
+
+    team.members.splice(memberIndex, 1);
+    writeStore(store);
+    return { success: true, team };
+  },
+
+  transferTeamLeadership(teamCode: string, currentLeaderEmail: string, newLeaderEmail: string): { success: boolean; team?: ParticipantTeam; error?: string } {
+    const store = readStore();
+    const clean = teamCode.trim().toUpperCase();
+    const team = store.teams.find(t => 
+      (t.teamCode && t.teamCode.toUpperCase() === clean) || 
+      (t.id && t.id.toUpperCase() === clean) || 
+      (t.inviteCode && t.inviteCode.toUpperCase() === clean)
+    );
+    if (!team) {
+      return { success: false, error: `Team ${teamCode} not found.` };
+    }
+
+    const normCurrent = currentLeaderEmail.trim().toLowerCase();
+    const normNew = newLeaderEmail.trim().toLowerCase();
+
+    if (normCurrent === normNew) {
+      return { success: false, error: 'New leader must be a different confirmed team member.' };
+    }
+
+    const isLeader = 
+      (team.leaderEmail && team.leaderEmail.toLowerCase() === normCurrent) ||
+      team.members.some(m => m.email.toLowerCase() === normCurrent && m.role === 'Leader');
+
+    if (!isLeader) {
+      return { success: false, error: 'Action requires verified authorization from the current Team Leader.' };
+    }
+
+    const currentLeaderMember = team.members.find(m => m.email.toLowerCase() === normCurrent);
+    const newLeaderMember = team.members.find(m => m.email.toLowerCase() === normNew);
+    if (!newLeaderMember) {
+      return { success: false, error: `Prospective leader ${newLeaderEmail} is not a member of this team.` };
+    }
+
+    if (currentLeaderMember) {
+      currentLeaderMember.role = 'Backend';
+    }
+    newLeaderMember.role = 'Leader';
+    team.leaderEmail = newLeaderMember.email;
+    team.leaderName = newLeaderMember.name;
 
     writeStore(store);
     return { success: true, team };
