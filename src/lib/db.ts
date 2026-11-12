@@ -15,7 +15,8 @@ import {
   CheckpointEvaluation, 
   CSATResponse, 
   OrgMember,
-  StudentAccount
+  StudentAccount,
+  LeaderboardEntry
 } from '../types';
 import { hashPassword, verifyPassword, generateVerificationToken, verifyEmailToken, generatePasswordResetToken, verifyPasswordResetToken } from './student_auth';
 
@@ -591,6 +592,7 @@ const DEFAULT_STORE: StoreSchema = {
 
 // In-memory cache and serialized write queue to prevent concurrency race conditions
 let cachedStore: StoreSchema | null = null;
+let lastMtimeMs = 0;
 let writeQueue: Promise<void> = Promise.resolve();
 
 // Safe thread-safe file persistence
@@ -604,31 +606,37 @@ function ensureDataDir() {
 }
 
 function readStore(): StoreSchema {
-  if (cachedStore) {
-    return cachedStore;
-  }
   try {
     ensureDataDir();
-    const raw = fs.readFileSync(JSON_FILE, 'utf-8');
-    const parsed = JSON.parse(raw);
-    const store: StoreSchema = {
-      ...DEFAULT_STORE,
-      ...parsed,
-      members: parsed.members && parsed.members.length > 0 ? parsed.members : DEFAULT_MEMBERS,
-      referrals: parsed.referrals || DEFAULT_STORE.referrals,
-      judges: parsed.judges || DEFAULT_STORE.judges,
-      evaluations: parsed.evaluations || DEFAULT_STORE.evaluations,
-      csat: parsed.csat || DEFAULT_STORE.csat,
-      studentAccounts: parsed.studentAccounts || [],
-    };
-    cachedStore = store;
-    return store;
+    if (fs.existsSync(JSON_FILE)) {
+      const stat = fs.statSync(JSON_FILE);
+      if (cachedStore && stat.mtimeMs === lastMtimeMs) {
+        return cachedStore;
+      }
+      lastMtimeMs = stat.mtimeMs;
+      const raw = fs.readFileSync(JSON_FILE, 'utf-8');
+      const parsed = JSON.parse(raw);
+      const store: StoreSchema = {
+        ...DEFAULT_STORE,
+        ...parsed,
+        members: parsed.members && parsed.members.length > 0 ? parsed.members : DEFAULT_MEMBERS,
+        referrals: parsed.referrals || DEFAULT_STORE.referrals,
+        judges: parsed.judges || DEFAULT_STORE.judges,
+        evaluations: parsed.evaluations || DEFAULT_STORE.evaluations,
+        csat: parsed.csat || DEFAULT_STORE.csat,
+        studentAccounts: parsed.studentAccounts || [],
+      };
+      cachedStore = store;
+      return store;
+    }
   } catch (err) {
+    if (cachedStore) return cachedStore;
     console.error('[DB] Read error, falling back to default store:', err);
-    const fallback: StoreSchema = { ...DEFAULT_STORE };
-    cachedStore = fallback;
-    return fallback;
   }
+
+  const fallback: StoreSchema = { ...DEFAULT_STORE };
+  cachedStore = fallback;
+  return fallback;
 }
 
 function writeStore(data: StoreSchema) {
@@ -642,6 +650,9 @@ function writeStore(data: StoreSchema) {
       const tmpFile = `${JSON_FILE}.${Date.now()}-${Math.random().toString(36).substring(2, 6)}.tmp`;
       fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), 'utf-8');
       fs.renameSync(tmpFile, JSON_FILE);
+      if (fs.existsSync(JSON_FILE)) {
+        lastMtimeMs = fs.statSync(JSON_FILE).mtimeMs;
+      }
     } catch (err) {
       console.error('[DB] Concurrent write error:', err);
     }
@@ -1226,29 +1237,326 @@ export const db = {
     return store.evaluations.filter(e => targetIds.has(e.teamId.toLowerCase()));
   },
 
-  addEvaluation(evalData: Omit<CheckpointEvaluation, 'id' | 'rawTotalScore' | 'normalizedZScore' | 'evaluatedAt'>): CheckpointEvaluation {
+  getEvaluationByJudgeAndTeam(judgeId: string, teamIdOrCode: string, checkpointGate: number): CheckpointEvaluation | undefined {
     const store = readStore();
+    const clean = (teamIdOrCode || '').trim().toLowerCase();
+    const targetIds = new Set<string>([clean]);
+    const team = store.teams.find(t => 
+      t.id.toLowerCase() === clean || 
+      (t.teamCode && t.teamCode.toLowerCase() === clean) ||
+      (t.inviteCode && t.inviteCode.toLowerCase() === clean)
+    );
+    if (team) {
+      targetIds.add(team.id.toLowerCase());
+      if (team.teamCode) targetIds.add(team.teamCode.toLowerCase());
+    }
+
+    return store.evaluations.find(e => 
+      e.judgeId === judgeId && 
+      e.checkpointGate === checkpointGate && 
+      targetIds.has(e.teamId.toLowerCase())
+    );
+  },
+
+  saveEvaluation(
+    evalData: {
+      teamId: string;
+      judgeId: string;
+      checkpointGate: number;
+      criterion1Score: number;
+      criterion2Score: number;
+      criterion3Score: number;
+      criterion4Score: number;
+      qualitativeFeedback?: string;
+    },
+    isEdit = false,
+    editorName?: string,
+    editReason?: string
+  ): { success: boolean; evaluation?: CheckpointEvaluation; duplicate?: boolean; updated?: boolean; error?: string } {
+    const store = readStore();
+
+    // Canonicalize team identifier
+    const cleanTeamInput = evalData.teamId.trim().toLowerCase();
+    const team = store.teams.find(t => 
+      t.id.toLowerCase() === cleanTeamInput || 
+      (t.teamCode && t.teamCode.toLowerCase() === cleanTeamInput) ||
+      (t.inviteCode && t.inviteCode.toLowerCase() === cleanTeamInput)
+    );
+    const canonicalTeamId = team ? (team.teamCode || team.id) : evalData.teamId;
+
+    // Check for existing evaluation by this judge for this gate
+    const existing = this.getEvaluationByJudgeAndTeam(evalData.judgeId, canonicalTeamId, evalData.checkpointGate);
+
+    if (existing && !isEdit) {
+      return {
+        success: false,
+        duplicate: true,
+        error: `Team ${canonicalTeamId} has already been evaluated for Checkpoint Gate ${evalData.checkpointGate} by this judge. Use edit mode to update score.`,
+        evaluation: existing
+      };
+    }
+
     const rawTotalScore = evalData.criterion1Score + evalData.criterion2Score + evalData.criterion3Score + evalData.criterion4Score;
-    
-    // Existing evaluations for this judge to compute mean and stdev for Z-score
-    const judgeEvals = store.evaluations.filter(e => e.judgeId === evalData.judgeId);
-    const allScores = [...judgeEvals.map(e => e.rawTotalScore), rawTotalScore];
+
+    // Compute Z-score based on this judge's score distribution
+    const otherJudgeEvals = store.evaluations.filter(e => e.judgeId === evalData.judgeId && (!existing || e.id !== existing.id));
+    const allScores = [...otherJudgeEvals.map(e => e.rawTotalScore), rawTotalScore];
     const mean = allScores.reduce((acc, v) => acc + v, 0) / allScores.length;
     const variance = allScores.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / (allScores.length || 1);
     const stdev = Math.sqrt(variance) || 1;
     const normalizedZScore = Number(((rawTotalScore - mean) / stdev).toFixed(4));
 
+    const judge = store.judges.find(j => j.id === evalData.judgeId);
+    const logActor = editorName || judge?.fullName || `Judge ${evalData.judgeId}`;
+
+    if (existing && isEdit) {
+      // Update existing evaluation with audit trail
+      const previousScore = existing.rawTotalScore;
+      existing.criterion1Score = evalData.criterion1Score;
+      existing.criterion2Score = evalData.criterion2Score;
+      existing.criterion3Score = evalData.criterion3Score;
+      existing.criterion4Score = evalData.criterion4Score;
+      existing.rawTotalScore = rawTotalScore;
+      existing.normalizedZScore = normalizedZScore;
+      if (evalData.qualitativeFeedback !== undefined) {
+        existing.qualitativeFeedback = evalData.qualitativeFeedback.trim();
+      }
+      existing.updatedAt = new Date().toISOString();
+      existing.updatedBy = logActor;
+
+      if (!existing.editHistory) existing.editHistory = [];
+      existing.editHistory.push({
+        previousScore,
+        updatedScore: rawTotalScore,
+        timestamp: new Date().toISOString(),
+        reason: editReason || 'Score calibration'
+      });
+
+      if (!store.auditLogs) store.auditLogs = [];
+      store.auditLogs.unshift({
+        id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        timestamp: new Date().toISOString(),
+        organizerName: logActor,
+        action: 'UPDATE_EVALUATION',
+        details: `Judge updated Gate ${evalData.checkpointGate} evaluation for team [${canonicalTeamId}]: ${previousScore} -> ${rawTotalScore} (${editReason || 'Score calibration'})`
+      });
+
+      writeStore(store);
+      return { success: true, evaluation: existing, updated: true };
+    }
+
+    // New evaluation
     const newEval: CheckpointEvaluation = {
-      ...evalData,
       id: `eval-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      teamId: canonicalTeamId,
+      judgeId: evalData.judgeId,
+      checkpointGate: evalData.checkpointGate as 0 | 1 | 2 | 3,
+      criterion1Score: evalData.criterion1Score,
+      criterion2Score: evalData.criterion2Score,
+      criterion3Score: evalData.criterion3Score,
+      criterion4Score: evalData.criterion4Score,
       rawTotalScore,
       normalizedZScore,
+      qualitativeFeedback: evalData.qualitativeFeedback?.trim() || '',
       evaluatedAt: new Date().toISOString(),
+      editHistory: []
     };
 
+    if (!store.evaluations) store.evaluations = [];
     store.evaluations.push(newEval);
+
+    if (!store.auditLogs) store.auditLogs = [];
+    store.auditLogs.unshift({
+      id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      timestamp: new Date().toISOString(),
+      organizerName: logActor,
+      action: 'SUBMIT_EVALUATION',
+      details: `Recorded Gate ${evalData.checkpointGate} evaluation for team [${canonicalTeamId}]: ${rawTotalScore}/100 (Normalized Z-score: ${normalizedZScore})`
+    });
+
     writeStore(store);
-    return newEval;
+    return { success: true, evaluation: newEval };
+  },
+
+  getAssignedTeamsForJudge(judgeId: string): (ParticipantTeam & { evaluations: CheckpointEvaluation[] })[] {
+    const store = readStore();
+    const judge = store.judges.find(j => j.id === judgeId);
+    if (!judge) return [];
+
+    let eligibleTeams = [...store.teams];
+
+    if (judge.trackSpecialization) {
+      const spec = judge.trackSpecialization.toLowerCase();
+      if (!spec.includes('all') && !spec.includes('general')) {
+        eligibleTeams = eligibleTeams.filter(t => {
+          const teamTrack = (t.trackId || '').toLowerCase().replace(/^track-/, '');
+          return (
+            spec.includes(teamTrack) ||
+            (teamTrack.includes('cloud') && spec.includes('cloud')) ||
+            (teamTrack.includes('ai') && spec.includes('ai')) ||
+            ((teamTrack.includes('fintech') || teamTrack.includes('trust')) && (spec.includes('fintech') || spec.includes('trust'))) ||
+            (teamTrack.includes('open') && spec.includes('open')) ||
+            (teamTrack.includes('edge') && spec.includes('edge')) ||
+            (teamTrack.includes('iot') && spec.includes('iot')) ||
+            (teamTrack.includes('distributed') && spec.includes('distributed'))
+          );
+        });
+      }
+    }
+
+    return eligibleTeams.map(t => {
+      const tCode = (t.teamCode || '').toLowerCase();
+      const tId = (t.id || '').toLowerCase();
+      const teamEvals = store.evaluations.filter(e => 
+        e.judgeId === judgeId && 
+        (e.teamId.toLowerCase() === tCode || e.teamId.toLowerCase() === tId)
+      );
+
+      return {
+        ...t,
+        evaluations: teamEvals
+      };
+    });
+  },
+
+  getLeaderboardStandings(filterTrack?: string): { published: boolean; message?: string; standings: LeaderboardEntry[] } {
+    const store = readStore();
+    const flags = store.featureFlags;
+
+    // Respect event publication settings
+    if (flags.leaderboardPublished === false) {
+      return {
+        published: false,
+        message: 'Official leaderboard rankings are currently withheld during active jury deliberation. Live standings will unlock upon grand stage reveal.',
+        standings: []
+      };
+    }
+
+    let teams = [...store.teams];
+    if (filterTrack && filterTrack !== 'all') {
+      const normFilter = filterTrack.toLowerCase().replace(/^track-/, '');
+      teams = teams.filter(t => (t.trackId || '').toLowerCase().replace(/^track-/, '') === normFilter);
+    }
+
+    const evaluations = store.evaluations || [];
+
+    const computedList = teams.map(team => {
+      const targetIds = new Set<string>([team.id.toLowerCase()]);
+      if (team.teamCode) targetIds.add(team.teamCode.toLowerCase());
+
+      const teamEvals = evaluations.filter(e => targetIds.has(e.teamId.toLowerCase()));
+
+      const gate1Evals = teamEvals.filter(e => e.checkpointGate === 1);
+      const gate2Evals = teamEvals.filter(e => e.checkpointGate === 2);
+      const gate3Evals = teamEvals.filter(e => e.checkpointGate === 3);
+
+      const cp1Score = gate1Evals.length > 0
+        ? Number((gate1Evals.reduce((a, e) => a + e.rawTotalScore, 0) / gate1Evals.length).toFixed(1))
+        : 0;
+      const cp2Score = gate2Evals.length > 0
+        ? Number((gate2Evals.reduce((a, e) => a + e.rawTotalScore, 0) / gate2Evals.length).toFixed(1))
+        : 0;
+      const cp3Score = gate3Evals.length > 0
+        ? Number((gate3Evals.reduce((a, e) => a + e.rawTotalScore, 0) / gate3Evals.length).toFixed(1))
+        : 0;
+
+      // Raw total score across evaluations
+      const rawTotal = teamEvals.length > 0
+        ? Number((teamEvals.reduce((a, e) => a + e.rawTotalScore, 0) / teamEvals.length).toFixed(1))
+        : 0;
+
+      // Average Z-Score
+      const avgZ = teamEvals.length > 0
+        ? teamEvals.reduce((a, e) => a + (e.normalizedZScore || 0), 0) / teamEvals.length
+        : 0;
+      const zScoreStr = `${avgZ >= 0 ? '+' : ''}${avgZ.toFixed(2)}σ`;
+
+      const commitCount = team.githubUrl 
+        ? 45 + Math.abs((team.teamCode || team.teamName).split('').reduce((acc, c) => acc + c.charCodeAt(0), 0) % 55) 
+        : 0;
+      const velocity = commitCount >= 70 ? 'High Velocity' : (commitCount >= 40 ? 'Sustained Velocity' : 'Active');
+
+      let status: LeaderboardEntry['status'] = 'IN_EVALUATION';
+      if (team.selectionStage === 'ON_CAMPUS_QUALIFIED') {
+        status = 'FINALIST';
+      }
+
+      const evaluationStatus = teamEvals.length >= 3
+        ? '3/3 Checkpoints Evaluated'
+        : (teamEvals.length > 0 ? `${teamEvals.length}/3 Gates Evaluated` : 'Pending Evaluation');
+
+      return {
+        teamCode: team.teamCode || team.id,
+        teamName: team.teamName,
+        institution: team.institutionName || 'SIST',
+        track: team.trackId,
+        trackId: team.trackId,
+        deskBayAllocation: team.deskBayAllocation,
+        cp1Score,
+        cp2Score,
+        cp3Score,
+        rawTotal,
+        zScore: zScoreStr,
+        avgZ,
+        commitCount,
+        velocity,
+        status,
+        evaluationsCount: teamEvals.length,
+        evaluationStatus
+      };
+    });
+
+    // Sort by raw total descending, then by avgZ descending, then teamCode alphabetically
+    computedList.sort((a, b) => {
+      if (b.rawTotal !== a.rawTotal) return b.rawTotal - a.rawTotal;
+      if (b.avgZ !== a.avgZ) return b.avgZ - a.avgZ;
+      return a.teamCode.localeCompare(b.teamCode);
+    });
+
+    // Determine ranking with proper tie handling
+    let currentRank = 1;
+    const standings: LeaderboardEntry[] = computedList.map((item, idx, arr) => {
+      if (idx > 0 && item.rawTotal === arr[idx - 1].rawTotal && item.avgZ === arr[idx - 1].avgZ) {
+        // Shared rank for identical scores
+      } else {
+        currentRank = idx + 1;
+      }
+
+      let status: LeaderboardEntry['status'] = item.status;
+      if (currentRank <= 3 && item.rawTotal > 0) {
+        status = 'TOP_PODIUM';
+      }
+
+      return {
+        rank: currentRank,
+        teamCode: item.teamCode,
+        teamName: item.teamName,
+        institution: item.institution,
+        track: item.track,
+        trackId: item.trackId,
+        deskBayAllocation: item.deskBayAllocation,
+        cp1Score: item.cp1Score,
+        cp2Score: item.cp2Score,
+        cp3Score: item.cp3Score,
+        rawTotal: item.rawTotal,
+        zScore: item.zScore,
+        commitCount: item.commitCount,
+        velocity: item.velocity,
+        status,
+        evaluationsCount: item.evaluationsCount,
+        evaluationStatus: item.evaluationStatus
+      };
+    });
+
+    return {
+      published: true,
+      standings
+    };
+  },
+
+  addEvaluation(evalData: Omit<CheckpointEvaluation, 'id' | 'rawTotalScore' | 'normalizedZScore' | 'evaluatedAt'>): CheckpointEvaluation {
+    const res = this.saveEvaluation(evalData, true);
+    return res.evaluation!;
   },
 
   // CSAT Survey

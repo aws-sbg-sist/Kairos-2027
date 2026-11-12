@@ -18,6 +18,7 @@ import { NextRequest } from 'next/server';
 import crypto from 'crypto';
 import { getCurrentAdminSession, AdminSession } from './auth';
 import { getCurrentStudentSession, StudentSession } from './student_auth';
+import { getCurrentJudgeSession, JudgeSession } from './judge_auth';
 import { db } from './db';
 import { ParticipantTeam, Judge } from '@/types';
 
@@ -154,6 +155,7 @@ export interface AuthContext {
   role: KairosRole;
   studentSession: StudentSession | null;
   adminSession: AdminSession | null;
+  judgeSession?: JudgeSession | null;
   email: string | null;
   isLeaderOfTeam?: string; // teamCode if leader
 }
@@ -173,6 +175,7 @@ export async function resolveAuthContext(): Promise<AuthContext> {
       role: isSuper ? 'SUPER_ADMIN' : 'ORGANIZER',
       studentSession: null,
       adminSession: admin,
+      judgeSession: null,
       email: null
     };
   }
@@ -191,16 +194,30 @@ export async function resolveAuthContext(): Promise<AuthContext> {
       role: isLeader ? 'TEAM_LEADER' : 'STUDENT',
       studentSession: student,
       adminSession: null,
+      judgeSession: null,
       email: student.email,
       isLeaderOfTeam: isLeader && team ? team.teamCode : undefined
     };
   }
 
-  // 3. Fallback to Anonymous
+  // 3. Evaluate Judge Session
+  const judge = await getCurrentJudgeSession();
+  if (judge) {
+    return {
+      role: 'JUDGE',
+      studentSession: null,
+      adminSession: null,
+      judgeSession: judge,
+      email: null
+    };
+  }
+
+  // 4. Fallback to Anonymous
   return {
     role: 'ANONYMOUS',
     studentSession: null,
     adminSession: null,
+    judgeSession: null,
     email: null
   };
 }
@@ -295,7 +312,7 @@ export function verifyJudgeAuthorization(
     if (judge.trackSpecialization) {
       // Check if judge track specialization encompasses this team's track
       const spec = judge.trackSpecialization.toLowerCase();
-      const teamTrack = team.trackId.toLowerCase();
+      const teamTrack = team.trackId.toLowerCase().replace(/^track-/, '');
       
       const trackMatch = 
         spec.includes('all') ||
@@ -303,7 +320,10 @@ export function verifyJudgeAuthorization(
         (teamTrack.includes('cloud') && spec.includes('cloud')) ||
         (teamTrack.includes('ai') && spec.includes('ai')) ||
         ((teamTrack.includes('fintech') || teamTrack.includes('trust')) && (spec.includes('fintech') || spec.includes('trust'))) ||
-        (teamTrack.includes('open') && spec.includes('open'));
+        (teamTrack.includes('open') && spec.includes('open')) ||
+        (teamTrack.includes('edge') && spec.includes('edge')) ||
+        (teamTrack.includes('iot') && spec.includes('iot')) ||
+        (teamTrack.includes('distributed') && spec.includes('distributed'));
 
       if (!trackMatch) {
         return { 

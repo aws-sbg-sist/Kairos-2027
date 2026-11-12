@@ -87,6 +87,7 @@ export interface FeatureFlags {
   demoSandboxMode: boolean;
   announcementBanner: string;
   registrationDeadline: string;
+  leaderboardPublished?: boolean;
 }
 
 export interface OrganizerAccount {
@@ -195,6 +196,34 @@ export interface CheckpointEvaluation {
   qualitativeFeedback?: string;
   recusedConflict?: boolean;
   evaluatedAt: string;
+  updatedAt?: string;
+  updatedBy?: string;
+  editHistory?: {
+    previousScore: number;
+    updatedScore: number;
+    timestamp: string;
+    reason?: string;
+  }[];
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  teamCode: string;
+  teamName: string;
+  institution: string;
+  track: string;
+  trackId: string;
+  deskBayAllocation?: string;
+  cp1Score: number;
+  cp2Score: number;
+  cp3Score: number;
+  rawTotal: number;
+  zScore: string;
+  commitCount: number;
+  velocity: string;
+  status: 'TOP_PODIUM' | 'TRACK_LEADER' | 'FINALIST' | 'QUALIFIED' | 'COMPLETED' | 'IN_EVALUATION';
+  evaluationsCount: number;
+  evaluationStatus: string;
 }
 
 export interface CSATResponse {

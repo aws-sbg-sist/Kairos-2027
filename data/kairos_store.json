@@ -2,6 +2,46 @@
   "waitlist": [
     {
       "fullName": "Varun Nair",
+      "email": "reg.builder.1794483832299@sathyabama.ac.in",
+      "phone": "+91 98401 22334",
+      "institution": "Sathyabama Institute of Science and Technology",
+      "college": "Sathyabama Institute of Science and Technology",
+      "department": "Computer Science and Engineering",
+      "yearOfStudy": "3rd Year",
+      "githubUrl": "https://github.com/varun-nair-cloud",
+      "linkedinUrl": "https://linkedin.com/in/varun-nair",
+      "preferredTrack": "track-cloud-native",
+      "teamStatus": "looking_for_team",
+      "meetupProfileUrl": "https://meetup.com/members/varun-nair",
+      "awsBuilderCenterUrl": "https://community.aws/@varun",
+      "experienceLevel": "Intermediate",
+      "tShirtSize": "XL",
+      "status": "pending",
+      "id": "w-1794483833587-7981c",
+      "createdAt": "2026-11-12T11:43:53.587Z"
+    },
+    {
+      "fullName": "Ravi Chandran",
+      "email": "ravi.chandran.1794483809177@sathyabama.ac.in",
+      "phone": "+91 97403 99001",
+      "institution": "SIST",
+      "college": "SIST",
+      "department": "Computer Science & Engineering",
+      "yearOfStudy": "3rd Year",
+      "githubUrl": "",
+      "linkedinUrl": "",
+      "preferredTrack": "track-quantum",
+      "teamStatus": "seeking_team",
+      "meetupProfileUrl": "",
+      "awsBuilderCenterUrl": "",
+      "experienceLevel": "Intermediate",
+      "tShirtSize": "L",
+      "status": "pending",
+      "id": "w-1794483814048-s8z1t",
+      "createdAt": "2026-11-12T11:43:34.048Z"
+    },
+    {
+      "fullName": "Varun Nair",
       "email": "reg.builder.1794482611880@sathyabama.ac.in",
       "phone": "+91 98401 22334",
       "institution": "Sathyabama Institute of Science and Technology",
@@ -255,9 +295,934 @@
     "prizePoolConfirmed": false,
     "demoSandboxMode": true,
     "announcementBanner": "KAIROS 2027 Early-Interest Waitlist is now live! Reserve your team priority.",
-    "registrationDeadline": "2027-01-06T23:59:59+05:30"
+    "registrationDeadline": "2027-01-06T23:59:59+05:30",
+    "leaderboardPublished": true
   },
   "auditLogs": [
+    {
+      "id": "log-1794483996985",
+      "timestamp": "2026-11-12T11:46:36.986Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":true}"
+    },
+    {
+      "id": "log-1794483996720",
+      "timestamp": "2026-11-12T11:46:36.720Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":false}"
+    },
+    {
+      "id": "log-1794483996550-h0z4",
+      "timestamp": "2026-11-12T11:46:36.550Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483995988-56bq",
+      "timestamp": "2026-11-12T11:46:35.988Z",
+      "organizerName": "Vikrant Roy",
+      "action": "UPDATE_EVALUATION",
+      "details": "Judge updated Gate 1 evaluation for team [KAIROS-T001]: 93 -> 96 (Recalibrated score after table-side architecture defense and AWS EventBridge demo)"
+    },
+    {
+      "id": "log-1794483995699-wrkg",
+      "timestamp": "2026-11-12T11:46:35.699Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T003]: 85/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483995543-p33p",
+      "timestamp": "2026-11-12T11:46:35.543Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T004]: 89/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483995404-tzqf",
+      "timestamp": "2026-11-12T11:46:35.404Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T002]: 81/100 (Normalized Z-score: -1)"
+    },
+    {
+      "id": "log-1794483995284-tal5",
+      "timestamp": "2026-11-12T11:46:35.284Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T001]: 93/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483995154-eo8q",
+      "timestamp": "2026-11-12T11:46:35.154Z",
+      "organizerName": "Vikrant Roy",
+      "action": "RECUSE_EVALUATION",
+      "details": "Judge Vikrant Roy declared conflict of interest and recused from evaluating team [KAIROS-T001] for Gate 1."
+    },
+    {
+      "id": "log-1794483993120-ml04",
+      "timestamp": "2026-11-12T11:46:33.120Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483992984-3pqq",
+      "timestamp": "2026-11-12T11:46:32.985Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGOUT",
+      "details": "Judge Vikrant Roy locked evaluation terminal."
+    },
+    {
+      "id": "log-1794483992718-83wc",
+      "timestamp": "2026-11-12T11:46:32.718Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Dr. Rajesh Kannan (Center for Distributed Computing) authenticated for track [Distributed Systems & Edge IoT]"
+    },
+    {
+      "id": "log-1794483992548-c261",
+      "timestamp": "2026-11-12T11:46:32.548Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Aishwarya Subramanian (Peak Capital Partners) authenticated for track [FinTech & Open Innovation]"
+    },
+    {
+      "id": "log-1794483992385-v25c",
+      "timestamp": "2026-11-12T11:46:32.385Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483979704",
+      "timestamp": "2026-11-12T11:46:19.704Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":true}"
+    },
+    {
+      "id": "log-1794483979428",
+      "timestamp": "2026-11-12T11:46:19.428Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":false}"
+    },
+    {
+      "id": "log-1794483977905-nooy",
+      "timestamp": "2026-11-12T11:46:17.905Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483974112-k0fc",
+      "timestamp": "2026-11-12T11:46:14.112Z",
+      "organizerName": "Vikrant Roy",
+      "action": "UPDATE_EVALUATION",
+      "details": "Judge updated Gate 1 evaluation for team [KAIROS-T001]: 93 -> 96 (Recalibrated score after table-side architecture defense and AWS EventBridge demo)"
+    },
+    {
+      "id": "log-1794483973842-x3im",
+      "timestamp": "2026-11-12T11:46:13.842Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T003]: 85/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483973696-erbm",
+      "timestamp": "2026-11-12T11:46:13.696Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T004]: 89/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483973556-7zbj",
+      "timestamp": "2026-11-12T11:46:13.556Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T002]: 81/100 (Normalized Z-score: -1)"
+    },
+    {
+      "id": "log-1794483973416-w7a5",
+      "timestamp": "2026-11-12T11:46:13.416Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T001]: 93/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483973269-t4bn",
+      "timestamp": "2026-11-12T11:46:13.269Z",
+      "organizerName": "Vikrant Roy",
+      "action": "RECUSE_EVALUATION",
+      "details": "Judge Vikrant Roy declared conflict of interest and recused from evaluating team [KAIROS-T001] for Gate 1."
+    },
+    {
+      "id": "log-1794483971609-1uwk",
+      "timestamp": "2026-11-12T11:46:11.609Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483971473-uor7",
+      "timestamp": "2026-11-12T11:46:11.473Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGOUT",
+      "details": "Judge Vikrant Roy locked evaluation terminal."
+    },
+    {
+      "id": "log-1794483971133-qli7",
+      "timestamp": "2026-11-12T11:46:11.133Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Dr. Rajesh Kannan (Center for Distributed Computing) authenticated for track [Distributed Systems & Edge IoT]"
+    },
+    {
+      "id": "log-1794483970836-cqmy",
+      "timestamp": "2026-11-12T11:46:10.836Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Aishwarya Subramanian (Peak Capital Partners) authenticated for track [FinTech & Open Innovation]"
+    },
+    {
+      "id": "log-1794483970714-pgjp",
+      "timestamp": "2026-11-12T11:46:10.714Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483903338-qljk",
+      "timestamp": "2026-11-12T11:45:03.338Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to reviewed"
+    },
+    {
+      "id": "log-1794483902902",
+      "timestamp": "2026-11-12T11:45:02.902Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"demoSandboxMode\":true}"
+    },
+    {
+      "id": "log-1794483902739-9euc",
+      "timestamp": "2026-11-12T11:45:02.739Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483902613-ey39",
+      "timestamp": "2026-11-12T11:45:02.613Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to shortlisted"
+    },
+    {
+      "id": "log-1794483902077-mvf4",
+      "timestamp": "2026-11-12T11:45:02.077Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794483901923-yb4q",
+      "timestamp": "2026-11-12T11:45:01.924Z",
+      "organizerName": "Vikrant Roy",
+      "action": "RECUSE_EVALUATION",
+      "details": "Judge Vikrant Roy declared conflict of interest and recused from evaluating team [KAIROS-T001]."
+    },
+    {
+      "id": "log-1794483901659-4kt7",
+      "timestamp": "2026-11-12T11:45:01.659Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T001]: 91/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483900287-fylp",
+      "timestamp": "2026-11-12T11:45:00.287Z",
+      "organizerName": "Pooja Venkatesh",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [pooja.v@example.edu]"
+    },
+    {
+      "id": "log-1794483899851-m7w7",
+      "timestamp": "2026-11-12T11:44:59.851Z",
+      "organizerName": "Rohan Gupta",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [rohan.g@example.edu]"
+    },
+    {
+      "id": "log-1794483898435-82e3",
+      "timestamp": "2026-11-12T11:44:58.435Z",
+      "organizerName": "Independent Builder",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [builder.outsider.1794483896401@test.edu]"
+    },
+    {
+      "id": "log-1794483857733-a8jz",
+      "timestamp": "2026-11-12T11:44:17.733Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to reviewed"
+    },
+    {
+      "id": "log-1794483857306",
+      "timestamp": "2026-11-12T11:44:17.306Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"demoSandboxMode\":true}"
+    },
+    {
+      "id": "log-1794483857134-ia33",
+      "timestamp": "2026-11-12T11:44:17.134Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483856938-blre",
+      "timestamp": "2026-11-12T11:44:16.938Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_WAITLIST_STATUS",
+      "details": "Updated candidate Pooja Venkatesh (pooja.v@example.edu) status to shortlisted"
+    },
+    {
+      "id": "log-1794483856451-g386",
+      "timestamp": "2026-11-12T11:44:16.451Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794483854674-g34l",
+      "timestamp": "2026-11-12T11:44:14.674Z",
+      "organizerName": "Pooja Venkatesh",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [pooja.v@example.edu]"
+    },
+    {
+      "id": "log-1794483854261-jhhj",
+      "timestamp": "2026-11-12T11:44:14.261Z",
+      "organizerName": "Rohan Gupta",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [rohan.g@example.edu]"
+    },
+    {
+      "id": "log-1794483852915-4if6",
+      "timestamp": "2026-11-12T11:44:12.915Z",
+      "organizerName": "Independent Builder",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [builder.outsider.1794483847959@test.edu]"
+    },
+    {
+      "id": "log-1794483837316-3pt0",
+      "timestamp": "2026-11-12T11:43:57.316Z",
+      "organizerName": "Priya Dharshini",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [member1.1794483832299@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794483835929-fjkc",
+      "timestamp": "2026-11-12T11:43:55.929Z",
+      "organizerName": "Karthik Subramanian",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [leader.1794483832299@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794483835224",
+      "timestamp": "2026-11-12T11:43:55.224Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":true,\"registrationDeadline\":\"2027-01-06T23:59:59+05:30\"}"
+    },
+    {
+      "id": "log-1794483834968",
+      "timestamp": "2026-11-12T11:43:54.968Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":true,\"registrationDeadline\":\"2026-01-01T00:00:00Z\"}"
+    },
+    {
+      "id": "log-1794483834516",
+      "timestamp": "2026-11-12T11:43:54.516Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":false}"
+    },
+    {
+      "id": "log-1794483833427-fjdn",
+      "timestamp": "2026-11-12T11:43:53.427Z",
+      "organizerName": "Varun Nair",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [reg.builder.1794483832299@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794483832663",
+      "timestamp": "2026-11-12T11:43:52.663Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":true,\"registrationDeadline\":\"2027-01-06T23:59:59+05:30\"}"
+    },
+    {
+      "id": "log-1794483832493-avv5",
+      "timestamp": "2026-11-12T11:43:52.494Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483815874-ixwu",
+      "timestamp": "2026-11-12T11:43:35.874Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T023]: 89/100 (Normalized Z-score: 0.0544)"
+    },
+    {
+      "id": "log-1794483812847-em04",
+      "timestamp": "2026-11-12T11:43:32.847Z",
+      "organizerName": "Ravi Chandran",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [ravi.chandran.1794483809177@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794483812059-fbd9",
+      "timestamp": "2026-11-12T11:43:32.059Z",
+      "organizerName": "Meera Krishnan",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [meera.krish.1794483809177@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794483811291-ujwj",
+      "timestamp": "2026-11-12T11:43:31.291Z",
+      "organizerName": "Arjun Ramanathan",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [arjun.raman.1794483809177@sathyabama.ac.in]"
+    },
+    {
+      "id": "log-1794483803327-0yki",
+      "timestamp": "2026-11-12T11:43:23.327Z",
+      "organizerName": "Formula Tester",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [fi.lead.1794483786255@example.edu]"
+    },
+    {
+      "id": "log-1794483801409-6har",
+      "timestamp": "2026-11-12T11:43:21.409Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483800122-6vwz",
+      "timestamp": "2026-11-12T11:43:20.121Z",
+      "organizerName": "Hemavarshine S",
+      "action": "CHECK_IN_TEAM",
+      "details": "Checked in team KAIROS-T020 (Neural Apex 1794483786255) at desk bay [BAY-C09] by Hemavarshine S"
+    },
+    {
+      "id": "log-1794483799887-4p88",
+      "timestamp": "2026-11-12T11:43:19.887Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T020] updated by Hemavarshine S: checkedIn (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794483797904-uvv4",
+      "timestamp": "2026-11-12T11:43:17.904Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T021] updated by Hemavarshine S: selectionStage (Stage: DISQUALIFIED)"
+    },
+    {
+      "id": "log-1794483797628-qnr5",
+      "timestamp": "2026-11-12T11:43:17.628Z",
+      "organizerName": "DQ Leader",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [dq.lead.1794483786255@example.edu]"
+    },
+    {
+      "id": "log-1794483796731-coic",
+      "timestamp": "2026-11-12T11:43:16.731Z",
+      "organizerName": "Hemavarshine S",
+      "action": "CHECK_IN_TEAM",
+      "details": "Checked in team KAIROS-T020 (Neural Apex 1794483786255) at desk bay [BAY-C09] by Hemavarshine S"
+    },
+    {
+      "id": "log-1794483796461-y83z",
+      "timestamp": "2026-11-12T11:43:16.462Z",
+      "organizerName": "Hemavarshine S",
+      "action": "DELETE_JUDGE",
+      "details": "Removed judge [Dr. Vikram Raman 1794483786255] by Hemavarshine S"
+    },
+    {
+      "id": "log-1794483796326-hhmv",
+      "timestamp": "2026-11-12T11:43:16.326Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_JUDGE",
+      "details": "Updated judge [Dr. Vikram Raman 1794483786255] status (Active: false) by Hemavarshine S"
+    },
+    {
+      "id": "log-1794483796199-ymkl",
+      "timestamp": "2026-11-12T11:43:16.199Z",
+      "organizerName": "Hemavarshine S",
+      "action": "CREATE_JUDGE",
+      "details": "Added new judge Dr. Vikram Raman 1794483786255 (Intel Distributed Systems Lab) specializing in AI & Machine Learning Systems by Hemavarshine S"
+    },
+    {
+      "id": "log-1794483795881-v5lr",
+      "timestamp": "2026-11-12T11:43:15.881Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T020] updated by Hemavarshine S: reviewerNotes, reviewedBy, reviewedAt (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794483795699-ann0",
+      "timestamp": "2026-11-12T11:43:15.699Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T020] updated by Hemavarshine S: deskBayAllocation (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794483795545-vftl",
+      "timestamp": "2026-11-12T11:43:15.545Z",
+      "organizerName": "Hemavarshine S",
+      "action": "UPDATE_TEAM",
+      "details": "Team [KAIROS-T020] updated by Hemavarshine S: selectionStage (Stage: ON_CAMPUS_QUALIFIED)"
+    },
+    {
+      "id": "log-1794483794096-492u",
+      "timestamp": "2026-11-12T11:43:14.096Z",
+      "organizerName": "Team Leader P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [lead.p6.1794483786255@example.edu]"
+    },
+    {
+      "id": "log-1794483793380-7zt9",
+      "timestamp": "2026-11-12T11:43:13.380Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794483793246",
+      "timestamp": "2026-11-12T11:43:13.246Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"registrationOpen\":true,\"registrationDeadline\":\"2027-01-06T23:59:59+05:30\"}"
+    },
+    {
+      "id": "log-1794483793119-un1h",
+      "timestamp": "2026-11-12T11:43:13.119Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483791954-xz6c",
+      "timestamp": "2026-11-12T11:43:11.954Z",
+      "organizerName": "Student Builder P6",
+      "action": "STUDENT_LOGIN",
+      "details": "Student logged in successfully [student.p6.1794483786255@example.edu]"
+    },
+    {
+      "id": "log-1794483780300",
+      "timestamp": "2026-11-12T11:43:00.300Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":true}"
+    },
+    {
+      "id": "log-1794483779994",
+      "timestamp": "2026-11-12T11:42:59.994Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":false}"
+    },
+    {
+      "id": "log-1794483779837-yo3w",
+      "timestamp": "2026-11-12T11:42:59.837Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483779339-tc8j",
+      "timestamp": "2026-11-12T11:42:59.339Z",
+      "organizerName": "Vikrant Roy",
+      "action": "UPDATE_EVALUATION",
+      "details": "Judge updated Gate 1 evaluation for team [KAIROS-T001]: 93 -> 96 (Recalibrated score after table-side architecture defense and AWS EventBridge demo)"
+    },
+    {
+      "id": "log-1794483779115-29iq",
+      "timestamp": "2026-11-12T11:42:59.115Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T003]: 85/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483779002-bxqn",
+      "timestamp": "2026-11-12T11:42:59.002Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T004]: 89/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483778846-i03m",
+      "timestamp": "2026-11-12T11:42:58.846Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T002]: 81/100 (Normalized Z-score: -1)"
+    },
+    {
+      "id": "log-1794483778695-jk2o",
+      "timestamp": "2026-11-12T11:42:58.695Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T001]: 93/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483778564-x4wr",
+      "timestamp": "2026-11-12T11:42:58.565Z",
+      "organizerName": "Vikrant Roy",
+      "action": "RECUSE_EVALUATION",
+      "details": "Judge Vikrant Roy declared conflict of interest and recused from evaluating team [KAIROS-T001] for Gate 1."
+    },
+    {
+      "id": "log-1794483776771-52lf",
+      "timestamp": "2026-11-12T11:42:56.771Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483776643-www1",
+      "timestamp": "2026-11-12T11:42:56.643Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGOUT",
+      "details": "Judge Vikrant Roy locked evaluation terminal."
+    },
+    {
+      "id": "log-1794483776379-v152",
+      "timestamp": "2026-11-12T11:42:56.379Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Dr. Rajesh Kannan (Center for Distributed Computing) authenticated for track [Distributed Systems & Edge IoT]"
+    },
+    {
+      "id": "log-1794483776260-o4rg",
+      "timestamp": "2026-11-12T11:42:56.260Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Aishwarya Subramanian (Peak Capital Partners) authenticated for track [FinTech & Open Innovation]"
+    },
+    {
+      "id": "log-1794483776142-wttv",
+      "timestamp": "2026-11-12T11:42:56.142Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483716197",
+      "timestamp": "2026-11-12T11:41:56.197Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":true}"
+    },
+    {
+      "id": "log-1794483715860",
+      "timestamp": "2026-11-12T11:41:55.860Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":false}"
+    },
+    {
+      "id": "log-1794483715711-z66h",
+      "timestamp": "2026-11-12T11:41:55.711Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483714812-er2f",
+      "timestamp": "2026-11-12T11:41:54.812Z",
+      "organizerName": "Vikrant Roy",
+      "action": "UPDATE_EVALUATION",
+      "details": "Judge updated Gate 1 evaluation for team [KAIROS-T001]: 96 -> 96 (Recalibrated score after table-side architecture defense and AWS EventBridge demo)"
+    },
+    {
+      "id": "log-1794483713443-iata",
+      "timestamp": "2026-11-12T11:41:53.443Z",
+      "organizerName": "Vikrant Roy",
+      "action": "RECUSE_EVALUATION",
+      "details": "Judge Vikrant Roy declared conflict of interest and recused from evaluating team [KAIROS-T001] for Gate 1."
+    },
+    {
+      "id": "log-1794483710727-z9fb",
+      "timestamp": "2026-11-12T11:41:50.727Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483710535-6ehd",
+      "timestamp": "2026-11-12T11:41:50.535Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGOUT",
+      "details": "Judge Vikrant Roy locked evaluation terminal."
+    },
+    {
+      "id": "log-1794483710191-3e95",
+      "timestamp": "2026-11-12T11:41:50.191Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Dr. Rajesh Kannan (Center for Distributed Computing) authenticated for track [Distributed Systems & Edge IoT]"
+    },
+    {
+      "id": "log-1794483710044-p26e",
+      "timestamp": "2026-11-12T11:41:50.044Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Aishwarya Subramanian (Peak Capital Partners) authenticated for track [FinTech & Open Innovation]"
+    },
+    {
+      "id": "log-1794483709873-nvfl",
+      "timestamp": "2026-11-12T11:41:49.873Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483692806",
+      "timestamp": "2026-11-12T11:41:32.806Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":true}"
+    },
+    {
+      "id": "log-1794483692413",
+      "timestamp": "2026-11-12T11:41:32.413Z",
+      "organizerName": "Thenappan T",
+      "action": "UPDATE_FLAGS",
+      "details": "Updated feature flags: {\"leaderboardPublished\":false}"
+    },
+    {
+      "id": "log-1794483692292-l4e4",
+      "timestamp": "2026-11-12T11:41:32.292Z",
+      "organizerName": "Thenappan T",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as President & Student Builder Group Leader (SBGL)"
+    },
+    {
+      "id": "log-1794483691326-6tps",
+      "timestamp": "2026-11-12T11:41:31.326Z",
+      "organizerName": "Vikrant Roy",
+      "action": "UPDATE_EVALUATION",
+      "details": "Judge updated Gate 1 evaluation for team [KAIROS-T001]: 96 -> 96 (Recalibrated score after table-side architecture defense and AWS EventBridge demo)"
+    },
+    {
+      "id": "log-1794483689646-35fp",
+      "timestamp": "2026-11-12T11:41:29.646Z",
+      "organizerName": "Vikrant Roy",
+      "action": "RECUSE_EVALUATION",
+      "details": "Judge Vikrant Roy declared conflict of interest and recused from evaluating team [KAIROS-T001] for Gate 1."
+    },
+    {
+      "id": "log-1794483687571-2ivg",
+      "timestamp": "2026-11-12T11:41:27.571Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483687439-ww4w",
+      "timestamp": "2026-11-12T11:41:27.439Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGOUT",
+      "details": "Judge Vikrant Roy locked evaluation terminal."
+    },
+    {
+      "id": "log-1794483687164-7yk4",
+      "timestamp": "2026-11-12T11:41:27.164Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Dr. Rajesh Kannan (Center for Distributed Computing) authenticated for track [Distributed Systems & Edge IoT]"
+    },
+    {
+      "id": "log-1794483686963-8khx",
+      "timestamp": "2026-11-12T11:41:26.963Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Aishwarya Subramanian (Peak Capital Partners) authenticated for track [FinTech & Open Innovation]"
+    },
+    {
+      "id": "log-1794483686801-uqdg",
+      "timestamp": "2026-11-12T11:41:26.801Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483662481-s8tc",
+      "timestamp": "2026-11-12T11:41:02.481Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794483657127-0zbe",
+      "timestamp": "2026-11-12T11:40:57.127Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794483637125-e3sd",
+      "timestamp": "2026-11-12T11:40:37.125Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794483635283-o9m6",
+      "timestamp": "2026-11-12T11:40:35.283Z",
+      "organizerName": "Vikrant Roy",
+      "action": "UPDATE_EVALUATION",
+      "details": "Judge updated Gate 1 evaluation for team [KAIROS-T001]: 93 -> 96 (Recalibrated score after table-side architecture defense and AWS EventBridge demo)"
+    },
+    {
+      "id": "log-1794483634945-jus7",
+      "timestamp": "2026-11-12T11:40:34.945Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T003]: 85/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483634733-mdj4",
+      "timestamp": "2026-11-12T11:40:34.733Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T004]: 89/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483634530-yexz",
+      "timestamp": "2026-11-12T11:40:34.530Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T002]: 81/100 (Normalized Z-score: -1)"
+    },
+    {
+      "id": "log-1794483634358-ada7",
+      "timestamp": "2026-11-12T11:40:34.358Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T001]: 93/100 (Normalized Z-score: 0)"
+    },
+    {
+      "id": "log-1794483634187-7cts",
+      "timestamp": "2026-11-12T11:40:34.187Z",
+      "organizerName": "Vikrant Roy",
+      "action": "RECUSE_EVALUATION",
+      "details": "Judge Vikrant Roy declared conflict of interest and recused from evaluating team [KAIROS-T001] for Gate 1."
+    },
+    {
+      "id": "log-1794483631628-hmc2",
+      "timestamp": "2026-11-12T11:40:31.628Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483631494-2fqm",
+      "timestamp": "2026-11-12T11:40:31.494Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGOUT",
+      "details": "Judge Vikrant Roy locked evaluation terminal."
+    },
+    {
+      "id": "log-1794483631213-erqh",
+      "timestamp": "2026-11-12T11:40:31.213Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Dr. Rajesh Kannan (Center for Distributed Computing) authenticated for track [Distributed Systems & Edge IoT]"
+    },
+    {
+      "id": "log-1794483631074-rrba",
+      "timestamp": "2026-11-12T11:40:31.074Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Aishwarya Subramanian (Peak Capital Partners) authenticated for track [FinTech & Open Innovation]"
+    },
+    {
+      "id": "log-1794483630940-cxpc",
+      "timestamp": "2026-11-12T11:40:30.940Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483482445-9y28",
+      "timestamp": "2026-11-12T11:38:02.445Z",
+      "organizerName": "Hemavarshine S",
+      "action": "ADMIN_LOGIN",
+      "details": "Logged in successfully as Chief Experience Officer (CXO)"
+    },
+    {
+      "id": "log-1794483480512-07j3",
+      "timestamp": "2026-11-12T11:38:00.512Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T002]: 81/100 (Normalized Z-score: -1.8717)"
+    },
+    {
+      "id": "log-1794483478888-3js0",
+      "timestamp": "2026-11-12T11:37:58.888Z",
+      "organizerName": "Vikrant Roy",
+      "action": "SUBMIT_EVALUATION",
+      "details": "Recorded Gate 1 evaluation for team [KAIROS-T007]: 80/100 (Normalized Z-score: -2.6162)"
+    },
+    {
+      "id": "log-1794483477666-3axj",
+      "timestamp": "2026-11-12T11:37:57.666Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
+    {
+      "id": "log-1794483477534-ijuc",
+      "timestamp": "2026-11-12T11:37:57.534Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGOUT",
+      "details": "Judge Vikrant Roy locked evaluation terminal."
+    },
+    {
+      "id": "log-1794483477265-b2hq",
+      "timestamp": "2026-11-12T11:37:57.265Z",
+      "organizerName": "Dr. Rajesh Kannan",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Dr. Rajesh Kannan (Center for Distributed Computing) authenticated for track [Distributed Systems & Edge IoT]"
+    },
+    {
+      "id": "log-1794483477150-c2kf",
+      "timestamp": "2026-11-12T11:37:57.150Z",
+      "organizerName": "Aishwarya Subramanian",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Aishwarya Subramanian (Peak Capital Partners) authenticated for track [FinTech & Open Innovation]"
+    },
+    {
+      "id": "log-1794483477035-iqr2",
+      "timestamp": "2026-11-12T11:37:57.035Z",
+      "organizerName": "Vikrant Roy",
+      "action": "JUDGE_LOGIN",
+      "details": "Judge Vikrant Roy (Amazon Web Services) authenticated for track [Agentic AI & Cloud-Native]"
+    },
     {
       "id": "log-1794482732324-x08w",
       "timestamp": "2026-11-12T11:25:32.324Z",
@@ -1425,7 +2390,8 @@
       "projectAbstract": "A fault-tolerant stream processing engine handling 100k events/sec with distributed consensus and zero data loss.",
       "githubUrl": "https://github.com/kairos2027/chronos-stream",
       "createdAt": "2026-10-25T08:00:00.000Z",
-      "loomVideoUrl": "https://loom.com/share/chronos-demo"
+      "loomVideoUrl": "https://loom.com/share/chronos-demo",
+      "teamCode": "KAIROS-T001"
     },
     {
       "id": "team-1794480611914",
@@ -1464,7 +2430,7 @@
       "teamCode": "KAIROS-T003",
       "teamName": "Debug Squad 99",
       "inviteCode": "KAIROS-6159",
-      "trackId": "track-agentic-ai",
+      "trackId": "edge-iot",
       "institutionName": "SIST",
       "city": "Chennai",
       "state": "Tamil Nadu",
@@ -1875,7 +2841,7 @@
       "teamCode": "KAIROS-T012",
       "teamName": "Disqualified Team 1794482569558",
       "inviteCode": "KAIROS-4402",
-      "trackId": "track-agentic-ai",
+      "trackId": "open-enterprise",
       "institutionName": "SIST",
       "city": "Chennai",
       "state": "Tamil Nadu",
@@ -2132,7 +3098,7 @@
       "teamCode": "KAIROS-T018",
       "teamName": "Disqualified Team 1794482700408",
       "inviteCode": "KAIROS-6395",
-      "trackId": "track-agentic-ai",
+      "trackId": "edge-iot",
       "institutionName": "SIST",
       "city": "Chennai",
       "state": "Tamil Nadu",
@@ -2190,6 +3156,263 @@
         }
       ],
       "createdAt": "2026-11-12T11:25:32.545Z"
+    },
+    {
+      "id": "team-1794483795022",
+      "teamCode": "KAIROS-T020",
+      "teamName": "Neural Apex 1794483786255",
+      "inviteCode": "KAIROS-6533",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "lead.p6.1794483786255@example.edu",
+      "selectionStage": "ON_CAMPUS_QUALIFIED",
+      "problemTitle": "Decentralized Edge LLM Orchestrator",
+      "problemAbstract": "Scalable distributed consensus architecture for latency-sensitive model inference using AWS Bedrock and Step Functions.",
+      "architecturePdfUrl": "https://aws.amazon.com/architecture/neural-apex",
+      "githubUrl": "https://github.com/kairos2027/neural-apex",
+      "members": [
+        {
+          "id": "m-lead-1794483795022",
+          "name": "Team Leader P6",
+          "email": "lead.p6.1794483786255@example.edu",
+          "phone": "+91 99401 11223",
+          "collegeRegNo": "44118877",
+          "role": "Leader",
+          "college": "SIST Chennai",
+          "meetupProfileUrl": "https://meetup.com/members/leader-p6",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "https://community.aws/@leaderp6",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:43:15.022Z",
+      "deskBayAllocation": "BAY-C09",
+      "reviewerNotes": "Approved for on-campus finals. High architectural novelty in serverless edge design.",
+      "reviewedBy": "Hemavarshine S",
+      "reviewedAt": "2026-11-12T11:43:15.880Z",
+      "checkedIn": true,
+      "checkedInAt": "2026-11-12T11:43:20.121Z",
+      "checkedInBy": "Hemavarshine S"
+    },
+    {
+      "id": "team-1794483797762",
+      "teamCode": "KAIROS-T021",
+      "teamName": "Disqualified Team 1794483786255",
+      "inviteCode": "KAIROS-4520",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "dq.lead.1794483786255@example.edu",
+      "selectionStage": "DISQUALIFIED",
+      "problemTitle": "Test Disqualification",
+      "problemAbstract": "Test abstract",
+      "architecturePdfUrl": "https://aws.amazon.com/test",
+      "githubUrl": "https://github.com/kairos2027/test-dq",
+      "members": [
+        {
+          "id": "m-lead-1794483797762",
+          "name": "DQ Leader",
+          "email": "dq.lead.1794483786255@example.edu",
+          "phone": "+91 99999 88888",
+          "collegeRegNo": "44119999",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "https://meetup.com/members/dq-leader",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:43:17.762Z"
+    },
+    {
+      "id": "team-1794483803458",
+      "teamCode": "KAIROS-T022",
+      "teamName": "FI Test Team 1794483786255",
+      "inviteCode": "KAIROS-4973",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "fi.lead.1794483786255@example.edu",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "=cmd|' /C calc'!A0",
+      "problemAbstract": "@SUM(1,2,3) and +cmd|test",
+      "architecturePdfUrl": "https://aws.amazon.com/test",
+      "githubUrl": "https://github.com/kairos2027/test-fi",
+      "members": [
+        {
+          "id": "m-lead-1794483803458",
+          "name": "Formula Tester",
+          "email": "fi.lead.1794483786255@example.edu",
+          "phone": "+91 99999 77777",
+          "collegeRegNo": "44117777",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "https://meetup.com/members/fi-tester",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:43:23.458Z"
+    },
+    {
+      "id": "team-1794483811434",
+      "teamCode": "KAIROS-T023",
+      "teamName": "Titan Mesh 1794483809177",
+      "inviteCode": "KAIROS-4866",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "arjun.raman.1794483809177@sathyabama.ac.in",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "Self-Organizing Drone Swarms using Amazon Bedrock",
+      "problemAbstract": "A decentralized swarm routing protocol built on AWS IoT Greengrass and Amazon Bedrock Titan models to negotiate dynamic mesh pathways.",
+      "architecturePdfUrl": "",
+      "githubUrl": "https://github.com/kairos2027/titan-mesh",
+      "members": [
+        {
+          "id": "m-lead-1794483811434",
+          "name": "Arjun Ramanathan",
+          "email": "arjun.raman.1794483809177@sathyabama.ac.in",
+          "phone": "+91 99401 55667",
+          "collegeRegNo": "44112233",
+          "role": "Leader",
+          "college": "SIST Chennai",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        },
+        {
+          "id": "m-1794483812174",
+          "name": "Meera Krishnan",
+          "email": "meera.krish.1794483809177@sathyabama.ac.in",
+          "phone": "+91 98402 77889",
+          "collegeRegNo": "44113344",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "tshirtSize": "L",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:43:31.434Z"
+    },
+    {
+      "id": "team-1794483836074",
+      "teamCode": "KAIROS-T024",
+      "teamName": "NeuralMesh Alpha 1794483832299",
+      "inviteCode": "KAIROS-4661",
+      "trackId": "track-agentic-ai",
+      "institutionName": "SIST Chennai",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "member1.1794483832299@sathyabama.ac.in",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "NeuralMesh V3: Led by Priya Dharshini",
+      "problemAbstract": "Updated production-grade architecture utilizing AWS Nitro Enclaves and DynamoDB Global Tables for distributed resilience.",
+      "architecturePdfUrl": "https://aws.amazon.com/architecture/neural-mesh",
+      "githubUrl": "https://github.com/kairos2027/neural-mesh-alpha",
+      "members": [
+        {
+          "id": "m-1794483837441",
+          "name": "Priya Dharshini",
+          "email": "member1.1794483832299@sathyabama.ac.in",
+          "phone": "+91 98402 33445",
+          "collegeRegNo": "44117766",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "https://meetup.com/members/priya-dharshini",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "https://community.aws/@priya",
+          "tshirtSize": "M",
+          "confirmed": true
+        },
+        {
+          "id": "m-1794483837929",
+          "name": "Builder 3",
+          "email": "builder3.1794483832299@sathyabama.ac.in",
+          "phone": "",
+          "collegeRegNo": "",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "tshirtSize": "L",
+          "confirmed": true
+        },
+        {
+          "id": "m-1794483838051",
+          "name": "Builder 4",
+          "email": "builder4.1794483832299@sathyabama.ac.in",
+          "phone": "",
+          "collegeRegNo": "",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "tshirtSize": "L",
+          "confirmed": true
+        },
+        {
+          "id": "m-1794483838216",
+          "name": "Builder 5",
+          "email": "builder5.1794483832299@sathyabama.ac.in",
+          "phone": "",
+          "collegeRegNo": "",
+          "role": "AI / Cloud",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "tshirtSize": "L",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:43:56.074Z",
+      "leaderName": "Priya Dharshini"
+    },
+    {
+      "id": "team-1794483841653",
+      "teamCode": "KAIROS-T025",
+      "teamName": "Karthik Solo Squad 1794483832299",
+      "inviteCode": "KAIROS-1832",
+      "trackId": "track-fintech-trust",
+      "institutionName": "SIST",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "leaderEmail": "leader.1794483832299@sathyabama.ac.in",
+      "selectionStage": "ROUND_0_APPLICANT",
+      "problemTitle": "Decentralized Attestation Engine",
+      "problemAbstract": "Provable cryptographic zero-knowledge proof validator on AWS Nitro Enclaves.",
+      "architecturePdfUrl": "",
+      "githubUrl": "",
+      "members": [
+        {
+          "id": "m-lead-1794483841653",
+          "name": "Karthik Subramanian",
+          "email": "leader.1794483832299@sathyabama.ac.in",
+          "phone": "",
+          "collegeRegNo": "",
+          "role": "Leader",
+          "college": "SIST",
+          "meetupProfileUrl": "",
+          "meetupRsvpVerified": true,
+          "awsBuilderCenterUrl": "",
+          "confirmed": true
+        }
+      ],
+      "createdAt": "2026-11-12T11:44:01.653Z"
     }
   ],
   "radarSignals": [
@@ -2292,158 +3515,73 @@
   ],
   "evaluations": [
     {
-      "id": "eval-1",
-      "teamId": "team-k100-01",
-      "judgeId": "judge-1",
-      "checkpointGate": 1,
-      "criterion1Score": 28,
-      "criterion2Score": 24,
-      "criterion3Score": 24,
-      "criterion4Score": 19,
-      "rawTotalScore": 95,
-      "normalizedZScore": 1.45,
-      "qualitativeFeedback": "Exceptional event-mesh resilience on AWS EventBridge. IAM policies are neatly isolated.",
-      "evaluatedAt": "2027-01-22T17:30:00.000Z"
-    },
-    {
-      "id": "eval-2",
-      "teamId": "team-k100-02",
+      "id": "eval-1794483995284-bcmf",
+      "teamId": "KAIROS-T001",
       "judgeId": "judge-1",
       "checkpointGate": 1,
       "criterion1Score": 29,
       "criterion2Score": 25,
       "criterion3Score": 24,
-      "criterion4Score": 19,
-      "rawTotalScore": 97,
-      "normalizedZScore": 1.72,
-      "qualitativeFeedback": "Brilliant Bedrock multi-agent orchestration. Hallucination guardrails are tightly implemented.",
-      "evaluatedAt": "2027-01-22T18:00:00.000Z"
+      "criterion4Score": 18,
+      "rawTotalScore": 96,
+      "normalizedZScore": 1,
+      "qualitativeFeedback": "",
+      "evaluatedAt": "2026-11-12T11:46:35.284Z",
+      "editHistory": [
+        {
+          "previousScore": 93,
+          "updatedScore": 96,
+          "timestamp": "2026-11-12T11:46:35.988Z",
+          "reason": "Recalibrated score after table-side architecture defense and AWS EventBridge demo"
+        }
+      ],
+      "updatedAt": "2026-11-12T11:46:35.988Z",
+      "updatedBy": "Vikrant Roy"
     },
     {
-      "teamId": "team-k75-01",
+      "id": "eval-1794483995404-ggjf",
+      "teamId": "KAIROS-T002",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 24,
+      "criterion2Score": 21,
+      "criterion3Score": 20,
+      "criterion4Score": 16,
+      "rawTotalScore": 81,
+      "normalizedZScore": -1,
+      "qualitativeFeedback": "Solid multi-agent framework, need to tighten tool call execution error handling.",
+      "evaluatedAt": "2026-11-12T11:46:35.404Z",
+      "editHistory": []
+    },
+    {
+      "id": "eval-1794483995542-ddg5",
+      "teamId": "KAIROS-T004",
       "judgeId": "judge-2",
       "checkpointGate": 1,
-      "criterion1Score": 25,
-      "criterion2Score": 20,
-      "criterion3Score": 20,
-      "criterion4Score": 15,
-      "qualitativeFeedback": "Good architecture",
-      "id": "eval-1794479892737-kdlv",
-      "rawTotalScore": 80,
+      "criterion1Score": 27,
+      "criterion2Score": 23,
+      "criterion3Score": 22,
+      "criterion4Score": 17,
+      "rawTotalScore": 89,
       "normalizedZScore": 0,
-      "evaluatedAt": "2026-11-12T10:38:12.737Z"
+      "qualitativeFeedback": "Strong cryptographic verification proofs demonstrated.",
+      "evaluatedAt": "2026-11-12T11:46:35.542Z",
+      "editHistory": []
     },
     {
-      "teamId": "team-k75-01",
-      "judgeId": "judge-1",
-      "checkpointGate": 1,
-      "criterion1Score": 28,
-      "criterion2Score": 22,
-      "criterion3Score": 23,
-      "criterion4Score": 18,
-      "qualitativeFeedback": "Outstanding distributed event streaming design on AWS!",
-      "id": "eval-1794479892792-f15o",
-      "rawTotalScore": 91,
-      "normalizedZScore": -1.3363,
-      "evaluatedAt": "2026-11-12T10:38:12.792Z"
-    },
-    {
-      "teamId": "team-k75-01",
-      "judgeId": "judge-1",
-      "checkpointGate": 1,
-      "criterion1Score": 28,
-      "criterion2Score": 22,
-      "criterion3Score": 23,
-      "criterion4Score": 18,
-      "qualitativeFeedback": "Outstanding distributed event streaming design on AWS!",
-      "id": "eval-1794479909192-l1jx",
-      "rawTotalScore": 91,
-      "normalizedZScore": -0.9623,
-      "evaluatedAt": "2026-11-12T10:38:29.192Z"
-    },
-    {
-      "teamId": "team-k75-01",
-      "judgeId": "judge-1",
-      "checkpointGate": 1,
-      "criterion1Score": 28,
-      "criterion2Score": 22,
-      "criterion3Score": 23,
-      "criterion4Score": 18,
-      "qualitativeFeedback": "Robust event streaming and resilient AWS architecture.",
-      "id": "eval-1794479977359-xyhm",
-      "rawTotalScore": 91,
-      "normalizedZScore": -0.7906,
-      "evaluatedAt": "2026-11-12T10:39:37.359Z"
-    },
-    {
-      "teamId": "team-k75-01",
-      "judgeId": "judge-1",
-      "checkpointGate": 1,
-      "criterion1Score": 28,
-      "criterion2Score": 22,
-      "criterion3Score": 23,
-      "criterion4Score": 18,
-      "qualitativeFeedback": "Robust event streaming and resilient AWS architecture.",
-      "id": "eval-1794480711753-8spi",
-      "rawTotalScore": 91,
-      "normalizedZScore": -0.6868,
-      "evaluatedAt": "2026-11-12T10:51:51.753Z"
-    },
-    {
-      "teamId": "team-k75-01",
-      "judgeId": "judge-1",
-      "checkpointGate": 1,
-      "criterion1Score": 28,
-      "criterion2Score": 22,
-      "criterion3Score": 23,
-      "criterion4Score": 18,
-      "qualitativeFeedback": "Robust event streaming and resilient AWS architecture.",
-      "id": "eval-1794480864363-sj54",
-      "rawTotalScore": 91,
-      "normalizedZScore": -0.6155,
-      "evaluatedAt": "2026-11-12T10:54:24.363Z"
-    },
-    {
-      "teamId": "KAIROS-T009",
-      "judgeId": "judge-1",
+      "id": "eval-1794483995699-koax",
+      "teamId": "KAIROS-T003",
+      "judgeId": "judge-3",
       "checkpointGate": 1,
       "criterion1Score": 26,
-      "criterion2Score": 23,
-      "criterion3Score": 22,
-      "criterion4Score": 18,
-      "qualitativeFeedback": "Exceptional autonomous agent consensus. Real-time telemetry is robust.",
-      "id": "eval-1794481654226-dcvo",
-      "rawTotalScore": 89,
-      "normalizedZScore": -1.2247,
-      "evaluatedAt": "2026-11-12T11:07:34.226Z"
-    },
-    {
-      "teamId": "KAIROS-T014",
-      "judgeId": "judge-1",
-      "checkpointGate": 1,
-      "criterion1Score": 26,
-      "criterion2Score": 23,
-      "criterion3Score": 22,
-      "criterion4Score": 18,
-      "qualitativeFeedback": "Exceptional autonomous agent consensus. Real-time telemetry is robust.",
-      "id": "eval-1794482591890-q0wv",
-      "rawTotalScore": 89,
-      "normalizedZScore": -1.069,
-      "evaluatedAt": "2026-11-12T11:23:11.890Z"
-    },
-    {
-      "teamId": "team-k75-01",
-      "judgeId": "judge-1",
-      "checkpointGate": 1,
-      "criterion1Score": 28,
       "criterion2Score": 22,
-      "criterion3Score": 23,
-      "criterion4Score": 18,
-      "qualitativeFeedback": "Robust event streaming and resilient AWS architecture.",
-      "id": "eval-1794482632518-0par",
-      "rawTotalScore": 91,
-      "normalizedZScore": -0.2526,
-      "evaluatedAt": "2026-11-12T11:23:52.518Z"
+      "criterion3Score": 21,
+      "criterion4Score": 16,
+      "rawTotalScore": 85,
+      "normalizedZScore": 0,
+      "qualitativeFeedback": "Resilient MQTT telemetry pipelines on edge hardware.",
+      "evaluatedAt": "2026-11-12T11:46:35.699Z",
+      "editHistory": []
     }
   ],
   "csat": [
@@ -2790,7 +3928,7 @@
       "institution": "Sathyabama Institute of Science and Technology",
       "createdAt": "2026-11-12T10:37:43.001Z",
       "emailVerifiedAt": "2026-11-12T10:37:43.073Z",
-      "lastLoginAt": "2026-11-12T11:23:51.107Z"
+      "lastLoginAt": "2026-11-12T11:44:59.850Z"
     },
     {
       "id": "prof-4f5ec056ed16eb76",
@@ -2801,7 +3939,7 @@
       "institution": "Sathyabama Institute of Science and Technology",
       "createdAt": "2026-11-12T10:37:43.634Z",
       "emailVerifiedAt": "2026-11-12T10:37:43.695Z",
-      "lastLoginAt": "2026-11-12T11:23:51.515Z"
+      "lastLoginAt": "2026-11-12T11:45:00.286Z"
     },
     {
       "id": "prof-28e66ae1e7108868",
@@ -3229,6 +4367,148 @@
       "createdAt": "2026-11-12T11:25:31.894Z",
       "emailVerifiedAt": "2026-11-12T11:25:32.020Z",
       "lastLoginAt": "2026-11-12T11:25:32.323Z"
+    },
+    {
+      "id": "prof-cb0664261b2ab34d",
+      "email": "student.p6.1794483786255@example.edu",
+      "fullName": "Student Builder P6",
+      "passwordHash": "7ef1ea592f519ddbd7f9fc051aece672:eb2c3c397178ed963bbfd7103a706ad66050d27785489f130924afd5b3020a07593f33028cb4139a23662b1cec68a2cf5b6b1f0c48aa6de7ae6b082c7e798fdc",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:43:10.533Z",
+      "emailVerifiedAt": "2026-11-12T11:43:10.989Z",
+      "lastLoginAt": "2026-11-12T11:43:11.953Z"
+    },
+    {
+      "id": "prof-68d9889536cbfa09",
+      "email": "lead.p6.1794483786255@example.edu",
+      "fullName": "Team Leader P6",
+      "passwordHash": "6c763a4fc12acde6898e19e25d64b17d:03a87e89bf4b0be70fb46c949a96ea055c1caaf50a88d13007711e2d3d2930128b8a2230642fcfe38c217b465686cb565f18ce8c14e93d5eb46f489d1b139ec7",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:43:13.686Z",
+      "emailVerifiedAt": "2026-11-12T11:43:13.815Z",
+      "lastLoginAt": "2026-11-12T11:43:14.096Z"
+    },
+    {
+      "id": "prof-70e03125a8370c09",
+      "email": "dq.lead.1794483786255@example.edu",
+      "fullName": "DQ Leader",
+      "passwordHash": "f680f2daa5b2db140e0a113cd24b0d59:ac699cff1921f93208231b288aa5f9817e470bfd19f6bdbdf4a1e2fe6c1200cf30a3a6abee28f967213a6a08922782a121ecbc3cd65a0db93473d095e25ee757",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:43:17.220Z",
+      "emailVerifiedAt": "2026-11-12T11:43:17.358Z",
+      "lastLoginAt": "2026-11-12T11:43:17.627Z"
+    },
+    {
+      "id": "prof-7cdadc7229ca3911",
+      "email": "fi.lead.1794483786255@example.edu",
+      "fullName": "Formula Tester",
+      "passwordHash": "66c4154e24d506d4b8279bf0ad374e17:18856ff00acbfc05654da1cb6f9c5a202591508ad9b64469dde4556c5eab25c90031be9b78c1695ead287f9947d8be22d7b0d8e4fc37f31a2c99685015cdba97",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:43:22.950Z",
+      "emailVerifiedAt": "2026-11-12T11:43:23.089Z",
+      "lastLoginAt": "2026-11-12T11:43:23.326Z"
+    },
+    {
+      "id": "prof-1dc0fc9067349dcd",
+      "email": "arjun.raman.1794483809177@sathyabama.ac.in",
+      "fullName": "Arjun Ramanathan",
+      "passwordHash": "620ca6fc1df9af89fde07a8faa6e1809:b2606451e05775b55029f0b646698ec30d8af5b1540adebfb75b46b1e209b09d4059732663ab4c86359030c9744deec6535eab09f8cf27fabdc5da93eb20e3ed",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:43:30.883Z",
+      "emailVerifiedAt": "2026-11-12T11:43:31.024Z",
+      "lastLoginAt": "2026-11-12T11:43:31.290Z"
+    },
+    {
+      "id": "prof-302082cd97ee57a4",
+      "email": "meera.krish.1794483809177@sathyabama.ac.in",
+      "fullName": "Meera Krishnan",
+      "passwordHash": "a68eafeb8d7e7807bbed924b424e5e68:4ab604a9d4a92e9dc0924bb74b567a6df5b3bb1da719477d01b072c376df491f818858817d44fe129948d3a5307784de39a003c103ca6eff57474f4cf56319c9",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:43:31.699Z",
+      "emailVerifiedAt": "2026-11-12T11:43:31.825Z",
+      "lastLoginAt": "2026-11-12T11:43:32.058Z"
+    },
+    {
+      "id": "prof-6a1ba72b18affeab",
+      "email": "ravi.chandran.1794483809177@sathyabama.ac.in",
+      "fullName": "Ravi Chandran",
+      "passwordHash": "7f599b222e340137189571b64c09358c:44ede67b009fa0149e5e4e1839a41b9b07db80eee43c3b57e05cff2edb69d7753f1d4eb8f9f9f2e3f060e74205d36b25ea007f8eeda87693ddd9a05575380acc",
+      "emailVerified": true,
+      "institution": "SIST",
+      "createdAt": "2026-11-12T11:43:32.444Z",
+      "emailVerifiedAt": "2026-11-12T11:43:32.568Z",
+      "lastLoginAt": "2026-11-12T11:43:32.846Z",
+      "phone": "+91 97403 99001",
+      "department": "School of Computing",
+      "yearOfStudy": "3rd Year",
+      "tshirtSize": "L"
+    },
+    {
+      "id": "prof-4fdffe8102ef7fc9",
+      "email": "reg.builder.1794483832299@sathyabama.ac.in",
+      "fullName": "Varun Nair",
+      "passwordHash": "1fc07e454500e80f8843037bf80cd205:aa5b9d3bd359c940591c2132c9a7dca4bef08a186c66b6d4847019cfab3fda5834aa2422a954870052217ad667067bc8f5d3ba21f7c4a6342939395c749df28c",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "phone": "+91 98401 22334",
+      "department": "Computer Science and Engineering",
+      "yearOfStudy": "3rd Year",
+      "tshirtSize": "XL",
+      "createdAt": "2026-11-12T11:43:52.977Z",
+      "emailVerifiedAt": "2026-11-12T11:43:53.109Z",
+      "lastLoginAt": "2026-11-12T11:43:53.426Z",
+      "githubUrl": "https://github.com/varun-nair-cloud",
+      "linkedinUrl": "https://linkedin.com/in/varun-nair"
+    },
+    {
+      "id": "prof-658768dfe9398e38",
+      "email": "leader.1794483832299@sathyabama.ac.in",
+      "fullName": "Karthik Subramanian",
+      "passwordHash": "7b1aed4b94c6eb552fac29bb8ec99d39:d26eaeee4e66f3f0f72972726c936878e96de1b9e8ddac83e478c15bdaac5598b9dbf726e9904026bad0d284ab3c06af00f9857877bce2dd27b7326e625f5750",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:43:55.537Z",
+      "emailVerifiedAt": "2026-11-12T11:43:55.663Z",
+      "lastLoginAt": "2026-11-12T11:43:55.928Z"
+    },
+    {
+      "id": "prof-ce3571db5fad0948",
+      "email": "member1.1794483832299@sathyabama.ac.in",
+      "fullName": "Priya Dharshini",
+      "passwordHash": "16a89d49c0394a2b05d19e35301de994:eaef6d0f6dd0f55cbb231fd465dad0923de5d6282c5ab574c0b045a2d44d2fac100a68dbc8a957dac907d578df1d1446d256f7ef46e5d2f6dcd2ab97784ab173",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:43:56.909Z",
+      "emailVerifiedAt": "2026-11-12T11:43:57.041Z",
+      "lastLoginAt": "2026-11-12T11:43:57.315Z"
+    },
+    {
+      "id": "prof-cb599292595d1ebf",
+      "email": "builder.outsider.1794483847959@test.edu",
+      "fullName": "Malicious Escalator",
+      "passwordHash": "b302ce70d0ec952748c6353ee60baf3d:6c273035e7338c37b1d6b011e1d69535c20f06869801b4a14444492c4e72a343a46122ca98d667cc5b765e3c8aaa4ed2fcdefe406f1d15caf0d1d885435913fe",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:44:12.499Z",
+      "emailVerifiedAt": "2026-11-12T11:44:12.640Z",
+      "lastLoginAt": "2026-11-12T11:44:12.914Z"
+    },
+    {
+      "id": "prof-542696203e5116f7",
+      "email": "builder.outsider.1794483896401@test.edu",
+      "fullName": "Malicious Escalator",
+      "passwordHash": "89eac02cb21d60aa5f51ad5f1f2be491:b49748866fad4d49f3b0c44bfd2be5b26aafe6c83bcb9ee97e0a59b827c78495c77cc0d29993c0704d54f3a1af5d043aaf83003f4761e22d1449a95e0ef590ea",
+      "emailVerified": true,
+      "institution": "Sathyabama Institute of Science and Technology",
+      "createdAt": "2026-11-12T11:44:57.966Z",
+      "emailVerifiedAt": "2026-11-12T11:44:58.136Z",
+      "lastLoginAt": "2026-11-12T11:44:58.434Z"
     }
   ]
 }
