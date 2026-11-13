@@ -50,6 +50,14 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
     // Reset timer and completion flag on flip
     startTimeRef.current = performance.now();
     hasTriggeredCompleteRef.current = false;
+    // Reset particles to throat orifice
+    if (particlesRef.current.length > 0) {
+      particlesRef.current.forEach((p) => {
+        p.y = 246 + Math.random() * 8;
+        p.vy = 1.2 + Math.random() * 1.5;
+      });
+    }
+    splashesRef.current = [];
   }, [isFlipped]);
 
   useEffect(() => {
@@ -82,6 +90,8 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
       // Calculate progress (0.0 to 1.0)
       const rawElapsed = time - startTimeRef.current;
       const progress = Math.min(1.0, rawElapsed / CYCLE_DURATION);
+      // Flip warm-up factor: smoothly fade in the stream over first 650ms while glass rotates 180°
+      const flipWarmup = Math.min(1.0, Math.max(0.05, rawElapsed / 650));
 
       // Trigger cycle flip when sand finishes
       if (progress >= 1.0 && !hasTriggeredCompleteRef.current) {
@@ -245,6 +255,7 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
       if (progress < 0.995) {
         // Continuous Central Laser Stream Core
         ctx.save();
+        ctx.globalAlpha = flipWarmup;
         const streamGrad = ctx.createLinearGradient(250, 246, 250, moundApexY);
         streamGrad.addColorStop(0.0, 'rgba(233, 213, 255, 0.95)');
         streamGrad.addColorStop(0.3, 'rgba(192, 132, 252, 0.85)');
@@ -269,7 +280,7 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
         for (let i = 0; i < currentParticles.length; i++) {
           const p = currentParticles[i];
 
-          // Gravity acceleration
+          // Gravity acceleration (ALWAYS DOWNWARDS +Y)
           p.vy += 0.22;
           p.y += p.vy;
           p.x += p.vx + Math.sin(time * 0.005 + i) * 0.15;
@@ -299,12 +310,12 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
             p.vx = (Math.random() - 0.5) * 0.4;
           }
 
-          // Draw Particle
+          // Draw Particle (Always flows from UP to DOWN)
           ctx.save();
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           ctx.fillStyle = p.color;
-          ctx.globalAlpha = p.alpha;
+          ctx.globalAlpha = p.alpha * flipWarmup;
           ctx.shadowColor = p.color;
           ctx.shadowBlur = 4;
           ctx.fill();
@@ -325,7 +336,7 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
             continue;
           }
 
-          const splashAlpha = 1 - s.life / s.maxLife;
+          const splashAlpha = (1 - s.life / s.maxLife) * flipWarmup;
           ctx.save();
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);

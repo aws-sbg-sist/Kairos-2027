@@ -12,11 +12,13 @@ export const Logo25DAnimation: React.FC = () => {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [idleAngle, setIdleAngle] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [flipAngle, setFlipAngle] = useState(0);
+
+  const isFlipped = (flipAngle / 180) % 2 !== 0;
 
   const handleFlip = useCallback(() => {
-    setIsFlipped((prev) => !prev);
-    sound.playClick();
+    setFlipAngle((prev) => prev + 180);
+    sound?.playClick();
     if (haptics) {
       haptics.light();
     }
@@ -185,8 +187,7 @@ export const Logo25DAnimation: React.FC = () => {
           onClick={handleFlip}
           className="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center cursor-pointer group select-none"
           style={{
-            transform: `translateZ(45px) rotateZ(${isFlipped ? 180 : 0}deg)`,
-            transition: 'transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            transform: 'translateZ(45px)',
           }}
           title="KAIROS 48H Live Hourglass — Click to Invert Time Flow"
         >
@@ -199,11 +200,19 @@ export const Logo25DAnimation: React.FC = () => {
             }}
           />
 
-          {/* Live Dynamic Sand Simulation (Physical Granular Engine) */}
-          <HourglassLiveSand isFlipped={isFlipped} onCycleComplete={handleFlip} />
+          {/* Live Dynamic Sand Simulation (Physical Granular Engine — Sand ALWAYS spills UP to DOWN) */}
+          <div className="absolute inset-0 w-full h-full pointer-events-none">
+            <HourglassLiveSand isFlipped={isFlipped} onCycleComplete={handleFlip} />
+          </div>
 
-          {/* Core Official Kairos Glass Frame Asset */}
-          <div className="relative w-full h-full pointer-events-none">
+          {/* Rotating Official Kairos Glass Frame (Flips 180° around center upon Inversion) */}
+          <div
+            className="relative w-full h-full pointer-events-none"
+            style={{
+              transform: `rotateZ(${flipAngle}deg)`,
+              transition: 'transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            }}
+          >
             <Image
               src="/assets/kairos-hourglass-glass.png"
               alt="KAIROS 2027 Hourglass Official Emblem"
