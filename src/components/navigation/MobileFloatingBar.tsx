@@ -70,3 +70,4 @@ export const MobileFloatingBar: React.FC = () => {
     </div>
   );
 };
+
