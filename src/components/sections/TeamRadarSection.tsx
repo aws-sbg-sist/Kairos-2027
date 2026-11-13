@@ -52,14 +52,11 @@ export function TeamRadarSection() {
 
   return (
     <section id="radar" className="py-24 relative overflow-hidden bg-[#07090e]">
-      {/* Background ambient radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-purple-950/20 blur-[140px] rounded-full pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           {/* Badge with Frameless Single Transparent PNG */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-300 text-xs font-mono mb-4 shadow-md backdrop-blur-md">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-purple-950/60 border border-purple-500/30 text-purple-300 text-xs font-mono mb-4 shadow-md">
             <div className="relative w-5 h-5 shrink-0">
               <Image
                 src="/assets/teams.png"
@@ -72,7 +69,7 @@ export function TeamRadarSection() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-display tracking-tight mb-4">
-            Assemble Your <span className="gradient-text-kairos">Elite Squad</span>
+            Assemble Your <span className="gradient-text-kairos">Hackathon Squad</span>
           </h2>
 
           <p className="text-base sm:text-lg text-slate-300">

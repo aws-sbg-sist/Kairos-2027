@@ -44,7 +44,11 @@ AUTHORITATIVE KAIROS CONTEXT:
 ${contextText}`;
 
         // Format recent conversation history for Gemini
-        const contents: any[] = [];
+        interface GeminiMessageContent {
+          role: 'user' | 'model';
+          parts: Array<{ text: string }>;
+        }
+        const contents: GeminiMessageContent[] = [];
         if (Array.isArray(history)) {
           const recentHistory: ChatMessage[] = history.slice(-4);
           for (const msg of recentHistory) {

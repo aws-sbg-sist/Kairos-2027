@@ -85,15 +85,11 @@ export const GallerySection: React.FC = () => {
 
   return (
     <section id="gallery" className="relative py-16 lg:py-24 overflow-hidden bg-aws-canvas">
-      {/* Background illumination */}
-      <div className="absolute top-1/3 left-1/4 -translate-y-1/2 w-[700px] h-[400px] bg-purple-950/20 blur-[160px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[350px] bg-purple-950/40 blur-[150px] pointer-events-none rounded-full" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md backdrop-blur-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md">
               <Camera className="w-3.5 h-3.5 text-purple-400" />
               <span>Event Atmosphere & Arena Preview</span>
             </div>

@@ -1,11 +1,18 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { getCurrentAdminSession } from '@/lib/auth';
+import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { WaitlistEntry } from '@/types';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
+  // Rate limit: 30 requests per minute
+  const rateLimitResult = checkRateLimit(request, { limit: 30, windowMs: 60_000 });
+  if (!rateLimitResult.allowed) {
+    return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
+  }
+
   try {
     const session = await getCurrentAdminSession();
     if (!session) {

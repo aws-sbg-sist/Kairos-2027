@@ -8,6 +8,7 @@ import { FactsStrip } from '@/components/sections/FactsStrip';
 import { DualPhasePipelineVisualizer } from '@/components/sections/DualPhasePipelineVisualizer';
 import { MissionSection } from '@/components/sections/MissionSection';
 import { TracksSection } from '@/components/sections/TracksSection';
+import { TeamRadarSection } from '@/components/sections/TeamRadarSection';
 import { ScheduleSection } from '@/components/sections/ScheduleSection';
 import { GallerySection } from '@/components/sections/GallerySection';
 import { JudgingSection } from '@/components/sections/JudgingSection';
@@ -85,6 +86,9 @@ export default function HomePage() {
 
         {/* Five Technical Tracks (Interactive Bento Grid) */}
         <TracksSection onSelectTrack={handleOpenWaitlistWithTrack} />
+
+        {/* Builder Radar & Team Matchmaking */}
+        <TeamRadarSection />
 
         {/* 48-Hour Experience & Timetable (Horizontal Timeline) */}
         <ScheduleSection />

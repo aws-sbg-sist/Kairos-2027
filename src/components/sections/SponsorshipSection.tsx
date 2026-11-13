@@ -8,6 +8,7 @@ import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 import { Marquee } from '@/components/animation/Marquee';
+import { SponsorInquiry } from '@/types';
 
 interface SponsorshipSectionProps {
   onOpenProspectusModal: () => void;
@@ -20,7 +21,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
     contactPerson: '',
     contactEmail: '',
     contactPhone: '',
-    interestedTier: 'title' as any,
+    interestedTier: 'title' as SponsorInquiry['interestedTier'],
     customRequirements: '',
   });
 
@@ -69,14 +70,11 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
 
   return (
     <section id="sponsors" className="relative py-16 lg:py-24 overflow-hidden bg-kairos-darkest">
-      {/* Background illumination */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-purple-950/20 blur-[170px] pointer-events-none rounded-full" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md backdrop-blur-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md">
               <div className="relative w-5 h-5 rounded overflow-hidden">
                 <Image
                   src="/assets/sponsors.png"
@@ -97,7 +95,7 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
 
           <ScrollReveal direction="up" distance={20} delay={0.2}>
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
-              Connect your brand with 400+ elite student software engineers, artificial intelligence builders, and founders at the national arena.
+              Connect your brand with 400+ shortlisted student engineers, ML practitioners, and founders — screened through a two-tier technical qualifier.
             </p>
           </ScrollReveal>
 
@@ -233,9 +231,9 @@ export const SponsorshipSection: React.FC<SponsorshipSectionProps> = ({ onOpenPr
                 <span className="text-xs font-mono uppercase text-slate-400 block tracking-wider font-semibold">
                   Key Partner Privileges & Deliverables
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {currentTier.highlights.map((del, i) => (
-                    <div key={i} className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-950/60 border border-white/5">
+                    <div key={i} className="flex items-start gap-2.5 py-2.5 px-3 rounded-lg bg-white/[0.03] border-b border-white/5">
                       <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                       <span className="text-xs text-slate-300 leading-snug">{del}</span>
                     </div>

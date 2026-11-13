@@ -20,7 +20,7 @@ import {
   Mail,
   FileText
 } from 'lucide-react';
-import { EVENT_CONFIG, SPONSOR_TIERS, HIGHER_MANAGEMENT } from '@/lib/config';
+import { EVENT_CONFIG, PROPOSED_SPONSOR_TIERS, HIGHER_MANAGEMENT } from '@/lib/config';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 
@@ -279,7 +279,7 @@ Target Domain: https://kairos.sathyabama.ac.in
 
         {/* Tiers Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-          {SPONSOR_TIERS.map((tier) => {
+          {PROPOSED_SPONSOR_TIERS.map((tier) => {
             const isSelected = selectedTier === tier.id;
             return (
               <div 

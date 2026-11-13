@@ -10,9 +10,6 @@ import { ScrollReveal } from '@/components/animation/ScrollReveal';
 export const CommitteeSection: React.FC = () => {
   return (
     <section id="committee" className="relative py-16 lg:py-20 overflow-hidden bg-aws-canvas">
-      {/* Background illumination */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[250px] bg-purple-950/40 blur-[140px] pointer-events-none rounded-full" />
-
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <ScrollReveal direction="up" distance={20}>
           <div className="p-8 sm:p-12 rounded-3xl glass-panel border border-purple-500/20 shadow-2xl space-y-6">

@@ -155,7 +155,7 @@ export default function TracksPage() {
                     </div>
                     <Icon className="w-5 h-5 text-purple-300 mb-2" aria-hidden="true" />
                     <h3 className="text-xs sm:text-sm font-bold text-white leading-snug">
-                      {(t as any).shortTitle || t.title}
+                      {t.shortTitle || t.title}
                     </h3>
                   </div>
                   <div className="mt-3 pt-2 border-t border-white/5 text-[10px] font-mono text-slate-400">

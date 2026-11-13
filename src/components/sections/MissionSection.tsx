@@ -10,10 +10,6 @@ import { KineticText } from '@/components/animation/KineticText';
 export const MissionSection: React.FC = () => {
   return (
     <section id="mission" className="relative py-16 lg:py-24 overflow-hidden bg-aws-canvas">
-      {/* Decorative cosmic background glow */}
-      <div className="absolute top-1/2 left-0 w-[550px] h-[550px] bg-purple-950/20 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-purple-950/40 blur-[140px] rounded-full pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -81,7 +77,7 @@ export const MissionSection: React.FC = () => {
             </ScrollReveal>
           </div>
 
-          {/* Kairos Column (Right, 7 cols - Elevated Heroic Card) */}
+          {/* Kairos Column (Right, 7 cols) */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             <ScrollReveal direction="left" distance={30} delay={0.15} className="h-full">
               <SpotlightCard
@@ -89,7 +85,7 @@ export const MissionSection: React.FC = () => {
                 borderColor="rgba(238, 5, 242, 0.5)"
                 className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-aws-squidInk/95 via-purple-950/40 to-slate-950 border-2 border-purple-500/40 h-full flex flex-col justify-between space-y-6 relative overflow-hidden shadow-2xl"
               >
-                {/* Glowing Aura Motif */}
+                {/* Accent Backdrop */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-purple-950/50 blur-3xl pointer-events-none rounded-full" />
 
                 <div className="space-y-4 relative z-10">
@@ -108,7 +104,7 @@ export const MissionSection: React.FC = () => {
                   </h3>
 
                   <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-                    KAIROS 2027 turns the 48-hour pressure cooker into a showcase of real distributed systems, verified repositories, and live jury defenses. We support builders with dedicated rest areas, 7 chef-curated meals, and high-concurrency cloud environments.
+                    KAIROS 2027 turns the 48-hour pressure cooker into 48 hours of real distributed systems, verified repositories, and live jury defenses. We support builders with dedicated rest areas, 7 chef-curated meals, and high-concurrency cloud environments.
                   </p>
                 </div>
 

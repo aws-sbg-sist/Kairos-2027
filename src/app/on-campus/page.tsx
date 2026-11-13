@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { useHaptics } from '@/lib/haptics';
-import { useSound } from '@/lib/sound';
+import { useSound } from '@/lib/audio';
 import { 
   MapPin, 
   Bus, 

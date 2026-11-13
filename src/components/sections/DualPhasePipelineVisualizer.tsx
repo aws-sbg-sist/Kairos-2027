@@ -15,9 +15,6 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
 
   return (
     <section className="relative py-20 lg:py-28 overflow-hidden bg-aws-canvas">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[350px] bg-purple-950/20 blur-[150px] pointer-events-none rounded-full" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <ScrollReveal direction="up" distance={24}>

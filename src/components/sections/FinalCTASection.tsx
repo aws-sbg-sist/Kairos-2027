@@ -26,8 +26,8 @@ export const FinalCTASection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
         {/* Top Floating Badge */}
         <ScrollReveal direction="down" distance={20}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/40 shadow-xl backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/40 shadow-xl">
+            <Calendar className="w-3.5 h-3.5 text-purple-400" />
             <span>KAIROS 2027 · Sathyabama Institute of Science and Technology</span>
           </div>
         </ScrollReveal>
@@ -35,7 +35,7 @@ export const FinalCTASection: React.FC = () => {
         {/* Animated 3D/2.5D Cosmic Hourglass Emblem */}
         <ScrollReveal direction="none" delay={0.1}>
           <div className="relative w-28 h-28 sm:w-36 sm:h-36 mx-auto animate-float-slow">
-            <div className="absolute inset-0 rounded-full bg-purple-950/70 blur-2xl animate-pulse" />
+            <div className="absolute inset-0 rounded-full bg-purple-950/70 blur-2xl" />
             <Image
               src="/assets/kairos-hourglass.png"
               alt="KAIROS Hourglass"

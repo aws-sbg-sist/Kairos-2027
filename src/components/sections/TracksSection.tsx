@@ -34,15 +34,11 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
 
   return (
     <section id="tracks" className="relative py-16 lg:py-24 overflow-hidden bg-aws-canvas">
-      {/* Background illumination */}
-      <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-purple-950/40 blur-[170px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-purple-950/20 blur-[160px] pointer-events-none rounded-full" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/30 shadow-md backdrop-blur-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/30 shadow-md">
               <div className="relative w-5 h-5 rounded overflow-hidden">
                 <Image
                   src="/assets/tracks.png"
@@ -51,13 +47,13 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                   className="object-contain"
                 />
               </div>
-              <span>5 Enterprise Innovation Tracks • Industry Architectures</span>
+              <span>5 AWS-Native Technical Tracks • Industry Architectures</span>
             </div>
           </ScrollReveal>
 
           <ScrollReveal direction="up" distance={20} delay={0.1}>
             <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
-              The Five Innovation <span className="gradient-text-kairos">Tracks</span>
+              The Five Technical <span className="gradient-text-kairos">Tracks</span>
             </h2>
           </ScrollReveal>
 
@@ -142,7 +138,7 @@ export const TracksSection: React.FC<TracksSectionProps> = ({ onSelectTrack }) =
                     </div>
 
                     <h3 className="font-display font-bold text-sm text-white mb-2 leading-snug group-hover:text-purple-200 transition-colors">
-                      {(track as any).shortTitle || track.title}
+                      {track.shortTitle || track.title}
                     </h3>
                   </div>
 

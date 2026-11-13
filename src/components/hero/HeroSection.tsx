@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Calendar, MapPin, Download, ShieldCheck, Play, Trophy, Users, Sparkles } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Download, ShieldCheck, Play, Trophy, Users, Layers } from 'lucide-react';
 import { EVENT_CONFIG } from '@/lib/config';
 import { Logo25DAnimation } from './Logo25DAnimation';
 import { sound } from '@/lib/audio';
@@ -237,7 +237,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                     className="island-btn px-5 py-3 text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-all backdrop-blur-sm group active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
                   >
                     <span className="island-btn-icon w-7 h-7 rounded-full bg-purple-500/20 text-purple-300" aria-hidden="true">
-                      <Sparkles className="w-3.5 h-3.5" />
+                      <Layers className="w-3.5 h-3.5" />
                     </span>
                     <span>Explore 5 Tracks</span>
                   </Link>
@@ -296,11 +296,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                     <span>Sathyabama Central Library</span>
                   </span>
-                  <span className="hidden sm:inline text-slate-400">· 48H Non-Stop Arena</span>
-                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-purple-950/70 border border-purple-500/30 text-purple-300 shadow-md backdrop-blur-md">
-                    <Sparkles className="w-2.5 h-2.5 text-purple-400" />
-                    <span>2.5D Hologram Active</span>
-                  </span>
+                  <span className="text-slate-400">· 48H Non-Stop Arena</span>
                 </div>
 
                 {/* Aerospace Telemetry Mini Dock */}

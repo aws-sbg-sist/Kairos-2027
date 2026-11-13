@@ -20,15 +20,12 @@ export const FAQSection: React.FC = () => {
 
   return (
     <section id="faq" className="relative py-16 lg:py-24 overflow-hidden bg-kairos-darkest">
-      {/* Background illumination */}
-      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[700px] h-[400px] bg-purple-950/20 blur-[160px] pointer-events-none rounded-full" />
-
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md backdrop-blur-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md">
               <div className="relative w-5 h-5 rounded overflow-hidden">
                 <Image
                   src="/assets/FAQ.png"
@@ -77,8 +74,8 @@ export const FAQSection: React.FC = () => {
               onClick={handleOpenAiChat}
               className="px-5 py-2.5 rounded-xl text-xs font-bold btn-primary-themed text-white flex items-center gap-2 shrink-0 shadow-md shadow-purple-900/30 hover:scale-105 active:scale-[0.97] transition-all"
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Launch Kairos AI →</span>
+              <Bot className="w-3.5 h-3.5" />
+              <span>Ask Kairos AI</span>
             </button>
           </div>
         </ScrollReveal>

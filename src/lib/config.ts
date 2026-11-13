@@ -458,7 +458,7 @@ export const PROPOSED_SPONSOR_TIERS = [
     referralPayout: '₹10,000 – ₹12,000 Direct Payout',
     commissionRate: '10% – 12%',
     statusBadge: 'Platform Partner',
-    description: 'Premier technology platform visibility. Showcase tools and drive direct API/SDK adoption.',
+    description: 'Platform-tier brand presence. Demo your tools live on stage and drive direct API/SDK adoption among shortlisted builders.',
     highlights: [
       'Co-branding: "KAIROS 2027 Powered by [Your Brand]"',
       '10-minute technical masterclass on main stage (11:35 AM)',

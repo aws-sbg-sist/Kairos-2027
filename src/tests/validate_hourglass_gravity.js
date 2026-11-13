@@ -34,3 +34,4 @@ console.log('✓ TEST 3 PASSED: Continuous +180° flip angle rotation verified.'
 console.log('\n====================================================');
 console.log('   ALL 3 HOURGLASS GRAVITY TESTS PASSED! [100% OK]  ');
 console.log('====================================================\n');
+

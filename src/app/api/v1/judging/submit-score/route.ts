@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { getCurrentAdminSession } from '@/lib/auth';
+import { Judge } from '@/types';
 
 export async function POST(req: NextRequest) {
   // Rate limiting to prevent brute force on judge PINs
@@ -38,7 +39,7 @@ export async function POST(req: NextRequest) {
     }
 
     const judges = db.getJudges();
-    let judge: any = null;
+    let judge: Judge | undefined = undefined;
 
     // Resolve judge by ID or by PIN directly
     if (judgeId) {
