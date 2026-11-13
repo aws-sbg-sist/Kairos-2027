@@ -17,6 +17,17 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
 
   const isCyber = theme === 'cyber';
 
+  React.useEffect(() => {
+    const handleRemoteToggle = () => {
+      sound?.playClick();
+      setIsTransitioning(true);
+      setTheme(isCyber ? 'aws' : 'cyber');
+      setTimeout(() => setIsTransitioning(false), 220);
+    };
+    window.addEventListener('kairos:toggle-theme', handleRemoteToggle);
+    return () => window.removeEventListener('kairos:toggle-theme', handleRemoteToggle);
+  }, [isCyber, setTheme]);
+
   const handleSelect = (targetTheme: 'cyber' | 'aws') => {
     if (theme !== targetTheme) {
       sound?.playClick();

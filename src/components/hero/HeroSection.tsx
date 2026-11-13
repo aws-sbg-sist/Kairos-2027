@@ -263,6 +263,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                   </Link>
                 </MagneticButton>
               </div>
+
+              {/* Friction-Elimination Guarantee Strip */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-1.5 pt-3 text-[11px] font-mono text-slate-300">
+                <span className="flex items-center gap-1.5">
+                  <span className="text-emerald-400 font-bold">✓</span> ₹0 Merit-Based Entry
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="text-emerald-400 font-bold">✓</span> Free Meals & Accommodation
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="text-emerald-400 font-bold">✓</span> 100% Hacker IP Ownership
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="text-emerald-400 font-bold">✓</span> $100 AWS Cloud Credits/Squad
+                </span>
+              </div>
             </ScrollReveal>
           </div>
 

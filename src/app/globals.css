@@ -675,3 +675,36 @@ a[role="button"]:active,
 .sound-bar-3 {
   animation: waveDance3 0.9s ease-in-out infinite;
 }
+
+/* ==========================================================================
+   MICRO-TYPOGRAPHY & TABULAR NUMBERS (ZERO DIGIT JITTER)
+   ========================================================================== */
+.tabular-nums,
+.font-mono,
+[data-timer],
+.double-bezel {
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   VESTIBULAR SAFETY & WCAG 2.3.3 REDUCED MOTION OVERRIDES
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .laser-scan-beam,
+  .sound-bar-1,
+  .sound-bar-2,
+  .sound-bar-3 {
+    animation: none !important;
+  }
+}
+

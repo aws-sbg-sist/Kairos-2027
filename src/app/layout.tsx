@@ -4,6 +4,8 @@ import './globals.css';
 import { KairosChatbot } from '@/components/chatbot/KairosChatbot';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
+import { KeyboardShortcutsModal } from '@/components/modals/KeyboardShortcutsModal';
+import { MobileFloatingBar } from '@/components/navigation/MobileFloatingBar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -134,6 +136,9 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="cyber" className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} dark`}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -166,6 +171,10 @@ export default function RootLayout({
             Skip to main content
           </a>
           {children}
+          {/* Mobile Quick Action Registration Dock */}
+          <MobileFloatingBar />
+          {/* Keyboard Shortcuts Command Center HUD */}
+          <KeyboardShortcutsModal />
           {/* Floating Kairos AI Chatbot */}
           <KairosChatbot />
         </ThemeProvider>
