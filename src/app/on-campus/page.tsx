@@ -77,7 +77,7 @@ export default function OnCampusGuidePage() {
       ]
     },
     first: {
-      title: 'First Floor — Hacking Bays LH1 & LH2 (Teams 01–50)',
+      title: 'First Floor — Central Library Hacking Bays LH1 & LH2 (Teams 01–50)',
       facilities: [
         'Dedicated Team Bays with Spike-Protected Power Drops',
         'Dual-Band 1Gbps High-Density Wi-Fi Access Points',
@@ -86,7 +86,7 @@ export default function OnCampusGuidePage() {
       ]
     },
     second: {
-      title: 'Second Floor — Hacking Bay LH3 (Teams 51–100) & Focus Labs',
+      title: 'Second Floor — Central Library Hacking Bay LH3 (Teams 51–100) & Focus Labs',
       facilities: [
         'Teams 51–100 Assigned Workstations',
         'Silent Code Sprint Pods for Deep Architecture Sprints',

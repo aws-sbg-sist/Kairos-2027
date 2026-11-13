@@ -7,7 +7,7 @@ export function generateKairosICS(): string {
     'METHOD:PUBLISH',
     'X-WR-CALNAME:KAIROS 2027 Hackathon',
     'X-WR-TIMEZONE:Asia/Kolkata',
-    
+
     // VTIMEZONE for Asia/Kolkata
     'BEGIN:VTIMEZONE',
     'TZID:Asia/Kolkata',
@@ -40,8 +40,8 @@ export function generateKairosICS(): string {
     'BEGIN:VEVENT',
     'UID:kairos-2027-code-freeze@awssbg-sist.in',
     'DTSTAMP:20261025T090000Z',
-    'DTSTART;TZID=Asia/Kolkata:20270124T083000',
-    'DTEND;TZID=Asia/Kolkata:20270124T090000',
+    'DTSTART;TZID=Asia/Kolkata:20270124T121500',
+    'DTEND;TZID=Asia/Kolkata:20270124T124500',
     'SUMMARY:KAIROS 2027 — Code Freeze & Final Jury Defense',
     'DESCRIPTION:48-hour competition clock expires! Repositories locked for final architectural defense and finalist verification.',
     'LOCATION:Central Library Auditorium, Sathyabama Institute',

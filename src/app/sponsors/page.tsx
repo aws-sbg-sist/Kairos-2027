@@ -192,24 +192,24 @@ Target Domain: https://kairos.sathyabama.ac.in
           </div>
         </div>
 
-        {/* Rainmaker Referral Banner Callout */}
+        {/* Academic Community & Ambassador Grant Program */}
         <div className="mb-16 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/30 border border-purple-500/30 shadow-2xl backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-start gap-4">
             <div className="p-3.5 rounded-xl bg-purple-950/80 text-purple-400 shrink-0 border border-purple-500/40">
-              <DollarSign className="w-7 h-7" />
+              <Award className="w-7 h-7" />
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-purple-950/80 text-purple-400 uppercase">
-                  Crowdsourced Rainmaker Hub
+                  Community Ambassador Initiative
                 </span>
-                <span className="text-xs text-slate-400">For Students & Alumni</span>
+                <span className="text-xs text-slate-400">Campus Leads & Alumni</span>
               </div>
               <h3 className="text-xl font-bold text-white mb-1">
-                Know a company that wants to sponsor? Earn 10%–15% Direct Referral Commission!
+                Know an organization looking to mentor builders? Connect our academic leadership team.
               </h3>
               <p className="text-sm text-slate-300">
-                Submit a verified corporate lead. If it closes, receive up to <strong className="text-purple-400">₹30,000 direct payout</strong> transferred straight to your UPI ID with a 21-day lock guarantee.
+                Student ambassadors connecting verified industry sponsors receive direct educational bursaries and community builder grants honoring ecosystem leadership.
               </p>
             </div>
           </div>
@@ -217,7 +217,7 @@ Target Domain: https://kairos.sathyabama.ac.in
             href="/refer-sponsor"
             className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm hover:from-purple-500 hover:to-indigo-500 shadow-md shadow-purple-900/30 transition"
           >
-            Launch Referral Hub
+            Explore Ambassador Grants
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -308,8 +308,8 @@ Target Domain: https://kairos.sathyabama.ac.in
                     <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
                       {tier.statusBadge}
                     </span>
-                    <span className="text-xs font-mono text-[#10B981]">
-                      Referral: {tier.referralPayout}
+                    <span className="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider">
+                      Official Tier Partner
                     </span>
                   </div>
 

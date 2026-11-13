@@ -36,10 +36,10 @@ export const EVENT_CONFIG = {
     qualifierDisplay: 'January 02–04, 2027 (Online Technical Qualifier)',
     // Round 2 On-Campus Grand Finale
     checkInDate: '2027-01-22T09:30:00+05:30',
-    startDate: '2027-01-22T12:15:00+05:30', // 48-Hour Sprint Commences
-    codeFreezeDate: '2027-01-24T08:30:00+05:30', // Hard Code Freeze
+    startDate: '2027-01-22T12:15:00+05:30', // 48-Hour Sprint Commences (Clock Start)
+    codeFreezeDate: '2027-01-24T12:15:00+05:30', // Hard Code Freeze (Clock Stop - Exactly 48.0 Hours)
     endDate: '2027-01-24T17:00:00+05:30', // Bus Dispersal
-    valedictoryDate: '2027-01-24T14:30:00+05:30',
+    valedictoryDate: '2027-01-24T16:00:00+05:30',
     timezone: 'Asia/Kolkata',
     displayRange: 'January 22–24, 2027 (On-Campus Grand Finale)',
     durationHours: 48,
@@ -383,48 +383,54 @@ export const EVENT_SCHEDULE = [
     tag: 'GRAND FINALE',
     events: [
       {
-        time: '07:30 AM – 08:30 AM',
-        title: 'Breakfast & Refreshments',
-        desc: 'Quick-service hot breakfast and coffee before the final submission.',
+        time: '08:00 AM – 09:00 AM',
+        title: 'Breakfast & Energy Boosters',
+        desc: 'Energizing hot South Indian breakfast, fruit bowls, and continuous filter coffee for the home stretch.',
         category: 'MEALS'
       },
       {
-        time: '08:30 AM',
+        time: '09:00 AM – 12:15 PM',
+        title: 'Final Architecture Sprint & Pitch Preparation',
+        desc: 'Final 3 hours 15 minutes of uninterrupted hacking, integration tests, demo video recording, and slide deck upload.',
+        category: 'HACKING'
+      },
+      {
+        time: '12:15 PM',
         title: 'HARD CODE FREEZE & GITHUB SUBMISSION LOCK',
-        desc: 'Automated GitHub commit freeze via Kairos webhook listener. Final submission of working demo video link and pitch deck. Zero extensions.',
+        desc: 'The 48-Hour Hackathon clock officially expires! Automated GitHub commit freeze via webhook lock. Final repository SHA hash and live demo link recorded. Exactly 48.0 Hours.',
         category: 'DEADLINE',
         highlight: true
       },
       {
-        time: '09:00 AM – 12:30 PM',
-        title: 'CHECKPOINT 3: Grand Finale Live Demonstrations',
-        desc: 'Concurrent stage & bay jury evaluations. 7-minute live presentation: 4 minutes working demo + 3 minutes grilling by VC Partners, CTOs, and AWS Leaders (40 Pts). Real-time algorithmic Z-score normalization.',
+        time: '12:15 PM – 01:15 PM',
+        title: 'Grand Celebration Luncheon & Bay Setup',
+        desc: 'Full celebratory buffet luncheon for all 100 squads, mentors, organizers, and jury members. Table-side prototype display setup.',
+        category: 'MEALS'
+      },
+      {
+        time: '01:15 PM – 03:30 PM',
+        title: 'CHECKPOINT 3: Grand Finale Live Demonstrations & Top 10 Pitches',
+        desc: 'Concurrent stage & bay jury evaluations. 7-minute live presentation: 4 minutes working software demo + 3 minutes architectural defense with VC Partners, Startup CTOs, and AWS Leaders (40 Pts). Real-time Z-score normalization.',
         category: 'EVALUATION',
         highlight: true
       },
       {
-        time: '12:30 PM – 01:30 PM',
-        title: 'Grand Celebration Luncheon',
-        desc: 'Festive celebration lunch buffet for all builders, organizers, and jury members.',
-        category: 'MEALS'
-      },
-      {
-        time: '01:30 PM – 02:15 PM',
-        title: 'Grand Jury Deliberation & Final Shortlisting',
-        desc: 'Evaluator committee convenes to finalize winners and track finalists.',
+        time: '03:30 PM – 04:00 PM',
+        title: 'Grand Jury Deliberation & Final Tabulation',
+        desc: 'Evaluator committee convenes behind closed doors to finalize track winners, innovation honors, and podium finish.',
         category: 'DELIBERATION'
       },
       {
-        time: '02:30 PM – 04:30 PM',
-        title: 'Grand Valedictory, Award Ceremony & Finale',
-        desc: 'Addresses by Keynote VIPs and University Leadership. Presentation of Track Awards & Special Innovation Honors. Grand Winner Announcement: 2nd Runner Up, 1st Runner Up, and Grand Champion (National Trophy & Awards Conferral).',
+        time: '04:00 PM – 05:00 PM',
+        title: 'Grand Valedictory, Award Ceremony & National Honors',
+        desc: 'Addresses by University Leadership & Industry Dignitaries. Presentation of Track Bounties (₹25,000 each) and Grand Champion Trophy (₹50,000 + $50K AWS Credits).',
         category: 'CEREMONY',
         highlight: true
       },
       {
         time: '05:00 PM',
         title: 'Formal Campus Dispersal via Sathyabama Bus Fleet',
-        desc: 'Complimentary return transit buses depart campus for Chennai Central, Tambaram, Airport, and CMBT Koyambedu.',
+        desc: 'Complimentary return transit buses depart campus for Chennai Central (MAS), Tambaram (TBM), Airport (MAA), and Koyambedu (CMBT).',
         category: 'DEPARTURE'
       }
     ]

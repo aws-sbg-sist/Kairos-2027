@@ -134,7 +134,7 @@ export default function StageScreenMode() {
         {/* Giant Countdown Clock */}
         <div className="space-y-4">
           <span className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] sm:tracking-[0.3em] text-slate-300 block font-bold">
-            COUNTDOWN TO HARD CODE FREEZE (08:30 AM IST)
+            COUNTDOWN TO HARD CODE FREEZE (12:15 PM IST)
           </span>
 
           <div className="flex items-center justify-center gap-1.5 sm:gap-5 md:gap-6 font-mono font-black text-4xl sm:text-7xl lg:text-9xl text-white tracking-wider">

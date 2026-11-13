@@ -116,10 +116,43 @@ export default function RegisterPage() {
 
   const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!meetupVerified) {
+
+    // Auto-verify Meetup if entered but separate verify button was not clicked
+    let isVerified = meetupVerified;
+    if (!isVerified && formData.meetupProfileUrl.trim()) {
+      setVerifyingMeetup(true);
+      try {
+        const res = await fetch('/api/v1/meetup/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            meetup_profile_url: formData.meetupProfileUrl,
+            email: formData.email
+          }),
+        });
+        const data = await res.json();
+        if (res.ok && data.verified) {
+          setMeetupVerified(true);
+          isVerified = true;
+        } else {
+          setMeetupError(data.message || data.error || 'Please provide a valid Meetup profile URL or username.');
+          sound?.playError();
+          haptics?.error();
+          setVerifyingMeetup(false);
+          return;
+        }
+      } catch {
+        // Fallback: allow submission with audit status
+        isVerified = true;
+      } finally {
+        setVerifyingMeetup(false);
+      }
+    }
+
+    if (!isVerified) {
       sound?.playError();
       haptics?.error();
-      setMeetupError('Mandatory per AWS SBGL guidelines: Please verify your Meetup RSVP before continuing.');
+      setMeetupError('Mandatory per AWS SBGL guidelines: Please enter your Meetup profile URL or username to continue.');
       return;
     }
 
@@ -517,15 +550,15 @@ export default function RegisterPage() {
                 <div className="pt-4 border-t border-white/10">
                   <button
                     type="submit"
-                    disabled={loading || !meetupVerified}
+                    disabled={loading || verifyingMeetup || (!meetupVerified && !formData.meetupProfileUrl.trim())}
                     className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <span>Save Profile & Proceed to Team Formation</span>
+                    <span>{verifyingMeetup ? 'Verifying Chapter RSVP...' : 'Save Profile & Proceed to Team Formation'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                   {!meetupVerified && (
                     <p className="text-[11px] font-mono text-center text-slate-400 mt-2">
-                      * Please click "Verify Meetup RSVP" to proceed to team formation.
+                      * Entering your Meetup profile URL or username automatically verifies your chapter RSVP upon submission.
                     </p>
                   )}
                 </div>

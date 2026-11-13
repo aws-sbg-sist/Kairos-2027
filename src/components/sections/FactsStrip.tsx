@@ -16,8 +16,8 @@ export const FactsStrip: React.FC = () => {
       numericValue: 48,
       suffix: ' Hours',
       label: 'Continuous Offline Hackathon',
-      detail: '22 Jan 09:30 AM – 24 Jan 05:00 PM IST',
-      badge: 'Live Hack Clock',
+      detail: '22 Jan 12:15 PM – 24 Jan 12:15 PM IST',
+      badge: '48H Clock Sprint',
     },
     {
       id: '02',

@@ -112,7 +112,7 @@ export default function RulesPage() {
 
             <div className="space-y-4 text-sm text-slate-300 leading-relaxed">
               <p>
-                <strong>Hacking Window:</strong> The official 48-hour sprint commences at <strong>12:15 PM IST on Friday, January 22, 2027</strong> and terminates strictly at <strong>08:30 AM IST on Sunday, January 24, 2027 (Hard Code Freeze)</strong>.
+                <strong>Hacking Window:</strong> The official 48-hour sprint commences at <strong>12:15 PM IST on Friday, January 22, 2027</strong> and terminates strictly at <strong>12:15 PM IST on Sunday, January 24, 2027 (Hard Code Freeze — Exactly 48.0 Hours)</strong>.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
                 <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 text-xs space-y-2">
@@ -134,7 +134,7 @@ export default function RulesPage() {
                   <ul className="list-disc list-inside space-y-1 text-slate-300">
                     <li>Pre-written proprietary business logic authored before the event</li>
                     <li>Finished applications with cosmetic frontend changes</li>
-                    <li>Commits pushed after the 08:30 AM Sunday hard freeze</li>
+                    <li>Commits pushed after the 12:15 PM Sunday hard freeze</li>
                     <li>Plagiarized codebases or clone wrappers with zero novel logic</li>
                   </ul>
                 </div>

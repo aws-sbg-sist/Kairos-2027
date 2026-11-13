@@ -41,7 +41,7 @@ Venue: Central Library & Campus Bays, Sathyabama Institute of Science and Techno
 - Campus Night Lock-In: Jan 22 & Jan 23 at 10:00 PM IST (Perimeter secured, EV shuttles active).
 - Checkpoint 2 (Code Velocity & APIs): Saturday, Jan 23 at 02:00 PM – 05:30 PM (35 Points).
 - Midnight Energy Drops: Saturday night / Sunday 01:30 AM (Snacks, filter coffee, energy boosters).
-- HARD CODE FREEZE: Sunday, January 24, 2027 at 08:30 AM IST (Zero extensions, GitHub commit freeze).
+- HARD CODE FREEZE: Sunday, January 24, 2027 at 12:15 PM IST (Zero extensions, GitHub commit freeze - Exactly 48.0 Hours from Friday 12:15 PM).
 - Checkpoint 3 (Grand Finale Live Demos): Sunday, Jan 24 at 09:00 AM – 12:30 PM (40 Points; 4-min demo + 3-min jury Q&A).
 - Grand Valedictory & Awards Ceremony: Sunday, Jan 24 at 02:30 PM – 04:30 PM IST.
 - Return Bus Fleet Dispersal: Sunday, Jan 24 at 05:00 PM IST.`
@@ -324,7 +324,7 @@ KAIROS 2027 has **zero entry fee** for all students nationwide. Every qualified 
 • **Finalist Announcement (Top 100 Teams):** January 08, 2027
 • **On-Campus Grand Finale:** January 22–24, 2027 at Sathyabama Central Library, Chennai
 • **Hackathon Clock Starts:** Friday, Jan 22, 2027 at 12:15 PM IST
-• **Hard Code Freeze:** Sunday, Jan 24, 2027 at 08:30 AM IST
+• **Hard Code Freeze:** Sunday, Jan 24, 2027 at 12:15 PM IST (Exactly 48.0 Hours)
 • **Grand Demos & Valedictory:** Sunday, Jan 24, 2027 (09:00 AM – 04:30 PM IST)`;
   }
 

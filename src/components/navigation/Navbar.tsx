@@ -64,7 +64,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
   ];
 
   const secondaryNavLinks: NavLinkItem[] = [
-    { label: 'Rainmaker Referral (10%–15% Cash)', href: '/refer-sponsor', badge: 'Rewards' },
+    { label: 'Community Builder Grants', href: '/refer-sponsor', badge: 'Grants' },
     { label: 'AWS Learning Library', href: '/resources' },
     { label: 'Live Leaderboard & Z-Score', href: '/leaderboard' },
     { label: 'Leadership Gallery', href: '/members/leadership' },
@@ -94,8 +94,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
             <strong className="text-white">NATIONAL APPLICATIONS OPEN:</strong> 100% Free • ₹0 Entry Fee • ₹1,75,000 Total Prize Pool
           </span>
           <div className="flex items-center gap-4 text-[10px]">
-            <Link href="/refer-sponsor" className="text-purple-300 hover:text-white underline font-semibold focus-visible:ring-1 focus-visible:ring-aws-orange rounded px-1">
-              Refer a Corporate Sponsor → Earn 10%–15% Referral Commission
+            <Link href="/sponsors" className="text-purple-300 hover:text-white underline font-semibold focus-visible:ring-1 focus-visible:ring-aws-orange rounded px-1">
+              Corporate & Community Partnerships Open → Partner With Kairos 2027
             </Link>
             <span className="text-slate-400">|</span>
             <a href="https://meetup.com/aws-student-builder-group-sist" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300 focus-visible:ring-1 focus-visible:ring-aws-orange rounded px-1">

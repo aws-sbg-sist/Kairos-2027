@@ -264,95 +264,179 @@ export default function LeaderboardPage() {
 
           {/* Leaderboard Table Double-Bezel Card */}
           <div className="double-bezel shadow-2xl">
-            <div className="double-bezel-inner p-6 sm:p-8 overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead>
-                  <tr className="border-b border-white/10 text-[11px] font-mono text-purple-300 uppercase">
-                    <th className="py-3 px-3">Rank</th>
-                    <th className="py-3 px-3">Team Code</th>
-                    <th className="py-3 px-3">Team & Institution</th>
-                    <th className="py-3 px-3">Track</th>
-                    <th className="py-3 px-3 text-center">CP1 (25)</th>
-                    <th className="py-3 px-3 text-center">CP2 (35)</th>
-                    <th className="py-3 px-3 text-center">CP3 (40)</th>
-                    <th className="py-3 px-3 text-center">Raw (100)</th>
-                    <th className="py-3 px-3 text-right">Z-Score</th>
-                    <th className="py-3 px-3 text-right">Commit Telemetry</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {filteredRankings.map((r) => {
-                    const isTop3 = r.rank <= 3;
-                    return (
-                      <tr
-                        key={r.teamCode}
-                        className={`hover:bg-white/[0.02] transition-colors ${isTop3 ? 'bg-purple-950/30' : ''
-                          }`}
-                      >
-                        <td className="py-4 px-3 font-mono font-bold">
-                          <div className="flex items-center gap-1.5">
-                            {r.rank === 1 && (
-                              <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 font-mono text-xs font-bold inline-flex items-center justify-center">
-                                1
-                              </span>
-                            )}
-                            {r.rank === 2 && (
-                              <span className="w-6 h-6 rounded-full bg-slate-400/20 text-slate-200 border border-slate-400/40 font-mono text-xs font-bold inline-flex items-center justify-center">
-                                2
-                              </span>
-                            )}
-                            {r.rank === 3 && (
-                              <span className="w-6 h-6 rounded-full bg-amber-600/20 text-amber-300 border border-amber-600/40 font-mono text-xs font-bold inline-flex items-center justify-center">
-                                3
-                              </span>
-                            )}
-                            {r.rank > 3 && (
-                              <span className="w-6 h-6 font-mono text-xs text-slate-400 inline-flex items-center justify-center">
-                                {r.rank}
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        <td className="py-4 px-3 font-mono font-bold text-purple-400">
-                          {r.teamCode}
-                        </td>
-                        <td className="py-4 px-3 space-y-0.5">
-                          <span className="font-bold text-white text-sm block">
-                            {r.teamName}
+            <div className="double-bezel-inner p-4 sm:p-6 md:p-8">
+              {/* Desktop Tabular Grid (md and up) */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="border-b border-white/10 text-[11px] font-mono text-purple-300 uppercase">
+                      <th className="py-3 px-3">Rank</th>
+                      <th className="py-3 px-3">Team Code</th>
+                      <th className="py-3 px-3">Team & Institution</th>
+                      <th className="py-3 px-3">Track</th>
+                      <th className="py-3 px-3 text-center">CP1 (25)</th>
+                      <th className="py-3 px-3 text-center">CP2 (35)</th>
+                      <th className="py-3 px-3 text-center">CP3 (40)</th>
+                      <th className="py-3 px-3 text-center">Raw (100)</th>
+                      <th className="py-3 px-3 text-right">Z-Score</th>
+                      <th className="py-3 px-3 text-right">Commit Telemetry</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {filteredRankings.map((r) => {
+                      const isTop3 = r.rank <= 3;
+                      return (
+                        <tr
+                          key={r.teamCode}
+                          className={`hover:bg-white/[0.02] transition-colors ${isTop3 ? 'bg-purple-950/30' : ''
+                            }`}
+                        >
+                          <td className="py-4 px-3 font-mono font-bold">
+                            <div className="flex items-center gap-1.5">
+                              {r.rank === 1 && (
+                                <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 font-mono text-xs font-bold inline-flex items-center justify-center">
+                                  1
+                                </span>
+                              )}
+                              {r.rank === 2 && (
+                                <span className="w-6 h-6 rounded-full bg-slate-400/20 text-slate-200 border border-slate-400/40 font-mono text-xs font-bold inline-flex items-center justify-center">
+                                  2
+                                </span>
+                              )}
+                              {r.rank === 3 && (
+                                <span className="w-6 h-6 rounded-full bg-amber-600/20 text-amber-300 border border-amber-600/40 font-mono text-xs font-bold inline-flex items-center justify-center">
+                                  3
+                                </span>
+                              )}
+                              {r.rank > 3 && (
+                                <span className="w-6 h-6 font-mono text-xs text-slate-400 inline-flex items-center justify-center">
+                                  {r.rank}
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="py-4 px-3 font-mono font-bold text-purple-400">
+                            {r.teamCode}
+                          </td>
+                          <td className="py-4 px-3 space-y-0.5">
+                            <span className="font-bold text-white text-sm block">
+                              {r.teamName}
+                            </span>
+                            <span className="text-[11px] text-slate-400 block font-mono">
+                              {r.institution}
+                            </span>
+                          </td>
+                          <td className="py-4 px-3 text-slate-300 max-w-[200px] truncate">
+                            {r.track}
+                          </td>
+                          <td className="py-4 px-3 text-center font-mono text-slate-300">
+                            {r.cp1Score.toFixed(1)}
+                          </td>
+                          <td className="py-4 px-3 text-center font-mono text-slate-300">
+                            {r.cp2Score.toFixed(1)}
+                          </td>
+                          <td className="py-4 px-3 text-center font-mono text-slate-300">
+                            {r.cp3Score.toFixed(1)}
+                          </td>
+                          <td className="py-4 px-3 text-center font-mono font-bold text-white">
+                            {r.rawTotal.toFixed(1)}
+                          </td>
+                          <td className="py-4 px-3 text-right font-mono font-bold text-emerald-400">
+                            {r.zScore}
+                          </td>
+                          <td className="py-4 px-3 text-right font-mono">
+                            <span className="text-sky-400 flex items-center justify-end gap-1">
+                              <GitCommit className="w-3.5 h-3.5" />
+                              <span>{r.commitCount} commits</span>
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Responsive Cards (Phone Viewports < 768px) */}
+              <div className="block md:hidden space-y-3.5">
+                {filteredRankings.map((r) => {
+                  const isTop3 = r.rank <= 3;
+                  return (
+                    <div
+                      key={r.teamCode}
+                      className={`p-4 rounded-2xl border transition-all ${
+                        isTop3
+                          ? 'bg-purple-950/40 border-purple-500/50 shadow-lg shadow-purple-900/20'
+                          : 'bg-aws-card/80 border-white/10'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-white/10">
+                        <div className="flex items-center gap-2">
+                          <span className={`w-6 h-6 rounded-full font-mono text-xs font-bold inline-flex items-center justify-center border ${
+                            r.rank === 1
+                              ? 'bg-purple-500/20 text-purple-300 border-purple-500/40'
+                              : r.rank === 2
+                              ? 'bg-slate-400/20 text-slate-200 border-slate-400/40'
+                              : r.rank === 3
+                              ? 'bg-amber-600/20 text-amber-300 border-amber-600/40'
+                              : 'bg-white/5 text-slate-400 border-white/10'
+                          }`}>
+                            {r.rank}
                           </span>
-                          <span className="text-[11px] text-slate-400 block font-mono">
-                            {r.institution}
+                          <span className="font-mono font-bold text-xs text-purple-400">
+                            {r.teamCode}
                           </span>
-                        </td>
-                        <td className="py-4 px-3 text-slate-300 max-w-[200px] truncate">
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono font-bold text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                            Z: {r.zScore}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1 mb-3">
+                        <h4 className="font-bold text-white text-sm">
+                          {r.teamName}
+                        </h4>
+                        <p className="text-[11px] text-slate-400 font-mono">
+                          {r.institution}
+                        </p>
+                        <div className="inline-block text-[10px] font-mono text-purple-300 px-2 py-0.5 rounded bg-purple-950/60 border border-purple-500/30">
                           {r.track}
-                        </td>
-                        <td className="py-4 px-3 text-center font-mono text-slate-300">
-                          {r.cp1Score.toFixed(1)}
-                        </td>
-                        <td className="py-4 px-3 text-center font-mono text-slate-300">
-                          {r.cp2Score.toFixed(1)}
-                        </td>
-                        <td className="py-4 px-3 text-center font-mono text-slate-300">
-                          {r.cp3Score.toFixed(1)}
-                        </td>
-                        <td className="py-4 px-3 text-center font-mono font-bold text-white">
-                          {r.rawTotal.toFixed(1)}
-                        </td>
-                        <td className="py-4 px-3 text-right font-mono font-bold text-emerald-400">
-                          {r.zScore}
-                        </td>
-                        <td className="py-4 px-3 text-right font-mono">
-                          <span className="text-sky-400 flex items-center justify-end gap-1">
-                            <GitCommit className="w-3.5 h-3.5" />
-                            <span>{r.commitCount} commits</span>
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                        </div>
+                      </div>
+
+                      {/* 4-Column Checkpoint Rubric Breakdown */}
+                      <div className="grid grid-cols-4 gap-1.5 p-2 rounded-xl bg-slate-950/60 border border-white/5 text-center font-mono">
+                        <div>
+                          <div className="text-[9px] text-slate-400 uppercase">CP1</div>
+                          <div className="text-xs text-slate-200 font-bold">{r.cp1Score.toFixed(1)}<span className="text-[9px] text-slate-500">/25</span></div>
+                        </div>
+                        <div>
+                          <div className="text-[9px] text-slate-400 uppercase">CP2</div>
+                          <div className="text-xs text-slate-200 font-bold">{r.cp2Score.toFixed(1)}<span className="text-[9px] text-slate-500">/35</span></div>
+                        </div>
+                        <div>
+                          <div className="text-[9px] text-slate-400 uppercase">CP3</div>
+                          <div className="text-xs text-slate-200 font-bold">{r.cp3Score.toFixed(1)}<span className="text-[9px] text-slate-500">/40</span></div>
+                        </div>
+                        <div>
+                          <div className="text-[9px] text-purple-400 uppercase font-bold">RAW</div>
+                          <div className="text-xs text-white font-black">{r.rawTotal.toFixed(1)}<span className="text-[9px] text-slate-500">/100</span></div>
+                        </div>
+                      </div>
+
+                      <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400">
+                        <span>Automated Telemetry</span>
+                        <span className="text-sky-400 flex items-center gap-1 font-bold">
+                          <GitCommit className="w-3 h-3" />
+                          <span>{r.commitCount} commits</span>
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
