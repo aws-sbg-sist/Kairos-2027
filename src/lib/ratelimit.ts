@@ -5,19 +5,31 @@ interface RateLimitRecord {
   resetAt: number;
 }
 
-// In-memory sliding window rate limiter
+// In-memory sliding window rate limiter with strict size caps to protect 512MB RAM containers
+const MAX_RATE_LIMIT_KEYS = 1000;
 const rateLimitMap = new Map<string, RateLimitRecord>();
 
-// Cleanup stale entries every 5 minutes to prevent memory leaks
+function pruneRateLimitMap(now: number) {
+  rateLimitMap.forEach((record, key) => {
+    if (now > record.resetAt) {
+      rateLimitMap.delete(key);
+    }
+  });
+
+  // If map still exceeds safety threshold under traffic spike, evict oldest half
+  if (rateLimitMap.size > MAX_RATE_LIMIT_KEYS) {
+    const keysToDelete = Array.from(rateLimitMap.keys()).slice(0, Math.floor(MAX_RATE_LIMIT_KEYS / 2));
+    for (const k of keysToDelete) {
+      rateLimitMap.delete(k);
+    }
+  }
+}
+
+// Cleanup stale entries every 60 seconds
 if (typeof setInterval !== 'undefined') {
   setInterval(() => {
-    const now = Date.now();
-    rateLimitMap.forEach((record, key) => {
-      if (now > record.resetAt) {
-        rateLimitMap.delete(key);
-      }
-    });
-  }, 5 * 60 * 1000).unref?.();
+    pruneRateLimitMap(Date.now());
+  }, 60 * 1000).unref?.();
 }
 
 export interface RateLimitOptions {
@@ -46,6 +58,9 @@ export function checkRateLimit(
 
   const key = options.identifier ? `${clientIp}:${options.identifier}` : clientIp;
   const now = Date.now();
+  if (rateLimitMap.size >= MAX_RATE_LIMIT_KEYS) {
+    pruneRateLimitMap(now);
+  }
   const existing = rateLimitMap.get(key);
 
   if (!existing || now > existing.resetAt) {

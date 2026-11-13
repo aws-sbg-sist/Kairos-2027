@@ -2,6 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Strict in-memory cache limit for 512MB RAM PaaS containers (Render Free/Starter)
+  cacheMaxMemorySize: 25 * 1024 * 1024,
+  productionBrowserSourceMaps: false,
+  experimental: {
+    // Tree-shake icons and animations so unused components are never loaded into server heap
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
+  },
   async headers() {
     return [
       {

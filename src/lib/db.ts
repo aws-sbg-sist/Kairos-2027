@@ -582,9 +582,10 @@ const DEFAULT_STORE: StoreSchema = {
   members: DEFAULT_MEMBERS
 };
 
-// In-memory cache and serialized write queue to prevent concurrency race conditions
+// In-memory cache and non-leaking coalescing write worker to prevent concurrency race conditions & heap leaks
 let cachedStore: StoreSchema | null = null;
-let writeQueue: Promise<void> = Promise.resolve();
+let isWriting = false;
+let pendingWrite: StoreSchema | null = null;
 
 // Safe thread-safe file persistence
 function ensureDataDir() {
@@ -623,21 +624,32 @@ function readStore(): StoreSchema {
   }
 }
 
+async function flushWriteQueue() {
+  if (isWriting || !pendingWrite) return;
+  isWriting = true;
+  const data = pendingWrite;
+  pendingWrite = null;
+
+  try {
+    ensureDataDir();
+    const tmpFile = `${JSON_FILE}.${Date.now()}-${Math.random().toString(36).substring(2, 6)}.tmp`;
+    fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), 'utf-8');
+    fs.renameSync(tmpFile, JSON_FILE);
+  } catch (err) {
+    console.error('[DB] Concurrent write error:', err);
+  } finally {
+    isWriting = false;
+    if (pendingWrite) {
+      flushWriteQueue();
+    }
+  }
+}
+
 function writeStore(data: StoreSchema) {
   // Update in-memory reference immediately so subsequent reads in this process see the update
   cachedStore = data;
-
-  // Chain atomic disk persistence onto serialized write queue
-  writeQueue = writeQueue.then(async () => {
-    try {
-      ensureDataDir();
-      const tmpFile = `${JSON_FILE}.${Date.now()}-${Math.random().toString(36).substring(2, 6)}.tmp`;
-      fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), 'utf-8');
-      fs.renameSync(tmpFile, JSON_FILE);
-    } catch (err) {
-      console.error('[DB] Concurrent write error:', err);
-    }
-  });
+  pendingWrite = data;
+  flushWriteQueue();
 }
 
 export const db = {
