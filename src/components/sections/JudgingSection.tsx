@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { JUDGING_CRITERIA } from '@/lib/config';
-import { Scale, CheckSquare, Eye, Lock, Sparkles } from 'lucide-react';
+import { Scale, CheckSquare, Eye, Lock } from 'lucide-react';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 import { sound } from '@/lib/audio';

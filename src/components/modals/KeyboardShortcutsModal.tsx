@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Command, X, Moon, Volume2, Sparkles, Trophy, Calendar, FileText, ArrowRight } from 'lucide-react';
+import { Command, X, Moon, Volume2, Layers, Trophy, Calendar, FileText, ArrowRight } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { haptics } from '@/lib/haptics';
 
@@ -89,7 +89,7 @@ export const KeyboardShortcutsModal: React.FC = () => {
     { key: 'T', label: 'Toggle Cyber / AWS Theme', icon: Moon },
     { key: 'M', label: 'Toggle Audio Synthesizer & Haptics', icon: Volume2 },
     { key: 'R', label: 'Quick Jump: Registration (100% Free)', icon: ArrowRight },
-    { key: 'K', label: 'Quick Jump: 5 Technical Tracks', icon: Sparkles },
+    { key: 'K', label: 'Quick Jump: 5 Technical Tracks', icon: Layers },
     { key: 'S', label: 'Quick Jump: 48-Hour Event Schedule', icon: Calendar },
     { key: 'L', label: 'Quick Jump: Live Leaderboard & Z-Score', icon: Trophy },
     { key: 'Esc', label: 'Dismiss Active Dialog / Modal', icon: X },

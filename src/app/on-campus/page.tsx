@@ -7,20 +7,19 @@ import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { useHaptics } from '@/lib/haptics';
 import { useSound } from '@/lib/audio';
-import { 
-  MapPin, 
-  Bus, 
-  Shirt, 
-  ShieldAlert, 
-  Navigation, 
-  Clock, 
-  CheckCircle2, 
-  Building2, 
-  PhoneCall, 
+import {
+  MapPin,
+  Bus,
+  Shirt,
+  ShieldAlert,
+  Navigation,
+  Clock,
+  CheckCircle2,
+  Building2,
+  PhoneCall,
   ShieldCheck,
   Compass,
   Wifi,
-  Sparkles,
   Lock,
   Moon,
   HeartPulse
@@ -115,7 +114,7 @@ export default function OnCampusGuidePage() {
 
       <main className="flex-grow pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          
+
           {/* Header */}
           <div className="text-center space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk border border-purple-500/30">
@@ -185,11 +184,10 @@ export default function OnCampusGuidePage() {
                       haptics?.selection();
                       setSelectedFloor(floor);
                     }}
-                    className={`p-3 rounded-xl text-xs font-bold font-mono transition-all uppercase active:scale-[0.97] ${
-                      selectedFloor === floor
+                    className={`p-3 rounded-xl text-xs font-bold font-mono transition-all uppercase active:scale-[0.97] ${selectedFloor === floor
                         ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-900/40'
                         : 'bg-slate-900/80 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
-                    }`}
+                      }`}
                   >
                     {floor} Floor
                   </button>
@@ -273,11 +271,10 @@ export default function OnCampusGuidePage() {
                       haptics?.selection();
                       setSelectedHub(h.id as any);
                     }}
-                    className={`p-3 rounded-xl text-xs font-bold transition-all active:scale-[0.97] ${
-                      selectedHub === h.id
+                    className={`p-3 rounded-xl text-xs font-bold transition-all active:scale-[0.97] ${selectedHub === h.id
                         ? 'bg-sky-500 text-slate-950 font-bold shadow-md shadow-sky-900/40'
                         : 'bg-slate-900/80 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
-                    }`}
+                      }`}
                   >
                     {h.label}
                   </button>

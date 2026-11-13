@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FAQS } from '@/lib/config';
-import { HelpCircle, ChevronDown, Sparkles, Bot, MessageCircle } from 'lucide-react';
+import { HelpCircle, ChevronDown, Bot, MessageCircle } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 

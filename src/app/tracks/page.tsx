@@ -140,8 +140,8 @@ export default function TracksPage() {
                   aria-label={`Select Track ${t.number}: ${t.title}`}
                   onClick={() => setSelectedTrack(t)}
                   className={`p-4 rounded-2xl text-left transition-all focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none flex flex-col justify-between ${isSelected
-                      ? 'bg-aws-squidInk border-2 border-purple-500 shadow-lg shadow-purple-900/30 scale-[1.02]'
-                      : 'bg-aws-card border border-slate-700/60 hover:bg-slate-900/80 hover:border-purple-500/40'
+                    ? 'bg-aws-squidInk border-2 border-purple-500 shadow-lg shadow-purple-900/30 scale-[1.02]'
+                    : 'bg-aws-card border border-slate-700/60 hover:bg-slate-900/80 hover:border-purple-500/40'
                     }`}
                 >
                   <div>
@@ -150,7 +150,7 @@ export default function TracksPage() {
                         TRACK {t.number}
                       </span>
                       <span className="text-[9px] font-mono text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
-                        ₹7K
+                        ₹25,000 Bounty
                       </span>
                     </div>
                     <Icon className="w-5 h-5 text-purple-300 mb-2" aria-hidden="true" />

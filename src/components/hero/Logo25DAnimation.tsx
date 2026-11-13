@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { Sparkles, Compass } from 'lucide-react';
+import { Compass } from 'lucide-react';
 import { HourglassLiveSand } from './HourglassLiveSand';
 import { sound } from '@/lib/audio';
 import { haptics } from '@/lib/haptics';
@@ -261,12 +261,12 @@ export const Logo25DAnimation: React.FC = () => {
           <span>IST CALIBRATED · 12.87°N</span>
         </div>
 
-        {/* Center Waist Active Particle Flux */}
+        {/* Center Waist Chronometric Aperture Node */}
         <div
-          className="absolute pointer-events-none"
+          className="absolute pointer-events-none flex items-center justify-center"
           style={{ transform: 'translateZ(60px)' }}
         >
-          <Sparkles className="w-4 h-4 text-purple-300 animate-spin" style={{ animationDuration: '6s' }} />
+          <div className="w-2 h-2 rounded-full bg-purple-300 shadow-[0_0_10px_rgba(238,5,242,0.9)] animate-pulse" />
         </div>
       </div>
     </div>

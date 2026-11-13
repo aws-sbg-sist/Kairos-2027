@@ -81,7 +81,7 @@ export function fireGoldMilestone() {
       spread: 100,
       origin: { y: 0.5 },
       colors: GOLD_COLORS,
-      shapes: ['star', 'circle'],
+      shapes: ['square', 'circle'],
       scalar: 1.2,
       zIndex: 9999,
       disableForReducedMotion: true,

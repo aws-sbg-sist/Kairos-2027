@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from './ThemeProvider';
-import { Sparkles, Flame } from 'lucide-react';
+import { Zap, Flame } from 'lucide-react';
 import { sound } from '@/lib/audio';
 
 interface ThemeToggleProps {
@@ -64,7 +64,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
               exit={{ opacity: 0, scale: 0.75, filter: 'blur(2px)' }}
               transition={{ duration: 0.17, ease: [0.4, 0, 0.2, 1] }}
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Zap className="w-3.5 h-3.5" />
             </motion.div>
           ) : (
             <motion.div
@@ -98,7 +98,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
         }`}
         title="Active Theme: Cyber Neon (Default Adobe Palette: #ee05f2, #7630d9, #0511f2, #edebf2, #0d0d0d)"
       >
-        <Sparkles className={`w-3 h-3 ${isCyber ? 'text-white' : 'text-slate-300'}`} />
+        <Zap className={`w-3 h-3 ${isCyber ? 'text-white' : 'text-slate-300'}`} />
         <span>CYBER</span>
       </button>
 

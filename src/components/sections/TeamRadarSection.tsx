@@ -69,7 +69,7 @@ export function TeamRadarSection() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-display tracking-tight mb-4">
-            Assemble Your <span className="gradient-text-kairos">Hackathon Squad</span>
+            Assemble Your <span className="gradient-text-kairos">Elite Squad</span>
           </h2>
 
           <p className="text-base sm:text-lg text-slate-300">

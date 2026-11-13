@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Camera, LayoutGrid, SlidersHorizontal, Maximize2, Sparkles, MapPin, Eye } from 'lucide-react';
+import { Camera, LayoutGrid, SlidersHorizontal, Maximize2, MapPin, Eye } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';

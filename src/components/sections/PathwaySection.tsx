@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CheckCircle2, ArrowRight, ShieldCheck, Send, User, Mail, School, BookOpen, Layers, ExternalLink, Sparkles } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ShieldCheck, Send, User, Mail, School, BookOpen, Layers, ExternalLink } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';

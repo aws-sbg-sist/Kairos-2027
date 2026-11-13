@@ -72,7 +72,7 @@ http.get(testUrl + '/', (res) => {
       console.error(`FAIL: Dev server returned status ${res.statusCode}`);
       process.exit(1);
     }
-    if (!data.includes('2.5D Hologram Active') || !data.includes('kairos-hourglass.png')) {
+    if (!data.includes('48H SAND SYNC') || !data.includes('kairos-hourglass.png')) {
       console.error('FAIL: Response does not contain 2.5D logo animation markers');
       process.exit(1);
     }

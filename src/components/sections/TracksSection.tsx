@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TECHNICAL_TRACKS } from '@/lib/config';
-import { Cpu, Server, ShieldCheck, Leaf, ArrowRight, Layers, Code, CheckCircle2, Trophy, ExternalLink, Sparkles } from 'lucide-react';
+import { Cpu, Server, ShieldCheck, Leaf, ArrowRight, Layers, Code, CheckCircle2, Trophy, ExternalLink } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { haptics } from '@/lib/haptics';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Compass, Sparkles, Clock, Zap, ShieldCheck } from 'lucide-react';
+import { Compass, Clock, Zap, ShieldCheck } from 'lucide-react';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 import { KineticText } from '@/components/animation/KineticText';

@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Download, ShieldCheck, Trophy, Calendar, MapPin } from 'lucide-react';
+import { ArrowRight, Download, ShieldCheck, Trophy, Calendar, MapPin } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { MagneticButton } from '@/components/animation/MagneticButton';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';

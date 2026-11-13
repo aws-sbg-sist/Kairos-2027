@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { MessageSquare, X, Send, Sparkles, RotateCcw, Bot, User } from 'lucide-react';
+import { MessageSquare, X, Send, RotateCcw, Bot, User } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { haptics } from '@/lib/haptics';
 
@@ -236,16 +236,15 @@ export const KairosChatbot: React.FC = () => {
               >
                 {msg.role === 'assistant' && (
                   <div className="w-6 h-6 rounded-md bg-purple-950/60 border border-purple-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 text-purple-400">
-                    <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+                    <Bot className="w-3.5 h-3.5 text-purple-400" />
                   </div>
                 )}
 
                 <div
-                  className={`max-w-[85%] rounded-xl p-3 leading-relaxed whitespace-pre-wrap ${
-                    msg.role === 'user'
+                  className={`max-w-[85%] rounded-xl p-3 leading-relaxed whitespace-pre-wrap ${msg.role === 'user'
                       ? 'bg-gradient-to-r from-aws-orange/25 to-indigo-600/20 border border-purple-500/40 text-purple-200 font-medium'
                       : 'bg-aws-card/95 border border-purple-500/20 text-aws-snow shadow-sm'
-                  }`}
+                    }`}
                 >
                   <div className="text-[11.5px] leading-relaxed select-text">
                     {msg.content}
@@ -266,7 +265,7 @@ export const KairosChatbot: React.FC = () => {
             {isLoading && (
               <div className="flex gap-2.5 items-center text-slate-400 text-xs italic p-2">
                 <div className="w-6 h-6 rounded-md bg-purple-950/60 border border-purple-500/40 flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-3.5 h-3.5 text-purple-400 animate-spin" />
+                  <Bot className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
                 </div>
                 <div className="flex items-center gap-1.5 font-mono text-[11px] text-purple-300">
                   <span>Searching Kairos knowledge base</span>

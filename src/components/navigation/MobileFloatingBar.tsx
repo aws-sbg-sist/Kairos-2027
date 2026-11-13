@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Layers, X } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { haptics } from '@/lib/haptics';
 
@@ -38,7 +38,7 @@ export const MobileFloatingBar: React.FC = () => {
           }}
           className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-purple-300 border border-white/10 transition active:scale-95 text-[11px] font-mono shrink-0"
         >
-          <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+          <Layers className="w-3.5 h-3.5 text-purple-400" />
           <span>5 Tracks</span>
         </Link>
 

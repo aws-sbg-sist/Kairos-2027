@@ -7,16 +7,16 @@ import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { useHaptics } from '@/lib/haptics';
 import { useSound } from '@/lib/audio';
-import { 
-  ShieldCheck, 
-  CheckCircle2, 
-  ArrowRight, 
-  Users, 
-  Cloud, 
-  ExternalLink, 
-  Calendar, 
-  MapPin, 
-  Clock, 
+import {
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+  Users,
+  Cloud,
+  ExternalLink,
+  Calendar,
+  MapPin,
+  Clock,
   Award,
   Video,
   FileCode,
@@ -27,14 +27,13 @@ import {
   Activity,
   Cpu,
   Layers,
-  Sparkles,
   Terminal
 } from 'lucide-react';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
   const initialCode = searchParams.get('code') || searchParams.get('team') || 'KAIROS-T001';
-  
+
   const [activeCode, setActiveCode] = useState(initialCode);
   const [selectedTeam, setSelectedTeam] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -116,7 +115,7 @@ function DashboardContent() {
 
       <main className="flex-grow pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          
+
           {/* Team Switcher & Status Bar */}
           <div className="hud-frame flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-900/80 border border-white/10 backdrop-blur-md shadow-2xl">
             <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-300">
@@ -124,41 +123,41 @@ function DashboardContent() {
                 <Terminal className="w-3.5 h-3.5 text-purple-400" />
                 Roster Switcher:
               </span>
-              <button 
+              <button
                 onClick={() => {
                   sound?.playClick();
                   haptics?.selection();
                   fetchTeam('KAIROS-T001');
-                }} 
+                }}
                 className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-mono transition active:scale-[0.97] ${activeCode === 'KAIROS-T001' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40' : 'bg-slate-800/80 text-slate-300 hover:text-white border border-white/5'}`}
               >
                 KAIROS-T001 (Finalist)
               </button>
-              <button 
+              <button
                 onClick={() => {
                   sound?.playClick();
                   haptics?.selection();
                   fetchTeam('KAIROS-T002');
-                }} 
+                }}
                 className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-mono transition active:scale-[0.97] ${activeCode === 'KAIROS-T002' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40' : 'bg-slate-800/80 text-slate-300 hover:text-white border border-white/5'}`}
               >
                 KAIROS-T002 (Finalist)
               </button>
-              <button 
+              <button
                 onClick={() => {
                   sound?.playClick();
                   haptics?.selection();
                   fetchTeam('KAIROS-T003');
-                }} 
+                }}
                 className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-mono transition active:scale-[0.97] ${activeCode === 'KAIROS-T003' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/40' : 'bg-slate-800/80 text-slate-300 hover:text-white border border-white/5'}`}
               >
                 KAIROS-T003 (Semi-Finalist)
               </button>
             </div>
 
-            <form 
-              onSubmit={(e) => { 
-                e.preventDefault(); 
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
                 if (inputCode.trim()) {
                   sound?.playClick();
                   haptics?.medium();
@@ -175,8 +174,8 @@ function DashboardContent() {
                 onChange={(e) => setInputCode(e.target.value.toUpperCase())}
                 className="flex-1 sm:flex-initial min-h-[40px] px-3.5 py-2 rounded-xl bg-slate-950 border border-white/15 text-xs font-mono text-purple-300 placeholder:text-slate-400 uppercase focus:outline-none focus:border-purple-500"
               />
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="island-btn min-h-[40px] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition flex items-center gap-1.5 active:scale-[0.97]"
               >
                 <Search className="w-3.5 h-3.5" />
@@ -310,10 +309,10 @@ function DashboardContent() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
+
             {/* Left 2 Cols: Project Abstract & Hardware/Cloud Credentials */}
             <div className="lg:col-span-2 space-y-6">
-              
+
               {/* Project Card */}
               <div className="double-bezel shadow-xl">
                 <div className="double-bezel-inner p-6 sm:p-8 space-y-4">
@@ -416,7 +415,7 @@ function DashboardContent() {
 
                   <div className="space-y-3">
                     {team.members?.map((member: any, idx: number) => (
-                      <div 
+                      <div
                         key={member.id || idx}
                         className="p-3.5 rounded-2xl bg-slate-900/60 border border-white/5 flex items-center justify-between gap-3"
                       >

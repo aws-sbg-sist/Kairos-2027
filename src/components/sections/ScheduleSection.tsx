@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EVENT_SCHEDULE } from '@/lib/config';
-import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { haptics } from '@/lib/haptics';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';

@@ -653,7 +653,10 @@ export const db = {
     
     const existing = store.waitlist.find(w => w.email.trim().toLowerCase() === normalizedEmail);
     if (existing) {
-      return { success: false, error: 'This email address is already on the KAIROS 2027 registration list!' };
+      // Upsert: update existing entry with any new fields provided (e.g. teamCode, track, sizing)
+      Object.assign(existing, entry, { email: normalizedEmail, updatedAt: new Date().toISOString() });
+      writeStore(store);
+      return { success: true, entry: existing };
     }
 
     const newEntry: WaitlistEntry = {
@@ -776,7 +779,10 @@ export const db = {
   }): { success: boolean; team?: ParticipantTeam; error?: string } {
     const store = readStore();
     const clean = teamCode.trim().toUpperCase();
-    const team = store.teams.find(t => t.inviteCode && t.inviteCode.toUpperCase() === clean);
+    const team = store.teams.find(t => 
+      (t.inviteCode && t.inviteCode.toUpperCase() === clean) || 
+      (t.teamCode && t.teamCode.toUpperCase() === clean)
+    );
 
     if (!team) {
       return { success: false, error: 'Invalid Team Code. Please verify your team invitation code.' };

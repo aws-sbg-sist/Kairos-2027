@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { PROPOSED_SPONSOR_TIERS, EVENT_CONFIG } from '@/lib/config';
-import { Briefcase, Download, CheckCircle, ArrowRight, ShieldAlert, Send, Building, User, Mail, Phone, MessageSquare, Sparkles } from 'lucide-react';
+import { Briefcase, Download, CheckCircle, ArrowRight, ShieldAlert, Send, Building, User, Mail, Phone, MessageSquare } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';

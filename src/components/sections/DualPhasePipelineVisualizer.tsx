@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { DUAL_PHASE_PIPELINE } from '@/lib/config';
-import { CheckCircle2, ArrowRight, Laptop, Video, Users, Shield, Calendar, Sparkles } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Laptop, Video, Users, Shield, Calendar } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
@@ -54,11 +54,10 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                     sound?.playClick();
                     setActiveStep(idx);
                   }}
-                  className={`p-6 sm:p-7 rounded-2xl cursor-pointer transition-all duration-300 relative flex flex-col justify-between h-full ${
-                    isSelected
+                  className={`p-6 sm:p-7 rounded-2xl cursor-pointer transition-all duration-300 relative flex flex-col justify-between h-full ${isSelected
                       ? 'bg-aws-squidInk/95 border-2 border-purple-500 shadow-2xl shadow-purple-900/30 scale-[1.02]'
                       : 'bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/90'
-                  }`}
+                    }`}
                 >
                   {stage.status === 'ACTIVE_NOW' && (
                     <div className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5 shadow-[0_0_12px_rgba(16,185,129,0.3)]">
@@ -70,11 +69,10 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3.5">
                       <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-all duration-300 ${
-                          isSelected
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-all duration-300 ${isSelected
                             ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-900/40'
                             : 'bg-white/5 text-purple-400 border border-white/10'
-                        }`}
+                          }`}
                       >
                         <Icon className="w-6 h-6" />
                       </div>
