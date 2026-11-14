@@ -79,6 +79,7 @@ function runMigration() {
 
   summary.recordsRead = {
     waitlist: (store.waitlist || []).length,
+    studentAccounts: (store.studentAccounts || []).length,
     sponsors: (store.sponsors || []).length,
     referrals: (store.referrals || []).length,
     teams: (store.teams || []).length,
@@ -88,6 +89,7 @@ function runMigration() {
     csat: (store.csat || []).length,
     auditLogs: (store.auditLogs || []).length,
     members: (store.members || []).length,
+    notificationLogs: (store.notificationLogs || []).length,
     featureFlags: store.featureFlags ? 1 : 0
   };
 
@@ -111,7 +113,9 @@ function runMigration() {
       summary.duplicateEmailsMerged++;
       // Merge in non-null missing attributes
       for (const [k, v] of Object.entries(defaults)) {
-        if (v && !existing[k]) existing[k] = v;
+        if (v !== undefined && v !== null && (!existing[k] || existing[k] === false)) {
+          existing[k] = v;
+        }
       }
       return existing;
     }
@@ -135,11 +139,38 @@ function runMigration() {
       awsBuilderCenterUrl: defaults.awsBuilderCenterUrl || null,
       tshirtSize: defaults.tshirtSize || defaults.tShirtSize || null,
       hoodieSize: defaults.hoodieSize || null,
+      passwordHash: defaults.passwordHash || null,
+      emailVerified: Boolean(defaults.emailVerified),
+      emailVerifiedAt: defaults.emailVerifiedAt || (defaults.emailVerified ? (defaults.createdAt || new Date().toISOString()) : null),
+      lastLoginAt: defaults.lastLoginAt || null,
+      passwordResetToken: defaults.passwordResetToken || null,
+      passwordResetExpiresAt: defaults.passwordResetExpiresAt || null,
       createdAt: defaults.createdAt || new Date().toISOString()
     };
 
     profilesMap.set(norm, newProfile);
     return newProfile;
+  }
+
+  // Ingest from studentAccounts FIRST (authoritative security credentials & verified identity)
+  for (const s of (store.studentAccounts || [])) {
+    getOrCreateProfile(s.email, {
+      id: s.id,
+      fullName: s.fullName,
+      phone: s.phone,
+      institution: s.institution,
+      yearOfStudy: s.yearOfStudy,
+      department: s.department,
+      portfolioUrl: s.portfolioUrl,
+      githubUrl: s.githubUrl,
+      linkedinUrl: s.linkedinUrl,
+      tshirtSize: s.tshirtSize,
+      passwordHash: s.passwordHash,
+      emailVerified: s.emailVerified !== false,
+      emailVerifiedAt: s.emailVerifiedAt || (s.emailVerified ? (s.createdAt || new Date().toISOString()) : null),
+      lastLoginAt: s.lastLoginAt,
+      createdAt: s.createdAt
+    });
   }
 
   // Ingest from waitlist
@@ -207,11 +238,26 @@ function runMigration() {
   // ----------------------------------------------------------------------------
   console.log('\n3. Validating Relational Foreign Key Integrity...');
 
+  // Helper to resolve evaluations team references (by ID, teamCode, or inviteCode)
+  function resolveTeam(rawIdentifier) {
+    if (!rawIdentifier) return null;
+    const clean = rawIdentifier.trim();
+    return (store.teams || []).find(t => 
+      t.id === clean || 
+      (t.teamCode && t.teamCode.toUpperCase() === clean.toUpperCase()) ||
+      (t.inviteCode && t.inviteCode.toUpperCase() === clean.toUpperCase())
+    );
+  }
+
   // Check evaluations team references
-  const teamIds = new Set((store.teams || []).map(t => t.id));
   const missingTeamIds = new Set();
+  const evaluationTeamIdMap = new Map(); // eval.id -> canonical team.id
+
   for (const e of (store.evaluations || [])) {
-    if (!teamIds.has(e.teamId)) {
+    const matchedTeam = resolveTeam(e.teamId);
+    if (matchedTeam) {
+      evaluationTeamIdMap.set(e.id, matchedTeam.id);
+    } else {
       missingTeamIds.add(e.teamId);
     }
   }
@@ -233,6 +279,8 @@ function runMigration() {
         createdAt: new Date().toISOString()
       });
     }
+  } else {
+    console.log(`   ✓ All ${(store.evaluations || []).length} evaluations successfully resolved to legitimate registered teams (zero synthetic placeholders needed).`);
   }
 
   // ----------------------------------------------------------------------------
@@ -250,12 +298,16 @@ function runMigration() {
   // 1. Insert Profiles
   sqlLines.push('-- 1. PROFILES');
   for (const p of profilesMap.values()) {
-    sqlLines.push(`INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, created_at)
-VALUES (${escapeSqlString(p.id)}, ${escapeSqlString(p.email)}, ${escapeSqlString(p.fullName)}, ${escapeSqlString(p.phone)}, ${escapeSqlString(p.institution)}, ${escapeSqlString(p.collegeRegNo)}, ${escapeSqlString(p.yearOfStudy)}, ${escapeSqlString(p.department)}, ${escapeSqlString(p.portfolioUrl)}, ${escapeSqlString(p.githubUrl)}, ${escapeSqlString(p.linkedinUrl)}, ${escapeSqlString(p.meetupProfileUrl)}, ${escapeSqlString(p.meetupMemberId)}, ${escapeSqlString(p.meetupRsvpVerified)}, ${escapeSqlString(p.awsBuilderCenterUrl)}, ${escapeSqlString(p.tshirtSize)}, ${escapeSqlString(p.hoodieSize)}, ${escapeSqlString(p.createdAt)})
+    sqlLines.push(`INSERT INTO public.profiles (id, email, full_name, phone, institution, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_member_id, meetup_rsvp_verified, aws_builder_center_url, tshirt_size, hoodie_size, password_hash, email_verified, email_verified_at, last_login_at, password_reset_token, password_reset_expires_at, created_at)
+VALUES (${escapeSqlString(p.id)}, ${escapeSqlString(p.email)}, ${escapeSqlString(p.fullName)}, ${escapeSqlString(p.phone)}, ${escapeSqlString(p.institution)}, ${escapeSqlString(p.collegeRegNo)}, ${escapeSqlString(p.yearOfStudy)}, ${escapeSqlString(p.department)}, ${escapeSqlString(p.portfolioUrl)}, ${escapeSqlString(p.githubUrl)}, ${escapeSqlString(p.linkedinUrl)}, ${escapeSqlString(p.meetupProfileUrl)}, ${escapeSqlString(p.meetupMemberId)}, ${escapeSqlString(p.meetupRsvpVerified)}, ${escapeSqlString(p.awsBuilderCenterUrl)}, ${escapeSqlString(p.tshirtSize)}, ${escapeSqlString(p.hoodieSize)}, ${escapeSqlString(p.passwordHash)}, ${escapeSqlString(p.emailVerified)}, ${escapeSqlString(p.emailVerifiedAt)}, ${escapeSqlString(p.lastLoginAt)}, ${escapeSqlString(p.passwordResetToken)}, ${escapeSqlString(p.passwordResetExpiresAt)}, ${escapeSqlString(p.createdAt)})
 ON CONFLICT (email) DO UPDATE SET
   full_name = EXCLUDED.full_name,
   phone = COALESCE(EXCLUDED.phone, public.profiles.phone),
   institution = EXCLUDED.institution,
+  password_hash = COALESCE(EXCLUDED.password_hash, public.profiles.password_hash),
+  email_verified = COALESCE(EXCLUDED.email_verified, public.profiles.email_verified),
+  email_verified_at = COALESCE(EXCLUDED.email_verified_at, public.profiles.email_verified_at),
+  last_login_at = COALESCE(EXCLUDED.last_login_at, public.profiles.last_login_at),
   updated_at = timezone('utc'::text, now());`);
   }
   sqlLines.push('');
@@ -379,8 +431,9 @@ ON CONFLICT (id) DO UPDATE SET
   // 11. Insert Evaluations
   sqlLines.push('-- 11. EVALUATIONS');
   for (const e of (store.evaluations || [])) {
+    const canonicalTeamId = evaluationTeamIdMap.get(e.id) || e.teamId;
     sqlLines.push(`INSERT INTO public.evaluations (id, team_id, judge_id, checkpoint_gate, criterion1_score, criterion2_score, criterion3_score, criterion4_score, raw_total_score, normalized_z_score, qualitative_feedback, recused_conflict, evaluated_at)
-VALUES (${escapeSqlString(e.id)}, ${escapeSqlString(e.teamId)}, ${escapeSqlString(e.judgeId)}, ${escapeSqlString(e.checkpointGate)}, ${escapeSqlString(e.criterion1Score)}, ${escapeSqlString(e.criterion2Score)}, ${escapeSqlString(e.criterion3Score)}, ${escapeSqlString(e.criterion4Score)}, ${escapeSqlString(e.rawTotalScore)}, ${escapeSqlString(e.normalizedZScore)}, ${escapeSqlString(e.qualitativeFeedback)}, ${escapeSqlString(e.recusedConflict || false)}, ${escapeSqlString(e.evaluatedAt)})
+VALUES (${escapeSqlString(e.id)}, ${escapeSqlString(canonicalTeamId)}, ${escapeSqlString(e.judgeId)}, ${escapeSqlString(e.checkpointGate)}, ${escapeSqlString(e.criterion1Score)}, ${escapeSqlString(e.criterion2Score)}, ${escapeSqlString(e.criterion3Score)}, ${escapeSqlString(e.criterion4Score)}, ${escapeSqlString(e.rawTotalScore)}, ${escapeSqlString(e.normalizedZScore)}, ${escapeSqlString(e.qualitativeFeedback)}, ${escapeSqlString(e.recusedConflict || false)}, ${escapeSqlString(e.evaluatedAt)})
 ON CONFLICT (team_id, judge_id, checkpoint_gate) DO UPDATE SET
   criterion1_score = EXCLUDED.criterion1_score,
   criterion2_score = EXCLUDED.criterion2_score,
@@ -413,6 +466,18 @@ ON CONFLICT (username) DO UPDATE SET
   bio = EXCLUDED.bio,
   contributions = EXCLUDED.contributions;`);
   }
+  sqlLines.push('');
+
+  // 14. Insert Notification Logs
+  sqlLines.push('-- 14. NOTIFICATION LOGS');
+  for (const n of (store.notificationLogs || [])) {
+    sqlLines.push(`INSERT INTO public.notification_logs (id, to_email, subject, template, status, message_id, attempts, idempotency_key, error_message, created_at)
+VALUES (${escapeSqlString(n.id)}, ${escapeSqlString(normalizeEmail(n.to))}, ${escapeSqlString(n.subject)}, ${escapeSqlString(n.template)}, ${escapeSqlString(n.status)}, ${escapeSqlString(n.messageId)}, ${escapeSqlString(n.attempts || 1)}, ${escapeSqlString(n.idempotencyKey)}, ${escapeSqlString(n.error)}, ${escapeSqlString(n.timestamp || new Date().toISOString())})
+ON CONFLICT (id) DO UPDATE SET
+  status = EXCLUDED.status,
+  attempts = EXCLUDED.attempts,
+  error_message = EXCLUDED.error_message;`);
+  }
   sqlLines.push('\nCOMMIT;\n');
 
   const generatedSql = sqlLines.join('\n');
@@ -422,6 +487,7 @@ ON CONFLICT (username) DO UPDATE SET
 
   summary.recordsToInsert = {
     profiles: profilesMap.size,
+    studentAccounts: (store.studentAccounts || []).length,
     waitlist: (store.waitlist || []).length,
     teams: allTeams.length,
     teamMembers: (store.teams || []).reduce((acc, t) => acc + (t.members || []).length, 0),
@@ -433,7 +499,8 @@ ON CONFLICT (username) DO UPDATE SET
     judges: (store.judges || []).length,
     evaluations: (store.evaluations || []).length,
     csatResponses: (store.csat || []).length,
-    orgMembers: (store.members || []).length
+    orgMembers: (store.members || []).length,
+    notificationLogs: (store.notificationLogs || []).length
   };
 
   summary.status = 'SUCCESS';
