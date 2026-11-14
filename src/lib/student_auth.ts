@@ -17,10 +17,10 @@ import { cookies } from 'next/headers';
 const STUDENT_COOKIE_NAME = 'kairos_student_session';
 
 function getAuthSecret(): string {
-  const secret = process.env.STUDENT_AUTH_SECRET || process.env.ADMIN_MASTER_SECRET;
+  const secret = process.env.STUDENT_AUTH_SECRET || process.env.SESSION_SECRET || process.env.ADMIN_MASTER_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === 'production') {
-      throw new Error('STUDENT_AUTH_SECRET environment variable is mandatory in production');
+      throw new Error('STUDENT_AUTH_SECRET (or SESSION_SECRET) environment variable is mandatory in production');
     }
     return 'kairos-local-student-auth-secret-do-not-use-in-prod';
   }

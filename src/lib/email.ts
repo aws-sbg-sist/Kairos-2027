@@ -18,7 +18,7 @@ import { db } from './db';
 import { EmailPayload, NotificationLog } from '@/types';
 
 // Configuration
-const DEFAULT_FROM = process.env.AWS_SES_FROM_EMAIL || 'sistawscc@gmail.com';
+const DEFAULT_FROM = process.env.AWS_SES_FROM_EMAIL || process.env.EMAIL_FROM || 'sistawscc@gmail.com';
 const SES_REGION = process.env.AWS_SES_REGION || process.env.AWS_REGION || 'ap-south-1';
 const MAX_RETRY_ATTEMPTS = 3;
 const DEDUPLICATION_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
@@ -100,7 +100,7 @@ export async function sendTransactionalEmail(
   if (!normTo || !emailRegex.test(normTo)) {
     const errorMsg = `Invalid recipient email address: "${payload.to}"`;
     console.error(`[KAIROS EMAIL ERROR]: ${errorMsg}`);
-    db.addNotificationLog({
+    await db.addNotificationLog({
       to: normTo || 'unknown',
       subject: payload.subject,
       template,
@@ -122,13 +122,13 @@ export async function sendTransactionalEmail(
     `${template}:${normTo}:${Buffer.from(payload.subject).toString('base64').substring(0, 16)}`;
 
   if (!options.skipDeduplication) {
-    const existing = db.getNotificationByIdempotencyKey(idempotencyKey);
+    const existing = await db.getNotificationByIdempotencyKey(idempotencyKey);
     if (existing) {
       const logTime = new Date(existing.timestamp).getTime();
       const elapsed = Date.now() - logTime;
       if (elapsed < DEDUPLICATION_WINDOW_MS && (existing.status === 'DELIVERED' || existing.status === 'SIMULATED')) {
         console.log(`[KAIROS EMAIL DEDUP]: Suppressed duplicate notification for ${normTo} (Key: ${idempotencyKey})`);
-        db.addNotificationLog({
+        await db.addNotificationLog({
           to: normTo,
           subject: payload.subject,
           template,
@@ -172,7 +172,7 @@ export async function sendTransactionalEmail(
     console.log(`Body Snip: ${payload.text.substring(0, 100).replace(/\n/g, ' ')}...`);
     console.log('------------------------------------------------------------');
 
-    db.addNotificationLog({
+    await db.addNotificationLog({
       to: normTo,
       subject: payload.subject,
       template,
@@ -226,7 +226,7 @@ export async function sendTransactionalEmail(
 
       console.log(`[AWS SES SUCCESS] Dispatched email to ${normTo} (MessageId: ${messageId}, Attempt: ${attempt})`);
 
-      db.addNotificationLog({
+      await db.addNotificationLog({
         to: normTo,
         subject: payload.subject,
         template,
@@ -266,7 +266,7 @@ export async function sendTransactionalEmail(
   const errorMsg = lastError?.message || 'AWS SES delivery failed after maximum retry attempts.';
   console.error(`[AWS SES FAILURE] Failed to send email to ${normTo}: ${errorMsg}`);
 
-  db.addNotificationLog({
+  await db.addNotificationLog({
     to: normTo,
     subject: payload.subject,
     template,

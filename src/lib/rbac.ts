@@ -18,6 +18,7 @@ import { NextRequest } from 'next/server';
 import crypto from 'crypto';
 import { getCurrentAdminSession, AdminSession } from './auth';
 import { getCurrentStudentSession, StudentSession } from './student_auth';
+import { verifyJudgePinMatch } from './judge_auth';
 import { getCurrentJudgeSession, JudgeSession } from './judge_auth';
 import { db } from './db';
 import { ParticipantTeam, Judge } from '@/types';
@@ -190,7 +191,7 @@ export async function resolveAuthContext(): Promise<AuthContext> {
   const student = await getCurrentStudentSession();
   if (student) {
     // Check if student is a team leader
-    const team = db.getStudentTeam(student.email);
+    const team = await db.getStudentTeam(student.email);
     const isLeader = team && (
       team.leaderEmail.toLowerCase() === student.email.toLowerCase() ||
       (team.members || []).some(m => m.email.toLowerCase() === student.email.toLowerCase() && m.role === 'Leader')
@@ -231,18 +232,19 @@ export async function resolveAuthContext(): Promise<AuthContext> {
 // ------------------------------------------------------------------------------
 // 3. TEAM OWNERSHIP & LEADER AUTHORIZATION
 // ------------------------------------------------------------------------------
-export function verifyTeamLeader(studentEmail: string, teamCode: string): { 
+export async function verifyTeamLeader(studentEmail: string, teamCode: string): Promise<{ 
   authorized: boolean; 
   team?: ParticipantTeam; 
   error?: string;
   statusCode: number;
-} {
+}> {
   if (!studentEmail) {
     return { authorized: false, error: 'Authentication required.', statusCode: 401 };
   }
 
   const cleanCode = (teamCode || '').trim().toUpperCase();
-  const team = db.getTeamByCode(cleanCode) || db.getTeams().find(t => (t.id && t.id.toUpperCase() === cleanCode) || (t.teamCode && t.teamCode.toUpperCase() === cleanCode));
+  const allTeams = await db.getTeams();
+  const team = (await db.getTeamByCode(cleanCode)) || allTeams.find(t => (t.id && t.id.toUpperCase() === cleanCode) || (t.teamCode && t.teamCode.toUpperCase() === cleanCode));
   if (!team) {
     return { authorized: false, error: `Team ${teamCode} not found.`, statusCode: 404 };
   }
@@ -274,36 +276,33 @@ export function verifyTeamLeader(studentEmail: string, teamCode: string): {
 // ------------------------------------------------------------------------------
 // 4. JUDGE CREDENTIAL & TRACK ASSIGNMENT AUTHORIZATION
 // ------------------------------------------------------------------------------
-export function verifyJudgeAuthorization(
+export async function verifyJudgeAuthorization(
   judgeId: string, 
   judgePin: string, 
   targetTeamId?: string
-): { 
+): Promise<{ 
   authorized: boolean; 
   judge?: Judge; 
   error?: string;
   statusCode: number;
-} {
+}> {
   if (!judgeId || !judgePin) {
     return { authorized: false, error: 'Missing judge credentials (judgeId and access PIN).', statusCode: 400 };
   }
 
-  const judges = db.getJudges();
+  const judges = await db.getJudges();
   const judge = judges.find(j => j.id === judgeId && j.isActive);
   if (!judge) {
     return { authorized: false, error: 'Judge account not found or is currently inactive.', statusCode: 403 };
   }
 
-  const pinBuffer = Buffer.from(String(judgePin).trim());
-  const expectedBuffer = Buffer.from(String(judge.accessPin).trim());
-
-  if (pinBuffer.length !== expectedBuffer.length || !crypto.timingSafeEqual(pinBuffer, expectedBuffer)) {
+  if (!judge.accessPin || !verifyJudgePinMatch(String(judgePin).trim(), String(judge.accessPin).trim())) {
     return { authorized: false, error: 'Invalid Jury Access PIN for this judge account.', statusCode: 403 };
   }
 
   // If a target team is specified, verify track specialization compatibility
   if (targetTeamId) {
-    const teams = db.getTeams();
+    const teams = await db.getTeams();
     const cleanId = (targetTeamId || '').trim().toLowerCase();
     const team = teams.find(t => 
       (t.id && t.id.toLowerCase() === cleanId) || 

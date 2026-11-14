@@ -8,6 +8,16 @@
 
 import { getSupabaseAdminClient, isSupabaseConfigured } from './supabase';
 import { sanitizeCsvCell } from './csv';
+import crypto from 'crypto';
+import { verifyJudgePinMatch, hashJudgePin } from './judge_auth';
+import {
+  hashPassword,
+  verifyPassword,
+  generateVerificationToken,
+  verifyEmailToken,
+  generatePasswordResetToken,
+  verifyPasswordResetToken
+} from './student_auth';
 import {
   WaitlistEntry,
   SponsorInquiry,
@@ -21,8 +31,79 @@ import {
   CheckpointEvaluation,
   CSATResponse,
   OrgMember,
-  LeaderboardEntry
+  LeaderboardEntry,
+  StudentAccount,
+  NotificationLog
 } from '../types';
+
+function profileToStudentAccount(row: any): StudentAccount {
+  return {
+    id: row.id,
+    email: row.email,
+    fullName: row.full_name,
+    passwordHash: row.password_hash || '',
+    emailVerified: Boolean(row.email_verified),
+    emailVerifiedAt: row.email_verified_at || undefined,
+    institution: row.institution || 'Sathyabama Institute of Science and Technology',
+    phone: row.phone || undefined,
+    collegeRegNo: row.college_reg_no || undefined,
+    yearOfStudy: row.year_of_study || undefined,
+    department: row.department || undefined,
+    portfolioUrl: row.portfolio_url || undefined,
+    githubUrl: row.github_url || undefined,
+    linkedinUrl: row.linkedin_url || undefined,
+    tshirtSize: row.tshirt_size || undefined,
+    createdAt: row.created_at || new Date().toISOString(),
+    lastLoginAt: row.last_login_at || undefined,
+  };
+}
+
+function referralRowToLead(row: any): SponsorReferralLead {
+  return {
+    id: row.id,
+    referralCode: row.referral_code,
+    referrerName: row.referrer_name,
+    referrerEmail: row.referrer_email,
+    referrerPhone: row.referrer_phone,
+    referrerCollege: row.referrer_college,
+    referrerUpiId: row.referrer_upi_id,
+    companyName: row.company_name,
+    decisionMakerName: row.decision_maker_name,
+    decisionMakerEmail: row.decision_maker_email,
+    decisionMakerDesignation: row.decision_maker_designation,
+    companyPocName: row.company_poc_name,
+    companyPocRole: row.company_poc_role,
+    companyPocContact: row.company_poc_contact,
+    targetTier: row.target_tier,
+    introContext: row.intro_context,
+    estimatedDealTier: row.estimated_deal_tier,
+    notes: row.notes,
+    lockExpiryDate: row.lock_expiry_date,
+    status: row.status,
+    commissionRate: row.commission_rate,
+    estimatedPayout: row.estimated_payout,
+    payoutAmount: row.payout_amount,
+    submittedAt: row.submitted_at
+  };
+}
+
+function evaluationRowToEntity(row: any): CheckpointEvaluation {
+  return {
+    id: row.id,
+    teamId: row.team_id,
+    judgeId: row.judge_id,
+    checkpointGate: row.checkpoint_gate,
+    criterion1Score: Number(row.criterion1_score),
+    criterion2Score: Number(row.criterion2_score),
+    criterion3Score: Number(row.criterion3_score),
+    criterion4Score: Number(row.criterion4_score),
+    rawTotalScore: Number(row.raw_total_score),
+    normalizedZScore: row.normalized_z_score ? Number(row.normalized_z_score) : undefined,
+    qualitativeFeedback: row.qualitative_feedback,
+    recusedConflict: Boolean(row.recused_conflict),
+    evaluatedAt: row.evaluated_at
+  };
+}
 
 export const postgresDb = {
   isAvailable(): boolean {
@@ -279,13 +360,24 @@ export const postgresDb = {
     if (!supabase) return null;
 
     const normCode = code.trim().toUpperCase();
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from('teams')
       .select('*, team_members(*)')
       .eq('team_code', normCode)
       .single();
 
-    if (error || !data) return null;
+    if (!data) {
+      const { data: fallback } = await supabase
+        .from('teams')
+        .select('*, team_members(*)')
+        .or(`id.eq.${code.trim()},invite_code.eq.${normCode}`)
+        .limit(1);
+      if (fallback && fallback.length > 0) {
+        data = fallback[0];
+      }
+    }
+
+    if (!data) return null;
 
     return {
       id: data.id,
@@ -966,31 +1058,48 @@ export const postgresDb = {
     const { data, error } = await supabase
       .from('judges')
       .select('*')
-      .eq('access_pin', pin.trim())
-      .eq('is_active', true)
-      .single();
+      .eq('is_active', true);
 
-    if (error || !data) return null;
+    if (error || !data || data.length === 0) return null;
+
+    const matched = data.find(j => j.access_pin && verifyJudgePinMatch(pin, j.access_pin));
+    if (!matched) return null;
+
+    // Opportunistic credential upgrade: legacy plaintext PIN successfully authenticated -> upgrade to salted PBKDF2 hash
+    if (matched.access_pin && !matched.access_pin.includes(':')) {
+      try {
+        const upgradedHash = hashJudgePin(pin);
+        await supabase
+          .from('judges')
+          .update({ access_pin: upgradedHash })
+          .eq('id', matched.id);
+        matched.access_pin = upgradedHash;
+      } catch (err) {
+        // Non-blocking: authentication still succeeds
+      }
+    }
+
     return {
-      id: data.id,
-      accessPin: data.access_pin,
-      fullName: data.full_name,
-      organization: data.organization,
-      designation: data.designation,
-      trackSpecialization: data.track_specialization,
-      assignedHall: data.assigned_hall,
-      isActive: data.is_active
+      id: matched.id,
+      accessPin: matched.access_pin,
+      fullName: matched.full_name,
+      organization: matched.organization,
+      designation: matched.designation,
+      trackSpecialization: matched.track_specialization,
+      assignedHall: matched.assigned_hall,
+      isActive: matched.is_active
     };
   },
 
   async addJudge(judgeData: Omit<Judge, 'id'>, organizerName?: string): Promise<Judge> {
     const supabase = getSupabaseAdminClient();
     const id = `judge-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
-    const accessPin = judgeData.accessPin?.trim() || String(Math.floor(100000 + Math.random() * 900000));
+    const rawPin = judgeData.accessPin?.trim() || String(Math.floor(100000 + Math.random() * 900000));
+    const storedPin = rawPin.includes(':') ? rawPin : hashJudgePin(rawPin);
     const judge: Judge = {
       ...judgeData,
       id,
-      accessPin,
+      accessPin: storedPin,
       isActive: judgeData.isActive ?? true,
       createdAt: new Date().toISOString()
     };
@@ -998,7 +1107,7 @@ export const postgresDb = {
     if (supabase) {
       await supabase.from('judges').insert({
         id,
-        access_pin: accessPin,
+        access_pin: storedPin,
         full_name: judgeData.fullName.trim(),
         organization: judgeData.organization.trim(),
         designation: judgeData.designation.trim(),
@@ -1029,7 +1138,10 @@ export const postgresDb = {
     if (updates.designation !== undefined) pgUpdates.designation = updates.designation.trim();
     if (updates.trackSpecialization !== undefined) pgUpdates.track_specialization = updates.trackSpecialization.trim();
     if (updates.assignedHall !== undefined) pgUpdates.assigned_hall = updates.assignedHall.trim();
-    if (updates.accessPin !== undefined) pgUpdates.access_pin = updates.accessPin.trim();
+    if (updates.accessPin !== undefined) {
+      const clean = updates.accessPin.trim();
+      pgUpdates.access_pin = clean.includes(':') ? clean : hashJudgePin(clean);
+    }
     if (updates.isActive !== undefined) pgUpdates.is_active = updates.isActive;
 
     const { error } = await supabase.from('judges').update(pgUpdates).eq('id', judgeId);
@@ -1547,5 +1659,668 @@ export const postgresDb = {
       },
       recentLogs: logs.slice(0, 20),
     };
+  },
+
+  // --------------------------------------------------------------------------
+  // 12. STUDENT AUTHENTICATION & IDENTITY (POSTGRESQL PARITY)
+  // --------------------------------------------------------------------------
+  async getStudentByEmail(email: string): Promise<StudentAccount | undefined> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return undefined;
+    const norm = email.trim().toLowerCase();
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('email', norm)
+      .single();
+    if (error || !data) return undefined;
+    return profileToStudentAccount(data);
+  },
+
+  async getStudentById(id: string): Promise<StudentAccount | undefined> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return undefined;
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error || !data) return undefined;
+    return profileToStudentAccount(data);
+  },
+
+  async registerStudent(data: {
+    email: string;
+    password: string;
+    fullName: string;
+    institution?: string;
+    phone?: string;
+    department?: string;
+    yearOfStudy?: string;
+    tshirtSize?: string;
+  }): Promise<{ success: boolean; account?: StudentAccount; verificationToken?: string; error?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const norm = data.email.trim().toLowerCase();
+    const existing = await this.getStudentByEmail(norm);
+    if (existing && existing.passwordHash) {
+      return { success: false, error: 'EMAIL_ALREADY_REGISTERED' };
+    }
+
+    const id = existing?.id || `prof-${crypto.createHash('sha256').update(norm).digest('hex').substring(0, 16)}`;
+    const passwordHash = hashPassword(data.password);
+    const verificationToken = generateVerificationToken(norm);
+
+    const profileData = {
+      id,
+      email: norm,
+      full_name: data.fullName.trim(),
+      password_hash: passwordHash,
+      email_verified: false,
+      verification_token: verificationToken,
+      institution: (data.institution || 'Sathyabama Institute of Science and Technology').trim(),
+      phone: data.phone?.trim() || null,
+      department: data.department?.trim() || null,
+      year_of_study: data.yearOfStudy || null,
+      tshirt_size: data.tshirtSize || null,
+      role: 'STUDENT',
+      created_at: new Date().toISOString()
+    };
+
+    const { data: savedProfile, error } = await supabase
+      .from('profiles')
+      .upsert(profileData, { onConflict: 'email' })
+      .select()
+      .single();
+
+    if (error || !savedProfile) {
+      return { success: false, error: error ? error.message : 'Failed to register student' };
+    }
+
+    const account = profileToStudentAccount(savedProfile);
+    await this.addAuditLog(norm, 'STUDENT_REGISTER', `New student builder account registered: ${norm}`);
+
+    return {
+      success: true,
+      account,
+      verificationToken
+    };
+  },
+
+  async verifyStudentEmail(token: string): Promise<{ success: boolean; account?: StudentAccount; error?: string }> {
+    const verification = verifyEmailToken(token);
+    if (!verification.valid || !verification.email) {
+      return { success: false, error: verification.expired ? 'TOKEN_EXPIRED' : 'INVALID_TOKEN' };
+    }
+
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const norm = verification.email.toLowerCase();
+    const existing = await this.getStudentByEmail(norm);
+    if (!existing) {
+      return { success: false, error: 'ACCOUNT_NOT_FOUND' };
+    }
+
+    const verifiedAt = new Date().toISOString();
+    const { data: updatedProfile, error } = await supabase
+      .from('profiles')
+      .update({
+        email_verified: true,
+        email_verified_at: verifiedAt
+      })
+      .eq('email', norm)
+      .select()
+      .single();
+
+    if (error || !updatedProfile) {
+      return { success: false, error: error ? error.message : 'Failed to verify email' };
+    }
+
+    // Link existing waitlist registration
+    await supabase
+      .from('waitlist')
+      .update({ profile_id: existing.id })
+      .eq('email', norm);
+
+    await this.addAuditLog(norm, 'STUDENT_EMAIL_VERIFIED', `Email verified for student: ${norm}`);
+    return { success: true, account: profileToStudentAccount(updatedProfile) };
+  },
+
+  async authenticateStudent(email: string, password: string): Promise<{ success: boolean; account?: StudentAccount; error?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const norm = email.trim().toLowerCase();
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('email', norm)
+      .single();
+
+    if (error || !profile || !profile.password_hash) {
+      return { success: false, error: 'INVALID_CREDENTIALS' };
+    }
+
+    const isValid = verifyPassword(password, profile.password_hash);
+    if (!isValid) {
+      return { success: false, error: 'INVALID_CREDENTIALS' };
+    }
+
+    const lastLogin = new Date().toISOString();
+    await supabase
+      .from('profiles')
+      .update({ last_login_at: lastLogin })
+      .eq('id', profile.id);
+
+    profile.last_login_at = lastLogin;
+    return { success: true, account: profileToStudentAccount(profile) };
+  },
+
+  async requestPasswordReset(email: string): Promise<{ success: boolean; resetToken?: string; error?: string }> {
+    const student = await this.getStudentByEmail(email);
+    if (!student) {
+      // Anti-enumeration: Return success even if email not found
+      return { success: true };
+    }
+
+    const resetToken = generatePasswordResetToken(student.email);
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1 hour
+
+    const supabase = getSupabaseAdminClient();
+    if (supabase) {
+      await supabase
+        .from('profiles')
+        .update({
+          password_reset_token: resetToken,
+          password_reset_expires_at: expiresAt
+        })
+        .eq('id', student.id);
+    }
+
+    return { success: true, resetToken };
+  },
+
+  async resetStudentPassword(token: string, newPassword: string): Promise<{ success: boolean; error?: string }> {
+    const result = verifyPasswordResetToken(token);
+    if (!result.valid || !result.email) {
+      return { success: false, error: result.expired ? 'TOKEN_EXPIRED' : 'INVALID_TOKEN' };
+    }
+
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const norm = result.email.toLowerCase();
+    const student = await this.getStudentByEmail(norm);
+    if (!student) {
+      return { success: false, error: 'ACCOUNT_NOT_FOUND' };
+    }
+
+    const passwordHash = hashPassword(newPassword);
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        password_hash: passwordHash,
+        password_reset_token: null,
+        password_reset_expires_at: null
+      })
+      .eq('id', student.id);
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    await this.addAuditLog(norm, 'PASSWORD_RESET', `Password successfully reset for student: ${norm}`);
+    return { success: true };
+  },
+
+  async updateStudentProfile(id: string, updates: Partial<StudentAccount>): Promise<{ success: boolean; account?: StudentAccount; error?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const pgUpdates: any = {};
+    if (updates.fullName !== undefined) pgUpdates.full_name = updates.fullName.trim();
+    if (updates.phone !== undefined) pgUpdates.phone = updates.phone;
+    if (updates.institution !== undefined) pgUpdates.institution = updates.institution.trim();
+    if (updates.department !== undefined) pgUpdates.department = updates.department;
+    if (updates.yearOfStudy !== undefined) pgUpdates.year_of_study = updates.yearOfStudy;
+    if (updates.portfolioUrl !== undefined) pgUpdates.portfolio_url = updates.portfolioUrl;
+    if (updates.githubUrl !== undefined) pgUpdates.github_url = updates.githubUrl;
+    if (updates.linkedinUrl !== undefined) pgUpdates.linkedin_url = updates.linkedinUrl;
+    if (updates.tshirtSize !== undefined) pgUpdates.tshirt_size = updates.tshirtSize;
+
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(pgUpdates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error || !data) {
+      return { success: false, error: error ? error.message : 'ACCOUNT_NOT_FOUND' };
+    }
+
+    return { success: true, account: profileToStudentAccount(data) };
+  },
+
+  async getStudentTeam(email: string): Promise<ParticipantTeam | null> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return null;
+
+    const norm = email.trim().toLowerCase();
+
+    // Check if leader
+    const { data: leaderTeams } = await supabase
+      .from('teams')
+      .select('*, team_members(*)')
+      .eq('leader_email', norm)
+      .limit(1);
+
+    if (leaderTeams && leaderTeams.length > 0) {
+      const teams = await this.getTeams();
+      return teams.find(t => t.id === leaderTeams[0].id) || null;
+    }
+
+    // Check if member
+    const { data: memberRows } = await supabase
+      .from('team_members')
+      .select('team_id')
+      .eq('email', norm)
+      .limit(1);
+
+    if (memberRows && memberRows.length > 0) {
+      const teamId = memberRows[0].team_id;
+      const teams = await this.getTeams();
+      return teams.find(t => t.id === teamId) || null;
+    }
+
+    return null;
+  },
+
+  async getStudentWaitlist(email: string): Promise<WaitlistEntry | null> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return null;
+
+    const norm = email.trim().toLowerCase();
+    const { data, error } = await supabase
+      .from('waitlist')
+      .select('*')
+      .eq('email', norm)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error || !data) return null;
+    return {
+      id: data.id,
+      fullName: data.full_name,
+      email: data.email,
+      phone: data.phone,
+      institution: data.institution,
+      yearOfStudy: data.year_of_study,
+      department: data.department,
+      preferredTrack: data.preferred_track,
+      portfolioUrl: data.portfolio_url,
+      motivation: data.motivation,
+      teamStatus: data.team_status,
+      teamCode: data.team_code,
+      experienceLevel: data.experience_level,
+      tShirtSize: data.tshirt_size,
+      status: data.status,
+      ipAddress: data.ip_address,
+      userAgent: data.user_agent,
+      createdAt: data.created_at
+    };
+  },
+
+  // --------------------------------------------------------------------------
+  // 13. QUALIFIER & EVALUATION EXTENSIONS
+  // --------------------------------------------------------------------------
+  async submitRound1Qualifier(teamCode: string, data: { loomVideoUrl: string; githubUrl: string }): Promise<boolean> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return false;
+
+    const team = await this.getTeamByCode(teamCode);
+    if (!team) return false;
+
+    const pgUpdates: any = {
+      loom_video_url: data.loomVideoUrl,
+      github_url: data.githubUrl,
+    };
+    if (team.selectionStage === 'ROUND_0_APPLICANT') {
+      pgUpdates.selection_stage = 'ONLINE_SEMI_FINALIST';
+    }
+
+    const { error } = await supabase
+      .from('teams')
+      .update(pgUpdates)
+      .eq('id', team.id);
+
+    if (error) return false;
+
+    await this.addAuditLog(
+      team.leaderEmail,
+      'QUALIFIER_SUBMITTED',
+      `Round 1 qualifier artifacts submitted for team ${team.teamCode || team.id} (Loom: ${data.loomVideoUrl})`
+    );
+    return true;
+  },
+
+  async getEvaluations(): Promise<CheckpointEvaluation[]> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return [];
+
+    const { data, error } = await supabase
+      .from('evaluations')
+      .select('*')
+      .order('evaluated_at', { ascending: false });
+
+    if (error || !data) return [];
+    return data.map(evaluationRowToEntity);
+  },
+
+  async getTeamEvaluations(teamIdOrCode: string): Promise<CheckpointEvaluation[]> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return [];
+
+    const team = await this.getTeamByCode(teamIdOrCode);
+    const targetTeamId = team ? team.id : teamIdOrCode;
+
+    const { data, error } = await supabase
+      .from('evaluations')
+      .select('*')
+      .eq('team_id', targetTeamId)
+      .order('checkpoint_gate', { ascending: true });
+
+    if (error || !data) return [];
+    return data.map(evaluationRowToEntity);
+  },
+
+  async saveEvaluation(
+    evalData: {
+      teamId: string;
+      judgeId: string;
+      checkpointGate: number;
+      criterion1Score: number;
+      criterion2Score: number;
+      criterion3Score: number;
+      criterion4Score: number;
+      qualitativeFeedback?: string;
+    },
+    isEdit = false,
+    editorName?: string,
+    editReason?: string
+  ): Promise<{ success: boolean; evaluation?: CheckpointEvaluation; duplicate?: boolean; updated?: boolean; error?: string }> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { success: false, error: 'Database unconfigured' };
+
+    const team = await this.getTeamByCode(evalData.teamId);
+    const targetTeamId = team ? team.id : evalData.teamId;
+
+    const existing = await this.getEvaluationByJudgeAndTeam(evalData.judgeId, targetTeamId, evalData.checkpointGate);
+
+    if (existing && !isEdit) {
+      return {
+        success: false,
+        duplicate: true,
+        error: `Team ${team?.teamCode || targetTeamId} has already been evaluated for Checkpoint Gate ${evalData.checkpointGate} by this judge. Use edit mode to update score.`,
+        evaluation: existing
+      };
+    }
+
+    const rawTotalScore = evalData.criterion1Score + evalData.criterion2Score + evalData.criterion3Score + evalData.criterion4Score;
+
+    // Compute Z-score based on judge's historical scoring distribution
+    const allEvaluations = await this.getEvaluations();
+    const judgeScores = allEvaluations
+      .filter(e => e.judgeId === evalData.judgeId && !(existing && e.id === existing.id))
+      .map(e => e.rawTotalScore);
+    judgeScores.push(rawTotalScore);
+
+    const judgeMean = judgeScores.reduce((acc, s) => acc + s, 0) / judgeScores.length;
+    const variance = judgeScores.reduce((acc, s) => acc + Math.pow(s - judgeMean, 2), 0) / judgeScores.length;
+    const judgeStdDev = Math.sqrt(variance);
+    const normalizedZScore = judgeStdDev > 0 ? (rawTotalScore - judgeMean) / judgeStdDev : 0.0;
+
+    const evaluatedAt = new Date().toISOString();
+    const id = existing?.id || `eval-${targetTeamId}-g${evalData.checkpointGate}-${evalData.judgeId}`;
+
+    const upsertPayload = {
+      id,
+      team_id: targetTeamId,
+      judge_id: evalData.judgeId,
+      checkpoint_gate: evalData.checkpointGate,
+      criterion1_score: evalData.criterion1Score,
+      criterion2_score: evalData.criterion2Score,
+      criterion3_score: evalData.criterion3Score,
+      criterion4_score: evalData.criterion4Score,
+      raw_total_score: rawTotalScore,
+      normalized_z_score: Number(normalizedZScore.toFixed(3)),
+      qualitative_feedback: evalData.qualitativeFeedback?.trim() || null,
+      recused_conflict: false,
+      evaluated_at: evaluatedAt
+    };
+
+    const { data: savedRow, error } = await supabase
+      .from('evaluations')
+      .upsert(upsertPayload, { onConflict: 'team_id,judge_id,checkpoint_gate' })
+      .select()
+      .single();
+
+    if (error || !savedRow) {
+      return { success: false, error: error ? error.message : 'Evaluation persistence error' };
+    }
+
+    const finalEval = evaluationRowToEntity(savedRow);
+    const actor = editorName || evalData.judgeId;
+    await this.addAuditLog(
+      actor,
+      isEdit ? 'UPDATE_EVALUATION' : 'SUBMIT_EVALUATION',
+      `${isEdit ? 'Calibrated' : 'Recorded'} Gate ${evalData.checkpointGate} score [${rawTotalScore}/100, Z: ${finalEval.normalizedZScore}] for team ${team?.teamCode || targetTeamId} by ${actor}${editReason ? ` (Reason: ${editReason})` : ''}`
+    );
+
+    return {
+      success: true,
+      updated: Boolean(isEdit),
+      evaluation: finalEval
+    };
+  },
+
+  // --------------------------------------------------------------------------
+  // 14. REFERRAL (RAINMAKER) EXTENSIONS
+  // --------------------------------------------------------------------------
+  async addReferral(lead: Omit<SponsorReferralLead, 'id' | 'lockExpiryDate' | 'status' | 'submittedAt'>): Promise<SponsorReferralLead> {
+    const supabase = getSupabaseAdminClient();
+    const id = `rain-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
+    const lockExpiryDate = new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString();
+    const submittedAt = new Date().toISOString();
+    const refCode = lead.referralCode || `RAIN-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+
+    const newLead: SponsorReferralLead = {
+      ...lead,
+      id,
+      referralCode: refCode,
+      lockExpiryDate,
+      status: 'LEAD_SUBMITTED',
+      submittedAt
+    };
+
+    if (!supabase) return newLead;
+
+    const row = {
+      id,
+      referral_code: refCode,
+      referrer_name: lead.referrerName,
+      referrer_email: lead.referrerEmail,
+      referrer_phone: lead.referrerPhone || null,
+      referrer_college: lead.referrerCollege || null,
+      referrer_upi_id: lead.referrerUpiId || null,
+      company_name: lead.companyName,
+      decision_maker_name: lead.decisionMakerName,
+      decision_maker_email: lead.decisionMakerEmail,
+      decision_maker_designation: lead.decisionMakerDesignation,
+      company_poc_name: lead.companyPocName,
+      company_poc_role: lead.companyPocRole,
+      company_poc_contact: lead.companyPocContact,
+      target_tier: lead.targetTier,
+      introContext: lead.introContext,
+      estimated_deal_tier: lead.estimatedDealTier || null,
+      notes: lead.notes || null,
+      lock_expiry_date: lockExpiryDate,
+      status: 'LEAD_SUBMITTED',
+      commission_rate: lead.commissionRate || 10,
+      estimated_payout: lead.estimatedPayout || 0,
+      payout_amount: lead.payoutAmount || 0,
+      submitted_at: submittedAt
+    };
+
+    await supabase.from('referrals').insert(row);
+    await this.addAuditLog(lead.referrerEmail || 'unknown', 'SUBMIT_REFERRAL', `Submitted Rainmaker lead for ${lead.companyName} (${refCode})`);
+    return newLead;
+  },
+
+  async getReferralByCode(code: string): Promise<SponsorReferralLead | undefined> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return undefined;
+
+    const norm = code.trim().toUpperCase();
+    const { data, error } = await supabase
+      .from('referrals')
+      .select('*')
+      .eq('referral_code', norm)
+      .single();
+
+    if (error || !data) return undefined;
+    return referralRowToLead(data);
+  },
+
+  async searchReferral(query: string): Promise<SponsorReferralLead[]> {
+    const all = await this.getReferrals();
+    const q = query.trim().toLowerCase();
+    return all.filter(r =>
+      (r.referralCode || '').toLowerCase().includes(q) ||
+      (r.referrerName || '').toLowerCase().includes(q) ||
+      (r.referrerEmail || '').toLowerCase().includes(q) ||
+      (r.companyName || '').toLowerCase().includes(q)
+    );
+  },
+
+  // --------------------------------------------------------------------------
+  // 15. MEMBERS & METRICS EXTENSIONS
+  // --------------------------------------------------------------------------
+  async getMemberByUsername(username: string): Promise<OrgMember | undefined> {
+    const members = await this.getMembers();
+    return members.find(m => m.username.toLowerCase() === username.trim().toLowerCase());
+  },
+
+  async getMetrics(): Promise<any> {
+    const [waitlist, teams, sponsors, referrals, radar, csat] = await Promise.all([
+      this.getWaitlist(),
+      this.getTeams(),
+      this.getSponsors(),
+      this.getReferrals(),
+      this.getRadarSignals(),
+      this.getCSAT()
+    ]);
+
+    return {
+      totalApplicants: waitlist.length,
+      totalTeams: teams.length,
+      finalistTeams: teams.filter(t => t.selectionStage === 'ON_CAMPUS_QUALIFIED').length,
+      semiFinalistTeams: teams.filter(t => t.selectionStage === 'ONLINE_SEMI_FINALIST').length,
+      totalSponsors: sponsors.length,
+      totalReferrals: referrals.length,
+      totalRadarSignals: radar.length,
+      totalCSATResponses: csat.length,
+    };
+  },
+
+  // --------------------------------------------------------------------------
+  // 16. NOTIFICATION LOGS EXTENSIONS
+  // --------------------------------------------------------------------------
+  async getNotificationLogs(limit = 100): Promise<NotificationLog[]> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return [];
+
+    const { data, error } = await supabase
+      .from('notification_logs')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error || !data) return [];
+    return data.map((row: any) => ({
+      id: row.id,
+      to: row.recipient,
+      subject: row.subject,
+      template: row.template,
+      status: row.status,
+      attempts: row.attempts,
+      idempotencyKey: row.idempotency_key || undefined,
+      messageId: row.message_id || undefined,
+      error: row.error_message || undefined,
+      timestamp: row.created_at
+    }));
+  },
+
+  async addNotificationLog(log: Omit<NotificationLog, 'id' | 'timestamp'>): Promise<NotificationLog> {
+    const supabase = getSupabaseAdminClient();
+    const id = `notif-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+    const timestamp = new Date().toISOString();
+
+    const newLog: NotificationLog = {
+      ...log,
+      id,
+      timestamp
+    };
+
+    if (!supabase) return newLog;
+
+    await supabase.from('notification_logs').insert({
+      id,
+      recipient: log.to,
+      subject: log.subject,
+      template: log.template,
+      status: log.status,
+      attempts: log.attempts,
+      idempotency_key: log.idempotencyKey || null,
+      message_id: log.messageId || null,
+      error_message: log.error || null,
+      created_at: timestamp
+    });
+
+    return newLog;
+  },
+
+  async getNotificationByIdempotencyKey(key: string): Promise<NotificationLog | undefined> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return undefined;
+
+    const { data, error } = await supabase
+      .from('notification_logs')
+      .select('*')
+      .eq('idempotency_key', key)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error || !data) return undefined;
+    return {
+      id: data.id,
+      to: data.recipient,
+      subject: data.subject,
+      template: data.template,
+      status: data.status,
+      attempts: data.attempts,
+      idempotencyKey: data.idempotency_key || undefined,
+      messageId: data.message_id || undefined,
+      error: data.error_message || undefined,
+      timestamp: data.created_at
+    };
+  },
+
+  getDriver(): 'supabase' {
+    return 'supabase';
   }
 };

@@ -20,6 +20,7 @@ import {
   NotificationLog
 } from '../types';
 import { hashPassword, verifyPassword, generateVerificationToken, verifyEmailToken, generatePasswordResetToken, verifyPasswordResetToken } from './student_auth';
+import { verifyJudgePinMatch, hashJudgePin } from './judge_auth';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'kairos_store.json');
@@ -663,8 +664,8 @@ function writeStore(data: StoreSchema) {
   });
 }
 
-export const db = {
-  // Waitlist Operations
+const jsonDb = {
+// Waitlist Operations
   getWaitlist(): WaitlistEntry[] {
     const store = readStore();
     return store.waitlist.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -1141,15 +1142,26 @@ export const db = {
 
   verifyJudgePin(pin: string): Judge | undefined {
     const store = readStore();
-    return store.judges.find(j => j.accessPin === pin.trim() && j.isActive);
+    const judge = store.judges.find(j => j.isActive && j.accessPin && verifyJudgePinMatch(pin, j.accessPin));
+    if (judge && judge.accessPin && !judge.accessPin.includes(':')) {
+      try {
+        judge.accessPin = hashJudgePin(pin);
+        writeStore(store);
+      } catch {
+        // Non-blocking opportunistic upgrade
+      }
+    }
+    return judge;
   },
 
   addJudge(judgeData: Omit<Judge, 'id'>, organizerName?: string): Judge {
     const store = readStore();
+    const rawPin = judgeData.accessPin?.trim() || String(Math.floor(100000 + Math.random() * 900000));
+    const storedPin = rawPin.includes(':') ? rawPin : hashJudgePin(rawPin);
     const newJudge: Judge = {
       ...judgeData,
       id: `judge-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-      accessPin: judgeData.accessPin?.trim() || String(Math.floor(100000 + Math.random() * 900000)),
+      accessPin: storedPin,
       isActive: judgeData.isActive ?? true,
       createdAt: new Date().toISOString(),
     };
@@ -1181,7 +1193,10 @@ export const db = {
     if (updates.trackSpecialization !== undefined) judge.trackSpecialization = updates.trackSpecialization.trim();
     if (updates.assignedTracks !== undefined) judge.assignedTracks = updates.assignedTracks;
     if (updates.assignedHall !== undefined) judge.assignedHall = updates.assignedHall.trim();
-    if (updates.accessPin !== undefined) judge.accessPin = updates.accessPin.trim();
+    if (updates.accessPin !== undefined) {
+      const clean = updates.accessPin.trim();
+      judge.accessPin = clean.includes(':') ? clean : hashJudgePin(clean);
+    }
     if (updates.isActive !== undefined) judge.isActive = updates.isActive;
 
     const logOrg = organizerName || 'ORGANIZER';
@@ -2006,10 +2021,508 @@ export const db = {
   },
 
   // PostgreSQL Architecture Access
+};
+
+
+export function getDbDriver(): 'json' | 'supabase' {
+  const explicitDriver = (process.env.KAIROS_DB_DRIVER || process.env.DB_DRIVER)?.toLowerCase();
+  const isProd = process.env.NODE_ENV === 'production';
+
+  if (isProd) {
+    if (explicitDriver === 'json') {
+      throw new Error(
+        '[DB FATAL] KAIROS_DB_DRIVER=json is strictly prohibited in production mode. ' +
+        'Fail-closed to protect data integrity and prevent split-brain state.'
+      );
+    }
+    if (!postgresDb.isAvailable()) {
+      throw new Error(
+        '[DB FATAL] Production database (Supabase/PostgreSQL) is unconfigured or unavailable. ' +
+        'Missing NEXT_PUBLIC_SUPABASE_URL and service key. ' +
+        'Fail-closed: falling back to JSON storage in production is strictly disabled.'
+      );
+    }
+    return 'supabase';
+  }
+
+  if (explicitDriver === 'supabase') {
+    if (!postgresDb.isAvailable()) {
+      throw new Error(
+        '[DB ERROR] KAIROS_DB_DRIVER=supabase was configured, but Supabase credentials are missing or unavailable.'
+      );
+    }
+    return 'supabase';
+  }
+
+  return 'json';
+}
+
+export function assertJsonAllowed(): void {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      '[DB FATAL] JSON store operations are forbidden in production environment. ' +
+      'Refusing to read or write flat-file storage.'
+    );
+  }
+}
+
+
+export const db = {
+  // --------------------------------------------------------------------------
+  // ASYNCHRONOUS UNIFIED DATABASE ABSTRACTION LAYER (ISOMORPHIC DRIVER)
+  // Automatically routes to Supabase PostgreSQL or local JSON store
+  // Enforces fail-closed safety in production (NODE_ENV=production)
+  // --------------------------------------------------------------------------
+
+  // Waitlist Operations
+  async getWaitlist(): Promise<WaitlistEntry[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getWaitlist();
+    assertJsonAllowed();
+    return jsonDb.getWaitlist();
+  },
+
+  async addWaitlistEntry(entry: Omit<WaitlistEntry, 'id' | 'createdAt'>): Promise<{ success: boolean; entry?: WaitlistEntry; error?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addWaitlistEntry(entry);
+    assertJsonAllowed();
+    return jsonDb.addWaitlistEntry(entry);
+  },
+
+  async updateWaitlistStatus(id: string, status: WaitlistEntry['status'], updatedBy?: string): Promise<boolean> {
+    if (getDbDriver() === 'supabase') return await postgresDb.updateWaitlistStatus(id, status, updatedBy);
+    assertJsonAllowed();
+    return jsonDb.updateWaitlistStatus(id, status, updatedBy);
+  },
+
+  // Teams Operations
+  async getTeams(): Promise<ParticipantTeam[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getTeams();
+    assertJsonAllowed();
+    return jsonDb.getTeams();
+  },
+
+  async getTeamByCode(code: string): Promise<ParticipantTeam | undefined> {
+    if (getDbDriver() === 'supabase') {
+      const res = await postgresDb.getTeamByCode(code);
+      return res || undefined;
+    }
+    assertJsonAllowed();
+    return jsonDb.getTeamByCode(code);
+  },
+
+  async createTeam(teamData: {
+    teamName: string;
+    trackId: string;
+    institutionName: string;
+    city: string;
+    state: string;
+    leaderName: string;
+    leaderEmail: string;
+    leaderPhone?: string;
+    leaderCollegeRegNo?: string;
+    leaderMeetupUrl: string;
+    leaderMeetupMemberId?: string;
+    leaderAwsBuilderCenterUrl?: string;
+    problemTitle: string;
+    problemAbstract: string;
+    architecturePdfUrl?: string;
+    githubUrl?: string;
+  }): Promise<ParticipantTeam> {
+    if (getDbDriver() === 'supabase') return await postgresDb.createTeam(teamData);
+    assertJsonAllowed();
+    return jsonDb.createTeam(teamData);
+  },
+
+  async joinTeam(teamCode: string, member: {
+    name: string;
+    email: string;
+    phone?: string;
+    collegeRegNo?: string;
+    role: 'Frontend' | 'Backend' | 'AI / Cloud' | 'UI/UX';
+    college: string;
+    meetupProfileUrl: string;
+    meetupMemberId?: string;
+    awsBuilderCenterUrl?: string;
+    tshirtSize?: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+    hoodieSize?: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+  }): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.joinTeam(teamCode, member);
+    assertJsonAllowed();
+    return jsonDb.joinTeam(teamCode, member);
+  },
+
+  async updateTeamDetails(teamCode: string, details: {
+    teamName?: string;
+    trackId?: string;
+    problemTitle?: string;
+    problemAbstract?: string;
+    architecturePdfUrl?: string;
+    githubUrl?: string;
+  }): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.updateTeamDetails(teamCode, details);
+    assertJsonAllowed();
+    return jsonDb.updateTeamDetails(teamCode, details);
+  },
+
+  async removeTeamMember(teamCode: string, memberEmail: string): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.removeTeamMember(teamCode, memberEmail);
+    assertJsonAllowed();
+    return jsonDb.removeTeamMember(teamCode, memberEmail);
+  },
+
+  async transferTeamLeadership(teamCode: string, currentLeaderEmail: string, newLeaderEmail: string): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.transferTeamLeadership(teamCode, currentLeaderEmail, newLeaderEmail);
+    assertJsonAllowed();
+    return jsonDb.transferTeamLeadership(teamCode, currentLeaderEmail, newLeaderEmail);
+  },
+
+  async submitRound1Qualifier(teamCode: string, data: { loomVideoUrl: string; githubUrl: string }): Promise<boolean> {
+    if (getDbDriver() === 'supabase') return await postgresDb.submitRound1Qualifier(teamCode, data);
+    assertJsonAllowed();
+    return jsonDb.submitRound1Qualifier(teamCode, data);
+  },
+
+  async updateTeamAdmin(teamIdOrCode: string, updates: Partial<ParticipantTeam>, organizerName?: string): Promise<{ success: boolean; team?: ParticipantTeam; error?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.updateTeamAdmin(teamIdOrCode, updates, organizerName);
+    assertJsonAllowed();
+    return jsonDb.updateTeamAdmin(teamIdOrCode, updates, organizerName);
+  },
+
+  async checkInTeam(teamIdOrCode: string, organizerName?: string): Promise<{ success: boolean; alreadyCheckedIn?: boolean; team?: ParticipantTeam; error?: string; message?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.checkInTeam(teamIdOrCode, organizerName);
+    assertJsonAllowed();
+    return jsonDb.checkInTeam(teamIdOrCode, organizerName);
+  },
+
+  // Referrals
+  async getReferrals(): Promise<SponsorReferralLead[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getReferrals();
+    assertJsonAllowed();
+    return jsonDb.getReferrals();
+  },
+
+  async addReferral(lead: Omit<SponsorReferralLead, 'id' | 'lockExpiryDate' | 'status' | 'submittedAt'>): Promise<SponsorReferralLead> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addReferral(lead);
+    assertJsonAllowed();
+    return jsonDb.addReferral(lead);
+  },
+
+  async getReferralByCode(code: string): Promise<SponsorReferralLead | undefined> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getReferralByCode(code);
+    assertJsonAllowed();
+    return jsonDb.getReferralByCode(code);
+  },
+
+  async searchReferral(query: string): Promise<SponsorReferralLead[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.searchReferral(query);
+    assertJsonAllowed();
+    return jsonDb.searchReferral(query);
+  },
+
+  // Judges
+  async getJudges(): Promise<Judge[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getJudges();
+    assertJsonAllowed();
+    return jsonDb.getJudges();
+  },
+
+  async verifyJudgePin(pin: string): Promise<Judge | undefined> {
+    if (getDbDriver() === 'supabase') {
+      const res = await postgresDb.verifyJudgePin(pin);
+      return res || undefined;
+    }
+    assertJsonAllowed();
+    return jsonDb.verifyJudgePin(pin);
+  },
+
+  async addJudge(judgeData: Omit<Judge, 'id'>, organizerName?: string): Promise<Judge> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addJudge(judgeData, organizerName);
+    assertJsonAllowed();
+    return jsonDb.addJudge(judgeData, organizerName);
+  },
+
+  async updateJudge(judgeId: string, updates: Partial<Judge>, organizerName?: string): Promise<Judge | null> {
+    if (getDbDriver() === 'supabase') return await postgresDb.updateJudge(judgeId, updates, organizerName);
+    assertJsonAllowed();
+    return jsonDb.updateJudge(judgeId, updates, organizerName);
+  },
+
+  async deleteJudge(judgeId: string, organizerName?: string): Promise<boolean> {
+    if (getDbDriver() === 'supabase') return await postgresDb.deleteJudge(judgeId, organizerName);
+    assertJsonAllowed();
+    return jsonDb.deleteJudge(judgeId, organizerName);
+  },
+
+  // Evaluations
+  async getEvaluations(): Promise<CheckpointEvaluation[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getEvaluations();
+    assertJsonAllowed();
+    return jsonDb.getEvaluations();
+  },
+
+  async getTeamEvaluations(teamIdOrCode: string): Promise<CheckpointEvaluation[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getTeamEvaluations(teamIdOrCode);
+    assertJsonAllowed();
+    return jsonDb.getTeamEvaluations(teamIdOrCode);
+  },
+
+  async getEvaluationByJudgeAndTeam(judgeId: string, teamIdOrCode: string, checkpointGate: number): Promise<CheckpointEvaluation | undefined> {
+    if (getDbDriver() === 'supabase') {
+      const res = await postgresDb.getEvaluationByJudgeAndTeam(judgeId, teamIdOrCode, checkpointGate);
+      return res || undefined;
+    }
+    assertJsonAllowed();
+    return jsonDb.getEvaluationByJudgeAndTeam(judgeId, teamIdOrCode, checkpointGate);
+  },
+
+  async saveEvaluation(
+    evalData: {
+      teamId: string;
+      judgeId: string;
+      checkpointGate: number;
+      criterion1Score: number;
+      criterion2Score: number;
+      criterion3Score: number;
+      criterion4Score: number;
+      qualitativeFeedback?: string;
+    },
+    isEdit = false,
+    editorName?: string,
+    editReason?: string
+  ): Promise<{ success: boolean; evaluation?: CheckpointEvaluation; duplicate?: boolean; updated?: boolean; error?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.saveEvaluation(evalData, isEdit, editorName, editReason);
+    assertJsonAllowed();
+    return jsonDb.saveEvaluation(evalData, isEdit, editorName, editReason);
+  },
+
+  async getAssignedTeamsForJudge(judgeId: string): Promise<any[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getAssignedTeamsForJudge(judgeId);
+    assertJsonAllowed();
+    return jsonDb.getAssignedTeamsForJudge(judgeId);
+  },
+
+  async getLeaderboardStandings(filterTrack?: string): Promise<{ published: boolean; message?: string; standings: LeaderboardEntry[] }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getLeaderboardStandings(filterTrack);
+    assertJsonAllowed();
+    return jsonDb.getLeaderboardStandings(filterTrack);
+  },
+
+  async addEvaluation(evalData: Omit<CheckpointEvaluation, 'id' | 'rawTotalScore' | 'normalizedZScore' | 'evaluatedAt'>): Promise<CheckpointEvaluation> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addEvaluation(evalData);
+    assertJsonAllowed();
+    return jsonDb.addEvaluation(evalData);
+  },
+
+  // CSAT
+  async getCSAT(): Promise<CSATResponse[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getCSAT();
+    assertJsonAllowed();
+    return jsonDb.getCSAT();
+  },
+
+  async addCSAT(response: Omit<CSATResponse, 'id' | 'submittedAt'>): Promise<CSATResponse> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addCSAT(response);
+    assertJsonAllowed();
+    return jsonDb.addCSAT(response);
+  },
+
+  async exportCSATCSV(): Promise<string> {
+    if (getDbDriver() === 'supabase') return await postgresDb.exportCSATCSV();
+    assertJsonAllowed();
+    return jsonDb.exportCSATCSV();
+  },
+
+  // Members
+  async getMembers(filter?: { batch?: string; tier?: string; division?: string; search?: string }): Promise<OrgMember[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getMembers(filter);
+    assertJsonAllowed();
+    return jsonDb.getMembers(filter);
+  },
+
+  async getMemberByUsername(username: string): Promise<OrgMember | undefined> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getMemberByUsername(username);
+    assertJsonAllowed();
+    return jsonDb.getMemberByUsername(username);
+  },
+
+  // Sponsors
+  async getSponsors(): Promise<SponsorInquiry[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getSponsors();
+    assertJsonAllowed();
+    return jsonDb.getSponsors();
+  },
+
+  async addSponsorInquiry(inquiry: Omit<SponsorInquiry, 'id' | 'status' | 'createdAt'>): Promise<SponsorInquiry> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addSponsorInquiry(inquiry);
+    assertJsonAllowed();
+    return jsonDb.addSponsorInquiry(inquiry);
+  },
+
+  // Feature Flags & Audit
+  async getFeatureFlags(): Promise<FeatureFlags> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getFeatureFlags();
+    assertJsonAllowed();
+    return jsonDb.getFeatureFlags();
+  },
+
+  async setFeatureFlags(flags: Partial<FeatureFlags>, organizer: string): Promise<FeatureFlags> {
+    if (getDbDriver() === 'supabase') return await postgresDb.setFeatureFlags(flags, organizer);
+    assertJsonAllowed();
+    return jsonDb.setFeatureFlags(flags, organizer);
+  },
+
+  async addAuditLog(organizerName: string, action: string, details: string): Promise<AuditLog> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addAuditLog(organizerName, action, details);
+    assertJsonAllowed();
+    return jsonDb.addAuditLog(organizerName, action, details);
+  },
+
+  async getAuditLogs(): Promise<AuditLog[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getAuditLogs();
+    assertJsonAllowed();
+    return jsonDb.getAuditLogs();
+  },
+
+  // Radar Signals
+  async getRadarSignals(): Promise<TeamRadarSignal[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getRadarSignals();
+    assertJsonAllowed();
+    return jsonDb.getRadarSignals();
+  },
+
+  async addRadarSignal(signal: Omit<TeamRadarSignal, 'id' | 'createdAt'>): Promise<TeamRadarSignal> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addRadarSignal(signal);
+    assertJsonAllowed();
+    return jsonDb.addRadarSignal(signal);
+  },
+
+  // Metrics & Analytics
+  async getMetrics(): Promise<any> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getMetrics();
+    assertJsonAllowed();
+    return jsonDb.getMetrics();
+  },
+
+  async getAdminAnalytics(): Promise<any> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getAdminAnalytics();
+    assertJsonAllowed();
+    return jsonDb.getAdminAnalytics();
+  },
+
+  // Student Auth & Profiles
+  async getStudentByEmail(email: string): Promise<StudentAccount | undefined> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getStudentByEmail(email);
+    assertJsonAllowed();
+    return jsonDb.getStudentByEmail(email);
+  },
+
+  async getStudentById(id: string): Promise<StudentAccount | undefined> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getStudentById(id);
+    assertJsonAllowed();
+    return jsonDb.getStudentById(id);
+  },
+
+  async registerStudent(data: {
+    email: string;
+    password: string;
+    fullName: string;
+    institution?: string;
+    phone?: string;
+    department?: string;
+    yearOfStudy?: string;
+    tshirtSize?: string;
+  }): Promise<{ success: boolean; account?: StudentAccount; student?: StudentAccount; verificationToken?: string; error?: string }> {
+    let res: any;
+    if (getDbDriver() === 'supabase') res = await postgresDb.registerStudent(data);
+    else {
+      assertJsonAllowed();
+      res = jsonDb.registerStudent(data);
+    }
+    const acc = res.account || res.student;
+    return { ...res, account: acc, student: acc };
+  },
+
+  async verifyStudentEmail(token: string): Promise<{ success: boolean; account?: StudentAccount; student?: StudentAccount; error?: string }> {
+    let res: any;
+    if (getDbDriver() === 'supabase') res = await postgresDb.verifyStudentEmail(token);
+    else {
+      assertJsonAllowed();
+      res = jsonDb.verifyStudentEmail(token);
+    }
+    const acc = res.account || res.student;
+    return { ...res, account: acc, student: acc };
+  },
+
+  async authenticateStudent(email: string, password: string): Promise<{ success: boolean; account?: StudentAccount; student?: StudentAccount; error?: string }> {
+    let res: any;
+    if (getDbDriver() === 'supabase') res = await postgresDb.authenticateStudent(email, password);
+    else {
+      assertJsonAllowed();
+      res = jsonDb.authenticateStudent(email, password);
+    }
+    const acc = res.account || res.student;
+    return { ...res, account: acc, student: acc };
+  },
+
+  async requestPasswordReset(email: string): Promise<{ success: boolean; resetToken?: string; error?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.requestPasswordReset(email);
+    assertJsonAllowed();
+    return jsonDb.requestPasswordReset(email);
+  },
+
+  async resetStudentPassword(token: string, newPassword: string): Promise<{ success: boolean; error?: string }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.resetStudentPassword(token, newPassword);
+    assertJsonAllowed();
+    return jsonDb.resetStudentPassword(token, newPassword);
+  },
+
+  async updateStudentProfile(id: string, updates: Partial<StudentAccount>): Promise<{ success: boolean; account?: StudentAccount; student?: StudentAccount; error?: string }> {
+    let res: any;
+    if (getDbDriver() === 'supabase') res = await postgresDb.updateStudentProfile(id, updates);
+    else {
+      assertJsonAllowed();
+      res = jsonDb.updateStudentProfile(id, updates);
+    }
+    const acc = res.account || res.student;
+    return { ...res, account: acc, student: acc };
+  },
+
+  async getStudentTeam(email: string): Promise<ParticipantTeam | null> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getStudentTeam(email);
+    assertJsonAllowed();
+    return jsonDb.getStudentTeam(email);
+  },
+
+  async getStudentWaitlist(email: string): Promise<WaitlistEntry | null> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getStudentWaitlist(email);
+    assertJsonAllowed();
+    return jsonDb.getStudentWaitlist(email);
+  },
+
+  // Notification Logs
+  async getNotificationLogs(limit = 100): Promise<NotificationLog[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getNotificationLogs(limit);
+    assertJsonAllowed();
+    return jsonDb.getNotificationLogs(limit);
+  },
+
+  async addNotificationLog(log: Omit<NotificationLog, 'id' | 'timestamp'>): Promise<NotificationLog> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addNotificationLog(log);
+    assertJsonAllowed();
+    return jsonDb.addNotificationLog(log);
+  },
+
+  async getNotificationByIdempotencyKey(key: string): Promise<NotificationLog | undefined> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getNotificationByIdempotencyKey(key);
+    assertJsonAllowed();
+    return jsonDb.getNotificationByIdempotencyKey(key);
+  },
+
+  // Architecture & Driver Access
   pg: postgresDb,
   getDriver(): 'json' | 'supabase' {
-    return process.env.KAIROS_DB_DRIVER === 'supabase' && postgresDb.isAvailable() ? 'supabase' : 'json';
+    return getDbDriver();
   }
 };
 
 export { postgresDb };
+export { jsonDb };

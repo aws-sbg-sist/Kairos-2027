@@ -13,10 +13,10 @@ import { db } from '@/lib/db';
 import { ParticipantTeam, WaitlistEntry } from '@/types';
 
 function getPassSecret(): string {
-  const secret = process.env.STUDENT_AUTH_SECRET || process.env.ADMIN_MASTER_SECRET;
+  const secret = process.env.STUDENT_AUTH_SECRET || process.env.SESSION_SECRET || process.env.ADMIN_MASTER_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === 'production') {
-      throw new Error('STUDENT_AUTH_SECRET environment variable is mandatory in production');
+      throw new Error('STUDENT_AUTH_SECRET (or SESSION_SECRET) environment variable is mandatory in production');
     }
     return 'kairos-local-student-auth-secret-do-not-use-in-prod';
   }
@@ -169,7 +169,7 @@ export function generateDigitalPass(
  * Verifies an opaque pass token against the server database.
  * Does NOT trust token content alone: always validates the backing database record.
  */
-export function verifyPassToken(token: string): VerificationResult {
+export async function verifyPassToken(token: string): Promise<VerificationResult> {
   try {
     if (!token || typeof token !== 'string') {
       return { valid: false, error: 'Missing or empty verification token.' };
@@ -200,14 +200,14 @@ export function verifyPassToken(token: string): VerificationResult {
     }
 
     // Verify backing student profile from database
-    const student = db.getStudentByEmail(data.em);
+    const student = await db.getStudentByEmail(data.em);
     if (!student) {
       return { valid: false, error: 'No active student record matches this pass token.' };
     }
 
     // Derive real team and waitlist
-    const team = db.getStudentTeam(student.email);
-    const waitlist = db.getStudentWaitlist(student.email);
+    const team = await db.getStudentTeam(student.email);
+    const waitlist = await db.getStudentWaitlist(student.email);
 
     // Derive role
     let role = 'Builder';

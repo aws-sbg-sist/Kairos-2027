@@ -15,10 +15,10 @@ export interface JudgeSession {
 }
 
 function getMasterSecret(): string {
-  const secret = process.env.ADMIN_MASTER_SECRET;
+  const secret = process.env.ADMIN_MASTER_SECRET || process.env.SESSION_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === 'production') {
-      throw new Error('ADMIN_MASTER_SECRET environment variable is mandatory in production');
+      throw new Error('ADMIN_MASTER_SECRET (or SESSION_SECRET) environment variable is mandatory in production');
     }
     return 'kairos-local-development-secret-key-do-not-use-in-prod';
   }
@@ -103,5 +103,74 @@ export function getJudgeSessionFromRequest(req: { cookies?: any; headers?: any }
     return verifyJudgeToken(token);
   } catch {
     return null;
+  }
+}
+
+/**
+ * Hashes a 6-digit judge access PIN using salted PBKDF2-SHA512 with 100,000 iterations.
+ * Format returned: `<32_hex_salt>:<128_hex_key>`
+ */
+export function hashJudgePin(pin: string): string {
+  if (!pin || typeof pin !== 'string') {
+    throw new Error('Judge PIN must be provided as a string');
+  }
+  const clean = pin.trim();
+  if (!/^\d{6}$/.test(clean)) {
+    throw new Error('Judge PIN must be exactly 6 numeric digits');
+  }
+  const salt = crypto.randomBytes(16).toString('hex');
+  const derivedKey = crypto.pbkdf2Sync(clean, salt, 100_000, 64, 'sha512').toString('hex');
+  return `${salt}:${derivedKey}`;
+}
+
+/**
+ * Validates a judge PIN against a stored value with constant-time equality.
+ * Supports:
+ *  1. Salted PBKDF2-SHA512 hashes (<salt>:<derivedKey>)
+ *  2. Controlled migration fallback for legacy 6-digit plaintext PINs using constant-time comparison
+ */
+export function verifyJudgePinMatch(inputPin: string, storedPinOrHash: string): boolean {
+  try {
+    if (!inputPin || !storedPinOrHash || typeof inputPin !== 'string' || typeof storedPinOrHash !== 'string') {
+      return false;
+    }
+    const cleanInput = inputPin.trim();
+    // Validate format: strictly 6 numeric digits
+    if (!/^\d{6}$/.test(cleanInput)) {
+      return false;
+    }
+
+    const cleanStored = storedPinOrHash.trim();
+
+    // 1. Salted PBKDF2-SHA512 hash format check (<32-char-salt>:<128-char-key>)
+    if (cleanStored.includes(':')) {
+      const parts = cleanStored.split(':');
+      if (parts.length !== 2) return false;
+      const [salt, key] = parts;
+      if (salt.length !== 32 || key.length !== 128) return false;
+
+      const derivedKey = crypto.pbkdf2Sync(cleanInput, salt, 100_000, 64, 'sha512').toString('hex');
+      const keyBuffer = Buffer.from(key, 'hex');
+      const derivedBuffer = Buffer.from(derivedKey, 'hex');
+      if (keyBuffer.length !== derivedBuffer.length) return false;
+      return crypto.timingSafeEqual(keyBuffer, derivedBuffer);
+    }
+
+    // 2. Controlled legacy plaintext fallback (strictly 6 digits)
+    // Can be globally disabled in production via KAIROS_DISABLE_LEGACY_JUDGE_PINS=true
+    if (process.env.KAIROS_DISABLE_LEGACY_JUDGE_PINS === 'true') {
+      return false;
+    }
+
+    if (!/^\d{6}$/.test(cleanStored)) {
+      return false;
+    }
+
+    // Hash both with SHA-256 to produce fixed 32-byte buffers and compare in constant time
+    const inputDigest = crypto.createHash('sha256').update(cleanInput).digest();
+    const storedDigest = crypto.createHash('sha256').update(cleanStored).digest();
+    return crypto.timingSafeEqual(inputDigest, storedDigest);
+  } catch {
+    return false;
   }
 }

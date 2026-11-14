@@ -2,10 +2,10 @@ import crypto from 'crypto';
 import { cookies } from 'next/headers';
 
 function getMasterSecret(): string {
-  const secret = process.env.ADMIN_MASTER_SECRET;
+  const secret = process.env.ADMIN_MASTER_SECRET || process.env.SESSION_SECRET;
   if (!secret) {
     if (process.env.NODE_ENV === 'production') {
-      throw new Error('ADMIN_MASTER_SECRET environment variable is mandatory in production');
+      throw new Error('ADMIN_MASTER_SECRET (or SESSION_SECRET) environment variable is mandatory in production');
     }
     // Development-only deterministic secret with prominent warning
     console.warn('[SECURITY WARNING] ADMIN_MASTER_SECRET is not set in development. Using dev-only fallback.');
