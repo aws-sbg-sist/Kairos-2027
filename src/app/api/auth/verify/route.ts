@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = db.verifyStudentEmail(token);
+    const result = await db.verifyStudentEmail(token);
     if (!result.success || !result.account) {
       const isExpired = result.error === 'TOKEN_EXPIRED';
       return NextResponse.json(

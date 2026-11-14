@@ -32,7 +32,7 @@ export default function AdminDashboardPage() {
   const [waitlist, setWaitlist] = useState<WaitlistEntry[]>([]);
   const [sponsors, setSponsors] = useState<SponsorInquiry[]>([]);
   const [teams, setTeams] = useState<ParticipantTeam[]>([]);
-  const [judges, setJudges] = useState<(Judge & { evaluationCount?: number; averageZScore?: number })[]>([]);
+  const [judges, setJudges] = useState<(Judge & { evaluationCount?: number; averageZScore?: number; hasPinConfigured?: boolean })[]>([]);
   const [flags, setFlags] = useState<FeatureFlags>({
     registrationOpen: false,
     prizePoolConfirmed: false,
@@ -274,7 +274,11 @@ export default function AdminDashboardPage() {
       });
       const data = await res.json();
       if (data.success && data.judge) {
-        setJudges(prev => [...prev, data.judge]);
+        // Retain temporaryInitialPin in local component state for the current administrative session only
+        const judgeWithSessionPin = data.temporaryInitialPin
+          ? { ...data.judge, accessPin: data.temporaryInitialPin, hasPinConfigured: true }
+          : { ...data.judge, hasPinConfigured: true };
+        setJudges(prev => [...prev, judgeWithSessionPin]);
         setShowAddJudgeModal(false);
         setNewJudgeForm({
           fullName: '',
@@ -285,7 +289,8 @@ export default function AdminDashboardPage() {
           accessPin: '',
           isActive: true
         });
-        notify(`Judge identity created for ${data.judge.fullName}.`);
+        const pinNotice = data.temporaryInitialPin ? ` Initial PIN: ${data.temporaryInitialPin}` : '';
+        notify(`Judge identity created for ${data.judge.fullName}.${pinNotice}`);
       } else {
         alert(data.error || 'Failed to create judge');
       }
@@ -1184,7 +1189,9 @@ export default function AdminDashboardPage() {
                         <span className="text-slate-400">Access PIN:</span>
                         <div className="flex items-center gap-1.5">
                           <span className="font-bold text-purple-200">
-                            {isPinVisible ? judge.accessPin : '••••••'}
+                            {judge.accessPin 
+                              ? (isPinVisible ? judge.accessPin : '••••••')
+                              : (judge.hasPinConfigured ? (isPinVisible ? 'Configured (PBKDF2)' : '••••••') : 'Not Configured')}
                           </span>
                           <button
                             onClick={() => setShowPinMap({ ...showPinMap, [judge.id]: !isPinVisible })}

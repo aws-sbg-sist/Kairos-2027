@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 3. Verify Team Leader Role Authorization
-    const leaderCheck = verifyTeamLeader(studentSession.email, teamCode);
+    const leaderCheck = await verifyTeamLeader(studentSession.email, teamCode);
     if (!leaderCheck.authorized) {
       return NextResponse.json({
         success: false,
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     const statusCode = result.status || (result.success ? 200 : 400);
 
     if (result.success) {
-      const team = db.getTeamByCode(teamCode.trim().toUpperCase());
+      const team = await db.getTeamByCode(teamCode.trim().toUpperCase());
       if (team) {
         sendTransactionalEmail(buildQualifierSubmissionEmail({
           to: team.leaderEmail || studentSession.email,
@@ -95,7 +95,7 @@ async function processQualifierSubmission(body: {
     return { success: false, error: 'Please provide a valid GitHub repository URL.', status: 400 };
   }
 
-  const updated = db.submitRound1Qualifier(teamCode.trim().toUpperCase(), {
+  const updated = await db.submitRound1Qualifier(teamCode.trim().toUpperCase(), {
     loomVideoUrl: loomVideoUrl.trim(),
     githubUrl: githubUrl.trim()
   });

@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    const team = db.getTeamByCode(teamCode.trim().toUpperCase());
+    const team = await db.getTeamByCode(teamCode.trim().toUpperCase());
     if (!team) {
       return NextResponse.json({
         success: false,
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     // RBAC: If student, verify leader of this team
     const teamCodeStr = team.teamCode || team.id || '';
     if (!adminSession) {
-      const leaderCheck = verifyTeamLeader(studentSession!.email, teamCodeStr);
+      const leaderCheck = await verifyTeamLeader(studentSession!.email, teamCodeStr);
       if (!leaderCheck.authorized) {
         return NextResponse.json({
           success: false,
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Check if invitee is already in another team
-    const existingTeam = db.getStudentTeam(cleanEmail);
+    const existingTeam = await db.getStudentTeam(cleanEmail);
     if (existingTeam) {
       return NextResponse.json({
         success: false,

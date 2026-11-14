@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   }
 
   // 1. Enforce Registration Open / Closed & Deadline Feature Flags
-  const flags = db.getFeatureFlags();
+  const flags = await db.getFeatureFlags();
   if (!flags.registrationOpen) {
     return NextResponse.json({
       success: false,
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Prevent Duplicate Registration
-    const existingWaitlist = db.getStudentWaitlist(normEmail);
+    const existingWaitlist = await db.getStudentWaitlist(normEmail);
     if (existingWaitlist) {
       return NextResponse.json({
         success: false,
@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
     // 3. Persistent Student Profile Synchronization
     const session = await getCurrentStudentSession();
     if (session && session.email.toLowerCase() === normEmail) {
-      db.updateStudentProfile(session.studentId, {
+      await db.updateStudentProfile(session.studentId, {
         fullName: fullName.trim(),
         phone: phone?.trim(),
         institution: instName,
@@ -110,9 +110,9 @@ export async function POST(req: NextRequest) {
         tshirtSize: tShirtSize || 'L'
       });
     } else {
-      const existingStudent = db.getStudentByEmail(normEmail);
+      const existingStudent = await db.getStudentByEmail(normEmail);
       if (existingStudent) {
-        db.updateStudentProfile(existingStudent.id, {
+        await db.updateStudentProfile(existingStudent.id, {
           fullName: fullName.trim(),
           phone: phone?.trim(),
           institution: instName,
@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Record Waitlist Entry with Correct Status Tracking
-    const result = db.addWaitlistEntry({
+    const result = await db.addWaitlistEntry({
       fullName: fullName.trim(),
       email: normEmail,
       phone: phone?.trim() || '',

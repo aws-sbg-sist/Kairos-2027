@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     }
 
     const updaterName = authCtx.adminSession?.organizerName || 'Organizer';
-    const success = db.updateWaitlistStatus(id, status, updaterName);
+    const success = await db.updateWaitlistStatus(id, status, updaterName);
     if (!success) {
       return NextResponse.json({ success: false, error: 'Candidate not found in waitlist' }, { status: 404 });
     }

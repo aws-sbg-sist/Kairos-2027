@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const student = db.getStudentByEmail(session.email);
+  const student = await db.getStudentByEmail(session.email);
   if (!student) {
     return NextResponse.json(
       { success: false, error: 'Student record not found.', code: 'STUDENT_NOT_FOUND' },
@@ -20,8 +20,8 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const team = db.getStudentTeam(student.email);
-  const waitlist = db.getStudentWaitlist(student.email);
+  const team = await db.getStudentTeam(student.email);
+  const waitlist = await db.getStudentWaitlist(student.email);
 
   const host = req.headers.get('host') || 'localhost:8000';
   const protocol = req.headers.get('x-forwarded-proto') || 'http';

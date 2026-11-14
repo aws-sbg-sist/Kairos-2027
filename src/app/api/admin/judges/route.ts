@@ -18,13 +18,15 @@ export async function GET(req: NextRequest) {
       }, { status: 403 });
     }
 
-    const judges = db.getJudges();
-    const evaluations = db.getEvaluations();
+    const judges = await db.getJudges();
+    const evaluations = await db.getEvaluations();
 
     const judgesWithStats = judges.map(j => {
       const judgeEvals = evaluations.filter(e => e.judgeId === j.id);
+      const { accessPin: _omitPin, ...safeJudge } = j;
       return {
-        ...j,
+        ...safeJudge,
+        hasPinConfigured: Boolean(j.accessPin),
         evaluationCount: judgeEvals.length,
         averageZScore: judgeEvals.length > 0 
           ? Number((judgeEvals.reduce((acc, e) => acc + (e.normalizedZScore || 0), 0) / judgeEvals.length).toFixed(3))
@@ -68,22 +70,29 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
+    const rawPin = accessPin?.trim() || String(Math.floor(100000 + Math.random() * 900000));
     const organizerName = authCtx.adminSession?.organizerName || 'Admin Organizer';
-    const newJudge = db.addJudge({
+    const newJudge = await db.addJudge({
       fullName: fullName.trim(),
       organization: organization.trim(),
       designation: designation.trim(),
       trackSpecialization: trackSpecialization?.trim() || 'General Evaluation',
       assignedHall: assignedHall?.trim() || 'Auditorium Bay 1',
-      accessPin: accessPin?.trim() || String(Math.floor(100000 + Math.random() * 900000)),
+      accessPin: rawPin,
       isActive: isActive !== undefined ? Boolean(isActive) : true,
       assignedTracks: Array.isArray(assignedTracks) ? assignedTracks : []
     }, organizerName);
 
+    const { accessPin: _omitPin, ...safeJudge } = newJudge;
+
     return NextResponse.json({
       success: true,
-      message: `Judge identity created for ${newJudge.fullName}`,
-      judge: newJudge
+      message: `Judge identity created for ${newJudge.fullName}. 6-digit access PIN generated securely.`,
+      temporaryInitialPin: rawPin, // Returned only ONCE upon initial creation to allow organizer handover
+      judge: {
+        ...safeJudge,
+        hasPinConfigured: true
+      }
     }, { status: 201 });
   } catch (err: any) {
     console.error('[API Admin Judges POST Error]:', err);
@@ -114,16 +123,21 @@ export async function PATCH(req: NextRequest) {
     }
 
     const organizerName = authCtx.adminSession?.organizerName || 'Admin Organizer';
-    const updated = db.updateJudge(id, updates, organizerName);
+    const updated = await db.updateJudge(id, updates, organizerName);
 
     if (!updated) {
       return NextResponse.json({ success: false, error: `Judge ${id} not found.` }, { status: 404 });
     }
 
+    const { accessPin: _omitPin, ...safeUpdated } = updated;
+
     return NextResponse.json({
       success: true,
       message: `Judge ${updated.fullName} updated successfully`,
-      judge: updated
+      judge: {
+        ...safeUpdated,
+        hasPinConfigured: Boolean(updated.accessPin)
+      }
     });
   } catch (err: any) {
     console.error('[API Admin Judges PATCH Error]:', err);
@@ -163,7 +177,7 @@ export async function DELETE(req: NextRequest) {
     }
 
     const organizerName = authCtx.adminSession?.organizerName || 'Admin Organizer';
-    const removed = db.deleteJudge(id, organizerName);
+    const removed = await db.deleteJudge(id, organizerName);
 
     if (!removed) {
       return NextResponse.json({ success: false, error: `Judge ${id} not found.` }, { status: 404 });

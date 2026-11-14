@@ -55,7 +55,7 @@ export async function DELETE(req: NextRequest) {
     const callerEmail = studentSession.email.trim().toLowerCase();
 
     // Verify caller authorization
-    const leaderCheck = verifyTeamLeader(callerEmail, cleanCode);
+    const leaderCheck = await verifyTeamLeader(callerEmail, cleanCode);
     const isLeader = leaderCheck.authorized;
     const isSelf = callerEmail === cleanEmail;
 
@@ -67,7 +67,7 @@ export async function DELETE(req: NextRequest) {
       }, { status: 403 });
     }
 
-    const result = db.removeTeamMember(cleanCode, cleanEmail);
+    const result = await db.removeTeamMember(cleanCode, cleanEmail);
     if (!result.success) {
       return NextResponse.json({
         success: false,

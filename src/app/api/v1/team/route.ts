@@ -21,7 +21,8 @@ export async function GET(req: NextRequest) {
 
   if (code) {
     const cleanCode = code.trim().toUpperCase();
-    const team = db.getTeamByCode(cleanCode) || db.getTeams().find(t => (t.id && t.id.toUpperCase() === cleanCode) || (t.teamCode && t.teamCode.toUpperCase() === cleanCode));
+    const allTeams = await db.getTeams();
+    const team = (await db.getTeamByCode(cleanCode)) || allTeams.find(t => (t.id && t.id.toUpperCase() === cleanCode) || (t.teamCode && t.teamCode.toUpperCase() === cleanCode));
     if (!team) {
       return NextResponse.json({ success: false, error: 'Team not found with the provided code.' }, { status: 404 });
     }
@@ -63,7 +64,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ success: true, team: sanitizedTeam });
   }
 
-  let teams = db.getTeams();
+  let teams = await db.getTeams();
   if (trackId && trackId !== 'all') {
     teams = teams.filter(t => t.trackId === trackId);
   }
@@ -104,7 +105,7 @@ export async function POST(req: NextRequest) {
   }
 
   // 1. Enforce Registration Open / Deadline Feature Flags
-  const flags = db.getFeatureFlags();
+  const flags = await db.getFeatureFlags();
   if (!flags.registrationOpen) {
     return NextResponse.json({
       success: false,
@@ -199,7 +200,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Multi-team membership prevention: Builder cannot lead or join multiple teams
-    const existingTeam = db.getStudentTeam(leadEmail);
+    const existingTeam = await db.getStudentTeam(leadEmail);
     if (existingTeam) {
       return NextResponse.json({
         success: false,
@@ -208,7 +209,7 @@ export async function POST(req: NextRequest) {
       }, { status: 409 });
     }
 
-    const newTeam = db.createTeam({
+    const newTeam = await db.createTeam({
       teamName: teamName.trim(),
       trackId: trackId.trim(),
       institutionName: leadCollege.trim(),
@@ -258,7 +259,7 @@ export async function PUT(req: NextRequest) {
   }
 
   // Enforce Registration Open / Deadline Feature Flags
-  const flags = db.getFeatureFlags();
+  const flags = await db.getFeatureFlags();
   if (!flags.registrationOpen) {
     return NextResponse.json({
       success: false,
@@ -310,7 +311,7 @@ export async function PUT(req: NextRequest) {
     }
 
     // Multi-team check: ensure member is not already in another squad
-    const existingTeam = db.getStudentTeam(memberEmail);
+    const existingTeam = await db.getStudentTeam(memberEmail);
     if (existingTeam) {
       const cleanCode = teamCode.trim().toUpperCase();
       if (
@@ -336,7 +337,7 @@ export async function PUT(req: NextRequest) {
         ? member.role
         : 'Backend';
 
-    const joinResult = db.joinTeam(teamCode.trim().toUpperCase(), {
+    const joinResult = await db.joinTeam(teamCode.trim().toUpperCase(), {
       name: memberName.trim(),
       email: memberEmail,
       phone: member.phone?.trim() || '',
@@ -395,7 +396,7 @@ export async function PATCH(req: NextRequest) {
     }
 
     // RBAC: Verify that the caller is the authorized Team Leader
-    const leaderCheck = verifyTeamLeader(studentSession.email, teamCode);
+    const leaderCheck = await verifyTeamLeader(studentSession.email, teamCode);
     if (!leaderCheck.authorized) {
       return NextResponse.json({
         success: false,
@@ -414,7 +415,7 @@ export async function PATCH(req: NextRequest) {
       }
     }
 
-    const updateResult = db.updateTeamDetails(teamCode, {
+    const updateResult = await db.updateTeamDetails(teamCode, {
       teamName,
       trackId,
       problemTitle,

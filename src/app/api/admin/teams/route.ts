@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     const status = (searchParams.get('status') || 'ALL').trim();
     const missing = (searchParams.get('missing') || 'none').trim().toLowerCase();
 
-    let teams = db.getTeams();
+    let teams = await db.getTeams();
 
     if (q) {
       teams = teams.filter(t => 
@@ -137,7 +137,7 @@ export async function PATCH(req: NextRequest) {
       }
     }
 
-    const result = db.updateTeamAdmin(identifier, updates, organizerName);
+    const result = await db.updateTeamAdmin(identifier, updates, organizerName);
     if (!result.success || !result.team) {
       return NextResponse.json({ success: false, error: result.error || 'Failed to update team' }, { status: 404 });
     }

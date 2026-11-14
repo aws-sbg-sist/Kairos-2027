@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const track = searchParams.get('track') || undefined;
 
-    const result = db.getLeaderboardStandings(track);
+    const result = await db.getLeaderboardStandings(track);
 
     const response = NextResponse.json({
       success: true,

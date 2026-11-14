@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = db.requestPasswordReset(email);
+    const result = await db.requestPasswordReset(email);
 
     if (result.resetToken) {
       const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000'}/auth/reset-password?token=${result.resetToken}`;

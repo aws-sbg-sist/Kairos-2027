@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { accessPin } = body;
 
-    if (!accessPin || typeof accessPin !== 'string') {
+    if (!accessPin || typeof accessPin !== 'string' || !/^\d{6}$/.test(accessPin.trim())) {
       return NextResponse.json({
         success: false,
         error: 'Please enter a valid 6-digit jury access PIN.'
@@ -22,9 +22,11 @@ export async function POST(req: NextRequest) {
     }
 
     const cleanPin = accessPin.trim();
-    const judge = db.verifyJudgePin(cleanPin);
+    const judge = await db.verifyJudgePin(cleanPin);
 
     if (!judge) {
+      const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown-client';
+      await db.addAuditLog('Anonymous Jury Gateway', 'JUDGE_AUTH_FAILURE', `Failed judge PIN authentication attempt from IP [${clientIp}]`);
       return NextResponse.json({
         success: false,
         error: 'Invalid 6-digit Jury Access PIN. Please verify with Hackathon Operations.'
@@ -32,10 +34,10 @@ export async function POST(req: NextRequest) {
     }
 
     const token = createJudgeToken(judge);
-    const assignedTeams = db.getAssignedTeamsForJudge(judge.id);
+    const assignedTeams = await db.getAssignedTeamsForJudge(judge.id);
 
     // Audit log
-    db.addAuditLog(
+    await db.addAuditLog(
       judge.fullName,
       'JUDGE_LOGIN',
       `Judge ${judge.fullName} (${judge.organization}) authenticated for track [${judge.trackSpecialization || 'ALL'}]`
@@ -83,7 +85,7 @@ export async function GET(req: NextRequest) {
       }, { status: 401 });
     }
 
-    const assignedTeams = db.getAssignedTeamsForJudge(session.judgeId);
+    const assignedTeams = await db.getAssignedTeamsForJudge(session.judgeId);
 
     return NextResponse.json({
       success: true,
@@ -101,7 +103,7 @@ export async function DELETE(req: NextRequest) {
   try {
     const session = getJudgeSessionFromRequest(req);
     if (session) {
-      db.addAuditLog(
+      await db.addAuditLog(
         session.fullName,
         'JUDGE_LOGOUT',
         `Judge ${session.fullName} locked evaluation terminal.`

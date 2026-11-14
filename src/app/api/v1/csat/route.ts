@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
 export async function GET() {
-  const responses = db.getCSAT();
+  const responses = await db.getCSAT();
   const count = responses.length;
   const avgSatisfaction = count > 0 
     ? (responses.reduce((sum, r) => sum + r.overallSatisfaction, 0) / count).toFixed(2)
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    const saved = db.addCSAT({
+    const saved = await db.addCSAT({
       overallSatisfaction: sat,
       npsScore: nps,
       cloudServicesUsed: Array.isArray(cloudServicesUsed) ? cloudServicesUsed : [],

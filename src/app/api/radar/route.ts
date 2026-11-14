@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {
-    const signals = db.getRadarSignals();
+    const signals = await db.getRadarSignals();
     return NextResponse.json({ success: true, signals });
   } catch (error) {
     console.error('Error fetching radar signals:', error);
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
       ? skills.map(s => String(s).trim()).filter(Boolean).slice(0, 10)
       : String(skills || '').split(',').map(s => s.trim()).filter(Boolean).slice(0, 10);
 
-    const newSignal = db.addRadarSignal({
+    const newSignal = await db.addRadarSignal({
       builderName: String(builderName).trim(),
       role: role as TeamRadarSignal['role'],
       trackId: String(trackId).trim(),

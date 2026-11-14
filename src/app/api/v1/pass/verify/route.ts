@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const result = verifyPassToken(token);
+  const result = await verifyPassToken(token);
   if (!result.valid) {
     return NextResponse.json(
       { success: false, valid: false, error: result.error || 'Invalid or unverified pass token.' },
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = verifyPassToken(token);
+    const result = await verifyPassToken(token);
     if (!result.valid) {
       return NextResponse.json(
         { success: false, valid: false, error: result.error || 'Invalid or unverified pass token.' },

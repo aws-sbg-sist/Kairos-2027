@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const inquiry = db.addSponsorInquiry({
+    const inquiry = await db.addSponsorInquiry({
       companyName: companyName.trim(),
       contactPerson: contactPerson.trim(),
       contactEmail: contactEmail.trim().toLowerCase(),
@@ -51,6 +51,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ success: false, error: 'Unauthorized admin access' }, { status: 401 });
   }
 
-  const sponsors = db.getSponsors();
+  const sponsors = await db.getSponsors();
   return NextResponse.json({ success: true, count: sponsors.length, sponsors });
 }

@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
       const paramPin = searchParams.get('judgePin');
 
       if (paramJudgeId && paramPin) {
-        const auth = verifyJudgeAuthorization(paramJudgeId, paramPin);
+        const auth = await verifyJudgeAuthorization(paramJudgeId, paramPin);
         if (auth.authorized && auth.judge) {
           judgeId = auth.judge.id;
         } else {
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
       }, { status: 401 });
     }
 
-    const assignedTeams = db.getAssignedTeamsForJudge(judgeId);
+    const assignedTeams = await db.getAssignedTeamsForJudge(judgeId);
 
     return NextResponse.json({
       success: true,

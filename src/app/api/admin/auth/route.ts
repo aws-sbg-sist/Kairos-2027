@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
     const isValid = verifyAdminPasskey(passkey);
     if (!isValid) {
-      db.addAuditLog('Failed Login Attempt', 'AUTH_FAILURE', `Invalid passkey attempted for identity [${organizerName}]`);
+      await db.addAuditLog('Failed Login Attempt', 'AUTH_FAILURE', `Invalid passkey attempted for identity [${organizerName}]`);
       return NextResponse.json(
         { success: false, error: 'Invalid organizer authorization passkey.' },
         { status: 401 }
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const token = createAdminToken(organizerName.trim(), assignedRole);
     
     // Record successful audit login
-    db.addAuditLog(organizerName.trim(), 'ADMIN_LOGIN', `Logged in successfully as ${assignedRole}`);
+    await db.addAuditLog(organizerName.trim(), 'ADMIN_LOGIN', `Logged in successfully as ${assignedRole}`);
 
     const response = NextResponse.json({
       success: true,

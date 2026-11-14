@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
   // 1. Waitlist
   if (type === 'waitlist') {
-    const list = db.getWaitlist();
+    const list = await db.getWaitlist();
     const headers = ['ID', 'Full Name', 'Email', 'Institution', 'Year', 'Department', 'Track', 'Portfolio', 'Status', 'Registered At'];
     const rows = list.map(item => [
       sanitizeCsvCell(item.id),
@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
 
   // 2. Participants (All registered student builders)
   if (type === 'participants') {
-    const teams = db.getTeams();
+    const teams = await db.getTeams();
     const headers = ['Student ID', 'Full Name', 'Email', 'Phone', 'Institution', 'Department', 'Year', 'T-Shirt Size', 'Role', 'Team Code', 'Team Name', 'Confirmed'];
     const rows: string[][] = [];
 
@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
 
   // 3. Teams
   if (type === 'teams') {
-    const teams = db.getTeams();
+    const teams = await db.getTeams();
     const headers = [
       'Team Code', 'Team Name', 'Track', 'Leader Name', 'Leader Email', 
       'Institution', 'City', 'State', 'Roster Count', 'Selection Stage', 
@@ -120,7 +120,7 @@ export async function GET(req: NextRequest) {
 
   // 4. Team Members
   if (type === 'team-members') {
-    const teams = db.getTeams();
+    const teams = await db.getTeams();
     const headers = ['Team Code', 'Team Name', 'Member Name', 'Email', 'Phone', 'College Reg No', 'Role', 'College', 'T-Shirt Size', 'Confirmed'];
     const rows: string[][] = [];
 
@@ -152,7 +152,7 @@ export async function GET(req: NextRequest) {
 
   // 5. Abstracts
   if (type === 'abstracts') {
-    const teams = db.getTeams();
+    const teams = await db.getTeams();
     const headers = ['Team Code', 'Team Name', 'Track', 'Problem Title', 'Problem Abstract', 'Architecture PDF', 'Reviewer Notes', 'Reviewed By', 'Reviewed At', 'Selection Stage'];
     const rows = teams.map(t => [
       sanitizeCsvCell(t.teamCode || t.id),
@@ -178,7 +178,7 @@ export async function GET(req: NextRequest) {
 
   // 6. Submissions
   if (type === 'submissions') {
-    const teams = db.getTeams();
+    const teams = await db.getTeams();
     const headers = ['Team Code', 'Team Name', 'Track', 'Leader Email', 'GitHub Repository', 'Loom Video URL', 'Selection Stage', 'Desk Bay'];
     const rows = teams.map(t => [
       sanitizeCsvCell(t.teamCode || t.id),
@@ -202,7 +202,7 @@ export async function GET(req: NextRequest) {
 
   // 7. Evaluations
   if (type === 'evaluations') {
-    const evals = db.getEvaluations();
+    const evals = await db.getEvaluations();
     const headers = ['Evaluation ID', 'Team ID', 'Judge ID', 'Checkpoint Gate', 'Criterion 1 Score', 'Criterion 2 Score', 'Criterion 3 Score', 'Criterion 4 Score', 'Raw Total Score', 'Normalized Z-Score', 'Evaluated At'];
     const rows = evals.map(e => [
       sanitizeCsvCell(e.id),
@@ -229,7 +229,7 @@ export async function GET(req: NextRequest) {
 
   // 8. Sponsors
   if (type === 'sponsors') {
-    const sponsors = db.getSponsors();
+    const sponsors = await db.getSponsors();
     const headers = ['ID', 'Company', 'Contact Person', 'Email', 'Phone', 'Tier', 'Status', 'Requirements', 'Received At'];
     const rows = sponsors.map(s => [
       sanitizeCsvCell(s.id),

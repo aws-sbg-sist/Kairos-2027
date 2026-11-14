@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = db.resetStudentPassword(token, newPassword);
+    const result = await db.resetStudentPassword(token, newPassword);
     if (!result.success) {
       const isExpired = result.error === 'TOKEN_EXPIRED';
       return NextResponse.json(

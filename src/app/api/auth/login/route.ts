@@ -21,9 +21,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const authResult = db.authenticateStudent(email, password);
+    const authResult = await db.authenticateStudent(email, password);
     if (!authResult.success || !authResult.account) {
-      db.addAuditLog('Anonymous Caller', 'STUDENT_AUTH_FAILURE', `Failed login attempt for [${email.trim().toLowerCase()}]`);
+      await db.addAuditLog('Anonymous Caller', 'STUDENT_AUTH_FAILURE', `Failed login attempt for [${email.trim().toLowerCase()}]`);
       return NextResponse.json(
         { success: false, error: 'Invalid email address or password.', code: 'INVALID_CREDENTIALS' },
         { status: 401 }
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
       emailVerified: account.emailVerified
     });
 
-    db.addAuditLog(account.fullName, 'STUDENT_LOGIN', `Student logged in successfully [${account.email}]`);
+    await db.addAuditLog(account.fullName, 'STUDENT_LOGIN', `Student logged in successfully [${account.email}]`);
 
     const response = NextResponse.json({
       success: true,

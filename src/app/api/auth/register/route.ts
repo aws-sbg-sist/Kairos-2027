@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = db.registerStudent({
+    const result = await db.registerStudent({
       email,
       password,
       fullName,

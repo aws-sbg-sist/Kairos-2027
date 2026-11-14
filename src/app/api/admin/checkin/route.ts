@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
       }, { status: 403 });
     }
 
-    const teams = db.getTeams();
+    const teams = await db.getTeams();
     const checkedInTeams = teams.filter(t => t.checkedIn);
     const pendingTeams = teams.filter(t => !t.checkedIn && t.selectionStage !== 'DISQUALIFIED');
     const disqualifiedTeams = teams.filter(t => t.selectionStage === 'DISQUALIFIED');
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
     let verifiedParticipant: any = null;
 
     if (token) {
-      const verification = verifyPassToken(token);
+      const verification = await verifyPassToken(token);
       if (!verification.valid || !verification.participant) {
         return NextResponse.json({
           success: false,
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
     }
 
     const organizerName = authCtx.adminSession?.organizerName || 'Admin Organizer';
-    const result = db.checkInTeam(targetIdentifier, organizerName);
+    const result = await db.checkInTeam(targetIdentifier, organizerName);
 
     if (result.alreadyCheckedIn) {
       return NextResponse.json({

@@ -11,7 +11,7 @@ export async function GET() {
     );
   }
 
-  const account = db.getStudentByEmail(session.email);
+  const account = await db.getStudentByEmail(session.email);
   if (!account) {
     return NextResponse.json(
       { success: false, error: 'Student identity profile not found.', code: 'PROFILE_NOT_FOUND' },
@@ -20,9 +20,9 @@ export async function GET() {
   }
 
   // Derive associated team and waitlist records
-  const team = db.getStudentTeam(account.email);
-  const waitlist = db.getStudentWaitlist(account.email);
-  const evaluations = team ? db.getTeamEvaluations(team.id) : [];
+  const team = await db.getStudentTeam(account.email);
+  const waitlist = await db.getStudentWaitlist(account.email);
+  const evaluations = team ? await db.getTeamEvaluations(team.id) : [];
 
   return NextResponse.json({
     success: true,
@@ -62,7 +62,7 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const { fullName, phone, institution, department, yearOfStudy, portfolioUrl, githubUrl, linkedinUrl, tshirtSize } = body;
 
-    const result = db.updateStudentProfile(session.studentId, {
+    const result = await db.updateStudentProfile(session.studentId, {
       fullName,
       phone,
       institution,

@@ -20,7 +20,7 @@ export async function GET() {
   }
 
   try {
-    const csvContent = db.exportCSATCSV();
+    const csvContent = await db.exportCSATCSV();
 
     return new NextResponse(csvContent, {
       status: 200,

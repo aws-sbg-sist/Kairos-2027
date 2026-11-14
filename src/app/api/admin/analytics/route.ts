@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
       }, { status: 403 });
     }
 
-    const analytics = db.getAdminAnalytics();
+    const analytics = await db.getAdminAnalytics();
 
     return NextResponse.json({
       success: true,

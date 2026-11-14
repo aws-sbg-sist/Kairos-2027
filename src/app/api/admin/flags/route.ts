@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { resolveAuthContext, hasPermission } from '@/lib/rbac';
 
 export async function GET() {
-  const flags = db.getFeatureFlags();
+  const flags = await db.getFeatureFlags();
   return NextResponse.json({ success: true, flags });
 }
 
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   try {
     const updates = await req.json();
     const updaterName = authCtx.adminSession?.organizerName || 'Super Administrator';
-    const newFlags = db.setFeatureFlags(updates, updaterName);
+    const newFlags = await db.setFeatureFlags(updates, updaterName);
     return NextResponse.json({ success: true, flags: newFlags });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: 'Failed to update feature flags' }, { status: 500 });

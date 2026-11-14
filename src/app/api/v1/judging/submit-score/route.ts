@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       };
       judgeId = session.judgeId;
     } else if (judgeId && judgePin) {
-      const authResult = verifyJudgeAuthorization(judgeId, judgePin, targetTeam);
+      const authResult = await verifyJudgeAuthorization(judgeId, judgePin, targetTeam);
       if (!authResult.authorized || !authResult.judge) {
         return NextResponse.json({
           success: false,
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       authenticatedJudge = authResult.judge;
     } else if (judgePin && !judgeId) {
       // If only judgePin is provided, verify against all active judges
-      const judge = db.verifyJudgePin(String(judgePin).trim());
+      const judge = await db.verifyJudgePin(String(judgePin).trim());
       if (!judge) {
         return NextResponse.json({
           success: false,
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Verify track assignment compatibility for this team
-    const teams = db.getTeams();
+    const teams = await db.getTeams();
     const cleanTeam = targetTeam.trim().toLowerCase();
     const foundTeam = teams.find(t => 
       t.id.toLowerCase() === cleanTeam || 
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
     // Handle conflict of interest recusal
     const isRecused = Boolean(recusal || recusedConflict);
     if (isRecused) {
-      db.addAuditLog(
+      await db.addAuditLog(
         authenticatedJudge.fullName,
         'RECUSE_EVALUATION',
         `Judge ${authenticatedJudge.fullName} declared conflict of interest and recused from evaluating team [${foundTeam.teamCode || foundTeam.teamName}]${checkpointGate ? ` for Gate ${checkpointGate}` : ''}.`
@@ -174,7 +174,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    const evalResult = db.saveEvaluation(
+    const evalResult = await db.saveEvaluation(
       {
         teamId: foundTeam.teamCode || foundTeam.id,
         judgeId,

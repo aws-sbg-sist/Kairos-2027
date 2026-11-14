@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     const callerEmail = studentSession.email.trim().toLowerCase();
 
     // Verify caller is the current Team Leader
-    const leaderCheck = verifyTeamLeader(callerEmail, cleanCode);
+    const leaderCheck = await verifyTeamLeader(callerEmail, cleanCode);
     if (!leaderCheck.authorized) {
       return NextResponse.json({
         success: false,
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
       }, { status: leaderCheck.statusCode });
     }
 
-    const result = db.transferTeamLeadership(cleanCode, callerEmail, cleanNewLeader);
+    const result = await db.transferTeamLeadership(cleanCode, callerEmail, cleanNewLeader);
     if (!result.success) {
       return NextResponse.json({
         success: false,

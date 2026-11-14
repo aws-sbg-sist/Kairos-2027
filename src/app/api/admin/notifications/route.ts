@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
     const templateFilter = searchParams.get('template');
     const search = searchParams.get('search')?.toLowerCase();
 
-    let logs = db.getNotificationLogs(Math.min(limit, 200));
+    let logs = await db.getNotificationLogs(Math.min(limit, 200));
 
     if (statusFilter && statusFilter !== 'ALL') {
       logs = logs.filter(l => l.status === statusFilter);
@@ -197,7 +197,7 @@ export async function POST(req: NextRequest) {
         }, { status: 400 });
       }
 
-      let teams = db.getTeams();
+      let teams = await db.getTeams();
       if (targetTrack !== 'ALL') {
         const cleanTrack = targetTrack.toLowerCase().replace(/^track-/, '');
         teams = teams.filter(t => t.trackId.toLowerCase().replace(/^track-/, '') === cleanTrack);
@@ -265,7 +265,7 @@ export async function POST(req: NextRequest) {
       }
 
       // Audit log the broadcast
-      db.addAuditLog(
+      await db.addAuditLog(
         authCtx.adminSession?.organizerName || 'Admin Organizer',
         'BROADCAST_ANNOUNCEMENT',
         `Broadcast "${title}" (${category}, ${urgency}) to ${sentCount}/${recipients.length} builders across track ${targetTrack}`
