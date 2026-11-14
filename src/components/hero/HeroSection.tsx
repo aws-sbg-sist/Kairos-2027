@@ -72,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
           {/* Left Column: Hero Typography & CTAs (7 cols) */}
           <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
             {/* Event Category Badge & Watch Logo Reveal Button */}
-            <ScrollReveal direction="down" distance={20} delay={0.1}>
+            <ScrollReveal direction="down" distance={20} delay={0.1} immediate>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-aws-squidInk/90 border border-purple-500/30 text-purple-300 text-xs sm:text-sm font-mono shadow-md backdrop-blur-md">
                   <ShieldCheck className="w-4 h-4 text-purple-400 shrink-0" />
@@ -98,7 +98,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
             {/* Wordmark Graphic + Kinetic Headline */}
             <div className="space-y-4">
-              <ScrollReveal direction="none" delay={0.2}>
+              <ScrollReveal direction="none" delay={0.2} immediate>
                 <div className="relative w-full max-w-md sm:max-w-lg mx-auto lg:mx-0 h-14 sm:h-20">
                   <Image
                     src="/assets/kairos-wordmark.png"
@@ -110,14 +110,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal direction="up" distance={24} delay={0.25}>
+              <ScrollReveal direction="up" distance={24} delay={0.25} immediate>
                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black tracking-tight text-white leading-[1.1]">
                   Where Architecture <br />
                   <span className="gradient-text-kairos">Meets Execution.</span>
                 </h1>
               </ScrollReveal>
 
-              <ScrollReveal direction="up" distance={20} delay={0.35}>
+              <ScrollReveal direction="up" distance={20} delay={0.35} immediate>
                 <p className="text-base sm:text-xl text-slate-300 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                   48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors & Grants.
                 </p>
@@ -125,7 +125,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
             </div>
 
             {/* Event Details Chip */}
-            <ScrollReveal direction="up" distance={16} delay={0.4}>
+            <ScrollReveal direction="up" distance={16} delay={0.4} immediate>
               <div className="inline-flex flex-col sm:flex-row sm:flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-x-4 sm:gap-y-2 p-3 sm:px-4 sm:py-3 rounded-xl bg-slate-900/90 border border-purple-500/30 text-xs sm:text-sm text-slate-200 font-mono shadow-md backdrop-blur-md">
                 <span className="inline-flex items-center gap-1.5 text-white font-semibold">
                   <Calendar className="w-3.5 h-3.5 text-purple-400 shrink-0" />
@@ -143,7 +143,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
             </ScrollReveal>
 
             {/* 48-Hour Live Countdown Timer with Double-Bezel Hardware Enclosure HUD */}
-            <ScrollReveal direction="up" distance={20} delay={0.45}>
+            <ScrollReveal direction="up" distance={20} delay={0.45} immediate>
               <div className="double-bezel max-w-xl mx-auto lg:mx-0 group">
                 <div className="double-bezel-inner p-4 sm:p-5 relative overflow-hidden">
                   {/* Subtle top glow line */}
@@ -172,25 +172,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
                   <div className="grid grid-cols-4 gap-2 sm:gap-4 text-center">
                     <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
-                      <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
+                      <span suppressHydrationWarning className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
                         {String(timeLeft.days).padStart(2, '0')}
                       </span>
                       <span className="text-[10px] font-mono uppercase text-slate-400">Days</span>
                     </div>
                     <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
-                      <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
+                      <span suppressHydrationWarning className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
                         {String(timeLeft.hours).padStart(2, '0')}
                       </span>
                       <span className="text-[10px] font-mono uppercase text-slate-400">Hours</span>
                     </div>
                     <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
-                      <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
+                      <span suppressHydrationWarning className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
                         {String(timeLeft.minutes).padStart(2, '0')}
                       </span>
                       <span className="text-[10px] font-mono uppercase text-slate-400">Minutes</span>
                     </div>
                     <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-purple-500/40 bg-purple-950/30">
-                      <span className="font-display font-extrabold text-2xl sm:text-3xl text-purple-400 block animate-pulse">
+                      <span suppressHydrationWarning className="font-display font-extrabold text-2xl sm:text-3xl text-purple-400 block animate-pulse">
                         {String(timeLeft.seconds).padStart(2, '0')}
                       </span>
                       <span className="text-[10px] font-mono uppercase text-purple-300">Seconds</span>
@@ -201,7 +201,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
             </ScrollReveal>
 
             {/* Primary & Secondary Call-to-Action Buttons */}
-            <ScrollReveal direction="up" distance={20} delay={0.5}>
+            <ScrollReveal direction="up" distance={20} delay={0.5} immediate>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
                 <MagneticButton pullStrength={10}>
                   <Link
@@ -284,7 +284,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
           {/* Right Column: 2.5D Holographic Logo & Parallax Astrolabe (5 cols) */}
           <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
-            <ScrollReveal direction="left" distance={30} delay={0.3}>
+            <ScrollReveal direction="left" distance={30} delay={0.3} immediate>
               <div className="relative w-full aspect-square max-w-[420px] sm:max-w-[480px]">
                 <Logo25DAnimation />
               </div>

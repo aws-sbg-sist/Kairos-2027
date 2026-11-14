@@ -6,8 +6,8 @@ const nextConfig = {
   cacheMaxMemorySize: 25 * 1024 * 1024,
   productionBrowserSourceMaps: false,
   experimental: {
-    // Tree-shake icons and animations so unused components are never loaded into server heap
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    // Tree-shake icons so unused icons are never loaded into server heap (only lucide-react, NOT framer-motion)
+    optimizePackageImports: ['lucide-react'],
   },
   async headers() {
     return [
