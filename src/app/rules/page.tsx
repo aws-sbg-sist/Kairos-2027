@@ -102,7 +102,7 @@ export default function RulesPage() {
               </div>
               <div>
                 <h2 className="text-xl font-bold text-white">1. Fresh Code Standard & Real-Time Commit Telemetry</h2>
-                <p className="text-xs text-slate-400">Enforcing genuine engineering inside the 48-hour clock</p>
+                <p className="text-xs text-slate-400">Enforcing original engineering inside the 48-hour clock</p>
               </div>
             </div>
 

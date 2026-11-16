@@ -3,7 +3,7 @@ import { OrganizerAccount } from '@/types';
 export const EVENT_CONFIG = {
   name: 'KAIROS 2027',
   edition: 'Grand Edition',
-  tagline: 'Where Architecture Meets Execution.',
+  tagline: 'National 48-Hour Cloud Hackathon on AWS.',
   subtitle: '48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors.',
   notificationBar: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
   organizer: {
@@ -11,7 +11,7 @@ export const EVENT_CONFIG = {
     chapter: 'AWS Student Builder Group — SIST Chapter',
     department: 'Department of Computer Science & Engineering, School of Computing',
     institution: 'Sathyabama Institute of Science and Technology',
-    location: 'Chennai, Tamil Nadu, India - 600119',
+    location: 'OMR, Chennai, Tamil Nadu, India',
     contactEmail: 'sistawscc@gmail.com',
     leadOrganizer: 'Thenappan T, President & Student Builder Group Leader (SBGL)',
     meetupUrl: 'https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/',
@@ -21,7 +21,7 @@ export const EVENT_CONFIG = {
   venue: {
     name: 'Indoor Auditorium',
     campus: 'Sathyabama Institute of Science and Technology',
-    address: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR), Chennai, Tamil Nadu - 600119',
+    address: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR), Chennai',
     city: 'Chennai',
     state: 'Tamil Nadu',
     country: 'India',
@@ -132,7 +132,7 @@ export const TECHNICAL_TRACKS = [
   {
     id: 'fintech-trust',
     number: '04',
-    title: 'Next-Gen FinTech, Trust & Cryptographic Security',
+    title: 'FinTech, Trust & Cryptographic Security',
     
     shortDescription: 'Engineer low-latency settlement systems, real-time algorithmic fraud prevention, and zero-knowledge identity architectures.',
     longDescription: 'Re-engineer digital financial rails with mathematical integrity. Build high-volume transaction verification, instant anomaly and synthetic identity fraud detection, and automated audit trails while upholding privacy and regulatory compliance.',
@@ -219,7 +219,7 @@ export const JUDGING_CRITERIA = [
     category: 'Working Prototype & User Experience',
     points: 25,
     percentage: '25%',
-    description: 'A genuine, functional live implementation demonstrated during checkpoints and stage finals; intuitive interface, responsive polish, and frictionless workflows.'
+    description: 'A functional live implementation demonstrated during checkpoints and stage finals; intuitive interface, responsive polish, and verified workflows.'
   },
   {
     category: 'Practical Value & Pitch Defense',
@@ -287,7 +287,7 @@ export const EVENT_SCHEDULE = [
       {
         time: '12:15 PM',
         title: '🚀 CLOCK STARTS: 48-HOUR SPRINT COMMENCES',
-        desc: 'Official GitHub repository initialization with Kairos webhook listener. The 48-hour continuous countdown begins!',
+        desc: 'Official GitHub repository initialization with Kairos webhook listener. The 48-hour continuous countdown begins.',
         category: 'HACK LIVE',
         highlight: true
       },

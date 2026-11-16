@@ -85,7 +85,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                 >
                   {isGrand && (
                     <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-mono font-black text-xs rounded-bl-2xl  shadow-md">
-                      Apex Champion
+                      Grand Champion
                     </div>
                   )}
 
@@ -101,7 +101,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                         {isGrand ? (
                           <Image
                             src="/assets/achievement.png"
-                            alt="Apex Achievement"
+                            alt="Grand Championship"
                             fill
                             className="object-contain p-1"
                           />

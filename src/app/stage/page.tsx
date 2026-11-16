@@ -159,7 +159,7 @@ export default function StageScreenMode() {
         <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-mono pt-4">
           <div className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800">
             <span className="text-slate-400">Grand National Champion: </span>
-            <span className="text-purple-400 font-bold">Apex National Champion</span>
+            <span className="text-purple-400 font-bold">Grand National Champion</span>
           </div>
           <div className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800">
             <span className="text-slate-400">5 Track Winners: </span>

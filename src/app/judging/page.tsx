@@ -606,7 +606,7 @@ export default function JudgingPortalPage() {
                               <span className="font-mono text-purple-300 font-bold text-sm">{scores.criterion3} / 25 Pts</span>
                             </div>
                             <p className="text-[11px] text-slate-400">
-                              A genuine, functional live implementation demonstrated during checkpoints; intuitive interface, responsive polish, and frictionless workflows.
+                              A functional live implementation demonstrated during checkpoints; intuitive interface, responsive polish, and verified workflows.
                             </p>
                             <input
                               type="range"

@@ -25,8 +25,8 @@ const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 'collaboration-lounge',
-    title: 'Builder Synergy & Voluntary Rest Rotations',
-    caption: 'Quiet chill-out zones, continuous hydration stations, and 7 hot meals prepared on campus.',
+    title: 'Rest Lounges & Team Rotations',
+    caption: 'Designated chill-out zones, continuous hydration stations, and 7 hot meals prepared on campus.',
     category: 'Community',
     src: '/assets/collaborate.png',
   },
@@ -39,7 +39,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 'podium-honors',
-    title: 'Apex Champion & Grand Honors',
+    title: 'Grand Champion & National Honors',
     caption: '₹1,75,000 total prize pool, institutional trophies, and VC pitch fast-tracking.',
     category: 'Awards',
     src: '/assets/achievement.png',

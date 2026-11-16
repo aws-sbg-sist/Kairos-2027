@@ -30,7 +30,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
               How You Reach the <span className="gradient-text-kairos">Grand Finale</span>
             </h2>
             <p className="text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              From 2,000+ national applicants to 100 on-campus finalists. A transparent, two-tier screening process engineered to reward genuine technical depth.
+              From 2,000+ national applicants to 100 on-campus finalists. A transparent, two-tier screening process evaluated on working code, architecture schemas, and live system demos.
             </p>
           </div>
         </ScrollReveal>

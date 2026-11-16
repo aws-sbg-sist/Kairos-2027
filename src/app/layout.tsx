@@ -87,7 +87,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Hackathon',
   name: 'KAIROS 2027 | Grand Edition',
-  description: 'Where Architecture Meets Execution. 48-Hour National Technical Hackathon at Sathyabama Institute of Science and Technology, Chennai.',
+  description: 'National 48-Hour Technical Hackathon on AWS Cloud at Sathyabama Institute of Science and Technology, Chennai.',
   startDate: '2027-01-22T09:30:00+05:30',
   endDate: '2027-01-24T17:00:00+05:30',
   eventStatus: 'https://schema.org/EventScheduled',

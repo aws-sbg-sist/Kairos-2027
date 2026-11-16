@@ -30,7 +30,7 @@ export const KAIROS_KNOWLEDGE_BASE: KnowledgeChunk[] = [
     title: 'KAIROS 2027 General Overview & Vision',
     keywords: ['kairos', 'overview', 'about', 'what is', 'sist', 'aws', 'sbgl', 'hackathon', 'mission', 'vision', 'scale', 'edition', 'venue', 'auditorium'],
     content: `KAIROS 2027 (Grand Edition) is India's premier national flagship 48-hour continuous technical hackathon organized by the AWS Student Builder Group (AWS SBG) — SIST Chapter, hosted at Sathyabama Institute of Science and Technology, Chennai.
-Tagline: "Where Architecture Meets Execution."
+Tagline: "National 48-Hour Cloud Hackathon on AWS."
 Scale: 100 elite national finalist teams (400–600 builders), selected from 2,000+ national applications across two competitive technical tiers.
 Cost: 100% FREE — Exactly ₹0 registration fee for all students nationwide.
 Prize Pool: ₹1,75,000 Total Cash Prize Pool + $50,000+ in AWS Cloud Promotional Credits. (The individual prize split-ups are kept as a top secret and mystery to be revealed during the grand finale).
@@ -87,7 +87,7 @@ Track 03: Autonomous Edge IoT & Sustainable Green Energy
 - Focus: Smart microgrid demand balancing, municipal resource telemetry, precision agricultural logistics, microcontroller edge inference.
 - Recommended Stacks: AWS IoT Core, AWS Greengrass, Amazon Timestream, ESP32/Raspberry Pi, MQTT, TimescaleDB.
 
-Track 04: Next-Gen FinTech, Trust & Cryptographic Security
+Track 04: FinTech, Trust & Cryptographic Security
 - Focus: Algorithmic fraud recognition, double-entry ledger consistency, privacy-preserving KYC with ZK proofs & DID, digital settlement rails.
 - Recommended Stacks: AWS KMS, Amazon Cognito, AWS GuardDuty, Amazon Aurora Serverless, Python/Polars, Redis.
 
@@ -439,7 +439,7 @@ KAIROS 2027 features 5 core technical tracks:
 3. **Track 03: Autonomous Edge IoT & Sustainable Green Energy**
    • Focus: Microgrid demand balancing, municipal resource telemetry, precision agri-tech, microcontroller inference.
    • Stack: AWS IoT Core, AWS Greengrass, Amazon Timestream, ESP32/Raspberry Pi.
-4. **Track 04: Next-Gen FinTech, Trust & Cryptographic Security**
+4. **Track 04: FinTech, Trust & Cryptographic Security**
    • Focus: Algorithmic fraud recognition, double-entry ledgers, privacy-preserving KYC with ZK proofs & DID.
    • Stack: AWS KMS, Amazon Cognito, AWS GuardDuty, Aurora Serverless.
 5. **Track 05: Open Enterprise & Campus Life Innovation**

@@ -110,8 +110,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
               <ScrollReveal direction="up" distance={24} delay={0.25}>
                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black tracking-tight text-white leading-[1.1]">
-                  Where Architecture <br />
-                  <span className="gradient-text-kairos">Meets Execution.</span>
+                  Architect and Deploy <br />
+                  <span className="gradient-text-kairos">Live on AWS Cloud.</span>
                 </h1>
               </ScrollReveal>
 

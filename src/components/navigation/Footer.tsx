@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
                 <span>
-                  {EVENT_CONFIG.venue.name}, {EVENT_CONFIG.venue.campus}, Chennai - 600119
+                  {EVENT_CONFIG.venue.name}, {EVENT_CONFIG.venue.campus}, Chennai
                 </span>
               </div>
               <div className="flex items-center gap-2">
