@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   const batch = searchParams.get('batch') || undefined;
 
   const session = await getCurrentAdminSession();
-  const members = db.getMembers({ tier, division, search, batch });
+  const members = await db.getMembers({ tier, division, search, batch });
 
   // Protect student PII: strip registerNo unless requested by an authenticated admin
   const sanitizedMembers = session

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { DUAL_PHASE_PIPELINE } from '@/lib/config';
-import { CheckCircle2, ArrowRight, Laptop, Video, Users, Shield, Calendar } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Laptop, Video, Users, Shield, Calendar, Sparkles } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
@@ -15,6 +15,9 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
 
   return (
     <section className="relative py-20 lg:py-28 overflow-hidden bg-aws-canvas">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[350px] bg-purple-950/20 blur-[150px] pointer-events-none rounded-full" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <ScrollReveal direction="up" distance={24}>
@@ -27,7 +30,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
               How You Reach the <span className="gradient-text-kairos">Grand Finale</span>
             </h2>
             <p className="text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              From 2,000+ national applicants to 100 on-campus finalists. A transparent, two-tier screening process engineered to reward genuine technical depth.
+              From 2,000+ national applicants to 100 on-campus finalists. A transparent, two-tier screening process evaluated on working code, architecture schemas, and live system demos.
             </p>
           </div>
         </ScrollReveal>
@@ -54,13 +57,14 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                     sound?.playClick();
                     setActiveStep(idx);
                   }}
-                  className={`p-6 sm:p-7 rounded-2xl cursor-pointer transition-all duration-300 relative flex flex-col justify-between h-full ${isSelected
+                  className={`p-6 sm:p-7 rounded-2xl cursor-pointer transition-colors duration-300 relative flex flex-col justify-between h-full ${
+                    isSelected
                       ? 'bg-aws-squidInk/95 border-2 border-purple-500 shadow-2xl shadow-purple-900/30 scale-[1.02]'
                       : 'bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/90'
-                    }`}
+                  }`}
                 >
                   {stage.status === 'ACTIVE_NOW' && (
-                    <div className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5 shadow-[0_0_12px_rgba(16,185,129,0.3)]">
+                    <div className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5 shadow-md shadow-emerald-950/40">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                       <span>ACTIVE NOW</span>
                     </div>
@@ -69,15 +73,16 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3.5">
                       <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-all duration-300 ${isSelected
-                            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-900/40'
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-colors duration-300 ${
+                          isSelected
+                            ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-lg shadow-purple-900/40'
                             : 'bg-white/5 text-purple-400 border border-white/10'
-                          }`}
+                        }`}
                       >
                         <Icon className="w-6 h-6" />
                       </div>
                       <div>
-                        <span className="text-[11px] font-mono font-bold text-purple-300 block uppercase">
+                        <span role="status" className="text-[11px] font-mono font-medium text-purple-300 block">
                           {stage.step}
                         </span>
                         <h3 className="text-base font-bold text-white leading-tight">

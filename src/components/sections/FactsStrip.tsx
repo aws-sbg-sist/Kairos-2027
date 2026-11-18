@@ -16,8 +16,8 @@ export const FactsStrip: React.FC = () => {
       numericValue: 48,
       suffix: ' Hours',
       label: 'Continuous Offline Hackathon',
-      detail: '22 Jan 12:15 PM – 24 Jan 12:15 PM IST',
-      badge: '48H Clock Sprint',
+      detail: '22 Jan 09:30 AM – 24 Jan 05:00 PM IST',
+      badge: 'Live Hack Clock',
     },
     {
       id: '02',
@@ -44,7 +44,7 @@ export const FactsStrip: React.FC = () => {
     },
     {
       id: '04',
-      tag: 'BOUNTIES',
+      tag: 'PRIZE POOL',
       image: '/assets/prizes.png',
       imageGlow: 'rgba(238,5,242,0.4)',
       numericValue: 175000,
@@ -59,7 +59,7 @@ export const FactsStrip: React.FC = () => {
       tag: 'LOCATION',
       image: '/assets/venue.png',
       imageGlow: 'rgba(56,189,248,0.35)',
-      customValue: 'Central Library',
+      customValue: 'Indoor Auditorium',
       label: 'Sathyabama University, Chennai',
       detail: '1Gbps Wi-Fi Mesh & Power Drops',
       badge: 'OMR Campus',
@@ -77,9 +77,9 @@ export const FactsStrip: React.FC = () => {
   ];
 
   return (
-    <section className="relative z-20 border-y border-white/10 bg-[#0a0a0f]/95 backdrop-blur-2xl overflow-hidden select-none">
+    <section className="relative z-20 border-y border-white/10 bg-aws-canvas/95 backdrop-blur-2xl overflow-hidden select-none">
       {/* Top Ambient Neon Guide Hairline */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-aws-orange/40 to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent pointer-events-none" />
 
       {/* Background Subtle Tech Grid Motif */}
       <div className="absolute inset-0 tech-grid-pattern opacity-30 pointer-events-none" />
@@ -98,39 +98,39 @@ export const FactsStrip: React.FC = () => {
               >
                 <div
                   onMouseEnter={() => sound?.playHover()}
-                  className="group relative p-4 sm:p-5 lg:p-6 transition-all duration-200 ease-entrance hover:bg-white/[0.035] flex flex-col justify-between h-full overflow-hidden"
+                  className="group relative p-3.5 sm:p-5 lg:p-6 transition-colors duration-200 ease-entrance hover:bg-white/[0.035] flex flex-col justify-between h-full overflow-hidden"
                 >
                   {/* Top Glowing Beam on Hover */}
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-aws-orange to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Top Subtle Ambient Bloom on Hover */}
                   <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full bg-purple-950/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                   <div>
                     {/* Segment Telemetry Header */}
-                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
-                      <span className="flex items-center gap-1.5 font-bold tracking-wider group-hover:text-purple-400 transition-colors">
-                        <span className="text-[11px] text-slate-400 font-normal">[{item.id}]</span>
-                        <span>{item.tag}</span>
+                    <div className="flex items-center justify-between text-[11px] sm:text-xs font-mono text-slate-400 mb-2 sm:mb-3 gap-1">
+                      <span className="flex items-center gap-1 font-bold group-hover:text-purple-400 transition-colors truncate">
+                        <span className="text-[10px] sm:text-xs text-slate-400 font-normal">[{item.id}]</span>
+                        <span className="truncate">{item.tag}</span>
                       </span>
-                      <span className="text-[11px] px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300 group-hover:border-purple-500/30 group-hover:text-purple-300 transition-colors">
+                      <span className="text-[10px] sm:text-xs px-1.5 sm:px-2.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300 group-hover:border-purple-500/30 group-hover:text-purple-300 transition-colors shrink-0">
                         {item.badge}
                       </span>
                     </div>
 
                     {/* Visual Asset Emblem with Animated Scale */}
-                    <div className="mb-4 relative w-10 h-10 sm:w-11 sm:h-11 transition-transform duration-300 group-hover:scale-110">
+                    <div className="mb-3 sm:mb-4 relative w-8 h-8 sm:w-11 sm:h-11 transition-transform duration-300 group-hover:scale-110">
                       <Image
                         src={item.image}
                         alt={item.tag}
                         fill
-                        className="object-contain filter drop-shadow-[0_4px_12px_rgba(238,5,242,0.3)]"
+                        className="object-contain filter drop-shadow-md"
                       />
                     </div>
 
                     {/* Metric Display with Animated Counter */}
                     <div className="space-y-1">
-                      <div className="text-xl sm:text-2xl font-display font-black text-white tracking-tight group-hover:text-purple-200 transition-colors">
+                      <div className="text-lg sm:text-2xl font-display font-black text-white tracking-tight group-hover:text-purple-200 transition-colors">
                         {item.numericValue !== undefined ? (
                           <AnimatedCounter
                             value={item.numericValue}
@@ -142,14 +142,14 @@ export const FactsStrip: React.FC = () => {
                           <span>{item.customValue}</span>
                         )}
                       </div>
-                      <div className="text-xs font-semibold text-slate-300 leading-snug">
+                      <div className="text-[11px] sm:text-xs font-semibold text-slate-300 leading-snug">
                         {item.label}
                       </div>
                     </div>
                   </div>
 
                   {/* Micro Detail Technical Footnote */}
-                  <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-slate-400 leading-snug line-clamp-2">
+                  <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-white/5 text-[10px] sm:text-[11px] font-mono text-slate-400 truncate">
                     {item.detail}
                   </div>
                 </div>

@@ -3,6 +3,7 @@ import { verifyAdminPasskey, createAdminToken, isAdminAuthConfigured, COOKIE_NAM
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { cookies } from 'next/headers';
+import { ORGANIZING_ROSTER } from '@/lib/config';
 
 export async function POST(req: NextRequest) {
   // Rate limit: 5 attempts per minute per IP to defend against brute force
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { passkey, organizerName, organizerRole } = await req.json();
+    const { passkey, organizerName } = await req.json();
 
     if (!passkey || !organizerName) {
       return NextResponse.json(
@@ -30,22 +31,30 @@ export async function POST(req: NextRequest) {
 
     const isValid = verifyAdminPasskey(passkey);
     if (!isValid) {
-      db.addAuditLog('Failed Login Attempt', 'AUTH_FAILURE', `Invalid passkey attempted for identity [${organizerName}]`);
+      await db.addAuditLog('Failed Login Attempt', 'AUTH_FAILURE', `Invalid passkey attempted for identity [${organizerName}]`);
       return NextResponse.json(
         { success: false, error: 'Invalid organizer authorization passkey.' },
         { status: 401 }
       );
     }
 
-    const token = createAdminToken(organizerName, organizerRole || 'Organizer Lead');
+    // RBAC: Server-enforced role resolution from official roster (Never trust client-supplied role)
+    const rosterEntry = ORGANIZING_ROSTER.find(
+      o => o.name.toLowerCase() === organizerName.trim().toLowerCase()
+    );
+    const assignedRole = rosterEntry ? rosterEntry.role : (
+      organizerName.toLowerCase().includes('thenappan') ? 'President & SBGL' : 'Organizer Lead'
+    );
+
+    const token = createAdminToken(organizerName.trim(), assignedRole);
     
     // Record successful audit login
-    db.addAuditLog(organizerName, 'ADMIN_LOGIN', `Logged in successfully as ${organizerRole || 'Lead'}`);
+    await db.addAuditLog(organizerName.trim(), 'ADMIN_LOGIN', `Logged in successfully as ${assignedRole}`);
 
     const response = NextResponse.json({
       success: true,
       message: `Welcome, ${organizerName}. Admin access granted.`,
-      organizer: { name: organizerName, role: organizerRole }
+      organizer: { name: organizerName.trim(), role: assignedRole }
     });
 
     response.cookies.set({

@@ -2,9 +2,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { MessageSquare, X, Send, RotateCcw, Bot, User } from 'lucide-react';
+import { MessageSquare, X, Send, Sparkles, RotateCcw, Bot, User, CheckCircle2 } from 'lucide-react';
 import { sound } from '@/lib/audio';
-import { haptics } from '@/lib/haptics';
 
 interface Message {
   id: string;
@@ -17,28 +16,80 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: 'welcome',
     role: 'assistant',
-    content: `**KAIROS 2027 Event Specification & Technical Assistant**
+    content: `**Welcome to KAIROS 2027!**
 
-Query the verified event parameters directly:
-• **₹1,75,000** Total Prize Pool & AWS Cloud Credits
+I am the official AWS Student Builder Group AI Assistant. Ask me anything about:
+• **₹1,75,000** Total Cash Prize Pool & AWS Promotional Credits (Secret Split-Ups!)
 • **5 Technical Tracks** (Agentic AI, Cloud-Native, IoT, FinTech, Open Enterprise)
-• **Dual-Phase Selection** & Free Round 0 Registration
-• **On-Campus Facilities** (Complimentary meals, transit fleet & 48h bays)
-• **Rainmaker Program** (Earn 10%–15% cash referring corporate sponsors)
+• **Dual-Phase Selection** & 100% Free Registration
+• **Complimentary Meals & Transit Bus Fleet**
+• **Venue:** Indoor Auditorium, Sathyabama, Chennai
 
-Select a query chip below or submit your question.`,
-    time: 'Live',
+What would you like to know?`,
+    time: 'Just now',
   },
 ];
 
 const SUGGESTED_PROMPTS = [
-  'Cash prizes breakdown',
+  'Cash prize pool?',
   'What are the 5 tracks?',
   'Is registration 100% free?',
-  'Full 48-hour schedule',
-  'How referral rewards work',
-  'Meals, stay & transit buses',
+  'Full 48-hour schedule?',
+  'Where is the venue?',
+  'Meals & transit buses?',
 ];
+
+function renderFormattedMessage(content: string) {
+  const lines = content.split('\n');
+  return lines.map((line, idx) => {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      return <div key={idx} className="h-2" />;
+    }
+
+    if (line.startsWith('### ')) {
+      return (
+        <div key={idx} className="font-bold text-purple-300 text-sm sm:text-base mt-3 mb-1.5 font-ai tracking-normal">
+          {line.replace('### ', '')}
+        </div>
+      );
+    }
+    if (line.startsWith('## ')) {
+      return (
+        <div key={idx} className="font-bold text-white text-base sm:text-lg mt-3.5 mb-2 font-ai tracking-normal">
+          {line.replace('## ', '')}
+        </div>
+      );
+    }
+
+    const isBullet = trimmed.startsWith('•') || trimmed.startsWith('* ') || trimmed.startsWith('- ');
+    const cleanLine = isBullet ? trimmed.replace(/^[•*-]\s*/, '') : line;
+
+    // Format bold segments
+    const parts = cleanLine.split(/(\?\?\?[^*]+\?\?\?|\*\*[^*]+\*\*)/g);
+    const renderedParts = parts.map((part, pIdx) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={pIdx} className="font-bold text-white font-ai">{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+
+    if (isBullet) {
+      return (
+        <div key={idx} className="flex gap-2.5 pl-1 my-1.5 items-start font-ai">
+          <span className="text-purple-400 select-none leading-relaxed font-bold text-base">•</span>
+          <span className="flex-1 leading-relaxed text-[15px] sm:text-base text-slate-100 font-ai">{renderedParts}</span>
+        </div>
+      );
+    }
+
+    return (
+      <div key={idx} className="my-2 leading-relaxed text-[15px] sm:text-base text-slate-100 font-ai">
+        {renderedParts}
+      </div>
+    );
+  });
+}
 
 export const KairosChatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,7 +122,6 @@ export const KairosChatbot: React.FC = () => {
     if (!query || isLoading) return;
 
     sound?.playClick();
-    haptics?.medium();
     setHasInteracted(true);
     const userMsg: Message = {
       id: `usr-${Date.now()}`,
@@ -106,17 +156,13 @@ export const KairosChatbot: React.FC = () => {
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 
-      sound?.playHover();
-      haptics?.light();
       setMessages((prev) => [...prev, botMsg]);
     } catch (err: any) {
       console.error('[Chatbot error]:', err);
-      sound?.playError();
-      haptics?.error();
       const errorMsg: Message = {
         id: `err-${Date.now()}`,
         role: 'assistant',
-        content: `Notice: The request could not be completed at this moment. You can check the **FAQ** or **Rules** page, or email us at **sistawscc@gmail.com**.`,
+        content: `Sorry, I could not complete that request right now. You can check the **FAQ** or **Rules** page, or email us at **sistawscc@gmail.com**.`,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -134,26 +180,28 @@ export const KairosChatbot: React.FC = () => {
 
   const handleClearHistory = () => {
     sound?.playClick();
-    haptics?.selection();
     setMessages(INITIAL_MESSAGES);
   };
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-40 select-none print:hidden">
+    <div
+      className={
+        isOpen
+          ? 'fixed inset-x-2 sm:inset-x-auto sm:right-5 bottom-[max(0.5rem,env(safe-area-inset-bottom))] sm:bottom-5 z-40 select-none font-ai flex justify-center sm:justify-end'
+          : 'fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-3 sm:right-5 z-40 select-none font-ai'
+      }
+    >
       {/* Floating Trigger Button */}
       {!isOpen && (
         <button
           onClick={() => {
-            sound?.playModalOpen();
-            haptics?.medium();
+            sound?.playClick();
             setIsOpen(true);
           }}
-          className="relative group flex items-center justify-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-gradient-to-r from-purple-700 via-fuchsia-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-all duration-200 ease-entrance border border-purple-400/40 focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
-          aria-label="Open Kairos AI Assistant"
-          aria-expanded={isOpen}
-          aria-haspopup="dialog"
+          className="relative group flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-colors duration-200 ease-entrance border border-purple-400/40 font-ai"
+          aria-label="Open Kairos AI Chatbot"
         >
-          <div className="relative w-6 h-6 flex-shrink-0 animate-pulse">
+          <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 motion-safe:animate-pulse">
             <Image
               src="/assets/kairos-hourglass.png"
               alt="Kairos AI"
@@ -161,26 +209,28 @@ export const KairosChatbot: React.FC = () => {
               className="object-contain"
             />
           </div>
-          <span className="hidden sm:inline text-xs sm:text-sm font-sans tracking-wide">Ask Kairos AI</span>
-          <span className="absolute -top-1 -right-1 sm:static sm:flex h-2.5 w-2.5 relative" aria-hidden="true">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-slate-950" />
+          <span className="text-sm sm:text-base font-bold font-ai tracking-normal">Ask Kairos AI</span>
+          <span className="flex h-2.5 w-2.5 relative">
+            <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
           </span>
+
+          {/* Micro Tooltip */}
+          {!hasInteracted && (
+            <span className="hidden sm:inline-block absolute -top-11 right-0 bg-aws-canvas/95 border border-purple-500/40 text-purple-300 text-xs font-ai font-medium px-3 py-1.5 rounded-lg shadow-lg pointer-events-none whitespace-nowrap">
+              Instant RAG answers about Kairos 2027
+            </span>
+          )}
         </button>
       )}
 
       {/* Floating Chat Modal */}
       {isOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Kairos AI Chat Assistant"
-          className="relative w-[92vw] sm:w-[390px] h-[580px] max-h-[85vh] rounded-2xl glass-panel-glow border border-purple-500/30 shadow-2xl shadow-black/80 flex flex-col overflow-hidden bg-aws-squidInk/95 origin-bottom-right animate-popover-in backdrop-blur-xl"
-        >
+        <div className="relative w-full sm:w-[480px] md:w-[500px] h-[82dvh] max-h-[640px] rounded-2xl sm:rounded-3xl glass-panel-glow border border-purple-500/30 shadow-2xl shadow-black/80 flex flex-col overflow-hidden bg-aws-squidInk/95 origin-bottom-right animate-popover-in backdrop-blur-xl font-ai">
           {/* Header */}
-          <div className="p-3.5 border-b border-purple-500/20 bg-aws-canvas/90 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="relative w-7 h-7 rounded-lg overflow-hidden bg-aws-canvas border border-purple-500/40 flex-shrink-0 p-0.5">
+          <div className="p-4 border-b border-purple-500/20 bg-aws-canvas/90 flex items-center justify-between font-ai">
+            <div className="flex items-center gap-3">
+              <div className="relative w-8 h-8 rounded-xl overflow-hidden bg-aws-canvas border border-purple-500/40 flex-shrink-0 p-1">
                 <Image
                   src="/assets/kairos-hourglass.png"
                   alt="Kairos Logo"
@@ -189,90 +239,89 @@ export const KairosChatbot: React.FC = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-display font-bold text-xs sm:text-sm text-aws-snow tracking-wide">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-base sm:text-lg text-white font-ai tracking-normal">
                     Kairos Assistant
                   </span>
-                  <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-400 border border-purple-500/40">
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-purple-950/60 text-purple-300 border border-purple-500/40 font-ai">
                     RAG
                   </span>
                 </div>
-                <div className="flex items-center gap-1 text-[10px] text-emerald-400 font-mono">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium font-ai">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 motion-safe:animate-pulse" />
                   <span>AWS SBGL Knowledge Active</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <button
                 onClick={handleClearHistory}
-                aria-label="Restart conversation"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-purple-400 hover:bg-purple-950/40 transition focus-visible:ring-1 focus-visible:ring-aws-orange focus-visible:outline-none"
+                className="p-2 rounded-xl text-slate-300 hover:text-purple-300 hover:bg-purple-950/50 transition-colors"
                 title="Restart conversation"
               >
-                <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
+                <RotateCcw className="w-4 h-4" />
               </button>
               <button
                 onClick={() => {
                   sound?.playClick();
                   setIsOpen(false);
                 }}
-                aria-label="Close chat window"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-purple-400 hover:bg-purple-950/40 transition focus-visible:ring-1 focus-visible:ring-aws-orange focus-visible:outline-none"
+                className="p-2 rounded-xl text-slate-300 hover:text-purple-300 hover:bg-purple-950/50 transition-colors"
                 title="Close chat"
               >
-                <X className="w-4 h-4" aria-hidden="true" />
+                <X className="w-4 h-4" />
               </button>
             </div>
           </div>
 
           {/* Messages Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-3.5 space-y-3.5 text-xs bg-aws-canvas/30">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-aws-canvas/30 font-ai text-[15px] sm:text-base">
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex gap-2.5 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.role === 'assistant' && (
-                  <div className="w-6 h-6 rounded-md bg-purple-950/60 border border-purple-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 text-purple-400">
-                    <Bot className="w-3.5 h-3.5 text-purple-400" />
+                  <div className="w-7 h-7 rounded-lg bg-purple-950/70 border border-purple-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 text-purple-300">
+                    <Sparkles className="w-4 h-4 text-purple-400" />
                   </div>
                 )}
 
                 <div
-                  className={`max-w-[85%] rounded-xl p-3 leading-relaxed whitespace-pre-wrap ${msg.role === 'user'
-                      ? 'bg-gradient-to-r from-aws-orange/25 to-indigo-600/20 border border-purple-500/40 text-purple-200 font-medium'
-                      : 'bg-aws-card/95 border border-purple-500/20 text-aws-snow shadow-sm'
-                    }`}
+                  className={`max-w-[88%] rounded-2xl p-4 leading-relaxed font-ai text-[15px] sm:text-base ${
+                    msg.role === 'user'
+                      ? 'bg-gradient-to-r from-purple-900/60 to-purple-950/70 border border-purple-500/50 text-white font-medium shadow-md'
+                      : 'bg-aws-card/95 border border-purple-500/25 text-slate-100 shadow-md'
+                  }`}
                 >
-                  <div className="text-[11.5px] leading-relaxed select-text">
-                    {msg.content}
+                  <div className="leading-relaxed select-text font-ai">
+                    {msg.role === 'assistant' ? renderFormattedMessage(msg.content) : msg.content}
                   </div>
-                  <div className="mt-1 text-[9px] font-mono text-slate-400 text-right">
+                  <div className="mt-2 text-xs font-ai text-slate-400 text-right">
                     {msg.time}
                   </div>
                 </div>
 
                 {msg.role === 'user' && (
-                  <div className="w-6 h-6 rounded-md bg-aws-squidInk border border-purple-500/30 flex items-center justify-center flex-shrink-0 mt-0.5 text-slate-300">
-                    <User className="w-3.5 h-3.5" />
+                  <div className="w-7 h-7 rounded-lg bg-aws-squidInk border border-purple-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 text-slate-200">
+                    <User className="w-4 h-4" />
                   </div>
                 )}
               </div>
             ))}
 
             {isLoading && (
-              <div className="flex gap-2.5 items-center text-slate-400 text-xs italic p-2">
-                <div className="w-6 h-6 rounded-md bg-purple-950/60 border border-purple-500/40 flex items-center justify-center flex-shrink-0">
-                  <Bot className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
+              <div className="flex gap-3 items-center text-slate-300 p-3 font-ai">
+                <div className="w-7 h-7 rounded-lg bg-purple-950/70 border border-purple-500/40 flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-4 h-4 text-purple-400 motion-safe:animate-spin" />
                 </div>
-                <div className="flex items-center gap-1.5 font-mono text-[11px] text-purple-300">
+                <div className="flex items-center gap-2 font-ai text-sm text-purple-300 font-medium">
                   <span>Searching Kairos knowledge base</span>
-                  <span className="flex gap-0.5">
-                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-bounce" />
-                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-bounce [animation-delay:0.2s]" />
-                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-bounce [animation-delay:0.4s]" />
+                  <span className="flex gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 motion-safe:animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 motion-safe:animate-pulse [animation-delay:0.2s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 motion-safe:animate-pulse [animation-delay:0.4s]" />
                   </span>
                 </div>
               </div>
@@ -282,20 +331,17 @@ export const KairosChatbot: React.FC = () => {
           </div>
 
           {/* Quick Suggestion Chips */}
-          <div className="p-2 border-t border-purple-500/15 bg-aws-canvas/80">
-            <div className="text-[10px] font-mono text-slate-400 mb-1.5 px-1 flex items-center gap-1">
+          <div className="p-3 border-t border-purple-500/15 bg-aws-canvas/80 font-ai">
+            <div className="text-xs sm:text-sm font-ai font-semibold text-slate-300 mb-2 px-1 flex items-center gap-1.5">
               <span>Quick Topics:</span>
             </div>
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-[10px]">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none font-ai">
               {SUGGESTED_PROMPTS.map((prompt) => (
                 <button
                   key={prompt}
-                  onClick={() => {
-                    haptics?.selection();
-                    handleSendMessage(prompt);
-                  }}
+                  onClick={() => handleSendMessage(prompt)}
                   disabled={isLoading}
-                  className="px-2.5 py-1 rounded-full bg-aws-squidInk/80 hover:bg-purple-950/60 border border-purple-500/20 hover:border-purple-500/60 text-slate-300 hover:text-white transition whitespace-nowrap flex-shrink-0 disabled:opacity-50 active:scale-[0.97]"
+                  className="px-3.5 py-1.5 rounded-full bg-aws-squidInk/90 hover:bg-purple-950/70 border border-purple-500/30 hover:border-purple-500/70 text-slate-200 hover:text-white transition-colors whitespace-nowrap flex-shrink-0 disabled:opacity-50 text-xs sm:text-sm font-medium font-ai"
                 >
                   {prompt}
                 </button>
@@ -304,27 +350,25 @@ export const KairosChatbot: React.FC = () => {
           </div>
 
           {/* Input Box */}
-          <div className="p-3 border-t border-purple-500/20 bg-aws-canvas/95 flex items-center gap-2">
+          <div className="p-3.5 border-t border-purple-500/20 bg-aws-canvas/95 flex items-center gap-2.5 font-ai">
             <input
               ref={inputRef}
               type="text"
-              aria-label="Ask a question about KAIROS 2027"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask about prizes, tracks, schedule..."
               disabled={isLoading}
               maxLength={1000}
-              className="flex-1 bg-aws-card border border-purple-500/25 focus:border-purple-500 rounded-xl px-3 py-2 text-xs text-aws-snow placeholder-slate-400 outline-none focus:ring-1 focus:ring-aws-orange transition"
+              className="flex-1 bg-aws-card border border-purple-500/30 focus:border-purple-400 rounded-xl px-4 py-3 text-base font-ai text-white placeholder-slate-400 outline-none focus:ring-1 focus:ring-purple-400 transition-colors"
             />
             <button
               onClick={() => handleSendMessage()}
               disabled={!inputValue.trim() || isLoading}
-              aria-label="Send message to Kairos Assistant"
-              className="p-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white disabled:opacity-40 disabled:cursor-not-allowed transition font-bold shadow-md shadow-purple-900/30 flex-shrink-0 focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none"
+              className="p-3 rounded-xl btn-primary-themed text-white hover:opacity-95 disabled:opacity-40 disabled:cursor-not-allowed transition-colors font-bold shadow-md shadow-purple-900/40 flex-shrink-0"
               title="Send message"
             >
-              <Send className="w-3.5 h-3.5" aria-hidden="true" />
+              <Send className="w-4 h-4" />
             </button>
           </div>
         </div>

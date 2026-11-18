@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CheckCircle2, ArrowRight, ShieldCheck, Send, User, Mail, School, BookOpen, Layers, ExternalLink } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ShieldCheck, Send, User, Mail, School, BookOpen, Layers, ExternalLink, Sparkles } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
@@ -59,18 +59,21 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
   const steps = [
     { number: '01', title: 'Early Interest', desc: 'Reserve your priority notification spot now. No fees, instant confirmation.', status: 'ACTIVE NOW', current: true },
     { number: '02', title: 'National Applications', desc: 'Submit abstract, proposed system architecture, and 4–6 builder team roster.', status: 'OPENS SOON' },
-    { number: '03', title: 'Technical Screening', desc: 'Evaluation of abstracts and Round 1 prototypes to shortlist up to 100 finalist teams.', status: 'PLANNED' },
-    { number: '04', title: 'On-Campus 48H Finale', desc: 'Build live in Chennai at Central Library & Campus Bays with power, Wi-Fi & meals.', status: '22-24 JAN 2027' },
-    { number: '05', title: 'Grand Stage Demos', desc: 'Top finalist squads demonstrate before the Grand Jury on the main stage.', status: 'VALEDICTORY' },
+    { number: '03', title: 'Technical Screening', desc: 'Evaluation of abstracts by faculty & engineers to shortlist up to 75 teams.', status: 'PLANNED' },
+    { number: '04', title: 'On-Campus 48H Finale', desc: 'Build live in Chennai at Sathyabama Indoor Auditorium with power, Wi-Fi & meals.', status: '22-24 JAN 2027' },
+    { number: '05', title: 'Grand Stage Demos', desc: 'Top 20 teams demonstrate before the Grand Jury on the main auditorium stage.', status: 'VALEDICTORY' },
   ];
 
   return (
-    <section id="pathway" className="relative py-16 lg:py-24 overflow-hidden bg-kairos-bg">
+    <section id="pathway" className="relative py-24 lg:py-32 overflow-hidden bg-kairos-bg">
+      {/* Background illumination */}
+      <div className="absolute top-1/2 left-0 w-[600px] h-[350px] bg-purple-900/15 blur-[160px] pointer-events-none rounded-full" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md backdrop-blur-md">
               <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
               <span>The Builder Journey</span>
             </div>
@@ -100,7 +103,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
               className="h-full"
             >
               <div
-                className={`p-5 rounded-2xl relative flex flex-col justify-between space-y-3 transition-all h-full ${
+                className={`p-5 rounded-2xl relative flex flex-col justify-between space-y-3 transition-colors h-full ${
                   st.current
                     ? 'bg-purple-950/50 border-2 border-purple-500 shadow-xl shadow-purple-950/60 scale-[1.02]'
                     : 'glass-panel opacity-85 hover:opacity-100 hover:border-purple-500/40'
@@ -112,7 +115,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
                     <span
                       className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                         st.current
-                          ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.2)]'
+                          ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 shadow-md shadow-emerald-950/30'
                           : 'bg-slate-900 text-slate-400'
                       }`}
                     >
@@ -129,7 +132,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
 
                 <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-purple-300">
                   <span>Milestone</span>
-                  <span className="text-slate-400">0{i + 1}/05</span>
+                  <span className="text-slate-500">0{i + 1}/05</span>
                 </div>
               </div>
             </ScrollReveal>
@@ -144,7 +147,7 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
             <div className="relative z-10 space-y-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs font-mono text-purple-300 font-bold block uppercase tracking-wider mb-1">
+                  <span className="text-xs font-mono text-purple-300 font-bold block  mb-1">
                     Direct Priority Reservation
                   </span>
                   <h3 className="text-2xl font-display font-black text-white">

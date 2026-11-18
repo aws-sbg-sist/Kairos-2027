@@ -4,9 +4,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EVENT_SCHEDULE } from '@/lib/config';
-import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { sound } from '@/lib/audio';
-import { haptics } from '@/lib/haptics';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 
@@ -34,12 +33,15 @@ export const ScheduleSection: React.FC = () => {
   };
 
   return (
-    <section id="schedule" className="relative py-16 lg:py-24 overflow-hidden bg-aws-canvas">
+    <section id="schedule" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-950/40 blur-[170px] pointer-events-none rounded-full" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/30 shadow-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/30 shadow-md backdrop-blur-md">
               <div className="relative w-5 h-5 rounded overflow-hidden">
                 <Image
                   src="/assets/schedule.png"
@@ -69,15 +71,10 @@ export const ScheduleSection: React.FC = () => {
               <a
                 href="/api/calendar"
                 download="KAIROS_2027_Schedule.ics"
-                onClick={() => {
-                  sound?.playClick();
-                  haptics?.success();
-                }}
-                className="island-btn px-5 py-2.5 text-xs font-semibold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/30 text-purple-300 shadow-md group active:scale-[0.97]"
+                onClick={() => sound?.playClick()}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-aws-squidInk hover:bg-slate-800 border border-purple-500/30 text-purple-300 transition-colors shadow-md group"
               >
-                <span className="island-btn-icon w-6 h-6 rounded-full bg-purple-500/20 text-purple-400">
-                  <Download className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
-                </span>
+                <Download className="w-3.5 h-3.5 text-purple-400 group-hover:translate-y-0.5 transition-transform" />
                 <span>Add to Apple / Google / Outlook Calendar (.ics)</span>
               </a>
             </div>
@@ -93,24 +90,23 @@ export const ScheduleSection: React.FC = () => {
                 key={day.day}
                 onClick={() => {
                   sound?.playClick();
-                  haptics?.selection();
                   setSelectedDayIdx(idx);
                 }}
-                className={`p-4 sm:p-5 rounded-2xl text-left transition-all duration-200 relative select-none active:scale-[0.98] ${
+                className={`p-4 sm:p-5 rounded-2xl text-left transition-colors duration-200 relative select-none ${
                   isActive
                     ? 'bg-aws-squidInk border-2 border-purple-500 shadow-xl shadow-purple-900/30 scale-[1.02]'
                     : 'bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/80'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] font-mono text-purple-400 block uppercase font-bold tracking-wider">
+                  <span className="text-xs font-mono text-purple-400 block font-bold">
                     DAY {day.day}
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-950/80 text-slate-400 border border-white/5">
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-slate-950/80 text-slate-300 border border-white/10">
                     {day.tag}
                   </span>
                 </div>
-                <span className="text-sm sm:text-base font-bold text-white block">
+                <span className="text-base sm:text-lg font-bold text-white block">
                   {day.dayName.split(':')[1]?.trim() || day.dayName}
                 </span>
                 <span className="text-xs text-slate-400 block truncate mt-0.5">
@@ -136,7 +132,7 @@ export const ScheduleSection: React.FC = () => {
               <div className="flex items-center gap-2 text-slate-200">
                 <Calendar className="w-4 h-4 text-purple-400" />
                 <span className="font-bold text-white">{activeDay.dayName}</span>
-                <span className="hidden sm:inline text-slate-400" aria-hidden="true">•</span>
+                <span className="text-slate-500">•</span>
                 <span className="text-purple-300">{activeDay.title}</span>
               </div>
               <div className="flex items-center gap-2 text-slate-400">
@@ -160,7 +156,7 @@ export const ScheduleSection: React.FC = () => {
                       maxTilt={5}
                       spotlightColor="rgba(238, 5, 242, 0.15)"
                       borderColor={isFreeze ? 'rgba(238, 5, 242, 0.5)' : isCheckpoint ? 'rgba(118, 48, 217, 0.4)' : 'rgba(255, 255, 255, 0.1)'}
-                      className={`w-[290px] sm:w-[320px] p-5 rounded-2xl border transition-all flex flex-col justify-between shrink-0 ${
+                      className={`w-[290px] sm:w-[320px] p-5 rounded-2xl border transition-colors flex flex-col justify-between shrink-0 ${
                         isFreeze
                           ? 'bg-gradient-to-b from-purple-950/60 to-slate-950 border-purple-500/50 shadow-lg shadow-purple-900/30'
                           : isCheckpoint
@@ -174,7 +170,7 @@ export const ScheduleSection: React.FC = () => {
                             <Clock className="w-3.5 h-3.5 text-purple-400" />
                             <span>{milestone.time}</span>
                           </span>
-                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border uppercase font-semibold ${badgeClass}`}>
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border  font-semibold ${badgeClass}`}>
                             {milestone.category}
                           </span>
                         </div>
@@ -183,12 +179,12 @@ export const ScheduleSection: React.FC = () => {
                           {milestone.title}
                         </h4>
 
-                        <p className="text-xs text-slate-300 leading-relaxed">
+                        <p className="text-sm text-slate-200 leading-relaxed">
                           {milestone.desc}
                         </p>
                       </div>
 
-                      <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                      <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-slate-300">
                         <span>Milestone 0{idx + 1}</span>
                         {isCheckpoint && (
                           <span className="text-purple-300 font-bold flex items-center gap-1">

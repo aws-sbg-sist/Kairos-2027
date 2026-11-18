@@ -84,7 +84,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
         damping: 25,
       }}
       className={`relative rounded-2xl overflow-hidden transition-shadow duration-300 ${
-        isHovered ? 'shadow-[0_12px_40px_-10px_rgba(0,0,0,0.7)]' : 'shadow-lg'
+        isHovered ? 'shadow-2xl shadow-black/80' : 'shadow-lg'
       } ${className}`}
     >
       {/* Radial Mouse Spotlight Effect */}

@@ -99,22 +99,22 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
 
   return (
     <div
-      className={`fixed inset-0 z-[100] bg-[#05070D] flex flex-col items-center justify-center transition-all duration-700 ease-out overflow-hidden ${
+      className={`fixed inset-0 z-[100] bg-aws-canvas flex flex-col items-center justify-center transition-colors duration-700 ease-out overflow-hidden ${
         isFadingOut ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
       }`}
     >
       {/* Background ambient lighting effects */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-r from-aws-orange/25 via-aws-blue/20 to-aws-purple/20 blur-[140px] rounded-full animate-pulse" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#05070D_95%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,var(--color-ink-canvas)_95%)]" />
       </div>
 
       {/* Top Header Bar inside reveal */}
       <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-20">
         <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/60 backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-ping" />
-          <span className="text-[11px] font-mono font-bold tracking-wider text-slate-300 uppercase">
-            AWS SBGL · KAIROS 2027 Logo Reveal
+          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 animate-ping" />
+          <span className="text-[11px] font-mono font-bold text-slate-300">
+            AWS SBGL - KAIROS 2027 Logo Reveal
           </span>
         </div>
 
@@ -132,7 +132,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
               </>
             ) : (
               <>
-                <Volume2 className="w-3.5 h-3.5 text-[#10B981] group-hover:scale-110 transition" />
+                <Volume2 className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition" />
                 <span className="hidden sm:inline">Sound On</span>
               </>
             )}
@@ -151,7 +151,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
 
       {/* Central Video Frame */}
       <div className="relative z-10 w-full max-w-4xl px-4 sm:px-6 flex flex-col items-center">
-        <div className="relative rounded-3xl overflow-hidden border-2 border-purple-500/40 shadow-[0_0_80px_rgba(168,85,247,0.4)] bg-slate-950/90 aspect-video w-full flex items-center justify-center">
+        <div className="relative rounded-3xl overflow-hidden border-2 border-purple-500/40 shadow-2xl shadow-purple-950/50 bg-slate-950/90 aspect-video w-full flex items-center justify-center">
           <video
             ref={videoRef}
             src="/assets/kairos-logo-reveal.mp4"
@@ -166,7 +166,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
           {/* Bottom subtle progress line */}
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-800">
             <div
-              className="h-full bg-gradient-to-r from-aws-orange via-aws-purple to-aws-blue transition-all duration-100 ease-linear"
+              className="h-full bg-gradient-to-r from-aws-orange via-aws-purple to-aws-blue transition-colors duration-100 ease-linear"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -175,8 +175,8 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
         {/* Bottom Subtitle / Press Esc notification */}
         <div className="mt-6 flex items-center justify-between w-full text-[11px] font-mono text-slate-400 px-2">
           <span className="flex items-center gap-2 text-slate-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600" />
-            National Grand Technical Hackathon · Sathyabama Institute of Science and Technology
+            <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-700 to-purple-900" />
+            National Grand Technical Hackathon - Sathyabama Institute of Science and Technology
           </span>
           <span className="hidden sm:inline-block text-slate-400">
             Press <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 text-[10px]">Esc</kbd> to enter site

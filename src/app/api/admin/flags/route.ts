@@ -1,23 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { getCurrentAdminSession } from '@/lib/auth';
+import { resolveAuthContext, hasPermission } from '@/lib/rbac';
 
 export async function GET() {
-  const flags = db.getFeatureFlags();
-  const session = await getCurrentAdminSession();
-  const auditLogs = session ? db.getAuditLogs() : [];
-  return NextResponse.json({ success: true, flags, auditLogs });
+  const flags = await db.getFeatureFlags();
+  return NextResponse.json({ success: true, flags });
 }
 
 export async function POST(req: NextRequest) {
-  const session = await getCurrentAdminSession();
-  if (!session) {
-    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  const authCtx = await resolveAuthContext();
+  if (authCtx.role === 'ANONYMOUS') {
+    return NextResponse.json({ success: false, error: 'Unauthorized: Admin session required' }, { status: 401 });
+  }
+
+  if (!hasPermission(authCtx.role, 'flags:update')) {
+    return NextResponse.json({
+      success: false,
+      error: 'Forbidden: Super Administrator privileges required to modify system feature flags.',
+      code: 'FORBIDDEN_SUPER_ADMIN_REQUIRED'
+    }, { status: 403 });
   }
 
   try {
     const updates = await req.json();
-    const newFlags = db.setFeatureFlags(updates, session.organizerName);
+    const updaterName = authCtx.adminSession?.organizerName || 'Super Administrator';
+    const newFlags = await db.setFeatureFlags(updates, updaterName);
     return NextResponse.json({ success: true, flags: newFlags });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: 'Failed to update feature flags' }, { status: 500 });

@@ -164,8 +164,8 @@ async function runSmokeTests() {
     'Hero Secondary CTA: "Explore 5 Tracks" button targets /tracks'
   );
   assert(
-    (heroSrc.includes('href="/sponsors"') || heroSrc.includes('href="/refer-sponsor"')) && (heroSrc.includes('Prospectus (PDF)') || heroSrc.includes('Referral Cash')),
-    'Hero Tertiary CTA: "Prospectus (PDF)" button targets /sponsors'
+    heroSrc.includes('href="/refer-sponsor"') && (heroSrc.includes('Earn 10% to 15% Referral Cash') || heroSrc.includes('Earn 10%–15% Referral Cash') || heroSrc.includes('Referral Cash')),
+    'Hero Tertiary CTA: "Earn 10%–15% Referral Cash" button targets /refer-sponsor'
   );
   assert(
     heroSrc.includes('sound?.playClick()'),

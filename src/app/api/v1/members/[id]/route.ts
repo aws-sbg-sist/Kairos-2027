@@ -17,9 +17,9 @@ export async function GET(
     return NextResponse.json({ success: false, error: 'Member ID or username is required.' }, { status: 400 });
   }
 
-  let member = db.getMemberByUsername(id);
+  let member = await db.getMemberByUsername(id);
   if (!member) {
-    const all = db.getMembers();
+    const all = await db.getMembers();
     member = all.find(m => m.id === id);
   }
 

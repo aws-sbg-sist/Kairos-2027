@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
+import { getCurrentStudentSession } from '@/lib/student_auth';
+import { sendTransactionalEmail, buildRegistrationConfirmationEmail } from '@/lib/email';
 
 export async function POST(req: NextRequest) {
   // Rate limit: 10 registrations per minute per IP
@@ -9,26 +11,47 @@ export async function POST(req: NextRequest) {
     return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
   }
 
+  // 1. Enforce Registration Open / Closed & Deadline Feature Flags
+  const flags = await db.getFeatureFlags();
+  if (!flags.registrationOpen) {
+    return NextResponse.json({
+      success: false,
+      error: 'Registration is currently closed by the organizing committee.',
+      code: 'REGISTRATION_CLOSED'
+    }, { status: 403 });
+  }
+
+  if (flags.registrationDeadline) {
+    const deadline = new Date(flags.registrationDeadline).getTime();
+    if (!isNaN(deadline) && Date.now() > deadline) {
+      return NextResponse.json({
+        success: false,
+        error: 'The registration deadline has passed. Early-interest registrations are closed.',
+        code: 'REGISTRATION_DEADLINE_EXCEEDED'
+      }, { status: 403 });
+    }
+  }
+
   try {
     const body = await req.json();
-    const fullName = body.fullName;
-    const email = body.email;
-    const phone = body.phone || '';
-    const college = body.college || body.institution || 'SIST';
-    const yearOfStudy = body.yearOfStudy || '3rd Year';
-    const department = body.department || 'Computer Science & Engineering';
-    const collegeRegNo = body.collegeRegNo || '';
-    const city = body.city || 'Chennai';
-    const state = body.state || 'Tamil Nadu';
-    const githubUrl = body.githubUrl || (body.githubUsername ? `https://github.com/${body.githubUsername.replace(/^@/, '')}` : '');
-    const linkedinUrl = body.linkedinUrl || '';
-    const preferredTrack = body.preferredTrack || 'Agentic AI & Generative Intelligence';
-    const teamStatus = body.teamStatus || 'looking_for_team';
-    const teamCode = body.teamCode;
-    const meetupProfileUrl = body.meetupProfileUrl || '';
-    const awsBuilderCenterUrl = body.awsBuilderCenterUrl || '';
-    const experienceLevel = body.experienceLevel || 'Intermediate';
-    const tShirtSize = body.tShirtSize || body.tshirtSize || 'L';
+    const { 
+      fullName, 
+      email, 
+      phone, 
+      college, 
+      institution,
+      department,
+      yearOfStudy, 
+      githubUrl, 
+      linkedinUrl, 
+      preferredTrack, 
+      teamStatus, 
+      teamCode, 
+      meetupProfileUrl, 
+      awsBuilderCenterUrl,
+      experienceLevel,
+      tShirtSize 
+    } = body;
 
     if (!fullName || !email) {
       return NextResponse.json({ 
@@ -37,17 +60,20 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
+    const normEmail = email.trim().toLowerCase();
+    const instName = institution?.trim() || college?.trim() || 'SIST';
+
     // Input length validation
     if (
-      String(fullName).length > 150 ||
-      String(email).length > 254 ||
-      (phone && String(phone).length > 50) ||
-      (college && String(college).length > 200) ||
-      (githubUrl && String(githubUrl).length > 300) ||
-      (linkedinUrl && String(linkedinUrl).length > 300) ||
-      (teamCode && String(teamCode).length > 50) ||
-      (meetupProfileUrl && String(meetupProfileUrl).length > 300) ||
-      (awsBuilderCenterUrl && String(awsBuilderCenterUrl).length > 300)
+      fullName.length > 150 ||
+      email.length > 254 ||
+      (phone && phone.length > 50) ||
+      (instName && instName.length > 200) ||
+      (githubUrl && githubUrl.length > 300) ||
+      (linkedinUrl && linkedinUrl.length > 300) ||
+      (teamCode && teamCode.length > 50) ||
+      (meetupProfileUrl && meetupProfileUrl.length > 300) ||
+      (awsBuilderCenterUrl && awsBuilderCenterUrl.length > 300)
     ) {
       return NextResponse.json({
         success: false,
@@ -56,31 +82,88 @@ export async function POST(req: NextRequest) {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(normEmail)) {
       return NextResponse.json({ success: false, error: 'Invalid email address.' }, { status: 400 });
     }
 
-    const result = db.addWaitlistEntry({
-      fullName: String(fullName).trim(),
-      email: String(email).trim().toLowerCase(),
-      phone: String(phone).trim(),
-      institution: String(college).trim(),
-      college: String(college).trim(),
-      department: String(department).trim(),
-      yearOfStudy: String(yearOfStudy).trim(),
-      githubUrl: String(githubUrl).trim(),
-      linkedinUrl: String(linkedinUrl).trim(),
-      preferredTrack: String(preferredTrack).trim(),
-      teamStatus: String(teamStatus).trim(),
-      teamCode: teamCode ? String(teamCode).trim().toUpperCase() : undefined,
-      meetupProfileUrl: String(meetupProfileUrl).trim(),
-      awsBuilderCenterUrl: String(awsBuilderCenterUrl).trim(),
-      experienceLevel: String(experienceLevel).trim(),
-      tShirtSize: String(tShirtSize).trim()
+    // 2. Prevent Duplicate Registration
+    const existingWaitlist = await db.getStudentWaitlist(normEmail);
+    if (existingWaitlist) {
+      return NextResponse.json({
+        success: false,
+        error: 'This email is already registered on the KAIROS 2027 priority waitlist.',
+        code: 'EMAIL_ALREADY_REGISTERED'
+      }, { status: 409 });
+    }
+
+    // 3. Persistent Student Profile Synchronization
+    const session = await getCurrentStudentSession();
+    if (session && session.email.toLowerCase() === normEmail) {
+      await db.updateStudentProfile(session.studentId, {
+        fullName: fullName.trim(),
+        phone: phone?.trim(),
+        institution: instName,
+        department: department || 'School of Computing',
+        yearOfStudy: yearOfStudy || '3rd Year',
+        githubUrl: githubUrl?.trim(),
+        linkedinUrl: linkedinUrl?.trim(),
+        tshirtSize: tShirtSize || 'L'
+      });
+    } else {
+      const existingStudent = await db.getStudentByEmail(normEmail);
+      if (existingStudent) {
+        await db.updateStudentProfile(existingStudent.id, {
+          fullName: fullName.trim(),
+          phone: phone?.trim(),
+          institution: instName,
+          department: department || 'School of Computing',
+          yearOfStudy: yearOfStudy || '3rd Year',
+          githubUrl: githubUrl?.trim(),
+          linkedinUrl: linkedinUrl?.trim(),
+          tshirtSize: tShirtSize || 'L'
+        });
+      }
+    }
+
+    // 4. Record Waitlist Entry with Correct Status Tracking
+    const result = await db.addWaitlistEntry({
+      fullName: fullName.trim(),
+      email: normEmail,
+      phone: phone?.trim() || '',
+      institution: instName,
+      college: instName,
+      department: department || 'Computer Science & Engineering',
+      yearOfStudy: yearOfStudy || '3rd Year',
+      githubUrl: githubUrl?.trim() || '',
+      linkedinUrl: linkedinUrl?.trim() || '',
+      preferredTrack: preferredTrack || 'Agentic AI & Generative Intelligence',
+      teamStatus: teamStatus || 'looking_for_team',
+      teamCode: teamCode?.trim().toUpperCase(),
+      meetupProfileUrl: meetupProfileUrl?.trim() || '',
+      awsBuilderCenterUrl: awsBuilderCenterUrl?.trim() || '',
+      experienceLevel: experienceLevel || 'Intermediate',
+      tShirtSize: tShirtSize || 'L',
+      status: 'pending'
     });
 
     if (!result.success) {
-      return NextResponse.json({ success: false, error: result.error || 'Registration failed' }, { status: 400 });
+      return NextResponse.json({
+        success: false,
+        error: result.error || 'Registration failed',
+        code: 'REGISTRATION_FAILED'
+      }, { status: 409 });
+    }
+
+    // Non-blocking confirmation notification dispatch
+    try {
+      sendTransactionalEmail(buildRegistrationConfirmationEmail({
+        to: normEmail,
+        fullName: fullName.trim(),
+        track: preferredTrack || 'Agentic AI & Generative Intelligence',
+        registrationId: result.entry?.id
+      })).catch(err => console.warn('[Register Notification Warning]:', err));
+    } catch (e) {
+      console.warn('[Register Notification Warning]:', e);
     }
 
     return NextResponse.json({

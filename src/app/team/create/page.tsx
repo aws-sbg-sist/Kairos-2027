@@ -17,9 +17,6 @@ import {
   Check, 
   AlertCircle 
 } from 'lucide-react';
-import { sound } from '@/lib/audio';
-import { haptics } from '@/lib/haptics';
-import { fireConfetti } from '@/lib/confetti';
 
 function CreateTeamContent() {
   const searchParams = useSearchParams();
@@ -57,14 +54,10 @@ function CreateTeamContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (wordCount > 250) {
-      sound?.playError();
-      haptics?.error();
       setError('Abstract exceeds maximum word limit of 250 words.');
       return;
     }
 
-    sound?.playClick();
-    haptics?.heavy();
     setLoading(true);
     setError('');
 
@@ -78,17 +71,10 @@ function CreateTeamContent() {
       const data = await res.json();
       if (res.ok && data.success) {
         setCreatedTeam(data.team);
-        sound?.playSuccess();
-        haptics?.celebration();
-        fireConfetti();
       } else {
-        sound?.playError();
-        haptics?.error();
         setError(data.error || 'Failed to create team. Please try again.');
       }
     } catch (err: any) {
-      sound?.playError();
-      haptics?.error();
       setError(err.message || 'Error communicating with server.');
     } finally {
       setLoading(false);
@@ -97,11 +83,8 @@ function CreateTeamContent() {
 
   const copyInviteLink = () => {
     if (!createdTeam) return;
-    const joinCode = createdTeam.inviteCode || createdTeam.teamCode;
-    const link = `${window.location.origin}/team/join?code=${joinCode}`;
+    const link = `${window.location.origin}/team/join?code=${createdTeam.teamCode}`;
     navigator.clipboard.writeText(link);
-    sound?.playClick();
-    haptics?.medium();
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
@@ -128,7 +111,7 @@ function CreateTeamContent() {
           </div>
 
           {!createdTeam ? (
-            <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl">
+            <div className="p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl">
               {error && (
                 <div className="p-3.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2 mb-6">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
@@ -140,7 +123,7 @@ function CreateTeamContent() {
                 
                 {/* Team Details */}
                 <div className="space-y-4">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold border-b border-white/10 pb-2">
+                  <h3 className="text-xs font-mono  text-purple-300 font-bold border-b border-white/10 pb-2">
                     1. Squad Identity & Primary Track
                   </h3>
 
@@ -212,7 +195,7 @@ function CreateTeamContent() {
 
                 {/* Team Leader Verification Confirmation */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold border-b border-white/10 pb-2">
+                  <h3 className="text-xs font-mono  text-purple-300 font-bold border-b border-white/10 pb-2">
                     2. Team Leader Confirmation
                   </h3>
 
@@ -258,7 +241,7 @@ function CreateTeamContent() {
                 {/* Round 0 Abstract & Problem Statement */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
+                    <h3 className="text-xs font-mono  text-purple-300 font-bold">
                       3. Round 0 Project Abstract
                     </h3>
                     <span className={`text-xs font-mono ${wordCount > 250 ? 'text-rose-400 font-bold' : 'text-slate-400'}`}>
@@ -320,7 +303,7 @@ function CreateTeamContent() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-colors flex items-center justify-center gap-2"
                   >
                     <span>{loading ? 'Creating Team...' : 'Create Team & Generate Invite Code (100% Free)'}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -332,41 +315,35 @@ function CreateTeamContent() {
           ) : (
             /* Success Screen with Team Code & Invite Link */
             <div className="p-8 sm:p-12 rounded-3xl bg-aws-card border-2 border-purple-500 shadow-2xl space-y-8 animate-fadeIn text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white mx-auto flex items-center justify-center font-bold shadow-lg shadow-purple-900/40">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 mx-auto flex items-center justify-center font-bold shadow-lg shadow-purple-900/40">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
 
               <div className="space-y-2">
-                <span className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">
+                <span className="text-xs font-mono text-emerald-400 font-bold ">
                   Squad Registered • Selection Stage: ROUND 0 APPLICANT
                 </span>
                 <h2 className="text-3xl font-display font-black text-white">
                   Team {createdTeam.teamName} Created!
                 </h2>
                 <p className="text-sm text-slate-300 max-w-md mx-auto">
-                  Share your private Invite Code with 3 to 5 teammates so they can join your roster before the Round 0 deadline.
+                  Share this unique Team Code with 3 to 5 teammates so they can join your official roster before the Round 0 deadline.
                 </p>
               </div>
 
-              {/* Team Code & Private Invite Code Display Box */}
-              <div className="p-6 rounded-2xl bg-aws-squidInk border border-purple-500/40 max-w-md mx-auto space-y-4">
-                <div>
-                  <span className="text-xs font-mono text-slate-400 block uppercase">Private Squad Invite Code (For Teammates)</span>
-                  <div className="text-4xl font-mono font-black text-purple-300 tracking-widest selection:bg-white mt-1">
-                    {createdTeam.inviteCode}
-                  </div>
+              {/* Team Code Display Box */}
+              <div className="p-6 rounded-2xl bg-aws-squidInk border border-purple-500/40 max-w-md mx-auto space-y-3">
+                <span className="text-xs font-mono text-slate-400 block ">Your Official Team Code</span>
+                <div className="text-4xl font-mono font-black text-purple-400 tracking-widest selection:bg-white">
+                  {createdTeam.teamCode}
                 </div>
-                <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono">
-                  <span className="text-slate-400 uppercase">Official Team ID:</span>
-                  <span className="font-bold text-white">{createdTeam.teamCode}</span>
-                </div>
-                <div className="pt-1 flex items-center justify-center gap-2">
+                <div className="pt-2 flex items-center justify-center gap-2">
                   <button
                     onClick={copyInviteLink}
-                    className="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white flex items-center gap-1.5 transition-colors"
+                    className="px-4 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white flex items-center gap-1.5 transition-colors"
                   >
                     {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copied ? 'Invite Link Copied!' : 'Copy Teammate Invite Link'}</span>
+                    <span>{copied ? 'Link Copied!' : 'Copy Teammate Invite Link'}</span>
                   </button>
                 </div>
               </div>
@@ -379,22 +356,19 @@ function CreateTeamContent() {
                 </div>
                 <div className="p-2.5 rounded-lg bg-slate-950 flex items-center justify-between text-xs">
                   <span className="font-bold text-white">{formData.leaderName} (Team Leader)</span>
-                  <span className="text-emerald-400 font-mono text-[11px] flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
-                    Meetup Verified
-                  </span>
+                  <span className="text-emerald-400 font-mono text-[11px]">Meetup Verified</span>
                 </div>
               </div>
 
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/dashboard"
-                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition-colors shadow-md"
+                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors shadow-md"
                 >
-                  Enter Hacker Dashboard →
+                  Enter Hacker Dashboard
                 </Link>
                 <Link
-                  href={`/team/join?code=${createdTeam.inviteCode || createdTeam.teamCode}`}
+                  href={`/team/join?code=${createdTeam.teamCode}`}
                   className="px-6 py-3 rounded-xl font-semibold text-xs bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors"
                 >
                   Preview Join Page
@@ -414,7 +388,7 @@ function CreateTeamContent() {
 
 export default function CreateTeamPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-aws-canvas text-white pt-32 text-center font-mono"><h1 className="sr-only">Create Team & Submit Abstract</h1>Loading team registration...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-aws-canvas text-white pt-32 text-center font-mono">Loading team registration...</div>}>
       <CreateTeamContent />
     </Suspense>
   );

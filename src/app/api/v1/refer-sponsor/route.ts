@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 
   // Single referral code lookup
   if (code) {
-    const lead = db.getReferralByCode(code.trim().toUpperCase());
+    const lead = await db.getReferralByCode(code.trim().toUpperCase());
     if (!lead) {
       return NextResponse.json({ success: false, error: 'Referral lead not found with that code.' }, { status: 404 });
     }
@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
     }, { status: 401 });
   }
 
-  const leads = db.getReferrals();
+  const leads = await db.getReferrals();
   return NextResponse.json({ success: true, count: leads.length, leads });
 }
 
@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Invalid email address provided.' }, { status: 400 });
     }
 
-    const newLead = db.addReferral({
+    const newLead = await db.addReferral({
       referrerName: referrerName.trim(),
       referrerEmail: referrerEmail.trim().toLowerCase(),
       referrerPhone: referrerPhone?.trim() || '',

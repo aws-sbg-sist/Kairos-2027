@@ -4,7 +4,7 @@ import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { getCurrentAdminSession } from '@/lib/auth';
 
 export async function GET() {
-  const responses = db.getCSAT();
+  const responses = await db.getCSAT();
   const count = responses.length;
   const validResponses = responses.filter(r => Number.isFinite(r.overallSatisfaction) && Number.isFinite(r.npsScore));
   const validCount = validResponses.length;
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    const saved = db.addCSAT({
+    const saved = await db.addCSAT({
       overallSatisfaction: sat,
       npsScore: nps,
       cloudServicesUsed: Array.isArray(cloudServicesUsed) ? cloudServicesUsed.slice(0, 20) : [],

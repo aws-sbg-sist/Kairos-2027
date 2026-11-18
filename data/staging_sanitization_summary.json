@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-11-13T18:27:39.602Z",
+  "mode": "OPTION_A_SANITIZED_STAGING_SEED",
+  "totalProfilesSynthesized": 144,
+  "totalTeams": 43,
+  "totalEvaluations": 8,
+  "totalNotificationLogs": 475,
+  "anonymizedAttributes": [
+    "student_full_name",
+    "email_addresses",
+    "telephone_numbers",
+    "college_registration_numbers",
+    "github_and_linkedin_urls",
+    "judge_access_pins_hashed_with_pbkdf2",
+    "password_hashes_standardized_to_staging_secret"
+  ],
+  "stagingStudentCredentials": {
+    "emailPattern": "builder[001-080]@kairos-staging.invalid",
+    "password": "StagingTest2027!"
+  },
+  "stagingJudgeCredentials": {
+    "pins": [
+      "111111",
+      "222222",
+      "333333"
+    ]
+  },
+  "outputFile": "E:\\AWS SBGL\\Events\\Kairos\\Git Site\\Kairos-2027\\supabase\\seed_sanitized_staging.sql"
+}

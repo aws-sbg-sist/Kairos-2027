@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Outfit, JetBrains_Mono } from 'next/font/google';
+import { Inter, Outfit, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { KairosChatbot } from '@/components/chatbot/KairosChatbot';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
@@ -25,11 +25,18 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-ai',
+  display: 'swap',
+});
+
 export const viewport: Viewport = {
-  themeColor: '#0B0F19',
+  themeColor: '#0a0a0f',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
@@ -87,14 +94,14 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Hackathon',
   name: 'KAIROS 2027 | Grand Edition',
-  description: 'Where Architecture Meets Execution. 48-Hour National Technical Hackathon at Sathyabama Institute of Science and Technology, Chennai.',
+  description: 'National 48-Hour Technical Hackathon on AWS Cloud at Sathyabama Institute of Science and Technology, Chennai.',
   startDate: '2027-01-22T09:30:00+05:30',
   endDate: '2027-01-24T17:00:00+05:30',
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   location: {
     '@type': 'Place',
-    name: 'Central Library & Campus Bays, Sathyabama Institute of Science and Technology',
+    name: 'Indoor Auditorium, Sathyabama Institute of Science and Technology',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR)',
@@ -134,7 +141,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="cyber" className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} dark`}>
+    <html lang="en" data-theme="cyber" className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} ${plusJakarta.variable} dark`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -159,14 +166,14 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-purple-600 selection:text-white">
+      <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-gradient-to-r from-purple-700 to-purple-900 selection:text-white">
         <ThemeProvider>
           {/* Ambient Magnetic Cursor Glow for Fine Pointers */}
           <MagneticGlowCursor />
           {/* WCAG 2.4.1 Accessible Skip Navigation */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[999] px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[999] px-4 py-2 bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition"
           >
             Skip to main content
           </a>

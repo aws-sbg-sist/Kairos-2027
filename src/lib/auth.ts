@@ -1,11 +1,11 @@
 import crypto from 'crypto';
 import { cookies } from 'next/headers';
 
-function getMasterSecret(): string | null {
-  const secret = process.env.ADMIN_MASTER_SECRET?.trim();
+function getMasterSecret(): string {
+  const secret = process.env.ADMIN_MASTER_SECRET?.trim() || process.env.SESSION_SECRET?.trim();
   if (!secret) {
     if (process.env.NODE_ENV === 'production') {
-      return null;
+      throw new Error('ADMIN_MASTER_SECRET (or SESSION_SECRET) environment variable is mandatory in production');
     }
     return 'kairos2027-sist-admin';
   }
@@ -90,3 +90,4 @@ export async function getCurrentAdminSession(): Promise<AdminSession | null> {
 }
 
 export { COOKIE_NAME };
+export { sanitizeCsvCell } from './csv';

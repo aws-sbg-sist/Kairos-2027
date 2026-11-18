@@ -11,7 +11,8 @@ export async function GET(req: NextRequest) {
   }
 
   const session = await getCurrentAdminSession();
-  const higherManagementMembers = db.getMembers().filter(m => m.isHigherManagement);
+  const allMembers = await db.getMembers();
+  const higherManagementMembers = allMembers.filter(m => m.isHigherManagement);
 
   const sanitizedRoster = session
     ? higherManagementMembers

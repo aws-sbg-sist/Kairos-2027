@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
@@ -18,23 +18,6 @@ import {
 } from 'lucide-react';
 
 export default function ResourcesPage() {
-  const [downloadedId, setDownloadedId] = useState<string | null>(null);
-
-  const handleDownloadStarterKit = (item: (typeof AWS_RESOURCE_LIBRARY)[number]) => {
-    const readmeContent = `# ${item.title}\n\nCategory: ${item.category}\nTrack Focus: ${item.badge}\n\n## Overview\n${item.description}\n\n## Key Capabilities\n${item.features.map((t: string) => `- ${t}`).join('\n')}\n\n## Quick Start Commands\n\`\`\`bash\n# Initialize your KAIROS 2027 project workspace\ngit init kairos-${item.id}\ncd kairos-${item.id}\n\n# Install AWS SDK v3 for Bedrock & serverless builders\nnpm init -y\nnpm install @aws-sdk/client-bedrock-runtime\n\`\`\`\n\n---\nProvided by AWS Student Builder Group — SIST Chapter (KAIROS 2027)\n`;
-    const blob = new Blob([readmeContent], { type: 'text/markdown;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${item.id}-starter-guide.md`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    setDownloadedId(item.id);
-    setTimeout(() => setDownloadedId((cur) => (cur === item.id ? null : cur)), 2500);
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
       <Navbar />
@@ -61,11 +44,11 @@ export default function ResourcesPage() {
             {AWS_RESOURCE_LIBRARY.map((item) => (
               <div
                 key={item.id}
-                className="p-6 sm:p-7 rounded-3xl bg-aws-card border border-slate-700/60 flex flex-col justify-between hover:border-purple-500/40 transition-all space-y-6 group"
+                className="p-6 sm:p-7 rounded-3xl bg-aws-card border border-slate-700/60 flex flex-col justify-between hover:border-purple-500/40 transition-colors space-y-6 group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-purple-400 uppercase font-bold px-2 py-0.5 rounded bg-purple-950/40 border border-purple-500/20">
+                    <span className="text-[10px] font-mono text-purple-400  font-bold px-2 py-0.5 rounded bg-purple-950/40 border border-purple-500/20">
                       {item.category}
                     </span>
                     <span className="text-[10px] font-mono text-slate-400">
@@ -82,7 +65,7 @@ export default function ResourcesPage() {
                   </p>
 
                   <div className="space-y-2 pt-2 border-t border-white/10">
-                    <span className="text-[11px] font-mono text-purple-300 uppercase font-semibold block">
+                    <span className="text-[11px] font-mono text-purple-300  font-semibold block">
                       Curriculum Highlights:
                     </span>
                     <ul className="space-y-1.5 text-xs text-slate-300">
@@ -119,21 +102,11 @@ export default function ResourcesPage() {
                     </a>
                   ) : (
                     <button
-                      type="button"
-                      onClick={() => handleDownloadStarterKit(item)}
-                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                      onClick={() => alert(`Starting download for ${item.title}... Module package will be saved.`)}
+                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 flex items-center justify-center gap-1.5 transition-colors shadow-sm"
                     >
-                      {downloadedId === item.id ? (
-                        <>
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
-                          <span>Starter Guide Downloaded!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Download className="w-3.5 h-3.5" />
-                          <span>Download Starter Guide (.md)</span>
-                        </>
-                      )}
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Download Starter Assets (Zip)</span>
                     </button>
                   )}
                 </div>

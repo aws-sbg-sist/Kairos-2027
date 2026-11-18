@@ -6,17 +6,17 @@ import Image from 'next/image';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { TECHNICAL_TRACKS } from '@/lib/config';
-import {
-  Cpu,
-  Server,
-  ShieldCheck,
-  Leaf,
-  ArrowRight,
-  CheckCircle2,
-  Layers,
-  Code2,
-  Trophy,
-  FileText,
+import { 
+  Cpu, 
+  Server, 
+  ShieldCheck, 
+  Leaf, 
+  ArrowRight, 
+  CheckCircle2, 
+  Layers, 
+  Code2, 
+  Trophy, 
+  FileText, 
   Download,
   Terminal,
   Database,
@@ -128,39 +128,32 @@ export default function TracksPage() {
 
         {/* Track Pills */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3" role="tablist" aria-label="Hackathon Technical Tracks">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {TECHNICAL_TRACKS.map((t) => {
               const Icon = getIcon(t.iconName);
               const isSelected = t.id === selectedTrack.id;
               return (
                 <button
                   key={t.id}
-                  role="tab"
-                  aria-selected={isSelected}
-                  aria-label={`Select Track ${t.number}: ${t.title}`}
                   onClick={() => setSelectedTrack(t)}
-                  className={`p-4 rounded-2xl text-left transition-all focus-visible:ring-2 focus-visible:ring-aws-orange focus-visible:outline-none flex flex-col justify-between ${isSelected
-                    ? 'bg-aws-squidInk border-2 border-purple-500 shadow-lg shadow-purple-900/30 scale-[1.02]'
-                    : 'bg-aws-card border border-slate-700/60 hover:bg-slate-900/80 hover:border-purple-500/40'
-                    }`}
+                  className={`p-4 rounded-2xl text-left transition-colors ${
+                    isSelected
+                      ? 'bg-aws-squidInk border-2 border-purple-500 shadow-lg shadow-purple-900/30 scale-[1.02]'
+                      : 'bg-aws-card border border-slate-700/60 hover:bg-slate-900/80'
+                  }`}
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-mono text-purple-400 font-bold uppercase">
-                        TRACK {t.number}
-                      </span>
-                      <span className="text-[9px] font-mono text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
-                        ₹25,000 Bounty
-                      </span>
-                    </div>
-                    <Icon className="w-5 h-5 text-purple-300 mb-2" aria-hidden="true" />
-                    <h3 className="text-xs sm:text-sm font-bold text-white leading-snug">
-                      {t.shortTitle || t.title}
-                    </h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-mono text-purple-400 font-bold ">
+                      TRACK {t.number}
+                    </span>
+                    <span className="text-[9px] font-mono text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                      ₹7K
+                    </span>
                   </div>
-                  <div className="mt-3 pt-2 border-t border-white/5 text-[10px] font-mono text-slate-400">
-                    {isSelected ? '● Active Dossier' : 'View Blueprint'}
-                  </div>
+                  <Icon className="w-5 h-5 text-purple-300 mb-2" />
+                  <h3 className="text-sm font-bold text-white line-clamp-2">
+                    {t.title}
+                  </h3>
                 </button>
               );
             })}
@@ -170,12 +163,12 @@ export default function TracksPage() {
         {/* Detailed Active Track Dossier */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 space-y-10">
-
+            
             {/* Top Bar with Title & Bounty Badge */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/10">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950">
                     TRACK {selectedTrack.number}
                   </span>
                   <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
@@ -193,7 +186,7 @@ export default function TracksPage() {
               <div className="flex-shrink-0">
                 <Link
                   href={`/team/create?track=${selectedTrack.id}`}
-                  className="px-6 py-3.5 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-all flex items-center gap-2"
+                  className="px-6 py-3.5 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-colors flex items-center gap-2"
                 >
                   <span>Submit Abstract for Track {selectedTrack.number}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -216,7 +209,7 @@ export default function TracksPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {blueprint.components.map((comp, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-slate-900/90 border border-slate-700/60 space-y-2">
-                    <span className="text-[10px] font-mono text-purple-400 uppercase font-bold block">
+                    <span className="text-[10px] font-mono text-purple-400 font-bold block">
                       Component {idx + 1}
                     </span>
                     <h4 className="text-sm font-bold text-white">
@@ -232,7 +225,7 @@ export default function TracksPage() {
 
             {/* Sample Challenge Problem Statement */}
             <div className="p-6 rounded-2xl bg-aws-squidInk border border-purple-500/30 space-y-3">
-              <div className="flex items-center gap-2 text-purple-300 text-xs font-mono uppercase tracking-wider font-bold">
+              <div className="flex items-center gap-2 text-purple-300 text-xs font-mono  font-bold">
                 <Terminal className="w-4 h-4 text-purple-400" />
                 <span>Sample Challenge Problem Statement</span>
               </div>
@@ -245,7 +238,7 @@ export default function TracksPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Focus Themes */}
               <div className="space-y-4">
-                <h4 className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold">
+                <h4 className="text-xs font-mono  text-purple-300 font-bold">
                   Core Evaluation Focus Themes
                 </h4>
                 <div className="space-y-2">
@@ -260,7 +253,7 @@ export default function TracksPage() {
 
               {/* Technology Stacks & Rubrics */}
               <div className="space-y-4">
-                <h4 className="text-xs font-mono uppercase tracking-wider text-sky-400 font-bold">
+                <h4 className="text-xs font-mono  text-sky-400 font-bold">
                   Recommended Stacks & Toolchains
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -294,9 +287,9 @@ export default function TracksPage() {
               <div className="flex items-center gap-3">
                 <Link
                   href="/register"
-                  className="px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition-colors"
+                  className="px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors"
                 >
-                  Register Team Free →
+                  Register Team Free
                 </Link>
               </div>
             </div>

@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-11-13T16:40:10.686Z",
+  "sourceFile": "E:\\AWS SBGL\\Events\\Kairos\\Git Site\\Kairos-2027\\data\\kairos_store.json",
+  "recordsRead": {
+    "waitlist": 54,
+    "studentAccounts": 80,
+    "sponsors": 1,
+    "referrals": 1,
+    "teams": 43,
+    "radarSignals": 4,
+    "judges": 3,
+    "evaluations": 8,
+    "csat": 1,
+    "auditLogs": 415,
+    "members": 9,
+    "notificationLogs": 475,
+    "featureFlags": 1
+  },
+  "profilesSynthesized": 144,
+  "duplicateEmailsMerged": 108,
+  "recordsToInsert": {
+    "profiles": 144,
+    "studentAccounts": 80,
+    "waitlist": 54,
+    "teams": 43,
+    "teamMembers": 74,
+    "sponsors": 1,
+    "referrals": 1,
+    "featureFlags": 1,
+    "auditLogs": 415,
+    "radarSignals": 4,
+    "judges": 3,
+    "evaluations": 8,
+    "csatResponses": 1,
+    "orgMembers": 9,
+    "notificationLogs": 475
+  },
+  "validationWarnings": [],
+  "status": "SUCCESS"
+}

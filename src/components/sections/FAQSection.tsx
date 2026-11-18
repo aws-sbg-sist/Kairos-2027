@@ -61,18 +61,18 @@ export const FAQSection: React.FC = () => {
               <div className="space-y-1">
                 <h4 className="text-base sm:text-lg font-display font-bold text-white flex items-center gap-2 justify-center sm:justify-start">
                   <span>Have More Questions?</span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                     24/7 Live AI
                   </span>
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-200 max-w-xl leading-relaxed">
                   Refer to the <strong className="text-white">Ask Kairos AI</strong> assistant in the <strong className="text-purple-400">bottom-right corner</strong> of your screen for instantaneous answers on rules, technical tracks, and venue facilities.
                 </p>
               </div>
             </div>
             <button
               onClick={handleOpenAiChat}
-              className="px-5 py-2.5 rounded-xl text-xs font-bold btn-primary-themed text-white flex items-center gap-2 shrink-0 shadow-md shadow-purple-900/30 hover:scale-105 active:scale-[0.97] transition-all"
+              className="px-5 py-2.5 rounded-xl text-sm font-bold btn-primary-themed text-white flex items-center gap-2 shrink-0 shadow-md shadow-purple-900/30 hover:scale-105 active:scale-[0.97] transition-colors"
             >
               <Bot className="w-3.5 h-3.5" />
               <span>Ask Kairos AI</span>
@@ -87,8 +87,9 @@ export const FAQSection: React.FC = () => {
             return (
               <div
                 key={idx}
-                className={`rounded-2xl glass-panel border transition-all duration-200 overflow-hidden ${isOpen ? 'border-purple-500/40 bg-aws-squidInk/80 shadow-lg' : 'border-purple-500/15 hover:border-purple-500/30'
-                  }`}
+                className={`rounded-2xl glass-panel border transition-colors duration-200 overflow-hidden ${
+                  isOpen ? 'border-purple-500/40 bg-aws-squidInk/80 shadow-lg' : 'border-purple-500/15 hover:border-purple-500/30'
+                }`}
               >
                 <button
                   onClick={() => {
@@ -103,7 +104,7 @@ export const FAQSection: React.FC = () => {
                     <span className="text-xs font-mono text-purple-400 font-bold shrink-0">
                       Q{String(idx + 1).padStart(2, '0')}
                     </span>
-                    <span className="text-sm sm:text-base font-bold text-white leading-snug">
+                    <span className="text-base sm:text-lg font-bold text-white leading-snug">
                       {faq.q}
                     </span>
                   </div>
@@ -125,7 +126,7 @@ export const FAQSection: React.FC = () => {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.25, ease: 'easeInOut' }}
                     >
-                      <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-purple-500/10 pt-4">
+                      <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-sm sm:text-base text-slate-200 leading-relaxed border-t border-purple-500/10 pt-4">
                         {faq.a}
                       </div>
                     </motion.div>

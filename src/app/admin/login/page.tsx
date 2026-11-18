@@ -55,7 +55,7 @@ export default function AdminLoginPage() {
       <div className="absolute top-6 left-6 z-20">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white px-3 py-1.5 rounded-lg bg-white/5 border border-purple-500/20 transition-all"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white px-3 py-1.5 rounded-lg bg-white/5 border border-purple-500/20 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Event Landing Page</span>
@@ -71,19 +71,19 @@ export default function AdminLoginPage() {
               src="/assets/kairos-hourglass.png"
               alt="KAIROS 2027"
               fill
-              className="object-contain filter drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]"
+              className="object-contain filter drop-shadow-md"
               priority
             />
           </div>
           <div>
-            <span className="text-[10px] font-mono text-purple-400 uppercase tracking-widest block font-bold">
+            <span className="text-[10px] font-mono text-purple-400  block font-bold">
               AUTHORIZED CADRE ACCESS ONLY
             </span>
             <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white mt-1">
               Organizer Console
             </h1>
             <p className="text-xs text-slate-400 mt-1">
-              AWS Student Builder Group (SIST Chapter) · KAIROS 2027
+              AWS Student Builder Group (SIST Chapter) - KAIROS 2027
             </p>
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function AdminLoginPage() {
               >
                 {ORGANIZING_ROSTER.map((lead) => (
                   <option key={lead.id} value={lead.name}>
-                    {lead.name} — {lead.role.split('&')[0].trim()}
+                    {lead.name} : {lead.role.split('&')[0].trim()}
                   </option>
                 ))}
               </select>
@@ -145,7 +145,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-md shadow-purple-950 transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+              className="w-full mt-2 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-purple-600 hover:bg-purple-500 shadow-md shadow-purple-950 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
             >
               <ShieldCheck className="w-4 h-4" />
               <span>{loading ? 'Authenticating...' : 'Sign In as Organizer'}</span>

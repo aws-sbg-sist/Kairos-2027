@@ -81,7 +81,7 @@ export const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
 
         {/* Footer info */}
         <div className="pt-3 border-t border-purple-500/15 flex items-center justify-between text-[11px] text-slate-400">
-          <span>Sathyabama Institute of Science and Technology · Chennai</span>
+          <span>Sathyabama Institute of Science and Technology - Chennai</span>
           <button
             onClick={onClose}
             className="px-4 py-1.5 rounded-lg text-xs font-semibold bg-purple-900/60 text-purple-200 hover:bg-purple-800"

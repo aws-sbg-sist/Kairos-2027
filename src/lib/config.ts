@@ -3,7 +3,7 @@ import { OrganizerAccount } from '@/types';
 export const EVENT_CONFIG = {
   name: 'KAIROS 2027',
   edition: 'Grand Edition',
-  tagline: 'Where Architecture Meets Execution.',
+  tagline: 'National 48-Hour Cloud Hackathon on AWS.',
   subtitle: '48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors.',
   notificationBar: 'NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
   organizer: {
@@ -11,17 +11,17 @@ export const EVENT_CONFIG = {
     chapter: 'AWS Student Builder Group — SIST Chapter',
     department: 'Department of Computer Science & Engineering, School of Computing',
     institution: 'Sathyabama Institute of Science and Technology',
-    location: 'Chennai, Tamil Nadu, India - 600119',
+    location: 'OMR, Chennai, Tamil Nadu, India',
     contactEmail: 'sistawscc@gmail.com',
     leadOrganizer: 'Thenappan T, President & Student Builder Group Leader (SBGL)',
-    meetupUrl: 'https://meetup.com/aws-student-builder-group-sist',
+    meetupUrl: 'https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/',
     assetGeneratorUrl: 'https://aws-version-3--assets-generator.netlify.app/',
     targetDomain: process.env.NEXT_PUBLIC_APP_URL || process.env.RENDER_EXTERNAL_URL || 'https://kairos.sathyabama.ac.in',
   },
   venue: {
-    name: 'Central Library & Campus Bays',
+    name: 'Indoor Auditorium',
     campus: 'Sathyabama Institute of Science and Technology',
-    address: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR), Chennai, Tamil Nadu - 600119',
+    address: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR), Chennai',
     city: 'Chennai',
     state: 'Tamil Nadu',
     country: 'India',
@@ -76,7 +76,7 @@ export const EVENT_CONFIG = {
     xTag: '@awsdevelopers',
     linkedin: 'AWS Developers',
     instagram: '@awssbg_sist',
-    meetup: 'https://meetup.com/aws-student-builder-group-sist',
+    meetup: 'https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/',
   }
 };
 
@@ -132,7 +132,7 @@ export const TECHNICAL_TRACKS = [
   {
     id: 'fintech-trust',
     number: '04',
-    title: 'Next-Gen FinTech, Trust & Cryptographic Security',
+    title: 'FinTech, Trust & Cryptographic Security',
     shortTitle: 'FinTech & Cryptography',
     shortDescription: 'Engineer low-latency settlement systems, real-time algorithmic fraud prevention, and zero-knowledge identity architectures.',
     longDescription: 'Re-engineer digital financial rails with mathematical integrity. Build high-volume transaction verification, instant anomaly and synthetic identity fraud detection, and automated audit trails while upholding privacy and regulatory compliance.',
@@ -219,7 +219,7 @@ export const JUDGING_CRITERIA = [
     category: 'Working Prototype & User Experience',
     points: 25,
     percentage: '25%',
-    description: 'A genuine, functional live implementation demonstrated during checkpoints and stage finals; intuitive interface, responsive polish, and frictionless workflows.'
+    description: 'A functional live implementation demonstrated during checkpoints and stage finals; intuitive interface, responsive polish, and verified workflows.'
   },
   {
     category: 'Practical Value & Pitch Defense',
@@ -253,7 +253,7 @@ export const DUAL_PHASE_PIPELINE = [
     title: 'On-Campus 48-Hour Grand Finale',
     dates: '22 – 24 Jan 2027',
     scale: 'Top 100 Elite National Teams',
-    description: 'The Top 100 teams assemble at Sathyabama Central Library, Chennai for 48 hours of continuous hacking, 3 evaluation checkpoints, and ₹1,75,000 total prize pool.',
+    description: 'The Top 100 teams assemble at Sathyabama Indoor Auditorium, Chennai for 48 hours of continuous hacking, 3 evaluation checkpoints, and ₹1,75,000 total prize pool.',
     badge: 'Top 100 Physical Stage',
     status: 'UPCOMING'
   }
@@ -287,7 +287,7 @@ export const EVENT_SCHEDULE = [
       {
         time: '12:15 PM',
         title: 'CLOCK STARTS: 48-HOUR SPRINT COMMENCES',
-        desc: 'Official GitHub repository initialization with Kairos webhook listener. The 48-hour continuous countdown begins!',
+        desc: 'Official GitHub repository initialization with Kairos webhook listener. The 48-hour continuous countdown begins.',
         category: 'HACK LIVE',
         highlight: true
       },
@@ -449,7 +449,7 @@ export const PROPOSED_SPONSOR_TIERS = [
     highlights: [
       'Naming rights: "KAIROS 2027 Presented by [Your Brand]"',
       'Prime 20-minute keynote address at inaugural plenary (11:15 AM)',
-      'Exclusive 10x10 ft demo booth in Central Library foyer',
+      'Exclusive 10x10 ft demo booth in Indoor Auditorium foyer',
       'Prime branding on chest of 106 organizer shirts & all 600 builder lanyards',
       '2 Grand Jury seats for final stage evaluation & awards conferral',
       'Access to opt-in developer database (2,000+ national applicants)',
@@ -699,7 +699,7 @@ export const HIGHER_MANAGEMENT = {
       leadName: 'Viswanathan Ashok',
       registerNo: '44110907',
       division: 'Division 3: Ground Operations, Venue & Transit Logistics',
-      mandate: 'Overseeing venue allocations in Central Library, 100-team bay setups, and Sathyabama transit bus fleet operations.'
+      mandate: 'Overseeing venue allocations in Indoor Auditorium, 100-team bay setups, and Sathyabama transit bus fleet operations.'
     },
     {
       code: 'SUPER_HEAD_4',
@@ -795,7 +795,7 @@ export const FAQS = [
   },
   {
     q: 'What are the grand finale dates and venue?',
-    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 (48 continuous non-stop hours) at Sathyabama Institute of Science and Technology, Chennai (Central Library & Campus Bays).'
+    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 (48 continuous non-stop hours) at Sathyabama Institute of Science and Technology, Chennai (Indoor Auditorium).'
   },
   {
     q: 'Who owns the intellectual property (IP)?',

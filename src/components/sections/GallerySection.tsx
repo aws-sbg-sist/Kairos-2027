@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Camera, LayoutGrid, SlidersHorizontal, Maximize2, MapPin, Eye } from 'lucide-react';
+import { Camera, LayoutGrid, SlidersHorizontal, Maximize2, Sparkles, MapPin, Eye } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
@@ -11,7 +11,7 @@ import { GalleryLightbox, GalleryItem } from '@/components/animation/GalleryLigh
 const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'venue-main',
-    title: 'The Arena: Central Library & Indoor Complex',
+    title: 'The Arena: Indoor Auditorium',
     caption: 'Air-conditioned stadium with dedicated gigabit LAN drops, 24/7 power backups, and private team cubicles.',
     category: 'Arena',
     src: '/assets/venue-illustration.png',
@@ -25,8 +25,8 @@ const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 'collaboration-lounge',
-    title: 'Builder Synergy & Voluntary Rest Rotations',
-    caption: 'Quiet chill-out zones, continuous hydration stations, and 7 hot meals prepared on campus.',
+    title: 'Rest Lounges & Team Rotations',
+    caption: 'Designated chill-out zones, continuous hydration stations, and 7 hot meals prepared on campus.',
     category: 'Community',
     src: '/assets/collaborate.png',
   },
@@ -39,7 +39,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 'podium-honors',
-    title: 'Apex Champion & Grand Honors',
+    title: 'Grand Champion & National Honors',
     caption: '₹1,75,000 total prize pool, institutional trophies, and VC pitch fast-tracking.',
     category: 'Awards',
     src: '/assets/achievement.png',
@@ -84,12 +84,16 @@ export const GallerySection: React.FC = () => {
   };
 
   return (
-    <section id="gallery" className="relative py-16 lg:py-24 overflow-hidden bg-aws-canvas">
+    <section id="gallery" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
+      {/* Background illumination */}
+      <div className="absolute top-1/3 left-1/4 -translate-y-1/2 w-[700px] h-[400px] bg-purple-950/20 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[350px] bg-purple-950/40 blur-[150px] pointer-events-none rounded-full" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md backdrop-blur-md">
               <Camera className="w-3.5 h-3.5 text-purple-400" />
               <span>Event Atmosphere & Arena Preview</span>
             </div>
@@ -121,9 +125,9 @@ export const GallerySection: React.FC = () => {
                         sound?.playClick();
                         setSelectedCategory(cat);
                       }}
-                      className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-mono transition-all ${
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-colors ${
                         isActive
-                          ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md shadow-purple-900/30 scale-105'
+                          ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-bold shadow-md shadow-purple-900/30 scale-105'
                           : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/10'
                       }`}
                     >
@@ -140,10 +144,10 @@ export const GallerySection: React.FC = () => {
                     sound?.playClick();
                     setViewMode('masonry');
                   }}
-                  className={`flex items-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-lg transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
                     viewMode === 'masonry'
                       ? 'bg-purple-950 text-purple-200 border border-purple-500/40 font-bold'
-                      : 'text-slate-300 hover:text-white'
+                      : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   <LayoutGrid className="w-3.5 h-3.5" />
@@ -155,10 +159,10 @@ export const GallerySection: React.FC = () => {
                     sound?.playClick();
                     setViewMode('carousel');
                   }}
-                  className={`flex items-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-lg transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
                     viewMode === 'carousel'
                       ? 'bg-purple-950 text-purple-200 border border-purple-500/40 font-bold'
-                      : 'text-slate-300 hover:text-white'
+                      : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -186,7 +190,7 @@ export const GallerySection: React.FC = () => {
                   spotlightColor="rgba(238, 5, 242, 0.2)"
                   borderColor="rgba(238, 5, 242, 0.4)"
                   onClick={() => handleOpenLightbox(idx)}
-                  className="p-5 rounded-2xl bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 transition-all flex flex-col justify-between h-full group cursor-pointer"
+                  className="p-5 rounded-2xl bg-aws-card/80 border border-slate-700/60 hover:border-purple-500/40 transition-colors flex flex-col justify-between h-full group cursor-pointer"
                 >
                   <div className="space-y-4">
                     <div className="relative w-full h-48 sm:h-52 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">
@@ -194,10 +198,10 @@ export const GallerySection: React.FC = () => {
                         src={item.src}
                         alt={item.title}
                         fill
-                        className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 filter drop-shadow-[0_8px_20px_rgba(238,5,242,0.25)]"
+                        className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 filter drop-shadow-md"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-end p-3">
-                        <span className="p-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md">
+                        <span className="p-2 rounded-lg bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-md">
                           <Maximize2 className="w-4 h-4" />
                         </span>
                       </div>
@@ -222,7 +226,7 @@ export const GallerySection: React.FC = () => {
                       <Eye className="w-3.5 h-3.5" />
                       <span>Click to expand</span>
                     </span>
-                    <span className="text-slate-400">KAIROS 2027</span>
+                    <span className="text-slate-500">KAIROS 2027</span>
                   </div>
                 </SpotlightCard>
               </ScrollReveal>
@@ -230,13 +234,13 @@ export const GallerySection: React.FC = () => {
           </div>
         ) : (
           /* View Mode: Horizontal Carousel */
-          <div className="overflow-x-auto pb-6 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin">
-            <div className="flex gap-6 min-w-max">
+          <div className="overflow-x-auto pb-6 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin carousel-touch-track">
+            <div className="flex gap-4 sm:gap-6 min-w-max">
               {filteredItems.map((item, idx) => (
                 <div
                   key={item.id}
                   onClick={() => handleOpenLightbox(idx)}
-                  className="w-[320px] sm:w-[360px] p-5 rounded-2xl bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40 transition-all flex flex-col justify-between shrink-0 group cursor-pointer shadow-lg"
+                  className="w-[82vw] max-w-[340px] sm:w-[360px] p-4 sm:p-5 rounded-2xl bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40 transition-colors flex flex-col justify-between shrink-0 group cursor-pointer shadow-lg carousel-touch-item"
                 >
                   <div className="space-y-4">
                     <div className="relative w-full h-48 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">

@@ -65,6 +65,8 @@ module.exports = {
         }
       },
       fontFamily: {
+        ai: ['var(--font-ai)', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
+        chatbot: ['var(--font-ai)', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
         sans: ['var(--font-inter)', '"Helvetica Neue"', 'Helvetica', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         display: ['var(--font-outfit)', '"Helvetica Neue"', 'Helvetica', 'Space Grotesk', 'sans-serif'],
         helvetica: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],

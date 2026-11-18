@@ -87,6 +87,7 @@ export interface FeatureFlags {
   demoSandboxMode: boolean;
   announcementBanner: string;
   registrationDeadline: string;
+  leaderboardPublished?: boolean;
 }
 
 export interface OrganizerAccount {
@@ -134,6 +135,7 @@ export interface ParticipantTeam {
   city?: string;
   state?: string;
   leaderEmail: string;
+  leaderName?: string;
   selectionStage?: 'ROUND_0_APPLICANT' | 'ONLINE_SEMI_FINALIST' | 'ON_CAMPUS_QUALIFIED' | 'DISQUALIFIED';
   status?: string;
   members: TeamMember[];
@@ -155,6 +157,12 @@ export interface ParticipantTeam {
   deskBayAllocation?: string;
   checkedIn?: boolean;
   checkedInAt?: string;
+  checkedInBy?: string;
+
+  // Review & Evaluation
+  reviewerNotes?: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
   
   // AWS Credits
   awsCreditVoucher?: string;
@@ -168,8 +176,10 @@ export interface Judge {
   organization: string;
   designation: string;
   trackSpecialization?: string;
+  assignedTracks?: string[];
   assignedHall?: string;
   isActive: boolean;
+  createdAt?: string;
 }
 
 export interface CheckpointEvaluation {
@@ -186,6 +196,34 @@ export interface CheckpointEvaluation {
   qualitativeFeedback?: string;
   recusedConflict?: boolean;
   evaluatedAt: string;
+  updatedAt?: string;
+  updatedBy?: string;
+  editHistory?: {
+    previousScore: number;
+    updatedScore: number;
+    timestamp: string;
+    reason?: string;
+  }[];
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  teamCode: string;
+  teamName: string;
+  institution: string;
+  track: string;
+  trackId: string;
+  deskBayAllocation?: string;
+  cp1Score: number;
+  cp2Score: number;
+  cp3Score: number;
+  rawTotal: number;
+  zScore: string;
+  commitCount: number;
+  velocity: string;
+  status: 'TOP_PODIUM' | 'TRACK_LEADER' | 'FINALIST' | 'QUALIFIED' | 'COMPLETED' | 'IN_EVALUATION';
+  evaluationsCount: number;
+  evaluationStatus: string;
 }
 
 export interface CSATResponse {
@@ -229,4 +267,46 @@ export interface OrgMember {
     badgeTier: 'DIAMOND' | 'PLATINUM' | 'GOLD' | 'SILVER';
     verificationHash: string;
   }[];
+}
+
+export interface StudentAccount {
+  id: string; // Unique student Profile ID
+  email: string; // Unique normalized email
+  fullName: string;
+  passwordHash: string;
+  emailVerified: boolean;
+  emailVerifiedAt?: string;
+  institution: string;
+  phone?: string;
+  collegeRegNo?: string;
+  yearOfStudy?: string;
+  department?: string;
+  portfolioUrl?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  tshirtSize?: string;
+  createdAt: string;
+  lastLoginAt?: string;
+}
+
+export interface NotificationLog {
+  id: string;
+  to: string;
+  subject: string;
+  template: string;
+  status: 'DELIVERED' | 'SIMULATED' | 'FAILED' | 'SUPPRESSED_DUPLICATE';
+  messageId?: string;
+  attempts: number;
+  idempotencyKey?: string;
+  error?: string;
+  timestamp: string;
+}
+
+export interface EmailPayload {
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
+  template?: string;
+  idempotencyKey?: string;
 }
