@@ -62,10 +62,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[70] pointer-events-auto transition-colors duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[70] pointer-events-auto transition-colors duration-300 pt-[env(safe-area-inset-top,0px)] ${
         scrolled
-          ? 'bg-aws-squidInk/95 backdrop-blur-md border-b border-purple-500/20 py-2.5 shadow-lg shadow-black/50'
-          : 'bg-aws-canvas/80 backdrop-blur-sm border-b border-white/5 py-3.5'
+          ? 'bg-aws-squidInk/95 backdrop-blur-md border-b border-purple-500/20 py-2 sm:py-2.5 shadow-lg shadow-black/50'
+          : 'bg-aws-canvas/80 backdrop-blur-sm border-b border-white/5 py-2.5 sm:py-3.5'
       }`}
     >
       {/* Top micro announcement bar */}
@@ -252,7 +252,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 p-4 rounded-xl glass-panel border border-purple-500/20 space-y-2 animate-fadeIn bg-aws-squidInk/95">
+          <div className="lg:hidden mt-3 p-4 rounded-xl glass-panel border border-purple-500/20 space-y-2 animate-fadeIn bg-aws-squidInk/95 max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain">
             <div className="grid grid-cols-2 gap-1 pb-2 border-b border-white/10">
               {allNavLinks.map((link) => (
                 <Link

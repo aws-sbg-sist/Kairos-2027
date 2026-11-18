@@ -97,7 +97,7 @@ export function TeamRadarSection() {
         {/* Filter Controls */}
         <div className="mb-10 space-y-4">
           {/* Track Filters */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none [touch-action:pan-x] overscroll-x-contain">
             <span className="text-xs font-mono text-slate-400 flex items-center gap-1 shrink-0 mr-2">
               <Filter className="w-3.5 h-3.5 text-purple-400" /> Track:
             </span>
@@ -129,7 +129,7 @@ export function TeamRadarSection() {
           </div>
 
           {/* Role Filters */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none [touch-action:pan-x] overscroll-x-contain">
             <span className="text-xs font-mono text-slate-400 flex items-center gap-1 shrink-0 mr-2">
               <Users className="w-3.5 h-3.5 text-sky-400" /> Role:
             </span>

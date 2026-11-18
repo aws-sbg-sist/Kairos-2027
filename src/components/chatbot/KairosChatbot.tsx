@@ -184,7 +184,13 @@ export const KairosChatbot: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 select-none font-ai">
+    <div
+      className={
+        isOpen
+          ? 'fixed inset-x-2 sm:inset-x-auto sm:right-5 bottom-[max(0.5rem,env(safe-area-inset-bottom))] sm:bottom-5 z-40 select-none font-ai flex justify-center sm:justify-end'
+          : 'fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-3 sm:right-5 z-40 select-none font-ai'
+      }
+    >
       {/* Floating Trigger Button */}
       {!isOpen && (
         <button
@@ -192,10 +198,10 @@ export const KairosChatbot: React.FC = () => {
             sound?.playClick();
             setIsOpen(true);
           }}
-          className="relative group flex items-center gap-3 px-5 py-3.5 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-colors duration-200 ease-entrance border border-purple-400/40 font-ai"
+          className="relative group flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-colors duration-200 ease-entrance border border-purple-400/40 font-ai"
           aria-label="Open Kairos AI Chatbot"
         >
-          <div className="relative w-7 h-7 flex-shrink-0 motion-safe:animate-pulse">
+          <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 motion-safe:animate-pulse">
             <Image
               src="/assets/kairos-hourglass.png"
               alt="Kairos AI"
@@ -211,7 +217,7 @@ export const KairosChatbot: React.FC = () => {
 
           {/* Micro Tooltip */}
           {!hasInteracted && (
-            <span className="absolute -top-11 right-0 bg-aws-canvas/95 border border-purple-500/40 text-purple-300 text-xs font-ai font-medium px-3 py-1.5 rounded-lg shadow-lg pointer-events-none whitespace-nowrap">
+            <span className="hidden sm:inline-block absolute -top-11 right-0 bg-aws-canvas/95 border border-purple-500/40 text-purple-300 text-xs font-ai font-medium px-3 py-1.5 rounded-lg shadow-lg pointer-events-none whitespace-nowrap">
               Instant RAG answers about Kairos 2027
             </span>
           )}
@@ -220,7 +226,7 @@ export const KairosChatbot: React.FC = () => {
 
       {/* Floating Chat Modal */}
       {isOpen && (
-        <div className="relative w-[94vw] sm:w-[480px] md:w-[500px] h-[660px] max-h-[88vh] rounded-3xl glass-panel-glow border border-purple-500/30 shadow-2xl shadow-black/80 flex flex-col overflow-hidden bg-aws-squidInk/95 origin-bottom-right animate-popover-in backdrop-blur-xl font-ai">
+        <div className="relative w-full sm:w-[480px] md:w-[500px] h-[82dvh] max-h-[640px] rounded-2xl sm:rounded-3xl glass-panel-glow border border-purple-500/30 shadow-2xl shadow-black/80 flex flex-col overflow-hidden bg-aws-squidInk/95 origin-bottom-right animate-popover-in backdrop-blur-xl font-ai">
           {/* Header */}
           <div className="p-4 border-b border-purple-500/20 bg-aws-canvas/90 flex items-center justify-between font-ai">
             <div className="flex items-center gap-3">
@@ -354,7 +360,7 @@ export const KairosChatbot: React.FC = () => {
               placeholder="Ask about prizes, tracks, schedule..."
               disabled={isLoading}
               maxLength={1000}
-              className="flex-1 bg-aws-card border border-purple-500/30 focus:border-purple-400 rounded-xl px-4 py-3 text-sm sm:text-base font-ai text-white placeholder-slate-400 outline-none focus:ring-1 focus:ring-purple-400 transition-colors"
+              className="flex-1 bg-aws-card border border-purple-500/30 focus:border-purple-400 rounded-xl px-4 py-3 text-base font-ai text-white placeholder-slate-400 outline-none focus:ring-1 focus:ring-purple-400 transition-colors"
             />
             <button
               onClick={() => handleSendMessage()}

@@ -148,7 +148,7 @@ export default function RegisterPage() {
           </div>
 
           {!submitted ? (
-            <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl">
+            <div className="p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl">
               <form onSubmit={handleProfileSubmit} className="space-y-6">
                 
                 {/* Step 1: Personal & College Details */}

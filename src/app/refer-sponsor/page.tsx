@@ -133,7 +133,7 @@ export default function ReferSponsorPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 items-stretch">
           
           {/* Interactive Calculator (7 cols) */}
-          <div className="lg:col-span-7 rounded-3xl bg-slate-900/90 border border-slate-800 p-8 sm:p-10 shadow-2xl flex flex-col justify-between">
+          <div className="lg:col-span-7 rounded-3xl bg-slate-900/90 border border-slate-800 p-5 sm:p-8 lg:p-10 shadow-2xl flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
@@ -201,7 +201,7 @@ export default function ReferSponsorPage() {
           </div>
 
           {/* 21-Day Lock & Transparency Box (5 cols) */}
-          <div className="lg:col-span-5 rounded-3xl bg-slate-900/90 border border-slate-800 p-8 sm:p-10 shadow-2xl flex flex-col justify-between">
+          <div className="lg:col-span-5 rounded-3xl bg-slate-900/90 border border-slate-800 p-5 sm:p-8 lg:p-10 shadow-2xl flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-purple-950/60 flex items-center justify-center text-purple-400 mb-6">
                 <Lock className="w-6 h-6" />
@@ -250,7 +250,7 @@ export default function ReferSponsorPage() {
         </div>
 
         {/* Lead Submission Form */}
-        <div className="max-w-4xl mx-auto rounded-3xl bg-slate-900/95 border border-slate-800 p-8 sm:p-12 shadow-2xl mb-20 backdrop-blur-xl">
+        <div className="max-w-4xl mx-auto rounded-3xl bg-slate-900/95 border border-slate-800 p-5 sm:p-8 lg:p-12 shadow-2xl mb-20 backdrop-blur-xl">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Submit Corporate Lead</h2>
             <p className="text-xs sm:text-sm text-slate-400">

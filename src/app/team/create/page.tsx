@@ -111,7 +111,7 @@ function CreateTeamContent() {
           </div>
 
           {!createdTeam ? (
-            <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl">
+            <div className="p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl">
               {error && (
                 <div className="p-3.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2 mb-6">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />

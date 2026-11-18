@@ -132,7 +132,7 @@ function JoinTeamContent() {
           </div>
 
           {!joinedSuccess ? (
-            <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-8">
+            <div className="p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-8">
               
               {/* Step A: Team Code Lookup */}
               <div className="space-y-3">

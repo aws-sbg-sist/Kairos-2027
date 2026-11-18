@@ -156,11 +156,19 @@
 }
 
 html {
-  font-size: 17.5px;
+  font-size: 16px;
   letter-spacing: 0.012em;
   overflow-x: clip;
   scroll-behavior: smooth;
   color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 17.5px;
+  }
 }
 
 body {
@@ -175,7 +183,49 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: clip;
   min-height: 100vh;
+  min-height: 100dvh;
+  overscroll-behavior-y: none;
   transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Mobile Native Touch & Controls Guard */
+button, a, [role="button"], input, select, textarea {
+  touch-action: manipulation;
+}
+
+button, [role="button"], .tab, .chip, .badge {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Prevent iOS Safari 16px auto-zoom bug on mobile screens */
+@media screen and (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* Native horizontal carousel scrolling rules */
+.carousel-touch-track {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+}
+
+.carousel-touch-item {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+/* Safe Area Inset Helpers */
+.safe-area-top {
+  padding-top: max(0.875rem, env(safe-area-inset-top));
+}
+
+.safe-area-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 /* Premium Display Typography Polish */

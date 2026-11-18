@@ -234,13 +234,13 @@ export const GallerySection: React.FC = () => {
           </div>
         ) : (
           /* View Mode: Horizontal Carousel */
-          <div className="overflow-x-auto pb-6 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin">
-            <div className="flex gap-6 min-w-max">
+          <div className="overflow-x-auto pb-6 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin carousel-touch-track">
+            <div className="flex gap-4 sm:gap-6 min-w-max">
               {filteredItems.map((item, idx) => (
                 <div
                   key={item.id}
                   onClick={() => handleOpenLightbox(idx)}
-                  className="w-[320px] sm:w-[360px] p-5 rounded-2xl bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40 transition-colors flex flex-col justify-between shrink-0 group cursor-pointer shadow-lg"
+                  className="w-[82vw] max-w-[340px] sm:w-[360px] p-4 sm:p-5 rounded-2xl bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40 transition-colors flex flex-col justify-between shrink-0 group cursor-pointer shadow-lg carousel-touch-item"
                 >
                   <div className="space-y-4">
                     <div className="relative w-full h-48 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">

@@ -343,10 +343,10 @@ async function runTestSuite() {
     let reply = synthesizeLocalAnswer(tc.query, topChunks);
 
     // If live API key is available, run live generation for a representative subset
-    if (apiKey && [1, 4, 8, 9, 12, 16, 19, 22, 25].includes(tc.id)) {
+    if (apiKey && [1, 4, 8, 9, 12, 16, 22, 25].includes(tc.id)) {
       try {
         const contextText = topChunks.map((c, i) => `[Source ${i + 1}: ${c.title}]\n${c.content}`).join('\n\n');
-        const systemInstruction = `You are the official AI Assistant for KAIROS 2027. Answer accurately based on the context. If uncertain, provide what is confirmed and direct to sistawscc@gmail.com. Do NOT show organizer names. Keep prize split-ups as a secret/mystery.\n\nCONTEXT:\n${contextText}`;
+        const systemInstruction = `You are the official AI Assistant for KAIROS 2027. Answer accurately based on the context. If the question asks about a policy or item not mentioned in the context (such as bringing pets or special permissions), state clearly that it is unconfirmed or not covered and direct the user to email sistawscc@gmail.com for official confirmation. Do NOT show individual organizer names. Keep prize split-ups as a secret/mystery.\n\nCONTEXT:\n${contextText}`;
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${apiKey}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

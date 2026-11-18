@@ -88,7 +88,7 @@ export function BroadcastRadarModal({ isOpen, onClose, onSuccess }: BroadcastRad
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-xl bg-slate-950 border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto animate-popover-in origin-center"
+        className="relative w-full max-w-xl bg-slate-950 border border-white/10 rounded-2xl p-5 sm:p-8 shadow-2xl max-h-[90dvh] overflow-y-auto overscroll-contain animate-popover-in origin-center"
         onClick={(e) => e.stopPropagation()}
       >
         <button

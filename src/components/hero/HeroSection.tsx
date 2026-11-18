@@ -62,7 +62,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
   }, []);
 
   return (
-    <section className="relative min-h-[96dvh] pt-32 pb-20 lg:pt-40 lg:pb-28 flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-[92dvh] pt-24 sm:pt-32 lg:pt-40 pb-14 sm:pb-20 lg:pb-28 flex flex-col justify-center overflow-hidden">
       {/* Cosmic Environment Background with Orbital Rings & Star Dust */}
       <CosmicBackground particleCount={50} interactive={true} />
 
@@ -124,17 +124,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
             {/* Event Details Chip */}
             <ScrollReveal direction="up" distance={16} delay={0.4}>
-              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5 p-3 rounded-xl bg-slate-900/90 border border-purple-500/30 text-sm sm:text-base text-slate-200 font-mono shadow-md backdrop-blur-md">
+              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-2.5 p-2.5 sm:p-3 rounded-xl bg-slate-900/90 border border-purple-500/30 text-xs sm:text-sm text-slate-200 font-mono shadow-md backdrop-blur-md">
                 <span className="flex items-center gap-1.5 text-white font-semibold">
                   <Calendar className="w-3.5 h-3.5 text-purple-400 shrink-0" />
                   January 22 to 24, 2027
                 </span>
-                <span className="text-slate-500">|</span>
+                <span className="text-slate-500 hidden sm:inline">|</span>
                 <span className="flex items-center gap-1.5 text-white">
                   <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                  Sathyabama Institute of Science and Technology, Chennai
+                  Indoor Auditorium, Sathyabama, Chennai
                 </span>
-                <span className="text-slate-500">|</span>
+                <span className="text-slate-500 hidden sm:inline">|</span>
                 <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
                   <Users className="w-3.5 h-3.5 shrink-0" />
                   100 Elite National Teams
@@ -200,37 +200,37 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
 
             {/* Primary & Secondary Call-to-Action Buttons with Magnetic Physics */}
             <ScrollReveal direction="up" distance={20} delay={0.5}>
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
-                <MagneticButton pullStrength={10}>
+              <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-3.5 pt-2 w-full">
+                <MagneticButton pullStrength={10} className="w-full sm:w-auto">
                   <Link
                     href="/register"
                     onClick={() => sound?.playClick()}
                     onMouseEnter={() => sound?.playHover()}
-                    className="px-6 py-3.5 rounded-xl text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 transition-colors duration-200 ease-entrance flex items-center gap-2 group active:scale-[0.97]"
+                    className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 transition-colors duration-200 ease-entrance flex items-center justify-center gap-2 group active:scale-[0.97]"
                   >
                     <span>Submit Round 0 Project Abstract (Free)</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
                   </Link>
                 </MagneticButton>
 
-                <MagneticButton pullStrength={8}>
+                <MagneticButton pullStrength={8} className="w-full sm:w-auto">
                   <Link
                     href="/sponsors"
                     onClick={() => sound?.playClick()}
                     onMouseEnter={() => sound?.playHover()}
-                    className="px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-colors flex items-center gap-2 backdrop-blur-sm"
+                    className="w-full sm:w-auto px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-colors flex items-center justify-center gap-2 backdrop-blur-sm"
                   >
                     <Download className="w-4 h-4 text-purple-400" />
                     <span>View Sponsorship Prospectus (PDF)</span>
                   </Link>
                 </MagneticButton>
 
-                <MagneticButton pullStrength={6}>
+                <MagneticButton pullStrength={6} className="w-full sm:w-auto">
                   <Link
                     href="/refer-sponsor"
                     onClick={() => sound?.playClick()}
                     onMouseEnter={() => sound?.playHover()}
-                    className="px-4 py-3.5 rounded-xl text-sm font-semibold text-emerald-400 hover:text-white bg-emerald-950/40 border border-emerald-500/30 hover:border-emerald-500/60 transition-colors flex items-center gap-1.5 backdrop-blur-sm"
+                    className="w-full sm:w-auto px-4 py-3.5 rounded-xl text-sm font-semibold text-emerald-400 hover:text-white bg-emerald-950/40 border border-emerald-500/30 hover:border-emerald-500/60 transition-colors flex items-center justify-center gap-1.5 backdrop-blur-sm"
                   >
                     <Trophy className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Earn 10% to 15% Referral Cash</span>

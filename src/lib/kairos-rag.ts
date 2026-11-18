@@ -405,6 +405,42 @@ How can I assist you with KAIROS 2027 today?`;
 • **How to Submit:** Visit the **/refer-sponsor** page on the portal and submit your corporate sponsor lead details.`;
   }
 
+  // Edge Case: Unverified / Missing Policy: Pets & Animals (Before general venue match)
+  if (q.includes('pet') || q.includes('dog') || q.includes('animal')) {
+    return `**What I can confirm:**
+KAIROS 2027 is hosted at the Indoor Auditorium of Sathyabama Institute of Science and Technology with strict safety and campus security.
+
+**What needs confirmation:**
+Auditorium and campus policies regarding pets or animals are not explicitly listed in standard hackathon guidelines.
+
+**Next step:**
+Please contact the club at **sistawscc@gmail.com** for confirmation on animal access before traveling to the campus.`;
+  }
+
+  // Edge Case: Unverified / Missing Policy: Flight / Travel Reimbursement
+  if ((q.includes('flight') || q.includes('ticket') || q.includes('reimburse')) && (q.includes('delhi') || q.includes('travel') || q.includes('train') || q.includes('flight'))) {
+    return `**What I can confirm:**
+Sathyabama provides complimentary chartered university bus shuttles across Chennai transit hubs (Central, Airport, Tambaram, CMBT) and 100% free hot meals during the 48 hours.
+
+**What needs confirmation:**
+Long-distance outstation travel expenses (such as domestic flights or train fares) are not automatically covered in the standard free registration package.
+
+**Next step:**
+Please contact **sistawscc@gmail.com** if your institution requires special travel grant documentation or on-duty approval.`;
+  }
+
+  // Edge Case: Unverified / Missing Policy: Team Roster Modification
+  if (q.includes('change') && (q.includes('member') || q.includes('team') || q.includes('roster'))) {
+    return `**What I can confirm:**
+Team sizes must remain strictly between 4 and 6 members, and Round 0 registration closes on December 28, 2026.
+
+**What needs confirmation:**
+Team roster modifications after initial submission are not automatically approved via the portal and must be vetted by the organizing committee.
+
+**Next step:**
+Please email **sistawscc@gmail.com** with your Team Code and registration details to request organizer approval.`;
+  }
+
   // 1. Cash Prize Pool & Secret Split-Ups
   if (q.includes('prize') || q.includes('cash') || q.includes('bounty') || q.includes('money') || q.includes('pool') || q.includes('champion') || q.includes('stipend') || q.includes('first place') || q.includes('second place') || q.includes('split') || q.includes('moolah')) {
     return `### 🏆 KAIROS 2027 Prize Pool: ₹1,75,000 Cash + $50,000+ AWS Credits
@@ -496,18 +532,6 @@ For all inquiries, please reach out directly through the official club channels:
 • **Safety:** Campus night lock-in strictly enforced from 10:00 PM to 06:00 AM with campus security and 24/7 first aid.`;
   }
 
-  // 8. Unverified / Missing Policy: Team Roster Modification
-  if (q.includes('change') && (q.includes('member') || q.includes('team') || q.includes('roster'))) {
-    return `**What I can confirm:**
-Team sizes must remain strictly between 4 and 6 members, and Round 0 registration closes on December 28, 2026.
-
-**What needs confirmation:**
-Team roster modifications after initial submission are not automatically approved via the portal and must be vetted by the organizing committee.
-
-**Next step:**
-Please email **sistawscc@gmail.com** with your Team Code and registration details to request organizer approval.`;
-  }
-
   // 9. Team Size, Eligibility & Solo Matching
   if (q.includes('team') || q.includes('member') || q.includes('size') || q.includes('alone') || q.includes('solo') || q.includes('college') || q.includes('cross') || q.includes('inter')) {
     return `### 👥 Team Composition & Eligibility
@@ -516,30 +540,6 @@ Please email **sistawscc@gmail.com** with your Team Code and registration detail
 • **Cross-College Teams:** Fully allowed! Students from different colleges and departments can team up freely.
 • **Solo Builders:** Individual builders can register and find squad teammates using the **Builder Squad Radar** on the homepage before final team freezing.
 • **Eligibility:** Registered undergraduate and postgraduate engineering and technology students across India.`;
-  }
-
-  // 10. Unverified / Missing Policy: Pets & Animals
-  if (q.includes('pet') || q.includes('dog') || q.includes('animal')) {
-    return `**What I can confirm:**
-KAIROS 2027 is hosted at the Indoor Auditorium of Sathyabama Institute of Science and Technology with strict safety and campus security.
-
-**What needs confirmation:**
-Auditorium and campus policies regarding pets or animals are not explicitly listed in standard hackathon guidelines.
-
-**Next step:**
-Please contact the club at **sistawscc@gmail.com** for confirmation on animal access before traveling to the campus.`;
-  }
-
-  // 11. Unverified / Missing Policy: Flight / Travel Reimbursement
-  if ((q.includes('flight') || q.includes('ticket') || q.includes('reimburse')) && (q.includes('delhi') || q.includes('travel') || q.includes('train') || q.includes('flight'))) {
-    return `**What I can confirm:**
-Sathyabama provides complimentary chartered university bus shuttles across Chennai transit hubs (Central, Airport, Tambaram, CMBT) and 100% free hot meals during the 48 hours.
-
-**What needs confirmation:**
-Long-distance outstation travel expenses (such as domestic flights or train fares) are not automatically covered in the standard free registration package.
-
-**Next step:**
-Please contact **sistawscc@gmail.com** if your institution requires special travel grant documentation or on-duty approval.`;
   }
 
   // 12. General educational query handler
