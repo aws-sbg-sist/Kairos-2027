@@ -29,7 +29,7 @@ export const KineticText: React.FC<KineticTextProps> = ({
   const prefersReducedMotion = useReducedMotion();
 
   const words = text.split(' ');
-  const Tag = as as any;
+  const Tag = as as React.ElementType;
 
   if (prefersReducedMotion) {
     return <Tag className={className}>{text}</Tag>;

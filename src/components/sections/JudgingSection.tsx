@@ -3,22 +3,19 @@
 import React from 'react';
 import Image from 'next/image';
 import { JUDGING_CRITERIA } from '@/lib/config';
-import { Scale, CheckSquare, Eye, Lock, Sparkles } from 'lucide-react';
+import { Scale, CheckSquare, Eye, Lock } from 'lucide-react';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 import { sound } from '@/lib/audio';
 
 export const JudgingSection: React.FC = () => {
   return (
-    <section id="judging" className="relative py-24 lg:py-32 overflow-hidden bg-kairos-bg/60">
-      {/* Background illumination */}
-      <div className="absolute top-1/2 right-10 w-[600px] h-[350px] bg-indigo-950/20 blur-[150px] rounded-full pointer-events-none" />
-
+    <section id="judging" className="relative py-16 lg:py-24 overflow-hidden bg-kairos-bg/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md backdrop-blur-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md">
               <div className="relative w-5 h-5 rounded overflow-hidden">
                 <Image
                   src="/assets/judges.png"
@@ -97,10 +94,10 @@ export const JudgingSection: React.FC = () => {
                   </div>
                   <div className="flex items-center justify-between text-xs font-mono text-slate-300">
                     <span className="flex items-center gap-1 text-slate-400">
-                      <Sparkles className="w-3 h-3 text-purple-400" />
+                      <Lock className="w-3 h-3 text-purple-400" />
                       <span>Weight Sealed</span>
                     </span>
-                    <span className="text-purple-300 font-medium">Reveals at Kickoff ⏳</span>
+                    <span className="text-purple-300 font-medium">Reveals at Kickoff</span>
                   </div>
                 </div>
               </SpotlightCard>

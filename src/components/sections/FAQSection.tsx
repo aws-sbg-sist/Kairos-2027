@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FAQS } from '@/lib/config';
-import { HelpCircle, ChevronDown, Sparkles, Bot, MessageCircle } from 'lucide-react';
+import { HelpCircle, ChevronDown, Bot, MessageCircle } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 
@@ -19,16 +19,13 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="relative py-24 lg:py-32 overflow-hidden bg-kairos-darkest">
-      {/* Background illumination */}
-      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[700px] h-[400px] bg-purple-950/20 blur-[160px] pointer-events-none rounded-full" />
-
+    <section id="faq" className="relative py-16 lg:py-24 overflow-hidden bg-kairos-darkest">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
           <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md backdrop-blur-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-purple-950/60 border border-purple-500/30 shadow-md">
               <div className="relative w-5 h-5 rounded overflow-hidden">
                 <Image
                   src="/assets/FAQ.png"
@@ -77,8 +74,8 @@ export const FAQSection: React.FC = () => {
               onClick={handleOpenAiChat}
               className="px-5 py-2.5 rounded-xl text-sm font-bold btn-primary-themed text-white flex items-center gap-2 shrink-0 shadow-md shadow-purple-900/30 hover:scale-105 active:scale-[0.97] transition-colors"
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Launch Kairos AI</span>
+              <Bot className="w-3.5 h-3.5" />
+              <span>Ask Kairos AI</span>
             </button>
           </div>
         </ScrollReveal>
@@ -101,6 +98,7 @@ export const FAQSection: React.FC = () => {
                   }}
                   className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-aws-orange"
                   aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${idx}`}
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-xs font-mono text-purple-400 font-bold shrink-0">
@@ -111,15 +109,18 @@ export const FAQSection: React.FC = () => {
                     </span>
                   </div>
                   <ChevronDown
-                    className={`w-5 h-5 text-purple-400 shrink-0 transition-transform duration-300 ${
-                      isOpen ? 'rotate-180 text-purple-400' : ''
-                    }`}
+                    className={`w-5 h-5 text-purple-400 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-purple-400' : ''
+                      }`}
+                    aria-hidden="true"
                   />
                 </button>
 
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
+                      id={`faq-answer-${idx}`}
+                      role="region"
+                      aria-label={faq.q}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
@@ -144,7 +145,7 @@ export const FAQSection: React.FC = () => {
               <span>Looking for something else?</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-300">
-              Click the <button onClick={handleOpenAiChat} className="text-purple-400 underline font-semibold hover:text-white transition">Ask Kairos AI</button> button in the bottom-right corner of the page, or email our student secretariat directly at{' '}
+              Click <button onClick={handleOpenAiChat} className="inline-flex items-center px-2 py-1 mx-0.5 rounded-lg bg-purple-950/60 border border-purple-500/30 text-purple-200 underline font-semibold hover:text-white transition">Ask Kairos AI</button> in the bottom-right corner, or email our student secretariat directly at{' '}
               <a
                 href="mailto:sistawscc@gmail.com"
                 className="text-purple-300 hover:text-white underline font-semibold font-mono"

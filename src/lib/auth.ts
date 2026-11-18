@@ -2,14 +2,12 @@ import crypto from 'crypto';
 import { cookies } from 'next/headers';
 
 function getMasterSecret(): string {
-  const secret = process.env.ADMIN_MASTER_SECRET || process.env.SESSION_SECRET;
+  const secret = process.env.ADMIN_MASTER_SECRET?.trim() || process.env.SESSION_SECRET?.trim();
   if (!secret) {
     if (process.env.NODE_ENV === 'production') {
       throw new Error('ADMIN_MASTER_SECRET (or SESSION_SECRET) environment variable is mandatory in production');
     }
-    // Development-only deterministic secret with prominent warning
-    console.warn('[SECURITY WARNING] ADMIN_MASTER_SECRET is not set in development. Using dev-only fallback.');
-    return 'kairos-local-development-secret-key-do-not-use-in-prod';
+    return 'kairos2027-sist-admin';
   }
   return secret;
 }
@@ -22,8 +20,15 @@ export interface AdminSession {
   authenticatedAt: number;
 }
 
+export function isAdminAuthConfigured(): boolean {
+  return Boolean(getMasterSecret());
+}
+
 export function createAdminToken(organizerName: string, organizerRole: string): string {
   const secret = getMasterSecret();
+  if (!secret) {
+    throw new Error('ADMIN_MASTER_SECRET is not configured in production environment.');
+  }
   const payload = JSON.stringify({
     organizerName,
     organizerRole,
@@ -35,13 +40,23 @@ export function createAdminToken(organizerName: string, organizerRole: string): 
 
 export function verifyAdminToken(token: string): AdminSession | null {
   try {
+    const secret = getMasterSecret();
+    if (!secret) return null;
+
     const raw = Buffer.from(token, 'base64').toString('utf-8');
-    const [payload, signature] = raw.split('::');
+    const sep = raw.lastIndexOf('::');
+    if (sep <= 0) return null;
+    const payload = raw.slice(0, sep);
+    const signature = raw.slice(sep + 2);
     if (!payload || !signature) return null;
 
-    const secret = getMasterSecret();
     const expectedSig = crypto.createHmac('sha256', secret).update(payload).digest('hex');
-    if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
+    const sigBuf = Buffer.from(signature, 'utf8');
+    const expectedBuf = Buffer.from(expectedSig, 'utf8');
+    if (sigBuf.length !== expectedBuf.length) {
+      return null;
+    }
+    if (!crypto.timingSafeEqual(sigBuf, expectedBuf)) {
       return null;
     }
 
@@ -52,7 +67,7 @@ export function verifyAdminToken(token: string): AdminSession | null {
     }
 
     return session;
-  } catch (err) {
+  } catch {
     return null;
   }
 }
@@ -60,8 +75,9 @@ export function verifyAdminToken(token: string): AdminSession | null {
 export function verifyAdminPasskey(passkey: string): boolean {
   if (!passkey) return false;
   const secret = getMasterSecret();
-  const buffA = Buffer.from(passkey.trim());
-  const buffB = Buffer.from(secret.trim());
+  if (!secret) return false;
+  const buffA = Buffer.from(passkey.trim(), 'utf8');
+  const buffB = Buffer.from(secret.trim(), 'utf8');
   if (buffA.length !== buffB.length) return false;
   return crypto.timingSafeEqual(buffA, buffB);
 }

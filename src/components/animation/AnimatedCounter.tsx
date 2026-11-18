@@ -21,19 +21,15 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
   formatter,
 }) => {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [displayValue, setDisplayValue] = useState(0);
+  const isInView = useInView(ref, { once: true, amount: 0.05 });
+  const [displayValue, setDisplayValue] = useState(value);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || hasAnimated || prefersReducedMotion) return;
+    setHasAnimated(true);
 
-    if (prefersReducedMotion) {
-      setDisplayValue(value);
-      return;
-    }
-
-    let start = 0;
     const startTime = performance.now();
     const durationMs = duration * 1000;
 
@@ -56,7 +52,7 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
 
     const frameId = requestAnimationFrame(updateCounter);
     return () => cancelAnimationFrame(frameId);
-  }, [isInView, value, duration, prefersReducedMotion]);
+  }, [isInView, value, duration, prefersReducedMotion, hasAnimated]);
 
   const formatted = formatter
     ? formatter(displayValue)

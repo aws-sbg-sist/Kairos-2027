@@ -62,8 +62,9 @@ if (!factsCode.includes("tag: 'DURATION'") || !factsCode.includes("tag: 'BOUNTIE
 }
 console.log('✓ TEST 3 PASSED: FactsStrip monolithic telemetry dock (replaces generic AI soft corner cards) verified.');
 
-// Test 4: Live HTTP Server 8000 Verification
-http.get('http://localhost:8000/', (res) => {
+// Test 4: Live HTTP Server Verification
+const testUrl = process.env.BASE_URL || (process.env.PORT ? 'http://localhost:' + process.env.PORT : 'http://localhost:3000');
+http.get(testUrl + '/', (res) => {
   let data = '';
   res.on('data', chunk => data += chunk);
   res.on('end', () => {
@@ -71,11 +72,11 @@ http.get('http://localhost:8000/', (res) => {
       console.error(`FAIL: Dev server returned status ${res.statusCode}`);
       process.exit(1);
     }
-    if (!data.includes('2.5D Hologram Active') || !data.includes('kairos-hourglass.png')) {
+    if (!data.includes('48H SAND SYNC') || !data.includes('kairos-hourglass.png')) {
       console.error('FAIL: Response does not contain 2.5D logo animation markers');
       process.exit(1);
     }
-    console.log('✓ TEST 4 PASSED: Live dev server at http://localhost:8000/ is healthy and serving 2.5D logo.');
+    console.log(`✓ TEST 4 PASSED: Live dev server at ${testUrl} is healthy and serving 2.5D logo.`);
     console.log('====================================================');
     console.log('   ALL 4 HERO & TELEMETRY TESTS PASSED! [OK]       ');
     console.log('====================================================');

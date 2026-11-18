@@ -193,3 +193,4 @@ class SoundEngine {
 }
 
 export const sound = typeof window !== 'undefined' ? new SoundEngine() : (null as unknown as SoundEngine);
+export const useSound = () => sound;

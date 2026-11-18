@@ -3,6 +3,9 @@ import { Inter, Outfit, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/goog
 import './globals.css';
 import { KairosChatbot } from '@/components/chatbot/KairosChatbot';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
+import { KeyboardShortcutsModal } from '@/components/modals/KeyboardShortcutsModal';
+import { MobileFloatingBar } from '@/components/navigation/MobileFloatingBar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -54,11 +57,11 @@ export const metadata: Metadata = {
     'FinTech Hackathon'
   ],
   authors: [{ name: 'AWS Student Builder Group — SIST Chapter' }],
-  metadataBase: new URL('https://kairos.sathyabama.ac.in'),
+  metadataBase: new URL(process.env.RENDER_EXTERNAL_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://kairos.sathyabama.ac.in'),
   openGraph: {
     title: 'KAIROS 2027 | The Defining Moment to Build on AWS Cloud',
     description: '48 Hours Non-Stop • ₹1,75,000 Total Prize Pool • 100 Elite Teams • Sathyabama Institute of Science and Technology, Chennai.',
-    url: 'https://kairos.sathyabama.ac.in',
+    url: process.env.RENDER_EXTERNAL_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://kairos.sathyabama.ac.in',
     siteName: 'Kairos 2027 Hackathon',
     images: [
       {
@@ -78,8 +81,11 @@ export const metadata: Metadata = {
     creator: '@awssbg_sist',
   },
   icons: {
-    icon: '/assets/kairos-hourglass.png',
-    shortcut: '/assets/kairos-hourglass.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/assets/kairos-hourglass.png', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
     apple: '/assets/kairos-hourglass.png',
   },
 };
@@ -121,7 +127,7 @@ const jsonLd = {
   organizer: {
     '@type': 'Organization',
     name: 'AWS Student Builder Group — SIST Chapter',
-    url: 'https://kairos.sathyabama.ac.in',
+    url: process.env.RENDER_EXTERNAL_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://kairos.sathyabama.ac.in',
     parentOrganization: {
       '@type': 'EducationalOrganization',
       name: 'Sathyabama Institute of Science and Technology'
@@ -137,6 +143,9 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="cyber" className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} ${plusJakarta.variable} dark`}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -159,14 +168,20 @@ export default function RootLayout({
       </head>
       <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-gradient-to-r from-purple-700 to-purple-900 selection:text-white">
         <ThemeProvider>
+          {/* Ambient Magnetic Cursor Glow for Fine Pointers */}
+          <MagneticGlowCursor />
           {/* WCAG 2.4.1 Accessible Skip Navigation */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[999] px-4 py-2 bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[999] px-4 py-2 bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition"
           >
             Skip to main content
           </a>
           {children}
+          {/* Mobile Quick Action Registration Dock */}
+          <MobileFloatingBar />
+          {/* Keyboard Shortcuts Command Center HUD */}
+          <KeyboardShortcutsModal />
           {/* Floating Kairos AI Chatbot */}
           <KairosChatbot />
         </ThemeProvider>

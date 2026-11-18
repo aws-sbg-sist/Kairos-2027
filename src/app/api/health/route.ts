@@ -6,6 +6,12 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   const timestamp = new Date().toISOString();
+  const mem = process.memoryUsage();
+  const memoryInfo = {
+    rssMB: Math.round(mem.rss / 1024 / 1024),
+    heapUsedMB: Math.round(mem.heapUsed / 1024 / 1024),
+    heapTotalMB: Math.round(mem.heapTotal / 1024 / 1024),
+  };
 
   try {
     const driver = getDbDriver();
@@ -15,7 +21,10 @@ export async function GET(req: NextRequest) {
         return NextResponse.json(
           {
             status: 'unhealthy',
+            service: 'kairos-2027',
             database: 'unavailable',
+            uptimeSeconds: Math.round(process.uptime()),
+            memory: memoryInfo,
             timestamp
           },
           { status: 503 }
@@ -27,7 +36,10 @@ export async function GET(req: NextRequest) {
         return NextResponse.json(
           {
             status: 'unhealthy',
+            service: 'kairos-2027',
             database: 'unconfigured',
+            uptimeSeconds: Math.round(process.uptime()),
+            memory: memoryInfo,
             timestamp
           },
           { status: 503 }
@@ -41,7 +53,10 @@ export async function GET(req: NextRequest) {
         return NextResponse.json(
           {
             status: 'unhealthy',
+            service: 'kairos-2027',
             database: 'unreachable',
+            uptimeSeconds: Math.round(process.uptime()),
+            memory: memoryInfo,
             timestamp
           },
           { status: 503 }
@@ -51,7 +66,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(
         {
           status: 'healthy',
+          service: 'kairos-2027',
           database: 'connected',
+          uptimeSeconds: Math.round(process.uptime()),
+          memory: memoryInfo,
           timestamp
         },
         { status: 200 }
@@ -62,8 +80,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(
       {
         status: 'healthy',
+        service: 'kairos-2027',
         database: 'connected',
         driver: 'local_json',
+        uptimeSeconds: Math.round(process.uptime()),
+        memory: memoryInfo,
         timestamp
       },
       { status: 200 }
@@ -73,7 +94,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(
       {
         status: 'unhealthy',
+        service: 'kairos-2027',
         database: 'error',
+        uptimeSeconds: Math.round(process.uptime()),
+        memory: memoryInfo,
         timestamp
       },
       { status: 503 }

@@ -5,7 +5,7 @@ export const EVENT_CONFIG = {
   edition: 'Grand Edition',
   tagline: 'National 48-Hour Cloud Hackathon on AWS.',
   subtitle: '48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors.',
-  notificationBar: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
+  notificationBar: 'NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
   organizer: {
     name: 'AWS Student Builder Group (AWS SBG)',
     chapter: 'AWS Student Builder Group — SIST Chapter',
@@ -16,7 +16,7 @@ export const EVENT_CONFIG = {
     leadOrganizer: 'Thenappan T, President & Student Builder Group Leader (SBGL)',
     meetupUrl: 'https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/',
     assetGeneratorUrl: 'https://aws-version-3--assets-generator.netlify.app/',
-    targetDomain: 'https://kairos.sathyabama.ac.in',
+    targetDomain: process.env.NEXT_PUBLIC_APP_URL || process.env.RENDER_EXTERNAL_URL || 'https://kairos.sathyabama.ac.in',
   },
   venue: {
     name: 'Indoor Auditorium',
@@ -36,10 +36,10 @@ export const EVENT_CONFIG = {
     qualifierDisplay: 'January 02–04, 2027 (Online Technical Qualifier)',
     // Round 2 On-Campus Grand Finale
     checkInDate: '2027-01-22T09:30:00+05:30',
-    startDate: '2027-01-22T12:15:00+05:30', // 48-Hour Sprint Commences
-    codeFreezeDate: '2027-01-24T08:30:00+05:30', // Hard Code Freeze
+    startDate: '2027-01-22T12:15:00+05:30', // 48-Hour Sprint Commences (Clock Start)
+    codeFreezeDate: '2027-01-24T12:15:00+05:30', // Hard Code Freeze (Clock Stop - Exactly 48.0 Hours)
     endDate: '2027-01-24T17:00:00+05:30', // Bus Dispersal
-    valedictoryDate: '2027-01-24T14:30:00+05:30',
+    valedictoryDate: '2027-01-24T16:00:00+05:30',
     timezone: 'Asia/Kolkata',
     displayRange: 'January 22–24, 2027 (On-Campus Grand Finale)',
     durationHours: 48,
@@ -85,7 +85,7 @@ export const TECHNICAL_TRACKS = [
     id: 'agentic-ai',
     number: '01',
     title: 'Agentic AI & Generative Intelligence',
-    
+    shortTitle: 'Agentic AI & GenAI',
     shortDescription: 'Architect autonomous multi-agent swarms, self-healing developer pipelines, and production generative AI workflows powered by Amazon Bedrock and Claude.',
     longDescription: 'Go beyond single prompt-response interfaces. Construct coordinated autonomous agent squads that interact with external tools, APIs, and real-time data environments to automate end-to-end multi-step reasoning while maintaining verifiable truthfulness and deterministic bounds.',
     themes: [
@@ -101,7 +101,7 @@ export const TECHNICAL_TRACKS = [
     id: 'cloud-native',
     number: '02',
     title: 'Cloud-Native, High-Throughput & Distributed Systems',
-    
+    shortTitle: 'Cloud-Native & Distributed',
     shortDescription: 'Build hyper-scale event-driven architectures, resilient distributed ledgers, and zero-downtime microservices capable of sustaining millions of concurrent events.',
     longDescription: 'Architect resilient backend systems built to withstand extreme traffic, network partitions, and cascading failures. Focus on serverless durability, low-latency stream processing, distributed transaction orchestration, and observable telemetry.',
     themes: [
@@ -117,7 +117,7 @@ export const TECHNICAL_TRACKS = [
     id: 'edge-iot',
     number: '03',
     title: 'Autonomous Edge IoT & Sustainable Green Energy',
-    
+    shortTitle: 'Edge IoT & Clean Energy',
     shortDescription: 'Deploy hardware microcontrollers, intelligent sensor networks, and edge inference systems optimizing renewable energy distribution and smart mobility.',
     longDescription: 'Solve urgent physical-world challenges through resilient software engineering and IoT telemetry integration. Tackle resource distribution, renewable energy microgrid balancing, environmental monitoring, and intelligent community utilities.',
     themes: [
@@ -133,7 +133,7 @@ export const TECHNICAL_TRACKS = [
     id: 'fintech-trust',
     number: '04',
     title: 'FinTech, Trust & Cryptographic Security',
-    
+    shortTitle: 'FinTech & Cryptography',
     shortDescription: 'Engineer low-latency settlement systems, real-time algorithmic fraud prevention, and zero-knowledge identity architectures.',
     longDescription: 'Re-engineer digital financial rails with mathematical integrity. Build high-volume transaction verification, instant anomaly and synthetic identity fraud detection, and automated audit trails while upholding privacy and regulatory compliance.',
     themes: [
@@ -149,7 +149,7 @@ export const TECHNICAL_TRACKS = [
     id: 'open-enterprise',
     number: '05',
     title: 'Open Enterprise & Campus Life Innovation',
-    
+    shortTitle: 'Open Enterprise & Campus',
     shortDescription: 'Tackle pressing institutional and societal bottlenecks across healthcare diagnostics, agricultural supply chains, and automated university operations.',
     longDescription: 'Engineer high-impact institutional and social systems. Transform enterprise workflows, automate campus student experiences, modernize medical diagnostics triage, and build accessible tools for underserved demographics.',
     themes: [
@@ -286,7 +286,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '12:15 PM',
-        title: '🚀 CLOCK STARTS: 48-HOUR SPRINT COMMENCES',
+        title: 'CLOCK STARTS: 48-HOUR SPRINT COMMENCES',
         desc: 'Official GitHub repository initialization with Kairos webhook listener. The 48-hour continuous countdown begins.',
         category: 'HACK LIVE',
         highlight: true
@@ -299,7 +299,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '04:00 PM – 06:30 PM',
-        title: '🔍 CHECKPOINT 1: Architecture & Cloud Feasibility Gate',
+        title: 'CHECKPOINT 1: Architecture & Cloud Feasibility Gate',
         desc: 'Table-side review with Senior AWS Solutions Architects & Industry Evaluators. Architecture blueprint, cloud service selection, and IAM security check (25 Pts).',
         category: 'EVALUATION',
         highlight: true
@@ -312,7 +312,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '10:00 PM',
-        title: '🔒 Campus Night Lock-In Activated',
+        title: 'Campus Night Lock-In Activated',
         desc: 'Campus perimeter doors secured for total builder safety. 24/7 Campus EV shuttles operating continuous loops across rest facilities and hostels.',
         category: 'SECURITY'
       }
@@ -344,7 +344,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '02:00 PM – 05:30 PM',
-        title: '⚡ CHECKPOINT 2: Code Velocity, API Integration & Authenticity Gate',
+        title: 'CHECKPOINT 2: Code Velocity, API Integration & Authenticity Gate',
         desc: 'Table-side review by Startup CTOs & Staff Engineers. Live testing of running frontend/backend endpoints, database schemas, and external APIs. Automated commit history verification (35 Pts).',
         category: 'EVALUATION',
         highlight: true
@@ -357,7 +357,7 @@ export const EVENT_SCHEDULE = [
       },
       {
         time: '10:00 PM',
-        title: '🔒 Night Lock-In Enforced',
+        title: 'Night Lock-In Enforced',
         desc: 'Night access protocols in place; quiet rest zones available.',
         category: 'SECURITY'
       },
@@ -383,48 +383,54 @@ export const EVENT_SCHEDULE = [
     tag: 'GRAND FINALE',
     events: [
       {
-        time: '07:30 AM – 08:30 AM',
-        title: 'Breakfast & Refreshments',
-        desc: 'Quick-service hot breakfast and coffee before the final submission.',
+        time: '08:00 AM – 09:00 AM',
+        title: 'Breakfast & Energy Boosters',
+        desc: 'Energizing hot South Indian breakfast, fruit bowls, and continuous filter coffee for the home stretch.',
         category: 'MEALS'
       },
       {
-        time: '08:30 AM',
-        title: '🛑 HARD CODE FREEZE & GITHUB SUBMISSION LOCK',
-        desc: 'Automated GitHub commit freeze via Kairos webhook listener. Final submission of working demo video link and pitch deck. Zero extensions.',
+        time: '09:00 AM – 12:15 PM',
+        title: 'Final Architecture Sprint & Pitch Preparation',
+        desc: 'Final 3 hours 15 minutes of uninterrupted hacking, integration tests, demo video recording, and slide deck upload.',
+        category: 'HACKING'
+      },
+      {
+        time: '12:15 PM',
+        title: 'HARD CODE FREEZE & GITHUB SUBMISSION LOCK',
+        desc: 'The 48-Hour Hackathon clock officially expires! Automated GitHub commit freeze via webhook lock. Final repository SHA hash and live demo link recorded. Exactly 48.0 Hours.',
         category: 'DEADLINE',
         highlight: true
       },
       {
-        time: '09:00 AM – 12:30 PM',
-        title: '🏆 CHECKPOINT 3: Grand Finale Live Demonstrations',
-        desc: 'Concurrent stage & bay jury evaluations. 7-minute live presentation: 4 minutes working demo + 3 minutes grilling by VC Partners, CTOs, and AWS Leaders (40 Pts). Real-time algorithmic Z-score normalization.',
+        time: '12:15 PM – 01:15 PM',
+        title: 'Grand Celebration Luncheon & Bay Setup',
+        desc: 'Full celebratory buffet luncheon for all 100 squads, mentors, organizers, and jury members. Table-side prototype display setup.',
+        category: 'MEALS'
+      },
+      {
+        time: '01:15 PM – 03:30 PM',
+        title: 'CHECKPOINT 3: Grand Finale Live Demonstrations & Top 10 Pitches',
+        desc: 'Concurrent stage & bay jury evaluations. 7-minute live presentation: 4 minutes working software demo + 3 minutes architectural defense with VC Partners, Startup CTOs, and AWS Leaders (40 Pts). Real-time Z-score normalization.',
         category: 'EVALUATION',
         highlight: true
       },
       {
-        time: '12:30 PM – 01:30 PM',
-        title: 'Grand Celebration Luncheon',
-        desc: 'Festive celebration lunch buffet for all builders, organizers, and jury members.',
-        category: 'MEALS'
-      },
-      {
-        time: '01:30 PM – 02:15 PM',
-        title: 'Grand Jury Deliberation & Final Shortlisting',
-        desc: 'Evaluator committee convenes to finalize winners and track finalists.',
+        time: '03:30 PM – 04:00 PM',
+        title: 'Grand Jury Deliberation & Final Tabulation',
+        desc: 'Evaluator committee convenes behind closed doors to finalize track winners, innovation honors, and podium finish.',
         category: 'DELIBERATION'
       },
       {
-        time: '02:30 PM – 04:30 PM',
-        title: '🎆 Grand Valedictory, Award Ceremony & Finale',
-        desc: 'Addresses by Keynote VIPs and University Leadership. Presentation of Track Awards & Special Innovation Honors. Grand Winner Announcement: 2nd Runner Up, 1st Runner Up, and Grand Champion (National Trophy & Awards Conferral).',
+        time: '04:00 PM – 05:00 PM',
+        title: 'Grand Valedictory, Award Ceremony & National Honors',
+        desc: 'Addresses by University Leadership & Industry Dignitaries. Presentation of Track Bounties (₹25,000 each) and Grand Champion Trophy (₹50,000 + $50K AWS Credits).',
         category: 'CEREMONY',
         highlight: true
       },
       {
         time: '05:00 PM',
         title: 'Formal Campus Dispersal via Sathyabama Bus Fleet',
-        desc: 'Complimentary return transit buses depart campus for Chennai Central, Tambaram, Airport, and CMBT Koyambedu.',
+        desc: 'Complimentary return transit buses depart campus for Chennai Central (MAS), Tambaram (TBM), Airport (MAA), and Koyambedu (CMBT).',
         category: 'DEPARTURE'
       }
     ]
@@ -458,7 +464,7 @@ export const PROPOSED_SPONSOR_TIERS = [
     referralPayout: '₹10,000 – ₹12,000 Direct Payout',
     commissionRate: '10% – 12%',
     statusBadge: 'Platform Partner',
-    description: 'Premier technology platform visibility. Showcase tools and drive direct API/SDK adoption.',
+    description: 'Platform-tier brand presence. Demo your tools live on stage and drive direct API/SDK adoption among shortlisted builders.',
     highlights: [
       'Co-branding: "KAIROS 2027 Powered by [Your Brand]"',
       '10-minute technical masterclass on main stage (11:35 AM)',

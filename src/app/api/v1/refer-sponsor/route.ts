@@ -29,10 +29,14 @@ export async function GET(req: NextRequest) {
         status: lead.status,
         lockExpiryDate: lead.lockExpiryDate,
         submittedAt: lead.submittedAt,
-        referrerName: lead.referrerName,
+        referrerName: lead.referrerName ? lead.referrerName.split(' ')[0] + ' ***' : undefined,
         referrerCollege: lead.referrerCollege,
         referrerUpiId: lead.referrerUpiId 
-          ? lead.referrerUpiId.replace(/(.{2})(.*)(@.*)/, '$1****$3')
+          ? (lead.referrerUpiId.includes('@')
+              ? lead.referrerUpiId.replace(/(.{2})(.*)(@.*)/, '$1****$3')
+              : lead.referrerUpiId.length > 4 
+                ? lead.referrerUpiId.substring(0, 2) + '****' + lead.referrerUpiId.slice(-2)
+                : '****')
           : undefined,
         estimatedDealTier: lead.estimatedDealTier,
       };

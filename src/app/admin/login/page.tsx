@@ -157,11 +157,6 @@ export default function AdminLoginPage() {
             All administrative actions, status toggles, and data exports are cryptographically signed and logged with your selected organizer identity.
           </div>
         </div>
-
-        {/* Development Helper Hint */}
-        <div className="p-3 rounded-xl bg-purple-950/30 border border-purple-500/15 text-center text-[11px] text-purple-300 font-mono">
-          Development Default Passkey: <span className="text-white font-bold select-all">kairos2027-sist-admin</span>
-        </div>
       </div>
     </div>
   );

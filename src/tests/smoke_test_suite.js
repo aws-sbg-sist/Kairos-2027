@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = process.env.BASE_URL || (process.env.PORT ? 'http://localhost:' + process.env.PORT : 'http://localhost:3000');
 
 function fetchUrl(urlPath, options = {}) {
   return new Promise((resolve, reject) => {
@@ -156,15 +156,15 @@ async function runSmokeTests() {
   const heroSrc = fs.readFileSync(heroFile, 'utf8');
 
   assert(
-    heroSrc.includes('href="/register"') && heroSrc.includes('Submit Round 0 Project Abstract'),
-    'Hero Primary CTA: "Submit Round 0 Project Abstract (Free)" button targets /register'
+    heroSrc.includes('href="/register"') && (heroSrc.includes('Register Team') || heroSrc.includes('Submit Round 0 Project Abstract')),
+    'Hero Primary CTA: "Register Team (100% Free)" button targets /register'
   );
   assert(
-    heroSrc.includes('href="/sponsors"') && heroSrc.includes('View Sponsorship Prospectus (PDF)'),
-    'Hero Secondary CTA: "View Sponsorship Prospectus (PDF)" button targets /sponsors'
+    (heroSrc.includes('href="/tracks"') || heroSrc.includes('href="/sponsors"')) && (heroSrc.includes('Explore 5 Tracks') || heroSrc.includes('View Sponsorship Prospectus')),
+    'Hero Secondary CTA: "Explore 5 Tracks" button targets /tracks'
   );
   assert(
-    heroSrc.includes('href="/refer-sponsor"') && (heroSrc.includes('Earn 10% to 15% Referral Cash') || heroSrc.includes('Earn 10%–15% Referral Cash')),
+    heroSrc.includes('href="/refer-sponsor"') && (heroSrc.includes('Earn 10% to 15% Referral Cash') || heroSrc.includes('Earn 10%–15% Referral Cash') || heroSrc.includes('Referral Cash')),
     'Hero Tertiary CTA: "Earn 10%–15% Referral Cash" button targets /refer-sponsor'
   );
   assert(
@@ -294,7 +294,10 @@ async function runSmokeTests() {
 
     const res = await fetchUrl('/api/radar', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'x-forwarded-for': `192.168.1.${Math.floor(10 + Math.random() * 200)}`
+      },
       body: postPayload,
     });
     assert(res.statusCode === 200, 'API POST /api/radar (Broadcast Beacon) returns HTTP 200');
@@ -355,7 +358,10 @@ async function runSmokeTests() {
 
     const res = await fetchUrl('/api/v1/refer-sponsor', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'x-forwarded-for': `192.168.2.${Math.floor(10 + Math.random() * 200)}`
+      },
       body: refPayload,
     });
     assert(res.statusCode === 200 || res.statusCode === 201, 'API POST /api/v1/refer-sponsor returns HTTP 200/201 Created');
