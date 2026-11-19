@@ -209,6 +209,7 @@ export default function ParticipantPassPage() {
         <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-slate-950/90 border border-purple-500/30">
           {qrDataUrl ? (
             <div className="relative w-44 h-44 rounded-xl overflow-hidden border border-purple-500/40 p-1 bg-black">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={qrDataUrl}
                 alt="Cryptographic Verification Token QR"

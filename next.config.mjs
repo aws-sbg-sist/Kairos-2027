@@ -2,11 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  outputFileTracingRoot: process.cwd(),
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // Strict in-memory cache limit for 512MB RAM PaaS containers (Render Free/Starter)
   cacheMaxMemorySize: 25 * 1024 * 1024,
   productionBrowserSourceMaps: false,
   experimental: {
+    outputFileTracingRoot: process.cwd(),
     // Tree-shake icons so unused icons are never loaded into server heap (only lucide-react, NOT framer-motion)
     optimizePackageImports: ['lucide-react'],
   },

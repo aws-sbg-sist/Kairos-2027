@@ -49,6 +49,7 @@ function JoinTeamContent() {
     if (initialCode) {
       handleLookupTeam(initialCode);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialCode]);
 
   const handleLookupTeam = async (codeToSearch?: string) => {
