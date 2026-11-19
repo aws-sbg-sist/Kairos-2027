@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  outputFileTracingRoot: process.cwd(),
   // Strict in-memory cache limit for 512MB RAM PaaS containers (Render Free/Starter)
   cacheMaxMemorySize: 25 * 1024 * 1024,
   productionBrowserSourceMaps: false,

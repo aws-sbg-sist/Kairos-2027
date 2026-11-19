@@ -44,9 +44,28 @@ export default function LeaderboardPage() {
       const data = await res.json();
 
       if (res.ok && data.success) {
+        let telemetry: any = null;
+        try {
+          const telemetryResponse = await fetch('/api/v1/github/webhook', { cache: 'no-store' });
+          telemetry = telemetryResponse.ok ? await telemetryResponse.json() : null;
+        } catch {
+          telemetry = null;
+        }
+        const commitStats = new Map<string, { commitCount: number; velocity: string }>(
+          Array.isArray(telemetry?.teamStats)
+            ? telemetry.teamStats.map((team: any) => [team.teamCode, team] as const)
+            : []
+        );
         setPublished(data.published);
         setPublicationMessage(data.message || '');
-        setStandings(data.standings || []);
+        setStandings((data.standings || []).map((entry: LeaderboardEntry) => {
+          const stats = commitStats.get(entry.teamCode);
+          return {
+            ...entry,
+            commitCount: stats?.commitCount || 0,
+            velocity: stats?.velocity || 'No Telemetry',
+          };
+        }));
         setLastRefreshed(new Date());
       }
     } catch (err) {

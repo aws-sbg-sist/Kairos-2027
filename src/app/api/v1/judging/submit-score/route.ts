@@ -154,10 +154,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Validate points bounds
-    const c1 = Number(criterion1Score) || 0;
-    const c2 = Number(criterion2Score) || 0;
-    const c3 = Number(criterion3Score) || 0;
-    const c4 = Number(criterion4Score) || 0;
+    const scores = [criterion1Score, criterion2Score, criterion3Score, criterion4Score].map(Number);
+    if (scores.some(score => !Number.isFinite(score))) {
+      return NextResponse.json({
+        success: false,
+        error: 'All four rubric scores must be finite numbers.'
+      }, { status: 400 });
+    }
+    const [c1, c2, c3, c4] = scores;
 
     if (c1 < 0 || c1 > 30 || c2 < 0 || c2 > 25 || c3 < 0 || c3 > 25 || c4 < 0 || c4 > 20) {
       return NextResponse.json({

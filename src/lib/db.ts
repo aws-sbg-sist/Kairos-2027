@@ -13,6 +13,7 @@ import {
   SponsorReferralLead, 
   Judge, 
   CheckpointEvaluation, 
+  GitHubCommitEvent,
   CSATResponse, 
   OrgMember,
   StudentAccount,
@@ -21,6 +22,7 @@ import {
 } from '../types';
 import { hashPassword, verifyPassword, generateVerificationToken, verifyEmailToken, generatePasswordResetToken, verifyPasswordResetToken } from './student_auth';
 import { verifyJudgePinMatch, hashJudgePin } from './judge_auth';
+import { recalculateJudgeCheckpointScores } from './scoring';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const JSON_FILE = path.join(DATA_DIR, 'kairos_store.json');
@@ -35,6 +37,7 @@ interface StoreSchema {
   radarSignals: TeamRadarSignal[];
   judges: Judge[];
   evaluations: CheckpointEvaluation[];
+  commitEvents: GitHubCommitEvent[];
   csat: CSATResponse[];
   members: OrgMember[];
   studentAccounts?: StudentAccount[];
@@ -165,7 +168,7 @@ const DEFAULT_MEMBERS: OrgMember[] = [
     username: 'shanmugapriyan',
     fullName: 'Shanmugapriyan',
     roleTitle: 'Chief Technology & Infrastructure Officer (CTO)',
-    registerNo: '44110756',
+    registerNo: '44111257',
     tier: 'SUPER_HEAD',
     isHigherManagement: true,
     division: 'Division 2: Cloud Systems & Tech Infra',
@@ -577,6 +580,7 @@ const DEFAULT_STORE: StoreSchema = {
       evaluatedAt: '2027-01-22T18:00:00.000Z'
     }
   ],
+  commitEvents: [],
   csat: [
     {
       id: 'csat-1',
@@ -627,6 +631,7 @@ function readStore(): StoreSchema {
         referrals: parsed.referrals || DEFAULT_STORE.referrals,
         judges: parsed.judges || DEFAULT_STORE.judges,
         evaluations: parsed.evaluations || DEFAULT_STORE.evaluations,
+        commitEvents: parsed.commitEvents || DEFAULT_STORE.commitEvents,
         csat: parsed.csat || DEFAULT_STORE.csat,
         studentAccounts: parsed.studentAccounts || [],
         notificationLogs: parsed.notificationLogs || [],
@@ -1276,7 +1281,6 @@ const jsonDb = {
       targetIds.has(e.teamId.toLowerCase())
     );
   },
-
   saveEvaluation(
     evalData: {
       teamId: string;
@@ -1317,14 +1321,6 @@ const jsonDb = {
 
     const rawTotalScore = evalData.criterion1Score + evalData.criterion2Score + evalData.criterion3Score + evalData.criterion4Score;
 
-    // Compute Z-score based on this judge's score distribution
-    const otherJudgeEvals = store.evaluations.filter(e => e.judgeId === evalData.judgeId && (!existing || e.id !== existing.id));
-    const allScores = [...otherJudgeEvals.map(e => e.rawTotalScore), rawTotalScore];
-    const mean = allScores.reduce((acc, v) => acc + v, 0) / allScores.length;
-    const variance = allScores.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / (allScores.length || 1);
-    const stdev = Math.sqrt(variance) || 1;
-    const normalizedZScore = Number(((rawTotalScore - mean) / stdev).toFixed(4));
-
     const judge = store.judges.find(j => j.id === evalData.judgeId);
     const logActor = editorName || judge?.fullName || `Judge ${evalData.judgeId}`;
 
@@ -1336,7 +1332,6 @@ const jsonDb = {
       existing.criterion3Score = evalData.criterion3Score;
       existing.criterion4Score = evalData.criterion4Score;
       existing.rawTotalScore = rawTotalScore;
-      existing.normalizedZScore = normalizedZScore;
       if (evalData.qualitativeFeedback !== undefined) {
         existing.qualitativeFeedback = evalData.qualitativeFeedback.trim();
       }
@@ -1360,6 +1355,7 @@ const jsonDb = {
         details: `Judge updated Gate ${evalData.checkpointGate} evaluation for team [${canonicalTeamId}]: ${previousScore} -> ${rawTotalScore} (${editReason || 'Score calibration'})`
       });
 
+      recalculateJudgeCheckpointScores(store.evaluations, evalData.judgeId, evalData.checkpointGate as 0 | 1 | 2 | 3);
       writeStore(store);
       return { success: true, evaluation: existing, updated: true };
     }
@@ -1375,7 +1371,7 @@ const jsonDb = {
       criterion3Score: evalData.criterion3Score,
       criterion4Score: evalData.criterion4Score,
       rawTotalScore,
-      normalizedZScore,
+      normalizedZScore: 0,
       qualitativeFeedback: evalData.qualitativeFeedback?.trim() || '',
       evaluatedAt: new Date().toISOString(),
       editHistory: []
@@ -1383,6 +1379,7 @@ const jsonDb = {
 
     if (!store.evaluations) store.evaluations = [];
     store.evaluations.push(newEval);
+    recalculateJudgeCheckpointScores(store.evaluations, evalData.judgeId, evalData.checkpointGate as 0 | 1 | 2 | 3);
 
     if (!store.auditLogs) store.auditLogs = [];
     store.auditLogs.unshift({
@@ -1390,7 +1387,7 @@ const jsonDb = {
       timestamp: new Date().toISOString(),
       organizerName: logActor,
       action: 'SUBMIT_EVALUATION',
-      details: `Recorded Gate ${evalData.checkpointGate} evaluation for team [${canonicalTeamId}]: ${rawTotalScore}/100 (Normalized Z-score: ${normalizedZScore})`
+      details: `Recorded Gate ${evalData.checkpointGate} evaluation for team [${canonicalTeamId}]: ${rawTotalScore}/100 (Normalized Z-score: ${newEval.normalizedZScore})`
     });
 
     writeStore(store);
@@ -1578,6 +1575,37 @@ const jsonDb = {
     return res.evaluation!;
   },
 
+  // GitHub push telemetry
+  getCommitEvents(): GitHubCommitEvent[] {
+    const store = readStore();
+    return [...store.commitEvents].sort(
+      (a, b) => new Date(b.committedAt).getTime() - new Date(a.committedAt).getTime()
+    );
+  },
+
+  addCommitEvents(events: GitHubCommitEvent[]): { inserted: number; duplicates: number } {
+    const store = readStore();
+    const knownIds = new Set(store.commitEvents.map((event) => event.id));
+    let inserted = 0;
+    let duplicates = 0;
+
+    for (const event of events) {
+      if (knownIds.has(event.id)) {
+        duplicates += 1;
+        continue;
+      }
+      store.commitEvents.push(event);
+      knownIds.add(event.id);
+      inserted += 1;
+    }
+
+    store.commitEvents = store.commitEvents
+      .sort((a, b) => new Date(b.committedAt).getTime() - new Date(a.committedAt).getTime())
+      .slice(0, 10_000);
+    writeStore(store);
+    return { inserted, duplicates };
+  },
+
   // CSAT Survey
   getCSAT(): CSATResponse[] {
     const store = readStore();
@@ -1659,6 +1687,26 @@ const jsonDb = {
     return newInquiry;
   },
 
+  updateSponsorStatus(
+    id: string,
+    status: SponsorInquiry['status'],
+    organizerName: string
+  ): SponsorInquiry | undefined {
+    const store = readStore();
+    const sponsor = store.sponsors.find((inquiry) => inquiry.id === id);
+    if (!sponsor) return undefined;
+
+    sponsor.status = status;
+    store.auditLogs.unshift({
+      id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      timestamp: new Date().toISOString(),
+      organizerName,
+      action: 'UPDATE_SPONSOR_STATUS',
+      details: `Updated sponsor inquiry ${id} to ${status}`,
+    });
+    writeStore(store);
+    return sponsor;
+  },
   // Feature Flags
   getFeatureFlags(): FeatureFlags {
     const store = readStore();
@@ -2312,6 +2360,18 @@ export const db = {
     return jsonDb.addEvaluation(evalData);
   },
 
+  // GitHub push telemetry
+  async getCommitEvents(): Promise<GitHubCommitEvent[]> {
+    if (getDbDriver() === 'supabase') return await postgresDb.getCommitEvents();
+    assertJsonAllowed();
+    return jsonDb.getCommitEvents();
+  },
+
+  async addCommitEvents(events: GitHubCommitEvent[]): Promise<{ inserted: number; duplicates: number }> {
+    if (getDbDriver() === 'supabase') return await postgresDb.addCommitEvents(events);
+    assertJsonAllowed();
+    return jsonDb.addCommitEvents(events);
+  },
   // CSAT
   async getCSAT(): Promise<CSATResponse[]> {
     if (getDbDriver() === 'supabase') return await postgresDb.getCSAT();
@@ -2357,6 +2417,15 @@ export const db = {
     return jsonDb.addSponsorInquiry(inquiry);
   },
 
+  async updateSponsorStatus(
+    id: string,
+    status: SponsorInquiry['status'],
+    organizerName: string
+  ): Promise<SponsorInquiry | undefined> {
+    if (getDbDriver() === 'supabase') return await postgresDb.updateSponsorStatus(id, status, organizerName);
+    assertJsonAllowed();
+    return jsonDb.updateSponsorStatus(id, status, organizerName);
+  },
   // Feature Flags & Audit
   async getFeatureFlags(): Promise<FeatureFlags> {
     if (getDbDriver() === 'supabase') return await postgresDb.getFeatureFlags();
