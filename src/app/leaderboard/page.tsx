@@ -83,6 +83,7 @@ export default function LeaderboardPage() {
       fetchLeaderboard();
     }, 15000);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTrack]);
 
   const filteredRankings = standings.filter(r => {
