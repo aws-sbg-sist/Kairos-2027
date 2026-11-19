@@ -5992,7 +5992,137 @@
       "isActive": true
     }
   ],
-  "evaluations": [],
+  "evaluations": [
+    {
+      "id": "eval-1794485308731-qs9b",
+      "teamId": "KAIROS-T001",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 29,
+      "criterion2Score": 25,
+      "criterion3Score": 24,
+      "criterion4Score": 18,
+      "rawTotalScore": 96,
+      "normalizedZScore": 1,
+      "qualitativeFeedback": "",
+      "evaluatedAt": "2026-11-12T12:08:28.731Z",
+      "editHistory": [
+        {
+          "previousScore": 93,
+          "updatedScore": 96,
+          "timestamp": "2026-11-12T12:08:29.770Z",
+          "reason": "Recalibrated score after table-side architecture defense and AWS EventBridge demo"
+        }
+      ],
+      "updatedAt": "2026-11-12T12:08:29.770Z",
+      "updatedBy": "Vikrant Roy"
+    },
+    {
+      "id": "eval-1794485308961-yzze",
+      "teamId": "KAIROS-T002",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 24,
+      "criterion2Score": 21,
+      "criterion3Score": 20,
+      "criterion4Score": 16,
+      "rawTotalScore": 81,
+      "normalizedZScore": -1,
+      "qualitativeFeedback": "Solid multi-agent framework, need to tighten tool call execution error handling.",
+      "evaluatedAt": "2026-11-12T12:08:28.961Z",
+      "editHistory": []
+    },
+    {
+      "id": "eval-1794485309118-wle7",
+      "teamId": "KAIROS-T004",
+      "judgeId": "judge-2",
+      "checkpointGate": 1,
+      "criterion1Score": 27,
+      "criterion2Score": 23,
+      "criterion3Score": 22,
+      "criterion4Score": 17,
+      "rawTotalScore": 89,
+      "normalizedZScore": 0,
+      "qualitativeFeedback": "Strong cryptographic verification proofs demonstrated.",
+      "evaluatedAt": "2026-11-12T12:08:29.118Z",
+      "editHistory": []
+    },
+    {
+      "id": "eval-1794485309307-vc5o",
+      "teamId": "KAIROS-T003",
+      "judgeId": "judge-3",
+      "checkpointGate": 1,
+      "criterion1Score": 26,
+      "criterion2Score": 22,
+      "criterion3Score": 21,
+      "criterion4Score": 16,
+      "rawTotalScore": 85,
+      "normalizedZScore": 0,
+      "qualitativeFeedback": "Resilient MQTT telemetry pipelines on edge hardware.",
+      "evaluatedAt": "2026-11-12T12:08:29.307Z",
+      "editHistory": []
+    },
+    {
+      "id": "eval-1794485371269-wcw4",
+      "teamId": "KAIROS-T032",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 26,
+      "criterion2Score": 23,
+      "criterion3Score": 22,
+      "criterion4Score": 18,
+      "rawTotalScore": 89,
+      "normalizedZScore": 0.0544,
+      "qualitativeFeedback": "Exceptional autonomous agent consensus. Real-time telemetry is robust.",
+      "evaluatedAt": "2026-11-12T12:09:31.269Z",
+      "editHistory": []
+    },
+    {
+      "id": "eval-1794485486851-ail6",
+      "teamId": "KAIROS-T001",
+      "judgeId": "judge-1",
+      "checkpointGate": 2,
+      "criterion1Score": 28,
+      "criterion2Score": 22,
+      "criterion3Score": 23,
+      "criterion4Score": 18,
+      "rawTotalScore": 91,
+      "normalizedZScore": 0.3239,
+      "qualitativeFeedback": "Robust event streaming and resilient AWS architecture.",
+      "evaluatedAt": "2026-11-12T12:11:26.851Z",
+      "editHistory": []
+    },
+    {
+      "id": "eval-1794485856772-g26o",
+      "teamId": "KAIROS-T037",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 29,
+      "criterion2Score": 24,
+      "criterion3Score": 24,
+      "criterion4Score": 19,
+      "rawTotalScore": 96,
+      "normalizedZScore": 0.9755,
+      "qualitativeFeedback": "Extraordinary multi-region consensus model. Serverless architecture demonstrates pristine idempotency.",
+      "evaluatedAt": "2026-11-12T12:17:36.772Z",
+      "editHistory": []
+    },
+    {
+      "id": "eval-1794485881252-38y1",
+      "teamId": "KAIROS-T038",
+      "judgeId": "judge-1",
+      "checkpointGate": 1,
+      "criterion1Score": 29,
+      "criterion2Score": 24,
+      "criterion3Score": 24,
+      "criterion4Score": 19,
+      "rawTotalScore": 96,
+      "normalizedZScore": 0.8273,
+      "qualitativeFeedback": "Extraordinary multi-region consensus model. Serverless architecture demonstrates pristine idempotency.",
+      "evaluatedAt": "2026-11-12T12:18:01.252Z",
+      "editHistory": []
+    }
+  ],
   "commitEvents": [],
   "csat": [
     {

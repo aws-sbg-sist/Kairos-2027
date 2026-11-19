@@ -9,6 +9,10 @@ interface EntranceVideoRevealProps {
   onClose?: () => void;
 }
 
+const VIDEO_SRC = process.env.NEXT_PUBLIC_SUPABASE_URL
+  ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/assets/kairos-logo-reveal.mp4`
+  : 'https://nwdpzcaxmfvcobnfwdwa.supabase.co/storage/v1/object/public/assets/kairos-logo-reveal.mp4';
+
 export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
   onComplete,
   forceOpen = false,
@@ -154,7 +158,7 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
         <div className="relative rounded-3xl overflow-hidden border-2 border-purple-500/40 shadow-2xl shadow-purple-950/50 bg-slate-950/90 aspect-video w-full flex items-center justify-center">
           <video
             ref={videoRef}
-            src="/assets/kairos-logo-reveal.mp4"
+            src={VIDEO_SRC}
             autoPlay
             playsInline
             muted={isMuted}

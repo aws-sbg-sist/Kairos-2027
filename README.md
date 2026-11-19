@@ -28,10 +28,10 @@
 
 ## 2. Tech Stack & Engineering Architecture
 
-- **Framework:** Next.js 15.5.29 App Router with React 18.3.1 and TypeScript 5.6.3.
+- **Framework:** Next.js 14 App Router with React 18.3.1 and TypeScript 5.6.3.
 - **Styling & Tokens:** Tailwind CSS with custom obsidian/violet/cyan cosmic design tokens and glassmorphism.
 - **Hero Signature:** Hybrid High-Fidelity 3D: Bespoke Three.js canvas featuring an interactive glass hourglass with falling cosmic sand particles, an orbital planetary ring, and celestial starfield responding to pointer movement, paired with an animated SVG fallback for mobile and reduced-motion users.
-- **Data Persistence:** Supabase PostgreSQL production driver with a guarded local JSON fallback for development and migration verification.
+- **Data Persistence:** Supabase PostgreSQL production driver with Supabase Cloud Storage offloading and a guarded local JSON fallback for development and migration verification.
 - **Security & RBAC:** Cryptographically signed HMAC session cookies for the 8 official committee leads. Zero public exposure of private student numbers, phone numbers, or secrets.
 - **Transactional Email:** AWS SES integration with truthful local development simulation fallback.
 - **Downloads:** Dynamic RFC 5545 `.ics` calendar generation, customized sponsorship prospectus scope generator, and official PDF downloads.

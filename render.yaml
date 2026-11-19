@@ -28,4 +28,14 @@ services:
         sync: false
       - key: AWS_SES_REGION
         value: ap-south-1
+      - key: KAIROS_DB_DRIVER
+        value: supabase
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        value: https://nwdpzcaxmfvcobnfwdwa.supabase.co
+      - key: SUPABASE_URL
+        value: https://nwdpzcaxmfvcobnfwdwa.supabase.co
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
 
