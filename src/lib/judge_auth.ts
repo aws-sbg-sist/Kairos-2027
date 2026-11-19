@@ -65,7 +65,7 @@ export function verifyJudgeToken(token: string): JudgeSession | null {
 
 export async function getCurrentJudgeSession(): Promise<JudgeSession | null> {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const token = cookieStore.get(JUDGE_COOKIE_NAME)?.value;
     if (!token) return null;
     return verifyJudgeToken(token);

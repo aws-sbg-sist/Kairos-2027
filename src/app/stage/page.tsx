@@ -27,6 +27,11 @@ export default function StageScreenMode() {
   const [activeAnnouncement, setActiveAnnouncement] = useState(
     '★ CHECKPOINT 1 ACTIVE: Senior AWS Solutions Architects conducting table-side architecture evaluations across all 100 bays.'
   );
+  const [telemetry, setTelemetry] = useState<{
+    totalCommits: number;
+    activeTeams: number;
+    recentCommits: Array<{ teamCode: string; message: string; committedAt: string; afterFreeze: boolean }>;
+  }>({ totalCommits: 0, activeTeams: 0, recentCommits: [] });
 
   useEffect(() => {
     const targetDate = new Date(EVENT_CONFIG.dates.codeFreezeDate).getTime();
@@ -46,6 +51,34 @@ export default function StageScreenMode() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    const loadTelemetry = async () => {
+      try {
+        const response = await fetch('/api/v1/github/webhook', { cache: 'no-store' });
+        const data = await response.json();
+        if (!cancelled && response.ok && data.success) {
+          setTelemetry({
+            totalCommits: data.totalCommits || 0,
+            activeTeams: Array.isArray(data.teamStats)
+              ? data.teamStats.filter((team: { commitCount: number }) => team.commitCount > 0).length
+              : 0,
+            recentCommits: Array.isArray(data.recentCommits) ? data.recentCommits.slice(0, 5) : [],
+          });
+        }
+      } catch {
+        // Keep the last verified snapshot visible during a temporary network interruption.
+      }
+    };
+
+    loadTelemetry();
+    const interval = setInterval(loadTelemetry, 15_000);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, []);
+
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
@@ -55,14 +88,6 @@ export default function StageScreenMode() {
       setIsFullscreen(false);
     }
   };
-
-  const recentCommits = [
-    { team: 'KAIROS-T001', msg: 'feat(eventbridge): add dlq retry mesh with exponential backoff', time: '1m ago' },
-    { team: 'KAIROS-T002', msg: 'refactor(bedrock): implement streaming tool-calls with langchain', time: '3m ago' },
-    { team: 'KAIROS-T007', msg: 'test(zkp): verify snark verification contract on testnet', time: '5m ago' },
-    { team: 'KAIROS-T003', msg: 'fix(greengrass): resolve MQTT connection disconnects on ESP32', time: '6m ago' },
-    { team: 'KAIROS-T012', msg: 'feat(textract): stream OCR key-value pairs directly to client', time: '8m ago' },
-  ];
 
   return (
     <div className="min-h-screen bg-black text-white p-6 sm:p-10 flex flex-col justify-between font-sans selection:bg-gradient-to-r from-purple-700 to-purple-900 selection:text-black overflow-hidden relative">
@@ -180,14 +205,19 @@ export default function StageScreenMode() {
             <GitCommit className="w-4 h-4" />
             <strong className="text-white">LIVE COMMIT TELEMETRY</strong> (Automated Webhook Ingestion)
           </span>
-          <span>100 Teams Active on Arena 1Gbps Network</span>
+          <span>{telemetry.activeTeams} teams reporting • {telemetry.totalCommits} verified commits</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
-          {recentCommits.map((c, i) => (
+          {telemetry.recentCommits.length === 0 && (
+            <div className="sm:col-span-2 lg:col-span-5 p-2 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-slate-400 text-center">
+              Awaiting signed GitHub push webhooks. No commit telemetry has been recorded yet.
+            </div>
+          )}
+          {telemetry.recentCommits.map((commit, i) => (
             <div key={i} className="p-2 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono truncate">
-              <span className="text-purple-400 font-bold mr-1.5">{c.team}:</span>
-              <span className="text-slate-300">{c.msg}</span>
+              <span className="text-purple-400 font-bold mr-1.5">{commit.teamCode}:</span>
+              <span className={commit.afterFreeze ? 'text-rose-300' : 'text-slate-300'}>{commit.message}</span>
             </div>
           ))}
         </div>

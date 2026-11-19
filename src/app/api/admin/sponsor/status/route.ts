@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Invalid sponsor status value.' }, { status: 400 });
     }
 
-    const updated = db.updateSponsorStatus(id, status, session.organizerName);
+    const updated = await db.updateSponsorStatus(id, status, session.organizerName);
     if (!updated) {
       return NextResponse.json({ success: false, error: 'Sponsor inquiry not found.' }, { status: 404 });
     }

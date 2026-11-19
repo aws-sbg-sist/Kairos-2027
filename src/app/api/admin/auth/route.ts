@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   cookieStore.delete(COOKIE_NAME);
   return NextResponse.json({ success: true, message: 'Logged out successfully' });
 }

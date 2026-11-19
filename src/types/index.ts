@@ -226,6 +226,23 @@ export interface LeaderboardEntry {
   evaluationStatus: string;
 }
 
+export interface GitHubCommitEvent {
+  id: string;
+  deliveryId: string;
+  teamId: string;
+  teamCode: string;
+  repository: string;
+  branch: string;
+  sha: string;
+  shortSha: string;
+  message: string;
+  authorName: string;
+  committedAt: string;
+  receivedAt: string;
+  afterFreeze: boolean;
+  url?: string;
+}
+
 export interface CSATResponse {
   id: string;
   teamMemberId?: string;

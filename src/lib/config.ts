@@ -554,7 +554,7 @@ export const ORGANIZING_ROSTER: OrganizerAccount[] = [
     name: 'Shanmugapriyan',
     role: 'Chief Technology & Infrastructure Officer (CTO)',
     department: 'Department of Computer Science & Engineering, SIST',
-    registerNo: '44110756',
+    registerNo: '44111257',
     email: 'sistawscc@gmail.com'
   },
   {
@@ -689,7 +689,7 @@ export const HIGHER_MANAGEMENT = {
       code: 'SUPER_HEAD_2',
       title: 'Chief Technology & Infrastructure Officer (CTO)',
       leadName: 'Shanmugapriyan',
-      registerNo: '44110756',
+      registerNo: '44111257',
       division: 'Division 2: Cloud Systems & Technical Infrastructure',
       mandate: 'Architecting the portal, 1Gbps high-density arena Wi-Fi mesh, GitHub commit webhook telemetry, and automated Z-score scoring pipeline.'
     },

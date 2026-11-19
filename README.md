@@ -28,10 +28,10 @@
 
 ## 2. Tech Stack & Engineering Architecture
 
-- **Framework:** Next.js 14 App Router with TypeScript.
+- **Framework:** Next.js 15.5.29 App Router with React 18.3.1 and TypeScript 5.6.3.
 - **Styling & Tokens:** Tailwind CSS with custom obsidian/violet/cyan cosmic design tokens and glassmorphism.
 - **Hero Signature:** Hybrid High-Fidelity 3D: Bespoke Three.js canvas featuring an interactive glass hourglass with falling cosmic sand particles, an orbital planetary ring, and celestial starfield responding to pointer movement, paired with an animated SVG fallback for mobile and reduced-motion users.
-- **Data Persistence:** Local persistent atomic store in `data/kairos_store.json`, seamlessly adaptable to Amazon DynamoDB or AWS RDS PostgreSQL for cloud deployments.
+- **Data Persistence:** Supabase PostgreSQL production driver with a guarded local JSON fallback for development and migration verification.
 - **Security & RBAC:** Cryptographically signed HMAC session cookies for the 8 official committee leads. Zero public exposure of private student numbers, phone numbers, or secrets.
 - **Transactional Email:** AWS SES integration with truthful local development simulation fallback.
 - **Downloads:** Dynamic RFC 5545 `.ics` calendar generation, customized sponsorship prospectus scope generator, and official PDF downloads.
@@ -117,6 +117,14 @@ For full instructions on deploying to **AWS Amplify Hosting**, setting up **Amaz
 
 ---
 
-## 8. Official Attribution & Disclaimers
+## 8. CTO Infrastructure Documentation
+
+- [Arena Network Topology](./docs/ARENA_NETWORK_TOPOLOGY.md) — Proposed network segmentation, capacity, monitoring and acceptance plan.
+- [GitHub Telemetry Runbook](./docs/GITHUB_TELEMETRY_RUNBOOK.md) — Signed push-webhook setup and operations.
+- [CTO Implementation Report](./docs/SHANMUGAPRIYAN_CTO_IMPLEMENTATION_REPORT.md) — Completed work, verification and production dependencies.
+
+---
+
+## 9. Official Attribution & Disclaimers
 
 > **AWS SBG Disclaimer:** KAIROS 2027 is organized by the AWS Student Builder Group at Sathyabama Institute of Science and Technology (SIST). References to the student builder group do not imply that Amazon Web Services, Inc. is a corporate financial sponsor or underwriter of this event.

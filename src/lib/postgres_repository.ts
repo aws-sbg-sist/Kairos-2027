@@ -29,12 +29,14 @@ import {
   TeamRadarSignal,
   Judge,
   CheckpointEvaluation,
+  GitHubCommitEvent,
   CSATResponse,
   OrgMember,
   LeaderboardEntry,
   StudentAccount,
   NotificationLog
 } from '../types';
+import { calculatePopulationZScores } from './scoring';
 
 function profileToStudentAccount(row: any): StudentAccount {
   return {
@@ -102,6 +104,25 @@ function evaluationRowToEntity(row: any): CheckpointEvaluation {
     qualitativeFeedback: row.qualitative_feedback,
     recusedConflict: Boolean(row.recused_conflict),
     evaluatedAt: row.evaluated_at
+  };
+}
+
+function commitRowToEntity(row: any): GitHubCommitEvent {
+  return {
+    id: row.id,
+    deliveryId: row.delivery_id,
+    teamId: row.team_id,
+    teamCode: row.team_code,
+    repository: row.repository,
+    branch: row.branch,
+    sha: row.sha,
+    shortSha: row.short_sha,
+    message: row.message,
+    authorName: row.author_name,
+    committedAt: row.committed_at,
+    receivedAt: row.received_at,
+    afterFreeze: Boolean(row.after_freeze),
+    url: row.url || undefined,
   };
 }
 
@@ -814,6 +835,38 @@ export const postgresDb = {
     };
   },
 
+  async updateSponsorStatus(
+    id: string,
+    status: SponsorInquiry['status'],
+    organizerName: string
+  ): Promise<SponsorInquiry | undefined> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) throw new Error('Database not configured');
+
+    const { data, error } = await supabase
+      .from('sponsors')
+      .update({ status })
+      .eq('id', id)
+      .select()
+      .maybeSingle();
+
+    if (error) throw new Error(`Failed to update sponsor status: ${error.message}`);
+    if (!data) return undefined;
+
+    await this.addAuditLog(organizerName, 'UPDATE_SPONSOR_STATUS', `Updated sponsor inquiry ${id} to ${status}`);
+    return {
+      id: data.id,
+      companyName: data.company_name,
+      contactPerson: data.contact_person,
+      contactEmail: data.contact_email,
+      contactPhone: data.contact_phone,
+      interestedTier: data.interested_tier,
+      customRequirements: data.custom_requirements,
+      status: data.status,
+      createdAt: data.created_at,
+    };
+  },
+
   // --------------------------------------------------------------------------
   // 5. REFERRALS (RAINMAKER)
   // --------------------------------------------------------------------------
@@ -1385,10 +1438,8 @@ export const postgresDb = {
         : 0;
       const zScoreStr = `${avgZ >= 0 ? '+' : ''}${avgZ.toFixed(2)}σ`;
 
-      const commitCount = team.githubUrl 
-        ? 45 + Math.abs((team.teamCode || team.teamName).split('').reduce((acc, c) => acc + c.charCodeAt(0), 0) % 55) 
-        : 0;
-      const velocity = commitCount >= 70 ? 'High Velocity' : (commitCount >= 40 ? 'Sustained Velocity' : 'Active');
+      const commitCount = 0;
+      const velocity = 'No Telemetry';
 
       let status: LeaderboardEntry['status'] = 'IN_EVALUATION';
       if (team.selectionStage === 'ON_CAMPUS_QUALIFIED') status = 'FINALIST';
@@ -2071,17 +2122,18 @@ export const postgresDb = {
 
     const rawTotalScore = evalData.criterion1Score + evalData.criterion2Score + evalData.criterion3Score + evalData.criterion4Score;
 
-    // Compute Z-score based on judge's historical scoring distribution
+    // A judge's score is comparable only within the same checkpoint gate.
     const allEvaluations = await this.getEvaluations();
-    const judgeScores = allEvaluations
-      .filter(e => e.judgeId === evalData.judgeId && !(existing && e.id === existing.id))
-      .map(e => e.rawTotalScore);
-    judgeScores.push(rawTotalScore);
-
-    const judgeMean = judgeScores.reduce((acc, s) => acc + s, 0) / judgeScores.length;
-    const variance = judgeScores.reduce((acc, s) => acc + Math.pow(s - judgeMean, 2), 0) / judgeScores.length;
-    const judgeStdDev = Math.sqrt(variance);
-    const normalizedZScore = judgeStdDev > 0 ? (rawTotalScore - judgeMean) / judgeStdDev : 0.0;
+    const comparable = allEvaluations.filter(
+      e => e.judgeId === evalData.judgeId &&
+        e.checkpointGate === evalData.checkpointGate &&
+        !(existing && e.id === existing.id)
+    );
+    const normalizedScores = calculatePopulationZScores([
+      ...comparable.map(e => e.rawTotalScore),
+      rawTotalScore
+    ]);
+    const normalizedZScore = normalizedScores[normalizedScores.length - 1] || 0;
 
     const evaluatedAt = new Date().toISOString();
     const id = existing?.id || `eval-${targetTeamId}-g${evalData.checkpointGate}-${evalData.judgeId}`;
@@ -2102,12 +2154,28 @@ export const postgresDb = {
       evaluated_at: evaluatedAt
     };
 
-    const { data: savedRow, error } = await supabase
-      .from('evaluations')
-      .upsert(upsertPayload, { onConflict: 'team_id,judge_id,checkpoint_gate' })
-      .select()
-      .single();
+    const recalibratedRows = comparable.map((evaluation, index) => ({
+      id: evaluation.id,
+      team_id: evaluation.teamId,
+      judge_id: evaluation.judgeId,
+      checkpoint_gate: evaluation.checkpointGate,
+      criterion1_score: evaluation.criterion1Score,
+      criterion2_score: evaluation.criterion2Score,
+      criterion3_score: evaluation.criterion3Score,
+      criterion4_score: evaluation.criterion4Score,
+      raw_total_score: evaluation.rawTotalScore,
+      normalized_z_score: normalizedScores[index],
+      qualitative_feedback: evaluation.qualitativeFeedback || null,
+      recused_conflict: Boolean(evaluation.recusedConflict),
+      evaluated_at: evaluation.evaluatedAt
+    }));
 
+    const { data: savedRows, error } = await supabase
+      .from('evaluations')
+      .upsert([...recalibratedRows, upsertPayload], { onConflict: 'team_id,judge_id,checkpoint_gate' })
+      .select();
+
+    const savedRow = savedRows?.find((row: any) => row.id === id);
     if (error || !savedRow) {
       return { success: false, error: error ? error.message : 'Evaluation persistence error' };
     }
@@ -2125,6 +2193,47 @@ export const postgresDb = {
       updated: Boolean(isEdit),
       evaluation: finalEval
     };
+  },
+
+  async getCommitEvents(): Promise<GitHubCommitEvent[]> {
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return [];
+    const { data, error } = await supabase
+      .from('github_commit_events')
+      .select('*')
+      .order('committed_at', { ascending: false })
+      .limit(10_000);
+    if (error || !data) return [];
+    return data.map(commitRowToEntity);
+  },
+
+  async addCommitEvents(events: GitHubCommitEvent[]): Promise<{ inserted: number; duplicates: number }> {
+    if (events.length === 0) return { inserted: 0, duplicates: 0 };
+    const supabase = getSupabaseAdminClient();
+    if (!supabase) return { inserted: 0, duplicates: events.length };
+    const rows = events.map((event) => ({
+      id: event.id,
+      delivery_id: event.deliveryId,
+      team_id: event.teamId,
+      team_code: event.teamCode,
+      repository: event.repository,
+      branch: event.branch,
+      sha: event.sha,
+      short_sha: event.shortSha,
+      message: event.message,
+      author_name: event.authorName,
+      committed_at: event.committedAt,
+      received_at: event.receivedAt,
+      after_freeze: event.afterFreeze,
+      url: event.url || null,
+    }));
+    const { data, error } = await supabase
+      .from('github_commit_events')
+      .upsert(rows, { onConflict: 'id', ignoreDuplicates: true })
+      .select('id');
+    if (error) throw error;
+    const inserted = data?.length || 0;
+    return { inserted, duplicates: events.length - inserted };
   },
 
   // --------------------------------------------------------------------------

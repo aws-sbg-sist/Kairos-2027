@@ -106,7 +106,7 @@ export function verifyStudentToken(token: string): StudentSession | null {
 }
 
 export async function getCurrentStudentSession(): Promise<StudentSession | null> {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get(STUDENT_COOKIE_NAME)?.value;
   if (!token) return null;
   return verifyStudentToken(token);
