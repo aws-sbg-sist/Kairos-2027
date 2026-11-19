@@ -29,3 +29,8 @@ next-env.d.ts
 
 # Playwright artifacts
 /.playwright-mcp/
+
+# Heavy media offloaded to Supabase Cloud Storage
+*.mp4
+/public/docs/*.pdf
+/assets/

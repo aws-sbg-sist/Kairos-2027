@@ -9,6 +9,29 @@ const nextConfig = {
     // Tree-shake icons so unused icons are never loaded into server heap (only lucide-react, NOT framer-motion)
     optimizePackageImports: ['lucide-react'],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
+  },
+  async rewrites() {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || 'https://nwdpzcaxmfvcobnfwdwa.supabase.co';
+    return [
+      {
+        source: '/assets/kairos-logo-reveal.mp4',
+        destination: `${supabaseUrl}/storage/v1/object/public/assets/kairos-logo-reveal.mp4`,
+      },
+      {
+        source: '/docs/:path*',
+        destination: `${supabaseUrl}/storage/v1/object/public/assets/docs/:path*`,
+      },
+    ];
+  },
   async headers() {
     return [
       {
@@ -49,9 +72,9 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
-              "img-src 'self' data: blob: https:",
-              "media-src 'self' data: blob:",
-              "connect-src 'self' https://generativelanguage.googleapis.com",
+              "img-src 'self' data: blob: https: https://*.supabase.co",
+              "media-src 'self' data: blob: https: https://*.supabase.co",
+              "connect-src 'self' https://generativelanguage.googleapis.com https://*.supabase.co",
               "frame-src 'self' https://www.loom.com",
               "frame-ancestors 'self'",
               "object-src 'none'",
