@@ -62,63 +62,44 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[70] pointer-events-auto transition-colors duration-300 pt-[env(safe-area-inset-top,0px)] ${
+      className={`fixed top-0 left-0 right-0 z-[70] pointer-events-auto transition-colors duration-200 pt-[env(safe-area-inset-top,0px)] ${
         scrolled
-          ? 'bg-aws-squidInk/95 backdrop-blur-md border-b border-purple-500/20 py-2 sm:py-2.5 shadow-lg shadow-black/50'
-          : 'bg-aws-canvas/80 backdrop-blur-sm border-b border-white/5 py-2.5 sm:py-3.5'
+          ? 'bg-[#090A0D]/95 backdrop-blur-md border-b border-white/10 py-2.5 shadow-lg shadow-black/80'
+          : 'bg-[#090A0D]/80 backdrop-blur-sm border-b border-white/5 py-3'
       }`}
     >
-      {/* Top micro announcement bar */}
-      <div className="bg-gradient-to-r from-aws-orange/15 via-aws-blue/15 to-aws-orange/15 border-b border-purple-500/20 py-1 px-4 text-center text-[11px] font-mono text-slate-200 hidden md:block">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <span className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <strong className="text-white">NATIONAL APPLICATIONS OPEN:</strong> 100% Free | ₹0 Entry Fee | ₹1,75,000 Total Prize Pool
-          </span>
-          <div className="flex items-center gap-4 text-xs sm:text-sm">
-            <Link href="/refer-sponsor" className="text-purple-300 hover:text-white underline font-semibold">
-              Refer a Corporate Sponsor: Earn 10% to 15% Referral Commission
-            </Link>
-            <span className="text-slate-400">|</span>
-            <a href="https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-300">
-              Meetup Chapter ↗
-            </a>
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
           {/* Logo & Co-Branding Lockup */}
-          <Link href="/" className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-aws-orange rounded-lg p-1">
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0">
+          <Link href="/" className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-aws-orange rounded-md p-1">
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0">
               <Image
                 src="/assets/kairos-hourglass.png"
                 alt="KAIROS 2027 Logo"
                 fill
-                sizes="40px"
-                className="object-contain filter drop-shadow-md group-hover:scale-105 transition-transform"
+                sizes="36px"
+                className="object-contain"
                 priority
               />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="font-display font-black text-lg sm:text-xl tracking-wider text-white">
+                <span className="font-display font-black text-lg tracking-wider text-white">
                   KAIROS
                 </span>
-                <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-purple-950/60 text-purple-400 border border-purple-500/40">
+                <span className="text-xs font-mono font-semibold px-1.5 py-0.5 rounded bg-white/10 text-slate-300 border border-white/10">
                   2027
                 </span>
               </div>
-              <span className="text-xs text-slate-300 font-medium hidden sm:inline-block whitespace-nowrap">
-                AWS Student Builder Group - SIST
+              <span className="text-xs text-slate-400 font-normal hidden sm:inline-block whitespace-nowrap">
+                AWS Student Builder Group SIST
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links - Spacious & Streamlined */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium text-slate-200">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium text-slate-300">
             {primaryNavLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -127,16 +108,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                   href={link.href}
                   onMouseEnter={() => sound?.playHover()}
                   onClick={() => sound?.playClick()}
-                  className={`px-2 xl:px-3 py-1.5 rounded-md transition-colors relative whitespace-nowrap flex-shrink-0 ${
+                  className={`px-3 py-1.5 rounded-md transition-colors relative whitespace-nowrap flex-shrink-0 ${
                     isActive
-                      ? 'text-white bg-purple-950/50 font-semibold text-purple-400 border border-purple-500/30'
+                      ? 'text-white bg-white/10 font-semibold border border-white/10'
                       : 'hover:text-white hover:bg-white/5 text-slate-300'
                   }`}
                 >
                   <span className="flex items-center gap-1.5 whitespace-nowrap">
                     {link.label}
                     {link.badge && (
-                      <span className="px-2 py-0.5 rounded text-[11px] bg-purple-950/50 text-purple-400 border border-purple-500/30 font-semibold whitespace-nowrap flex-shrink-0">
+                      <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-white/10 text-slate-300 border border-white/10 font-medium">
                         {link.badge}
                       </span>
                     )}
@@ -145,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               );
             })}
 
-            {/* Elegant "More" Dropdown */}
+            {/* "More" Dropdown */}
             <div className="relative" onMouseLeave={() => setMoreMenuOpen(false)}>
               <button
                 onClick={() => setMoreMenuOpen(!moreMenuOpen)}
@@ -158,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               </button>
 
               {moreMenuOpen && (
-                <div className="absolute top-full right-0 mt-1.5 w-48 py-2 rounded-xl bg-slate-950/95 border border-white/10 shadow-2xl backdrop-blur-xl z-50 origin-top-right animate-popover-in stagger-rows">
+                <div className="absolute top-full right-0 mt-1.5 w-48 py-2 rounded-md bg-[#12141A] border border-white/10 shadow-2xl z-50 origin-top-right">
                   {secondaryNavLinks.map((subLink) => (
                     <Link
                       key={subLink.label}
@@ -173,9 +154,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
                   <Link
                     href="/admin/login"
                     onClick={() => setMoreMenuOpen(false)}
-                    className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-purple-950/40 transition-colors"
+                    className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
                   >
-                    <Shield className="w-3.5 h-3.5 text-purple-400" />
+                    <Shield className="w-3.5 h-3.5 text-slate-400" />
                     <span>Admin Portal</span>
                   </Link>
                 </div>
@@ -184,14 +165,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
           </nav>
 
           {/* Desktop Action Buttons */}
-          <div className="hidden lg:flex items-center gap-1 xl:gap-2 flex-shrink-0">
-            {/* Theme Toggle (Adobe Cyber Neon vs AWS Classic) */}
+          <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
             <ThemeToggle />
             {/* Audio Toggle */}
             <button
               onClick={() => sound?.toggle()}
               onMouseEnter={() => sound?.playHover()}
-              className="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-xs font-mono"
+              className="px-2.5 py-1.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-xs font-mono"
               title={soundEnabled ? "Mute Ambient FX" : "Enable Ambient FX"}
             >
               {soundEnabled ? (
@@ -205,7 +185,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               href="/dashboard"
               onMouseEnter={() => sound?.playHover()}
               onClick={() => sound?.playClick()}
-              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/30 transition-colors"
+              className="text-xs text-slate-300 hover:text-white px-3 py-1.5 rounded-md border border-white/10 hover:border-white/20 transition-colors"
             >
               Dashboard
             </Link>
@@ -214,9 +194,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               href="/admin/login"
               onMouseEnter={() => sound?.playHover()}
               onClick={() => sound?.playClick()}
-              className="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded border border-white/10 hover:border-purple-500/40 transition-colors flex items-center gap-1.5"
+              className="text-xs text-slate-300 hover:text-white px-3 py-1.5 rounded-md border border-white/10 hover:border-white/20 transition-colors flex items-center gap-1.5"
             >
-              <Shield className="w-3.5 h-3.5 text-purple-400" />
+              <Shield className="w-3.5 h-3.5 text-slate-400" />
               <span>Admin</span>
             </Link>
 
@@ -224,25 +204,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               href="/register"
               onMouseEnter={() => sound?.playHover()}
               onClick={() => sound?.playClick()}
-              className="relative group px-4 py-2 rounded-lg text-xs font-bold text-white btn-primary-themed shadow-md shadow-purple-900/30 transition-colors duration-300 active:scale-95 flex items-center gap-1.5 whitespace-nowrap"
+              className="px-4 py-1.5 rounded-md text-xs font-semibold bg-[#FF9900] hover:bg-[#F59E0B] text-black transition-colors flex items-center gap-1.5 whitespace-nowrap"
             >
-              <span>Register (100% Free)</span>
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <span>Register</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-2">
-            <ThemeToggle compact />
             <Link
               href="/register"
-              className="px-3 py-1.5 rounded-lg text-xs font-bold btn-primary-themed text-white shadow-sm"
+              className="px-3 py-1.5 rounded-md text-xs font-semibold bg-[#FF9900] text-black hover:bg-[#F59E0B] transition-colors"
             >
-              Register Free
+              Register
             </Link>
             <button
               onClick={() => { sound?.playClick(); setMobileMenuOpen(!mobileMenuOpen); }}
-              className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 focus:outline-none"
+              className="p-2 rounded-md text-slate-300 hover:text-white hover:bg-white/5 focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -252,18 +231,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 p-4 rounded-xl glass-panel border border-purple-500/20 space-y-2 animate-fadeIn bg-aws-squidInk/95 max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain">
+          <div className="lg:hidden mt-3 p-4 rounded-md border border-white/10 space-y-2 animate-fadeIn bg-[#12141A] max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain">
             <div className="grid grid-cols-2 gap-1 pb-2 border-b border-white/10">
               {allNavLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
                   onClick={() => { sound?.playClick(); setMobileMenuOpen(false); }}
-                  className="px-3 py-2 rounded-lg text-xs text-slate-200 hover:text-white hover:bg-purple-950/50 font-medium flex items-center justify-between"
+                  className="px-3 py-2 rounded-md text-xs text-slate-200 hover:text-white hover:bg-white/10 font-medium flex items-center justify-between"
                 >
                   <span>{link.label}</span>
                   {link.badge && (
-                    <span className="px-1 py-0.2 rounded text-[8px] bg-purple-950/50 text-purple-400">
+                    <span className="px-1.5 py-0.5 rounded text-[10px] bg-white/10 text-slate-300 font-mono">
                       {link.badge}
                     </span>
                   )}
@@ -275,25 +254,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
               <Link
                 href="/register"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-xs text-center py-2.5 rounded-lg font-bold btn-primary-themed text-white"
+                className="text-xs text-center py-2.5 rounded-md font-semibold bg-[#FF9900] text-black hover:bg-[#F59E0B]"
               >
-                Register Team (100% Free)
+                Register your team
               </Link>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center py-2 rounded-lg bg-slate-900 border border-white/10 text-slate-300"
+                  className="text-center py-2 rounded-md bg-[#181B23] border border-white/10 text-slate-300"
                 >
-                  Hacker Dashboard
+                  Dashboard
                 </Link>
                 <Link
                   href="/admin/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center py-2 rounded-lg bg-slate-900 border border-purple-500/30 text-purple-400 flex items-center justify-center gap-1"
+                  className="text-center py-2 rounded-md bg-[#181B23] border border-white/10 text-slate-300 flex items-center justify-center gap-1"
                 >
-                  <Shield className="w-3.5 h-3.5" />
-                  <span>Admin Portal</span>
+                  <Shield className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Admin</span>
                 </Link>
               </div>
             </div>

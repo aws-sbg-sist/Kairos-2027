@@ -28,7 +28,7 @@ interface SplashParticle {
   color: string;
 }
 
-const PARTICLE_COLORS = ['#f3e8ff', '#e9d5ff', '#d8b4fe', '#c084fc', '#a855f7', '#38bdf8'];
+const PARTICLE_COLORS = ['#FEF3C7', '#FDE68A', '#FCD34D', '#F59E0B', '#D97706', '#E2E8F0'];
 
 export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
   isFlipped = false,
@@ -161,16 +161,16 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
 
         ctx.closePath();
 
-        // Shading Gradient for Upper Sand
+        // Shading Gradient for Upper Sand (Warm Quartz & Amber)
         const upperGrad = ctx.createLinearGradient(250, sandTopY, 250, 246);
-        upperGrad.addColorStop(0.0, '#e9d5ff'); // Light amethyst highlight rim
-        upperGrad.addColorStop(0.2, '#c084fc'); // Vibrant lilac
-        upperGrad.addColorStop(0.65, '#9333ea'); // Electric purple core
-        upperGrad.addColorStop(1.0, '#581c87'); // Deep violet shadow at throat
+        upperGrad.addColorStop(0.0, '#FEF3C7');
+        upperGrad.addColorStop(0.2, '#FCD34D');
+        upperGrad.addColorStop(0.65, '#F59E0B');
+        upperGrad.addColorStop(1.0, '#B45309');
 
         ctx.fillStyle = upperGrad;
-        ctx.shadowColor = 'rgba(168, 85, 247, 0.4)';
-        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(245, 158, 11, 0.25)';
+        ctx.shadowBlur = 8;
         ctx.fill();
         ctx.restore();
 
@@ -183,7 +183,7 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
           const grainX = 250 + side * (1 - grainT) * (topHw * 0.6);
           ctx.beginPath();
           ctx.arc(grainX, grainY, 1.2, 0, Math.PI * 2);
-          ctx.fillStyle = '#f3e8ff';
+          ctx.fillStyle = '#FEF3C7';
           ctx.globalAlpha = 0.7;
           ctx.fill();
         }
@@ -225,26 +225,26 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
 
         ctx.closePath();
 
-        // Multi-stop Radiant Gradient matching original artwork
+        // Multi-stop Warm Amber Sand Gradient
         const moundGrad = ctx.createLinearGradient(250, moundApexY, 250, 394);
-        moundGrad.addColorStop(0.0, '#f5d0fe'); // Radiant peak highlight
-        moundGrad.addColorStop(0.2, '#d8b4fe'); // Light violet
-        moundGrad.addColorStop(0.55, '#9333ea'); // Primary neon purple
-        moundGrad.addColorStop(1.0, '#4c1d95'); // Deep foundation violet
+        moundGrad.addColorStop(0.0, '#FEF3C7');
+        moundGrad.addColorStop(0.2, '#FCD34D');
+        moundGrad.addColorStop(0.55, '#F59E0B');
+        moundGrad.addColorStop(1.0, '#92400E');
 
         ctx.fillStyle = moundGrad;
-        ctx.shadowColor = 'rgba(192, 132, 252, 0.5)';
-        ctx.shadowBlur = 12;
+        ctx.shadowColor = 'rgba(245, 158, 11, 0.3)';
+        ctx.shadowBlur = 10;
         ctx.fill();
         ctx.restore();
 
-        // Glowing Apex Core Bead (like in the original logo)
+        // Core Bead
         ctx.save();
         ctx.beginPath();
         ctx.arc(250, moundApexY + 2, 2.5, 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = '#38bdf8';
-        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#F59E0B';
+        ctx.shadowBlur = 6;
         ctx.fill();
         ctx.restore();
       }
@@ -253,14 +253,14 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
       // 3. RENDER FALLING SAND STREAM & PARTICLES
       // -------------------------------------------------------------
       if (progress < 0.995) {
-        // Continuous Central Laser Stream Core
+        // Continuous Central Stream Core
         ctx.save();
         ctx.globalAlpha = flipWarmup;
         const streamGrad = ctx.createLinearGradient(250, 246, 250, moundApexY);
-        streamGrad.addColorStop(0.0, 'rgba(233, 213, 255, 0.95)');
-        streamGrad.addColorStop(0.3, 'rgba(192, 132, 252, 0.85)');
-        streamGrad.addColorStop(0.8, 'rgba(168, 85, 247, 0.9)');
-        streamGrad.addColorStop(1.0, 'rgba(56, 189, 248, 1.0)');
+        streamGrad.addColorStop(0.0, 'rgba(254, 243, 199, 0.95)');
+        streamGrad.addColorStop(0.3, 'rgba(252, 211, 77, 0.85)');
+        streamGrad.addColorStop(0.8, 'rgba(245, 158, 11, 0.9)');
+        streamGrad.addColorStop(1.0, 'rgba(217, 119, 6, 1.0)');
 
         ctx.beginPath();
         ctx.moveTo(249, 246);
@@ -270,8 +270,8 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
         ctx.closePath();
 
         ctx.fillStyle = streamGrad;
-        ctx.shadowColor = '#a855f7';
-        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#F59E0B';
+        ctx.shadowBlur = 6;
         ctx.fill();
         ctx.restore();
 
@@ -348,19 +348,19 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
       }
 
       // -------------------------------------------------------------
-      // 4. CENTRAL QUANTUM WAIST GLOW
+      // 4. CENTRAL WAIST FLOW NODE
       // -------------------------------------------------------------
       ctx.save();
-      const waistPulse = Math.sin(time * 0.004) * 0.2 + 0.8;
-      const waistGrad = ctx.createRadialGradient(250, 246, 1, 250, 246, 14);
-      waistGrad.addColorStop(0.0, 'rgba(56, 189, 248, 0.9)');
-      waistGrad.addColorStop(0.5, 'rgba(168, 85, 247, 0.5)');
-      waistGrad.addColorStop(1.0, 'rgba(168, 85, 247, 0)');
+      const waistPulse = Math.sin(time * 0.004) * 0.15 + 0.85;
+      const waistGrad = ctx.createRadialGradient(250, 246, 1, 250, 246, 10);
+      waistGrad.addColorStop(0.0, 'rgba(255, 153, 0, 0.7)');
+      waistGrad.addColorStop(0.5, 'rgba(245, 158, 11, 0.2)');
+      waistGrad.addColorStop(1.0, 'rgba(245, 158, 11, 0)');
 
       ctx.fillStyle = waistGrad;
       ctx.globalAlpha = waistPulse;
       ctx.beginPath();
-      ctx.arc(250, 246, 14, 0, Math.PI * 2);
+      ctx.arc(250, 246, 10, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 

@@ -17,10 +17,10 @@ export interface SpotlightCardProps {
 export const SpotlightCard: React.FC<SpotlightCardProps> = ({
   children,
   className = '',
-  spotlightColor = 'rgba(238, 5, 242, 0.15)',
-  borderColor = 'rgba(238, 5, 242, 0.35)',
-  enableTilt = true,
-  maxTilt = 7,
+  spotlightColor = 'rgba(255, 255, 255, 0.04)',
+  borderColor = 'rgba(255, 255, 255, 0.12)',
+  enableTilt = false,
+  maxTilt = 0,
   onClick,
   style = {},
 }) => {
