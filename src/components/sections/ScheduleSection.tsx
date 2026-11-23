@@ -141,9 +141,39 @@ export const ScheduleSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Horizontal Timeline Track */}
-            <div className="overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin">
-              <div className="flex gap-4 min-w-max">
+            {/* Horizontal Timeline Track with Sideways Text Gutter */}
+            <div className="flex items-stretch gap-4">
+              {/* Sideways Text Gutter (Animation #5) */}
+              <div
+                className="hidden lg:flex flex-col items-center justify-between py-6 px-3 rounded-2xl bg-aws-card/75 border border-purple-500/30 backdrop-blur-md shrink-0 select-none shadow-lg shadow-purple-950/20"
+                style={{ minHeight: '340px' }}
+                aria-hidden="true"
+              >
+                <div className="flex flex-col items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-aws-orange animate-ping" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-aws-orange" />
+                </div>
+                
+                <div
+                  className="font-mono text-[11px] font-extrabold tracking-[0.28em] text-purple-300 uppercase whitespace-nowrap flex items-center gap-3"
+                  style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                >
+                  <span className="text-purple-400">⚡</span>
+                  <span>48-Hour Continuous Hackathon Timeline</span>
+                  <span className="text-purple-400">•</span>
+                  <span className="text-slate-400">IST Operations</span>
+                </div>
+
+                <div className="flex flex-col items-center gap-1">
+                  <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-500/30">
+                    LIVE
+                  </span>
+                </div>
+              </div>
+
+              {/* Horizontal Timeline Track */}
+              <div className="overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin flex-1 min-w-0">
+                <div className="flex gap-4 min-w-max">
                 {activeDay.events.map((milestone, idx) => {
                   const badgeClass = getCategoryBadgeClass(milestone.category);
                   const isCheckpoint = milestone.title.toLowerCase().includes('checkpoint');
@@ -204,6 +234,7 @@ export const ScheduleSection: React.FC = () => {
                 })}
               </div>
             </div>
+          </div>
           </motion.div>
         </AnimatePresence>
       </div>

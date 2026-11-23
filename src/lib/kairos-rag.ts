@@ -396,13 +396,13 @@ export function synthesizeLocalAnswer(query: string, retrieved: KnowledgeChunk[]
 How can I assist you with KAIROS 2027 today?`;
   }
 
-  // 0. Referral & Rainmaker Crowdsourced Sponsorship Program
+  // 0. Corporate Sponsorship Inquiry & Referral Policy
   if (q.includes('referral') || q.includes('rainmaker') || q.includes('commission') || (q.includes('sponsor') && (q.includes('earn') || q.includes('refer')))) {
-    return `### 💼 Rainmaker Crowdsourced Sponsorship Program
+    return `### 💼 Corporate Sponsorships & Partnerships
 
-• **Earn Referral Commission:** Earn a direct **10% to 15% cash commission** for every verified corporate sponsor you connect to KAIROS 2027!
-• **Payout:** Direct UPI cash payout transferred straight to your bank account within 21 days of sponsorship deal closure.
-• **How to Submit:** Visit the **/refer-sponsor** page on the portal and submit your corporate sponsor lead details.`;
+• **Sponsorship Inquiries:** KAIROS 2027 collaborates directly with industry leaders across Title Presenting, Co-Powered, Associate/Gold, and Track partnerships.
+• **Referral Fees:** KAIROS 2027 does not offer referral fees or cash commissions for sponsorships. All corporate partnerships are coordinated directly through our official institutional desk.
+• **Partnership Dossier:** Visit **/sponsors** or contact **sistawscc@gmail.com** to connect with our sponsorship team.`;
   }
 
   // Edge Case: Unverified / Missing Policy: Pets & Animals (Before general venue match)

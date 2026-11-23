@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { PRIZE_POOL_CARDS } from '@/lib/config';
 import { Trophy, Award, Shield, CheckCircle2, ArrowRight, Gift, Sparkles } from 'lucide-react';
 import { sound } from '@/lib/audio';
@@ -59,8 +60,11 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
           </ScrollReveal>
         </div>
 
-        {/* Podium 3 Cards (Champion, 1st Runner Up, 2nd Runner Up) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12 items-stretch">
+        {/* Podium 3 Cards (Champion, 1st Runner Up, 2nd Runner Up) — 3D Card Zoom (Animation #3) */}
+        <div
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12 items-stretch"
+          style={{ perspective: '1200px' }}
+        >
           {PRIZE_POOL_CARDS.slice(0, 3).map((item, idx) => {
             const isGrand = idx === 0;
 
@@ -72,17 +76,27 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                 delay={idx * 0.1}
                 className="h-full"
               >
-                <SpotlightCard
-                  enableTilt={true}
-                  maxTilt={7}
-                  spotlightColor={isGrand ? 'rgba(238, 5, 242, 0.3)' : 'rgba(118, 48, 217, 0.2)'}
-                  borderColor={isGrand ? 'rgba(238, 5, 242, 0.7)' : 'rgba(118, 48, 217, 0.35)'}
-                  className={`p-6 sm:p-8 rounded-3xl flex flex-col justify-between transition-colors relative overflow-hidden h-full ${
-                    isGrand
-                      ? 'bg-gradient-to-b from-aws-squidInk via-slate-950 to-slate-950 border-2 border-purple-500 shadow-2xl shadow-purple-900/30 lg:-translate-y-3'
-                      : 'bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40'
-                  }`}
+                <motion.div
+                  whileHover={{
+                    scale: isGrand ? 1.07 : 1.04,
+                    rotateX: -4,
+                    rotateY: idx === 0 ? 0 : idx === 1 ? -3 : 3,
+                    z: isGrand ? 24 : 12,
+                  }}
+                  transition={{ type: 'spring', stiffness: 280, damping: 20 }}
+                  style={{ transformStyle: 'preserve-3d' }}
+                  className="h-full"
                 >
+                  <SpotlightCard
+                    enableTilt={false}
+                    spotlightColor={isGrand ? 'rgba(238, 5, 242, 0.3)' : 'rgba(118, 48, 217, 0.2)'}
+                    borderColor={isGrand ? 'rgba(238, 5, 242, 0.7)' : 'rgba(118, 48, 217, 0.35)'}
+                    className={`p-6 sm:p-8 rounded-3xl flex flex-col justify-between transition-colors relative overflow-hidden h-full ${
+                      isGrand
+                        ? 'bg-gradient-to-b from-aws-squidInk via-slate-950 to-slate-950 border-2 border-purple-500 shadow-2xl shadow-purple-900/30 lg:-translate-y-3'
+                        : 'bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40'
+                    }`}
+                  >
                   {isGrand && (
                     <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-mono font-black text-xs rounded-bl-2xl  shadow-md">
                       Grand Champion
@@ -142,6 +156,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
                     <span className="text-emerald-400 font-semibold">Official Award Conferral</span>
                   </div>
                 </SpotlightCard>
+                </motion.div>
               </ScrollReveal>
             );
           })}

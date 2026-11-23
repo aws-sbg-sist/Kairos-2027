@@ -61,16 +61,11 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 
   const initialPos = getInitialPosition();
 
-  // Above-the-fold or immediate entrance: animate on mount without waiting for scroll
+  // Above-the-fold or immediate entrance: visible immediately on first paint without blocking behind opacity:0
   if (immediate) {
     return (
       <motion.div
-        initial={{
-          opacity: 0,
-          x: initialPos.x,
-          y: initialPos.y,
-          scale: scale !== 1 ? scale : 1,
-        }}
+        initial={false}
         animate={{
           opacity: 1,
           x: 0,
@@ -78,9 +73,8 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
           scale: 1,
         }}
         transition={{
-          duration,
-          delay,
-          ease: [0.21, 0.47, 0.32, 0.98], // Apple/Stripe-style fluid ease-out
+          duration: 0.3,
+          ease: [0.21, 0.47, 0.32, 0.98],
         }}
         className={className}
       >

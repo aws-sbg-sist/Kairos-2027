@@ -187,18 +187,18 @@ export const KairosChatbot: React.FC = () => {
     <div
       className={
         isOpen
-          ? 'fixed inset-x-2 sm:inset-x-auto sm:right-5 bottom-[max(0.5rem,env(safe-area-inset-bottom))] sm:bottom-5 z-40 select-none font-ai flex justify-center sm:justify-end'
-          : 'fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-3 sm:right-5 z-40 select-none font-ai'
+          ? 'fixed inset-x-2 sm:inset-x-auto sm:right-5 bottom-[max(0.5rem,env(safe-area-inset-bottom))] sm:bottom-5 z-50 select-none font-ai flex justify-center sm:justify-end'
+          : 'fixed bottom-4 sm:bottom-5 right-3 sm:right-5 z-50 select-none font-ai'
       }
     >
-      {/* Floating Trigger Button */}
+      {/* Floating Trigger Button: Compact circular FAB on mobile, full pill on desktop */}
       {!isOpen && (
         <button
           onClick={() => {
             sound?.playClick();
             setIsOpen(true);
           }}
-          className="relative group flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-colors duration-200 ease-entrance border border-purple-400/40 font-ai"
+          className="relative group flex items-center justify-center gap-2.5 p-3 sm:px-5 sm:py-3.5 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-all duration-200 border border-purple-400/40 font-ai"
           aria-label="Open Kairos AI Chatbot"
         >
           <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 motion-safe:animate-pulse">
@@ -209,7 +209,9 @@ export const KairosChatbot: React.FC = () => {
               className="object-contain"
             />
           </div>
-          <span className="text-sm sm:text-base font-bold font-ai tracking-normal">Ask Kairos AI</span>
+          <span className="hidden sm:inline-block text-sm sm:text-base font-bold font-ai tracking-normal">
+            Ask Kairos AI
+          </span>
           <span className="flex h-2.5 w-2.5 relative">
             <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />

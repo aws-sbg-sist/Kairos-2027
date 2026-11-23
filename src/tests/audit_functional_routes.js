@@ -19,7 +19,6 @@ const routes = [
   { path: '/rules', name: 'Rules & Code of Conduct' },
   { path: '/resources', name: 'Builder Resources & Kits' },
   { path: '/sponsors', name: 'Sponsors & Ecosystem' },
-  { path: '/refer-sponsor', name: 'Refer Sponsor' },
   { path: '/on-campus', name: 'On-Campus Logistics & Fleet' },
   { path: '/online-qualifier', name: 'Online Qualifier Info' },
   { path: '/stage', name: 'Live Stage Stream' },

@@ -10,7 +10,6 @@ import {
   Download, 
   Send, 
   ArrowRight, 
-  DollarSign, 
   Users, 
   Briefcase, 
   Layers, 
@@ -20,6 +19,8 @@ import {
   Mail,
   FileText
 } from 'lucide-react';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 import { EVENT_CONFIG, SPONSOR_TIERS, HIGHER_MANAGEMENT } from '@/lib/config';
 
 export default function SponsorsPage() {
@@ -91,7 +92,6 @@ Corporate Partnership Tiers:
    - 20-Minute Keynote Address to all 600 contestants during Inaugural
    - 2 Table-Side Judge Slots + Main Stage Grand Finale Trophy Handover
    - Full Opt-In Resume Book of all 600 Builders + 2,000 Online Applicants
-   - Referral Payout: ₹20,000 - ₹30,000 (10%-15%)
 
 2. Co-Powered By Partner: ₹1,00,000
    - Co-Branding ("KAIROS 2027 Co-Powered by [Your Brand]")
@@ -130,8 +130,10 @@ Target Domain: https://kairos.sathyabama.ac.in
   };
 
   return (
-    <div className="min-h-screen bg-aws-canvas text-slate-100 pt-28 pb-24">
-      {/* Background Decorative Ambient */}
+    <div className="min-h-screen bg-aws-canvas text-slate-100 flex flex-col justify-between">
+      <Navbar />
+      <div className="pt-28 pb-24 flex-1">
+        {/* Background Decorative Ambient */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
         <div className="absolute top-2/3 right-10 w-[400px] h-[400px] bg-emerald-500/5 blur-[100px]" />
@@ -175,7 +177,7 @@ Target Domain: https://kairos.sathyabama.ac.in
               className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 via-purple-700 to-purple-900 text-white font-bold text-sm hover:brightness-110 transition shadow-lg shadow-purple-900/40"
             >
               <Download className="w-4 h-4" />
-              Download Partnership Deck (.txt / PDF)
+              Download Sponsorship Prospectus (PDF)
             </button>
             <a 
               href="#inquiry-form"
@@ -185,36 +187,6 @@ Target Domain: https://kairos.sathyabama.ac.in
               Submit Sponsorship Inquiry
             </a>
           </div>
-        </div>
-
-        {/* Rainmaker Referral Banner Callout */}
-        <div className="mb-16 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-purple-950/40 via-slate-900 to-purple-950/30 border border-purple-500/30 shadow-2xl backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="p-3.5 rounded-xl bg-purple-950/80 text-purple-400 shrink-0 border border-purple-500/40">
-              <DollarSign className="w-7 h-7" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-purple-950/80 text-purple-400 ">
-                  Crowdsourced Rainmaker Hub
-                </span>
-                <span className="text-xs text-slate-400">For Students & Alumni</span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-1">
-                Know a company that wants to sponsor? Earn 10% to 15% Direct Referral Commission!
-              </h3>
-              <p className="text-sm text-slate-300">
-                Submit a verified corporate lead. If it closes, receive up to <strong className="text-purple-400">₹30,000 direct payout</strong> transferred straight to your UPI ID with a 21-day lock guarantee.
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/refer-sponsor"
-            className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold text-sm hover:from-purple-600 hover:to-purple-800 shadow-md shadow-purple-900/30 transition"
-          >
-            Launch Referral Hub
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
 
         {/* ROI Pillars Grid */}
@@ -302,9 +274,6 @@ Target Domain: https://kairos.sathyabama.ac.in
                   <div className="flex items-center justify-between gap-2 mb-3">
                     <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
                       {tier.statusBadge}
-                    </span>
-                    <span className="text-xs font-mono text-emerald-400">
-                      Referral: {tier.referralPayout}
                     </span>
                   </div>
 
@@ -510,6 +479,8 @@ Target Domain: https://kairos.sathyabama.ac.in
         </div>
 
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

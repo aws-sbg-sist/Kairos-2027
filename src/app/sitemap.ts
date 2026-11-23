@@ -9,7 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/tracks', priority: 0.9, changeFrequency: 'weekly' as const },
     { path: '/rules', priority: 0.8, changeFrequency: 'weekly' as const },
     { path: '/sponsors', priority: 0.8, changeFrequency: 'weekly' as const },
-    { path: '/refer-sponsor', priority: 0.8, changeFrequency: 'weekly' as const },
     { path: '/resources', priority: 0.7, changeFrequency: 'weekly' as const },
     { path: '/dashboard', priority: 0.85, changeFrequency: 'hourly' as const },
     { path: '/leaderboard', priority: 0.9, changeFrequency: 'always' as const },

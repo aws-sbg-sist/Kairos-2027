@@ -82,14 +82,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
             </ul>
           </div>
 
-          {/* Column 3: Resources & Referrals */}
+          {/* Column 3: Resources & Partnerships */}
           <div>
             <h4 className="text-xs font-mono  text-purple-300 font-semibold mb-4">
-              Resources & Partner
+              Resources & Partnerships
             </h4>
             <ul className="space-y-2 text-sm text-slate-300">
               <li><Link href="/resources" className="hover:text-white transition-colors text-sky-400">AWS SBG Learning Library</Link></li>
-              <li><Link href="/refer-sponsor" className="hover:text-white transition-colors text-emerald-400 font-semibold">Earn 10% to 15% Referral Cash</Link></li>
               <li><Link href="/sponsors" className="hover:text-white transition-colors">Sponsorship Prospectus</Link></li>
               <li><Link href="/rules" className="hover:text-white transition-colors">100% Student IP & Rules</Link></li>
               

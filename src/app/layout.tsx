@@ -3,6 +3,7 @@ import { Inter, Outfit, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/goog
 import './globals.css';
 import { KairosChatbot } from '@/components/chatbot/KairosChatbot';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
 import { KeyboardShortcutsModal } from '@/components/modals/KeyboardShortcutsModal';
 import { MobileFloatingBar } from '@/components/navigation/MobileFloatingBar';
 
@@ -165,12 +166,14 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#090A0D] text-[#EDEDED] font-sans antialiased min-h-screen selection:bg-white/20 selection:text-white">
+      <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-gradient-to-r from-purple-700 to-purple-900 selection:text-white">
         <ThemeProvider>
+          {/* Ambient Magnetic Cursor Glow for Fine Pointers */}
+          <MagneticGlowCursor />
           {/* WCAG 2.4.1 Accessible Skip Navigation */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[999] px-4 py-2 bg-[#FF9900] text-black font-semibold rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[999] px-4 py-2 bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition"
           >
             Skip to main content
           </a>

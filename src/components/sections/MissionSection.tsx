@@ -6,6 +6,7 @@ import { Compass, Clock, Zap, ShieldCheck } from 'lucide-react';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 import { KineticText } from '@/components/animation/KineticText';
+import { LineReveal } from '@/components/animation/LineReveal';
 
 export const MissionSection: React.FC = () => {
   return (
@@ -103,9 +104,12 @@ export const MissionSection: React.FC = () => {
                     Where Systems Are Engineered to Withstand Reality
                   </h3>
 
-                  <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-                    KAIROS 2027 turns the 48-hour pressure cooker into 48 hours of real distributed systems, verified repositories, and live jury defenses. We support builders with dedicated rest areas, 7 chef-curated meals, and high-concurrency cloud environments.
-                  </p>
+                  <LineReveal
+                    text="KAIROS 2027 turns the 48-hour pressure cooker into 48 hours of real distributed systems, verified repositories, and live jury defenses. We support builders with dedicated rest areas, 7 chef-curated meals, and high-concurrency cloud environments."
+                    className="text-sm sm:text-base text-slate-200 leading-relaxed space-y-1.5"
+                    delay={0.2}
+                    stagger={0.16}
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-purple-500/20 text-xs font-mono relative z-10">

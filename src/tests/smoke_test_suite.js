@@ -67,7 +67,7 @@ async function runSmokeTests() {
     { path: '/tracks', name: 'Technical Tracks' },
     { path: '/rules', name: 'Competition Rules & Ethics' },
     { path: '/sponsors', name: 'Sponsorship & Partners' },
-    { path: '/refer-sponsor', name: 'Rainmaker ₹ Referral Program' },
+    { path: '/refer-sponsor', name: 'Referral Route (Redirects to /sponsors)', expectedStatus: [200, 307, 308] },
     { path: '/resources', name: 'Builder Resources & Docs' },
     { path: '/dashboard', name: 'Participant Dashboard' },
     { path: '/admin/login', name: 'Admin Login Portal' },
@@ -89,8 +89,9 @@ async function runSmokeTests() {
   for (const route of routesToTest) {
     try {
       const res = await fetchUrl(route.path);
+      const allowedStatuses = route.expectedStatus || [200];
       assert(
-        res.statusCode === 200,
+        allowedStatuses.includes(res.statusCode),
         `Route: ${route.path} - ${route.name}`,
         `Status ${res.statusCode}`
       );
@@ -117,7 +118,7 @@ async function runSmokeTests() {
     { label: 'Tracks', href: '/tracks' },
     { label: 'Schedule', href: '/#schedule' },
     { label: 'Qualifier', href: '/online-qualifier' },
-    { label: 'Rainmaker ₹', href: '/refer-sponsor' },
+    { label: 'Sponsors', href: '/sponsors' },
     { label: 'Rules', href: '/rules' },
   ];
 
@@ -161,11 +162,7 @@ async function runSmokeTests() {
   );
   assert(
     (heroSrc.includes('href="/tracks"') || heroSrc.includes('href="/sponsors"')) && (heroSrc.includes('Explore 5 Tracks') || heroSrc.includes('View Sponsorship Prospectus')),
-    'Hero Secondary CTA: "Explore 5 Tracks" button targets /tracks'
-  );
-  assert(
-    heroSrc.includes('href="/refer-sponsor"') && (heroSrc.includes('Earn 10% to 15% Referral Cash') || heroSrc.includes('Earn 10%–15% Referral Cash') || heroSrc.includes('Referral Cash')),
-    'Hero Tertiary CTA: "Earn 10%–15% Referral Cash" button targets /refer-sponsor'
+    'Hero Secondary CTA: Prospectus button targets /sponsors'
   );
   assert(
     heroSrc.includes('sound?.playClick()'),

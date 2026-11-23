@@ -7,6 +7,7 @@ import { ArrowRight, Sparkles, Download, ShieldCheck, Trophy, Calendar, MapPin }
 import { sound } from '@/lib/audio';
 import { MagneticButton } from '@/components/animation/MagneticButton';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
+import { Hourglass3DModel } from '@/components/animation/Hourglass3DModel';
 
 export const FinalCTASection: React.FC = () => {
   return (
@@ -32,16 +33,10 @@ export const FinalCTASection: React.FC = () => {
           </div>
         </ScrollReveal>
 
-        {/* Animated 3D/2.5D Cosmic Hourglass Emblem */}
+        {/* Fixed Interactive 3D Cosmic Hourglass Model (Animation #7) */}
         <ScrollReveal direction="none" delay={0.1}>
-          <div className="relative w-28 h-28 sm:w-36 sm:h-36 mx-auto animate-float-slow">
-            <div className="absolute inset-0 rounded-full bg-purple-950/70 blur-2xl animate-pulse" />
-            <Image
-              src="/assets/kairos-hourglass.png"
-              alt="KAIROS Hourglass"
-              fill
-              className="object-contain filter drop-shadow-xl"
-            />
+          <div className="relative py-2 flex items-center justify-center">
+            <Hourglass3DModel />
           </div>
         </ScrollReveal>
 

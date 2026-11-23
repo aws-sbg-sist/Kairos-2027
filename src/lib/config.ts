@@ -442,8 +442,6 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'title',
     name: 'Title Presenting Partner',
     amount: '₹2,00,000',
-    referralPayout: '₹20,000 – ₹30,000 Direct Payout',
-    commissionRate: '10% – 15%',
     statusBadge: 'Premier Flagship',
     description: 'Prime headline association. Maximum brand prominence across every digital, stage, and physical touchpoint.',
     highlights: [
@@ -461,8 +459,6 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'powered_by',
     name: 'Co-Powered By Partner',
     amount: '₹1,00,000',
-    referralPayout: '₹10,000 – ₹12,000 Direct Payout',
-    commissionRate: '10% – 12%',
     statusBadge: 'Platform Partner',
     description: 'Platform-tier brand presence. Demo your tools live on stage and drive direct API/SDK adoption among shortlisted builders.',
     highlights: [
@@ -480,8 +476,6 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'gold',
     name: 'Associate / Gold Partner',
     amount: '₹50,000',
-    referralPayout: '₹5,000 Direct Payout',
-    commissionRate: '10%',
     statusBadge: 'Ecosystem Partner',
     description: 'Strong presence and recruitment access at a highly accessible investment level.',
     highlights: [
@@ -498,8 +492,6 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'track',
     name: 'Track & Bounty Partner',
     amount: '₹25,000',
-    referralPayout: '₹2,500 Direct Payout',
-    commissionRate: '10%',
     statusBadge: 'Track Sponsor',
     description: 'Associate your brand directly with one of our five core engineering tracks.',
     highlights: [
@@ -515,8 +507,6 @@ export const PROPOSED_SPONSOR_TIERS = [
     id: 'in_kind',
     name: 'In-Kind F&B / Fuel Partner',
     amount: 'Energy Drinks / Snacks / Cloud Credits',
-    referralPayout: '₹3,000 – ₹5,000 Direct Payout',
-    commissionRate: 'Fixed Bounty',
     statusBadge: 'Fuel Partner',
     description: 'Provide developer cloud credits, software licenses, snacks, or energy beverages.',
     highlights: [
@@ -583,60 +573,7 @@ export const ORGANIZING_ROSTER: OrganizerAccount[] = [
   }
 ];
 
-export const SPONSOR_REFERRAL_TIERS = [
-  {
-    tier: 'Title Presenting Partner',
-    dealSize: '₹2,00,000',
-    commissionPercentage: '10% – 15%',
-    cashPayout: '₹20,000 – ₹30,000 Direct Payout',
-    perks: [
-      'National Corporate Rainmaker Trophy on stage',
-      'VIP Main-Stage All-Access Pass to Kairos 2027',
-      'Official Letter of Recommendation from President Thenappan T'
-    ]
-  },
-  {
-    tier: 'Co-Powered By Partner',
-    dealSize: '₹1,00,000',
-    commissionPercentage: '10% – 12%',
-    cashPayout: '₹10,000 – ₹12,000 Direct Payout',
-    perks: [
-      'VIP Jury Lounge Access',
-      'Official Letter of Recommendation',
-      'Exclusive Cyber Streetwear Hoodie'
-    ]
-  },
-  {
-    tier: 'Associate / Gold Partner',
-    dealSize: '₹50,000',
-    commissionPercentage: '10%',
-    cashPayout: '₹5,000 Direct Payout',
-    perks: [
-      'Exclusive Merch Kit',
-      'Verified Recommendation Certificate'
-    ]
-  },
-  {
-    tier: 'Track & Bounty Partner',
-    dealSize: '₹25,000',
-    commissionPercentage: '10%',
-    cashPayout: '₹2,500 Direct Payout',
-    perks: [
-      'Official Partner Certificate',
-      'Kairos Swag Pack'
-    ]
-  },
-  {
-    tier: 'In-Kind F&B / Fuel Deals',
-    dealSize: 'Red Bull / Energy / Snacks',
-    commissionPercentage: 'Fixed Bounty',
-    cashPayout: '₹3,000 – ₹5,000 Direct Payout',
-    perks: [
-      'Special Swag Drop',
-      'Official Event Recognition'
-    ]
-  }
-];
+export const SPONSOR_REFERRAL_TIERS: any[] = [];
 
 export const HIGHER_MANAGEMENT = {
   batch: '2026-2027',
@@ -683,7 +620,7 @@ export const HIGHER_MANAGEMENT = {
       leadName: 'Nangaiyar M (Nikki)',
       registerNo: '44612059',
       division: 'Division 1: Capital, Sponsorships & Corporate Relations',
-      mandate: 'Leading corporate outreach, ₹3.5L capital management, sponsor closing, and student referral commission execution.'
+      mandate: 'Leading corporate outreach, ₹3.5L capital management, sponsor closing, and corporate relations execution.'
     },
     {
       code: 'SUPER_HEAD_2',

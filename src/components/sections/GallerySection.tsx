@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Camera, LayoutGrid, SlidersHorizontal, Maximize2, Sparkles, MapPin, Eye } from 'lucide-react';
+import { Camera, LayoutGrid, SlidersHorizontal, Maximize2, Sparkles, MapPin, Eye, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
@@ -71,6 +72,8 @@ export const GallerySection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'masonry' | 'carousel'>('carousel');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [carouselIndex, setCarouselIndex] = useState<number>(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
 
   const categories = ['All', 'Arena', 'Engineering', 'Community', 'Awards', 'Jury'];
 
@@ -78,9 +81,33 @@ export const GallerySection: React.FC = () => {
     ? GALLERY_ITEMS
     : GALLERY_ITEMS.filter(item => item.category === selectedCategory);
 
+  // Keep carouselIndex within bounds when filteredItems change
+  useEffect(() => {
+    setCarouselIndex(0);
+  }, [selectedCategory]);
+
+  // Auto-advance Card Art Carousel
+  useEffect(() => {
+    if (!isAutoPlaying || viewMode !== 'carousel' || filteredItems.length <= 1) return;
+    const timer = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % filteredItems.length);
+    }, 3800);
+    return () => clearInterval(timer);
+  }, [isAutoPlaying, viewMode, filteredItems.length]);
+
   const handleOpenLightbox = (index: number) => {
     sound?.playClick();
     setLightboxIndex(index);
+  };
+
+  const handleNextCard = () => {
+    sound?.playClick();
+    setCarouselIndex((prev) => (prev + 1) % filteredItems.length);
+  };
+
+  const handlePrevCard = () => {
+    sound?.playClick();
+    setCarouselIndex((prev) => (prev - 1 + filteredItems.length) % filteredItems.length);
   };
 
   return (
@@ -233,42 +260,132 @@ export const GallerySection: React.FC = () => {
             ))}
           </div>
         ) : (
-          /* View Mode: Horizontal Carousel */
-          <div className="overflow-x-auto pb-6 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin carousel-touch-track">
-            <div className="flex gap-4 sm:gap-6 min-w-max">
-              {filteredItems.map((item, idx) => (
-                <div
-                  key={item.id}
-                  onClick={() => handleOpenLightbox(idx)}
-                  className="w-[82vw] max-w-[340px] sm:w-[360px] p-4 sm:p-5 rounded-2xl bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40 transition-colors flex flex-col justify-between shrink-0 group cursor-pointer shadow-lg carousel-touch-item"
+          /* View Mode: Card Art Carousel (Animation #6) */
+          <div className="space-y-6">
+            {/* Carousel Navigation Toolbar */}
+            <div className="flex items-center justify-between px-2 text-xs font-mono">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                  title={isAutoPlaying ? 'Pause automatic slideshow' : 'Start automatic slideshow'}
                 >
-                  <div className="space-y-4">
-                    <div className="relative w-full h-48 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">
-                      <Image
-                        src={item.src}
-                        alt={item.title}
-                        fill
-                        className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
-                        {item.category}
-                      </span>
-                      <h3 className="font-display font-bold text-base text-white mt-2 group-hover:text-purple-200 transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="text-xs text-slate-300 mt-1">
-                        {item.caption}
-                      </p>
-                    </div>
-                  </div>
+                  {isAutoPlaying ? <Pause className="w-3 h-3 text-purple-400" /> : <Play className="w-3 h-3 text-emerald-400" />}
+                  <span>{isAutoPlaying ? 'Auto-Advancing' : 'Paused'}</span>
+                </button>
+                <span className="text-slate-500">|</span>
+                <span className="text-purple-300 font-bold">
+                  Card Art {String(carouselIndex + 1).padStart(2, '0')} / {String(filteredItems.length).padStart(2, '0')}
+                </span>
+              </div>
 
-                  <div className="pt-3 mt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-purple-300">
-                    <span>Inspect</span>
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </div>
-                </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handlePrevCard}
+                  className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-purple-500/40 transition-colors cursor-pointer"
+                  title="Previous Card Art"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleNextCard}
+                  className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-purple-500/40 transition-colors cursor-pointer"
+                  title="Next Card Art"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Carousel Main Stage with Responsive Snap & Active Card Scaling */}
+            <div className="overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin">
+              <div className="flex items-stretch gap-5 min-w-max">
+                {filteredItems.map((item, idx) => {
+                  const isActive = idx === carouselIndex;
+                  return (
+                    <motion.div
+                      key={item.id}
+                      initial={false}
+                      animate={{
+                        scale: isActive ? 1.03 : 0.96,
+                        opacity: isActive ? 1 : 0.7,
+                      }}
+                      transition={{ type: 'spring', stiffness: 280, damping: 24 }}
+                      onClick={() => {
+                        if (isActive) {
+                          handleOpenLightbox(idx);
+                        } else {
+                          sound?.playClick();
+                          setCarouselIndex(idx);
+                        }
+                      }}
+                      className={`w-[82vw] max-w-[340px] sm:w-[370px] p-5 rounded-2xl transition-colors duration-300 flex flex-col justify-between shrink-0 cursor-pointer ${
+                        isActive
+                          ? 'bg-aws-card/95 border-2 border-purple-500 shadow-2xl shadow-purple-900/40'
+                          : 'bg-aws-card/70 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/90'
+                      }`}
+                    >
+                      <div className="space-y-4">
+                        <div className="relative w-full h-52 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">
+                          <Image
+                            src={item.src}
+                            alt={item.title}
+                            fill
+                            className="object-contain p-4 transition-transform duration-500 hover:scale-105"
+                          />
+                          {isActive && (
+                            <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-purple-950/90 text-purple-200 border border-purple-500/40 shadow-sm">
+                              FEATURED ART
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-between mb-1.5">
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
+                              {item.category}
+                            </span>
+                            <span className="text-[11px] font-mono text-slate-400">
+                              Art #0{idx + 1}
+                            </span>
+                          </div>
+                          <h3 className="font-display font-bold text-base text-white mt-1 group-hover:text-purple-200 transition-colors">
+                            {item.title}
+                          </h3>
+                          <p className="text-xs text-slate-300 mt-1 line-clamp-2">
+                            {item.caption}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="pt-3 mt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-purple-300">
+                        <span className="flex items-center gap-1">
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>{isActive ? 'Click to Enlarge' : 'Select Card'}</span>
+                        </span>
+                        <Maximize2 className="w-3.5 h-3.5" />
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Navigation Pip Dots */}
+            <div className="flex items-center justify-center gap-2 pt-2">
+              {filteredItems.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    sound?.playClick();
+                    setCarouselIndex(idx);
+                  }}
+                  className={`h-2 rounded-full transition-all cursor-pointer ${
+                    idx === carouselIndex
+                      ? 'w-8 bg-gradient-to-r from-purple-500 to-aws-orange shadow-md shadow-purple-900/50'
+                      : 'w-2 bg-slate-800 hover:bg-slate-700'
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
               ))}
             </div>
           </div>
