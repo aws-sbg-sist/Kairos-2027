@@ -28,6 +28,16 @@ export default function AdminDashboardPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<AdminTab>('analytics');
   
+  // Cadre Identity State (RBAC)
+  const [currentOrganizer, setCurrentOrganizer] = useState<{
+    name: string;
+    role: string;
+    leadId?: string;
+    pipelineName?: string;
+    allowedTabs: AdminTab[];
+    isSuperadmin: boolean;
+  } | null>(null);
+
   // Data State
   const [waitlist, setWaitlist] = useState<WaitlistEntry[]>([]);
   const [sponsors, setSponsors] = useState<SponsorInquiry[]>([]);
@@ -90,6 +100,26 @@ export default function AdminDashboardPage() {
     setLoading(true);
     setStatusMessage('');
     try {
+      // 0. Cadre Profile & RBAC Permissions
+      try {
+        const authRes = await fetch('/api/admin/auth');
+        if (authRes.status === 401) {
+          router.push('/admin/login');
+          return;
+        }
+        const authData = await authRes.json();
+        if (authData.authenticated && authData.organizer) {
+          setCurrentOrganizer(authData.organizer);
+          if (!authData.organizer.isSuperadmin && !authData.organizer.allowedTabs?.includes(activeTab)) {
+            if (authData.organizer.allowedTabs?.length > 0) {
+              setActiveTab(authData.organizer.allowedTabs[0]);
+            }
+          }
+        }
+      } catch (authErr) {
+        console.warn('Could not refresh cadre session metadata:', authErr);
+      }
+
       // 1. Teams
       const tRes = await fetch('/api/admin/teams');
       if (tRes.status === 401) {
@@ -415,26 +445,50 @@ export default function AdminDashboardPage() {
       
       {/* Top Admin Header */}
       <header className="border-b border-purple-500/20 bg-slate-950/90 px-6 py-4 sticky top-0 z-30 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-white/5 transition-colors"
+              className="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/5 border border-white/5 transition-colors"
               title="Return to Public Site"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4" />
             </Link>
-            <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-lg text-white">
-                KAIROS 2027
-              </span>
-              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-purple-900/60 text-purple-300 border border-purple-500/30">
-                ORGANIZER CONTROL SUITE
-              </span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-display font-extrabold text-lg text-white">
+                  KAIROS 2027
+                </span>
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-950/80 text-purple-300 border border-purple-500/40">
+                  CADRE RBAC SUITE
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400 font-mono mt-0.5">
+                AWS Student Builder Group SIST • Operations Console
+              </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Authenticated Cadre Profile Badge */}
+            {currentOrganizer && (
+              <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-slate-900 border border-purple-500/30 text-xs shadow-inner">
+                <div className="w-6 h-6 rounded-lg bg-purple-900/80 border border-purple-400/40 flex items-center justify-center font-mono font-bold text-[10px] text-purple-200">
+                  {currentOrganizer.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                </div>
+                <div className="text-left">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-white text-xs leading-none">
+                      {currentOrganizer.name}
+                    </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  </div>
+                  <span className="text-[10px] text-purple-300/80 font-mono block mt-0.5 leading-none">
+                    {currentOrganizer.pipelineName?.split('&')[0].trim() || currentOrganizer.role}
+                  </span>
+                </div>
+              </div>
+            )}
             
             {/* Export Center Dropdown */}
             <div className="relative">
@@ -575,6 +629,8 @@ export default function AdminDashboardPage() {
           ].map(tab => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
+            const isPermitted = !currentOrganizer || currentOrganizer.isSuperadmin || currentOrganizer.allowedTabs?.includes(tab.id as AdminTab);
+
             return (
               <button
                 key={tab.id}
@@ -582,15 +638,39 @@ export default function AdminDashboardPage() {
                 className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
                   isActive
                     ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                    : isPermitted
+                    ? 'text-slate-300 hover:text-white hover:bg-white/5'
+                    : 'text-slate-500 hover:text-slate-400 bg-black/20 opacity-60'
                 }`}
+                title={isPermitted ? undefined : 'Restricted pipeline module'}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-purple-300' : 'text-slate-400'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-purple-300' : isPermitted ? 'text-slate-400' : 'text-slate-600'}`} />
                 <span>{tab.label}</span>
+                {!isPermitted && <Lock className="w-2.5 h-2.5 text-slate-500 ml-0.5" />}
               </button>
             );
           })}
         </div>
+
+        {/* RBAC Restricted Pipeline Notice Banner */}
+        {currentOrganizer && !currentOrganizer.isSuperadmin && !currentOrganizer.allowedTabs?.includes(activeTab) && (
+          <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 text-amber-200 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-fadeIn">
+            <div className="flex items-center gap-2.5">
+              <Lock className="w-4 h-4 text-amber-400 shrink-0" />
+              <span>
+                <strong>Pipeline Notice:</strong> The <strong>{activeTab.toUpperCase()}</strong> pipeline is assigned to another officer. You are viewing with restricted cadre access under your {currentOrganizer.role} profile.
+              </span>
+            </div>
+            {currentOrganizer.allowedTabs?.length > 0 && (
+              <button
+                onClick={() => setActiveTab(currentOrganizer.allowedTabs[0])}
+                className="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 text-[11px] font-mono shrink-0 transition-colors"
+              >
+                Return to My Pipeline (#{currentOrganizer.allowedTabs[0]}) →
+              </button>
+            )}
+          </div>
+        )}
 
         {/* ========================================================================= */}
         {/* TAB 1: OVERVIEW ANALYTICS */}

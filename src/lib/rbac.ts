@@ -2,16 +2,16 @@
  * KAIROS 2027 — CENTRALIZED ROLE-BASED ACCESS CONTROL (RBAC)
  * 
  * Provides server-enforced authorization rules, permission matrix, and
- * identity guards across all 5 system roles:
+ * identity guards across all system roles:
  * - STUDENT: Participant view of own profile, team, and event schedule.
  * - TEAM_LEADER: All student permissions + team management and deliverable submissions.
  * - JUDGE: Scoped evaluation access restricted to assigned tracks/checkpoints.
  * - ORGANIZER: Operational access to registrations, teams, and inquiries.
  * - SUPER_ADMIN: Global root governance (feature flags, exports, organizers, audit logs).
  * 
- * STRICT IDENTITY RULE:
- * - Authorization data is derived exclusively from verified server-side sessions.
- * - Role claims supplied by client headers or request bodies are strictly ignored.
+ * CADRE RBAC:
+ * - Individual executive lead credentials with dedicated pipeline ownership.
+ * - Distinct, cryptographically verified passkeys per lead.
  */
 
 import { NextRequest } from 'next/server';
@@ -168,18 +168,17 @@ export interface AuthContext {
 }
 
 export async function resolveAuthContext(): Promise<AuthContext> {
-  // 1. Evaluate Administrator Session first
+  // 1. Evaluate Organizer / Super Admin Session
   const admin = await getCurrentAdminSession();
   if (admin) {
-    // Determine if Super Admin (President / Apex / Master Key) vs Operational Organizer
-    const isSuper = 
-      admin.organizerName === 'Thenappan T' || 
-      admin.organizerRole.toLowerCase().includes('president') || 
-      admin.organizerRole.toLowerCase().includes('apex') ||
-      admin.organizerRole.toLowerCase().includes('super_admin');
+    const isSuperAdmin = 
+      admin.isSuperadmin ||
+      admin.organizerRole?.toLowerCase().includes('president') ||
+      admin.organizerName?.toLowerCase().includes('thenappan') ||
+      admin.organizerRole?.toLowerCase().includes('super_admin');
 
     return {
-      role: isSuper ? 'SUPER_ADMIN' : 'ORGANIZER',
+      role: isSuperAdmin ? 'SUPER_ADMIN' : 'ORGANIZER',
       studentSession: null,
       adminSession: admin,
       judgeSession: null,
@@ -189,12 +188,17 @@ export async function resolveAuthContext(): Promise<AuthContext> {
 
   // 2. Evaluate Student Session
   const student = await getCurrentStudentSession();
-  if (student) {
-    // Check if student is a team leader
-    const team = await db.getStudentTeam(student.email);
+  if (student && student.email) {
+    const teams = await db.getTeams();
+    const normEmail = student.email.trim().toLowerCase();
+    const team = teams.find(t => 
+      (t.leaderEmail && t.leaderEmail.toLowerCase() === normEmail) ||
+      (t.members || []).some(m => m.email.toLowerCase() === normEmail)
+    );
+
     const isLeader = team && (
-      team.leaderEmail.toLowerCase() === student.email.toLowerCase() ||
-      (team.members || []).some(m => m.email.toLowerCase() === student.email.toLowerCase() && m.role === 'Leader')
+      (team.leaderEmail && team.leaderEmail.toLowerCase() === normEmail) ||
+      (team.members || []).some(m => m.email.toLowerCase() === normEmail && m.role === 'Leader')
     );
 
     return {
@@ -315,7 +319,6 @@ export async function verifyJudgeAuthorization(
     }
 
     if (judge.trackSpecialization) {
-      // Check if judge track specialization encompasses this team's track
       const spec = judge.trackSpecialization.toLowerCase();
       const teamTrack = team.trackId.toLowerCase().replace(/^track-/, '');
       
@@ -342,3 +345,19 @@ export async function verifyJudgeAuthorization(
 
   return { authorized: true, judge, statusCode: 200 };
 }
+
+// ------------------------------------------------------------------------------
+// 5. CADRE RBAC PIPELINES & INDIVIDUAL LEAD PASSKEYS
+// ------------------------------------------------------------------------------
+// Re-export cadre leads and authentication helpers
+export {
+  type AdminTab,
+  type AdminLead,
+  ADMIN_LEADS,
+  canAccessTab
+} from './cadre_leads';
+
+export {
+  getLeadPasskey,
+  verifyLeadAuthentication
+} from './auth';

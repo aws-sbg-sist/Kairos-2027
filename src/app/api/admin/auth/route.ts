@@ -1,60 +1,76 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAdminPasskey, createAdminToken, isAdminAuthConfigured, COOKIE_NAME } from '@/lib/auth';
+import { createAdminToken, COOKIE_NAME } from '@/lib/auth';
+import { verifyLeadAuthentication } from '@/lib/rbac';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { cookies } from 'next/headers';
-import { ORGANIZING_ROSTER } from '@/lib/config';
 
 export async function POST(req: NextRequest) {
-  // Rate limit: 5 attempts per minute per IP to defend against brute force
-  const rateLimitResult = checkRateLimit(req, { limit: 5, windowMs: 60_000 });
+  // Rate limit: 8 attempts per minute per IP to defend against brute force
+  const rateLimitResult = checkRateLimit(req, { limit: 8, windowMs: 60_000 });
   if (!rateLimitResult.allowed) {
     return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
   }
 
   try {
-    const { passkey, organizerName } = await req.json();
+    const body = await req.json();
+    const { passkey, organizerName } = body;
 
     if (!passkey || !organizerName) {
       return NextResponse.json(
-        { success: false, error: 'Passkey and organizer identity selection are required.' },
+        { success: false, error: 'Please select your organizer identity and enter your authorized passkey.' },
         { status: 400 }
       );
     }
 
-    if (!isAdminAuthConfigured()) {
-      return NextResponse.json(
-        { success: false, error: 'Organizer authentication is not configured on this server (missing ADMIN_MASTER_SECRET).' },
-        { status: 503 }
-      );
-    }
+    // RBAC Lead Authentication: verifies lead-specific passkey or emergency master key
+    const authResult = verifyLeadAuthentication(organizerName, passkey);
+    if (!authResult.success || !authResult.lead) {
+      // Record failed login attempt for security monitoring
+      try {
+        await db.addAuditLog('SECURITY_FIREWALL', 'AUTH_FAILURE', `Invalid passkey attempted for cadre identity [${organizerName}]`);
+      } catch {
+        // Non-blocking
+      }
 
-    const isValid = verifyAdminPasskey(passkey);
-    if (!isValid) {
-      await db.addAuditLog('Failed Login Attempt', 'AUTH_FAILURE', `Invalid passkey attempted for identity [${organizerName}]`);
       return NextResponse.json(
-        { success: false, error: 'Invalid organizer authorization passkey.' },
+        { 
+          success: false, 
+          error: 'Invalid passkey for the selected lead identity. Please enter your designated cadre passkey.' 
+        },
         { status: 401 }
       );
     }
 
-    // RBAC: Server-enforced role resolution from official roster (Never trust client-supplied role)
-    const rosterEntry = ORGANIZING_ROSTER.find(
-      o => o.name.toLowerCase() === organizerName.trim().toLowerCase()
-    );
-    const assignedRole = rosterEntry ? rosterEntry.role : (
-      organizerName.toLowerCase().includes('thenappan') ? 'President & SBGL' : 'Organizer Lead'
-    );
+    const { lead, isSuperadmin } = authResult;
 
-    const token = createAdminToken(organizerName.trim(), assignedRole);
-    
-    // Record successful audit login
-    await db.addAuditLog(organizerName.trim(), 'ADMIN_LOGIN', `Logged in successfully as ${assignedRole}`);
+    // Generate cryptographically signed HMAC token embedding RBAC permissions
+    const token = createAdminToken(lead.name, lead.role, {
+      leadId: lead.id,
+      pipelineName: lead.pipelineName,
+      allowedTabs: lead.allowedTabs,
+      isSuperadmin
+    });
+
+    // Audit log successful authentication (non-blocking)
+    try {
+      await db.addAuditLog(lead.name, 'ADMIN_LOGIN', `Authenticated into ${lead.pipelineName} (${lead.role})`);
+    } catch (auditErr) {
+      console.warn('[Admin Auth Audit Log Warning]:', auditErr);
+    }
 
     const response = NextResponse.json({
       success: true,
-      message: `Welcome, ${organizerName}. Admin access granted.`,
-      organizer: { name: organizerName.trim(), role: assignedRole }
+      message: `Welcome, ${lead.name}. ${lead.pipelineName} unlocked.`,
+      organizer: { 
+        name: lead.name, 
+        role: lead.role,
+        leadId: lead.id,
+        department: lead.department,
+        pipelineName: lead.pipelineName,
+        allowedTabs: lead.allowedTabs,
+        isSuperadmin
+      }
     });
 
     response.cookies.set({
@@ -70,12 +86,41 @@ export async function POST(req: NextRequest) {
     return response;
   } catch (err: any) {
     console.error('[API Admin Auth Error]:', err);
-    return NextResponse.json({ success: false, error: 'Authentication service error' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: 'Authentication service temporarily unavailable. Please retry.' }, 
+      { status: 500 }
+    );
   }
+}
+
+export async function GET() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(COOKIE_NAME)?.value;
+  if (!token) {
+    return NextResponse.json({ authenticated: false }, { status: 401 });
+  }
+
+  const { verifyAdminToken } = await import('@/lib/auth');
+  const session = verifyAdminToken(token);
+  if (!session) {
+    return NextResponse.json({ authenticated: false }, { status: 401 });
+  }
+
+  return NextResponse.json({
+    authenticated: true,
+    organizer: {
+      name: session.organizerName,
+      role: session.organizerRole,
+      leadId: session.leadId,
+      pipelineName: session.pipelineName,
+      allowedTabs: session.allowedTabs,
+      isSuperadmin: session.isSuperadmin
+    }
+  });
 }
 
 export async function DELETE() {
   const cookieStore = await cookies();
   cookieStore.delete(COOKIE_NAME);
-  return NextResponse.json({ success: true, message: 'Logged out successfully' });
+  return NextResponse.json({ success: true, message: 'Organizer signed out successfully.' });
 }
