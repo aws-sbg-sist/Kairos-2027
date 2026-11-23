@@ -25,7 +25,7 @@ export default function StageScreenMode() {
   });
 
   const [activeAnnouncement, setActiveAnnouncement] = useState(
-    '★ CHECKPOINT 1 ACTIVE: Senior AWS Solutions Architects conducting table-side architecture evaluations across all 100 bays.'
+    '★ REGISTRATION & ROUND 0 OPEN: Register your squad and submit your cloud architecture abstract before Dec 28, 2026.'
   );
   const [telemetry, setTelemetry] = useState<{
     totalCommits: number;
@@ -129,7 +129,7 @@ export default function StageScreenMode() {
         <div className="flex items-center gap-4">
           <div className="text-right hidden sm:block">
             <span className="text-[11px] font-mono text-slate-400 block ">ARENA SCALE</span>
-            <span className="text-sm font-mono font-bold text-purple-300 block">100 Teams | 450+ Builders | 100% Free</span>
+            <span className="text-sm font-mono font-bold text-purple-300 block">100 Teams | 450+ Builders | National Finale</span>
           </div>
           <button
             onClick={toggleFullscreen}

@@ -305,7 +305,7 @@ function CreateTeamContent() {
                     disabled={loading}
                     className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-colors flex items-center justify-center gap-2"
                   >
-                    <span>{loading ? 'Creating Team...' : 'Create Team & Generate Invite Code (100% Free)'}</span>
+                    <span>{loading ? 'Creating Team...' : 'Create Team & Generate Invite Code'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

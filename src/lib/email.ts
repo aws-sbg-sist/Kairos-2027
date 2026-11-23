@@ -396,7 +396,7 @@ export function buildRegistrationConfirmationEmail(data: {
   const html = wrapKairosEmail({
     title: subject,
     preheader: `Your builder priority for KAIROS 2027 has been confirmed for track: ${data.track}`,
-    badgeText: 'REGISTRATION CONFIRMED · ZERO ENTRY FEE',
+    badgeText: 'REGISTRATION CONFIRMED · NATIONAL SQUAD',
     bodyHtml: `
       <p>Hello <strong>${data.fullName}</strong>,</p>
       <p>Welcome to <strong>KAIROS 2027</strong>. Your early-interest builder registration has been officially recorded in the national tournament database.</p>

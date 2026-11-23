@@ -51,10 +51,10 @@ export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed
           </ScrollReveal>
 
           <ScrollReveal direction="up" distance={16} delay={0.25}>
-            <div className="p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 max-w-2xl mx-auto flex items-center justify-center gap-2.5 text-xs sm:text-sm text-emerald-300 font-medium shadow-md">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="p-3.5 rounded-2xl bg-purple-950/40 border border-purple-500/30 max-w-2xl mx-auto flex items-center justify-center gap-2.5 text-xs sm:text-sm text-purple-300 font-medium shadow-md">
+              <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
               <span>
-                <strong>Zero Entry Fee:</strong> 100% Free Participation | ₹1,75,000 Total Prize Pool | Fast-Track Incubation & Credits
+                <strong>Merit Evaluation:</strong> Open to All Engineering Students | ₹1,75,000 Total Prize Pool | Fast-Track Incubation & Credits
               </span>
             </div>
           </ScrollReveal>

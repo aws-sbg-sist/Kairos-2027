@@ -67,9 +67,9 @@ export const FinalCTASection: React.FC = () => {
               <MapPin className="w-3.5 h-3.5 text-sky-400" />
               <span>Sathyabama Campus, Chennai</span>
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 font-bold flex items-center gap-1.5">
+            <span className="px-3.5 py-1.5 rounded-full bg-purple-950/70 border border-purple-500/40 text-purple-300 font-bold flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>100% Free Entry (₹0 Fee)</span>
+              <span>National Selection</span>
             </span>
             <span className="px-3.5 py-1.5 rounded-full bg-purple-950/70 border border-purple-500/40 text-purple-300 font-bold flex items-center gap-1.5">
               <Trophy className="w-3.5 h-3.5" />
@@ -88,7 +88,7 @@ export const FinalCTASection: React.FC = () => {
                 onMouseEnter={() => sound?.playHover()}
                 className="px-8 py-4 rounded-2xl text-base font-bold text-white btn-primary-themed shadow-2xl shadow-purple-900/40 flex items-center gap-2.5 group active:scale-[0.97]"
               >
-                <span>Submit Round 0 Project Abstract (Free)</span>
+                <span>Submit Round 0 Project Abstract</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
               </Link>
             </MagneticButton>

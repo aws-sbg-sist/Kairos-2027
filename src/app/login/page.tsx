@@ -166,7 +166,7 @@ export default function StudentLoginPage() {
               href="/register"
               className="text-purple-400 font-semibold hover:text-purple-300 hover:underline transition-colors"
             >
-              Create Account (100% Free)
+              Create Account
             </Link>
           </div>
         </div>

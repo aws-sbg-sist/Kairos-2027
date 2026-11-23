@@ -89,7 +89,7 @@ export function TeamRadarSection() {
 
             <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-slate-300 backdrop-blur-md">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>Strictly ₹0 Merit Entry • 100 Elite Teams</span>
+              <span>National Merit Entry • 100 Elite Teams</span>
             </div>
           </div>
         </div>
@@ -231,15 +231,19 @@ export function TeamRadarSection() {
         {filteredSignals.length === 0 && (
           <div className="text-center py-16 bg-white/[0.02] border border-dashed border-white/10 rounded-2xl">
             <Radio className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-            <h4 className="text-base font-semibold text-white mb-1">No Beacons in This Filter</h4>
+            <h4 className="text-base font-semibold text-white mb-1">
+              {signals.length === 0 ? 'No Beacons Broadcast Yet' : 'No Beacons in This Filter'}
+            </h4>
             <p className="text-xs text-slate-400 max-w-sm mx-auto mb-4">
-              Be the first builder to transmit a beacon for this track and role!
+              {signals.length === 0
+                ? 'Be the first builder to transmit a beacon and find teammates for your squad!'
+                : 'Be the first builder to transmit a beacon for this track and role!'}
             </p>
             <button
               onClick={() => { sound?.playModalOpen(); setIsModalOpen(true); }}
               className="px-4 py-2 rounded-lg btn-primary-themed text-white text-xs font-bold"
             >
-              Broadcast Beacon
+              Broadcast Your Beacon
             </button>
           </div>
         )}

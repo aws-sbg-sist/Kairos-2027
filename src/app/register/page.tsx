@@ -119,7 +119,7 @@ export default function RegisterPage() {
                   className="object-contain"
                 />
               </div>
-              <span>100% Free | ₹0 Entry Fee | Zero Hidden Charges</span>
+              <span>Phase 0 National Screening • Round 0 Live</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
               National Developer <span className="gradient-text-kairos">Registration</span>
@@ -129,20 +129,20 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          {/* Zero Fee Guarantee Card */}
+          {/* Registration Notice Card */}
           <div className="p-4 rounded-2xl bg-aws-squidInk border border-purple-500/30 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-purple-950/60 text-purple-400 flex items-center justify-center font-bold">
-                ₹0
+                <ShieldCheck className="w-5 h-5 text-purple-400" />
               </div>
               <div className="text-xs">
-                <span className="font-bold text-white block">100% Free Merit-Based Hackathon</span>
-                <span className="text-slate-300">All meals, 48H arena access, smart NFC badges, transit buses, and AWS cloud credits are complimentary.</span>
+                <span className="font-bold text-white block">National Registration Notice</span>
+                <span className="text-slate-300">Registration and qualification details will be updated and communicated directly to your squad once registered.</span>
               </div>
             </div>
             <div className="text-right flex-shrink-0">
-              <span className="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                ₹0 NO GATEWAY
+              <span className="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                STATUS: ACTIVE
               </span>
             </div>
           </div>

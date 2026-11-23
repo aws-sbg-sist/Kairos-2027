@@ -145,7 +145,7 @@ async function runTests() {
     p1?.subject?.includes('Registration Confirmed [REG-KAIROS-9912]') &&
     p1?.html?.includes('Vikramaditya Sharma') &&
     p1?.html?.includes('Agentic AI & Autonomous Systems') &&
-    p1?.html?.includes('ZERO ENTRY FEE')
+    p1?.html?.includes('NATIONAL SQUAD')
   );
 
   // T02: Email verification

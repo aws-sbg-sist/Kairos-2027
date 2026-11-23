@@ -88,7 +88,7 @@ export const KeyboardShortcutsModal: React.FC = () => {
     { key: '?', label: 'Open / Close Shortcuts HUD', icon: Command },
     { key: 'T', label: 'Toggle Cyber / AWS Theme', icon: Moon },
     { key: 'M', label: 'Toggle Audio Synthesizer & Haptics', icon: Volume2 },
-    { key: 'R', label: 'Quick Jump: Registration (100% Free)', icon: ArrowRight },
+    { key: 'R', label: 'Quick Jump: Registration', icon: ArrowRight },
     { key: 'K', label: 'Quick Jump: 5 Technical Tracks', icon: Layers },
     { key: 'S', label: 'Quick Jump: 48-Hour Event Schedule', icon: Calendar },
     { key: 'L', label: 'Quick Jump: Live Leaderboard & Z-Score', icon: Trophy },

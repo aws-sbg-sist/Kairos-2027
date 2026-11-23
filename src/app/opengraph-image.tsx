@@ -128,7 +128,7 @@ export default async function Image() {
         {/* Bottom Feature Badges */}
         <div style={styles.footer}>
           {[
-            '₹0 Free Merit Entry',
+            'National Merit Selection',
             '75 Elite Teams',
             '5 Technical Tracks',
             'Sathyabama Indoor Auditorium',

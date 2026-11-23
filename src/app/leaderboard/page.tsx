@@ -239,8 +239,15 @@ export default function LeaderboardPage() {
                     <span>Computing real-time Gaussian Z-scores across all tournament gates...</span>
                   </div>
                 ) : filteredRankings.length === 0 ? (
-                  <div className="p-12 text-center text-slate-400 font-mono text-xs">
-                    No teams found matching the selected filter.
+                  <div className="p-12 text-center text-slate-400 font-mono text-xs space-y-2">
+                    <p className="text-sm font-semibold text-white">
+                      {standings.length === 0 ? 'Arena Evaluations Not Yet Commenced' : 'No teams found matching the selected filter'}
+                    </p>
+                    <p className="text-xs text-slate-400 max-w-md mx-auto">
+                      {standings.length === 0 
+                        ? 'Live checkpoint evaluations and Gaussian Z-scores will publish in real-time once Round 2 commences at Sathyabama Indoor Auditorium on January 22, 2027.'
+                        : 'Try adjusting your track filter or search query.'}
+                    </p>
                   </div>
                 ) : (
                   <table className="w-full text-left text-xs">

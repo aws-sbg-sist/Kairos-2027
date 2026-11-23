@@ -79,7 +79,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
             Join the KAIROS 2027 Waitlist
           </h3>
           <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-            Reserve priority notification for your 4–6 builder team. ₹0 admission fee.
+            Reserve priority notification for your 4–6 builder team. Admission details updated upon registration.
           </p>
         </div>
 

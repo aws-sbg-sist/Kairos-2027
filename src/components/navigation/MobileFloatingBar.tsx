@@ -57,7 +57,7 @@ export const MobileFloatingBar: React.FC = () => {
           }}
           className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gradient-to-r from-aws-orange to-purple-600 text-white font-bold text-xs shadow-md shadow-purple-900/40 active:scale-[0.98] transition"
         >
-          <span>Register Squad (₹0 Free)</span>
+          <span>Register Squad</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
 

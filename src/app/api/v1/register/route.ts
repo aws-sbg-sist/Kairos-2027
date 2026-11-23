@@ -168,7 +168,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Registration recorded successfully! 100% Free — Zero Entry Fee.',
+      message: 'Registration recorded successfully! Details will be updated to your team dashboard.',
       registrationId: result.entry?.id,
       entry: result.entry
     }, { status: 201 });

@@ -39,7 +39,7 @@ export default function HomePage() {
     registrationOpen: true,
     prizePoolConfirmed: true,
     demoSandboxMode: true,
-    announcementBanner: 'NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
+    announcementBanner: 'NATIONAL APPLICATIONS OPEN NOW • ₹1,75,000 TOTAL PRIZE POOL • SATHYABAMA CHENNAI',
   });
 
   useEffect(() => {

@@ -41,7 +41,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'KAIROS 2027 — National Flagship 48-Hour Hackathon | AWS Student Builder Group SIST',
-  description: 'Join 400–600 elite developers (teams of 4–6) at Sathyabama for KAIROS 2027. 48 hours continuous non-stop hacking on AWS Cloud. 100% Free - Zero Entry Fee. ₹1,75,000 total prize pool, two-tier technical screening, and tier-1 corporate sponsors. Register for free now!',
+  description: 'Join 400–600 elite developers (teams of 4–6) at Sathyabama for KAIROS 2027. 48 hours continuous non-stop hacking on AWS Cloud. ₹1,75,000 total prize pool, two-tier technical screening, and tier-1 corporate sponsors. Register your team now!',
   keywords: [
     'KAIROS 2027',
     'KAIROS Hackathon',
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'KAIROS 2027 — Build the Future in 48 Hours',
-    description: '100% Free National Hackathon. ₹1,75,000 Total Prize Pool. Free Meals, Swag, and Travel Support.',
+    description: 'National 48-Hour Cloud Hackathon on AWS. ₹1,75,000 Total Prize Pool. Dual-Phase National Selection.',
     creator: '@awssbg_sist',
   },
   icons: {
@@ -122,7 +122,7 @@ const jsonLd = {
     priceCurrency: 'INR',
     availability: 'https://schema.org/InStock',
     validFrom: '2026-10-25T00:00:00+05:30',
-    description: 'Zero registration fee. 100% free merit-based qualification.'
+    description: 'National merit-based qualification and live jury defense.'
   },
   organizer: {
     '@type': 'Organization',

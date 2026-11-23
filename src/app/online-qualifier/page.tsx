@@ -17,23 +17,19 @@ import {
 } from 'lucide-react';
 
 export default function OnlineQualifierPage() {
-  const [teamCode, setTeamCode] = useState('KAIROS-T001');
-  const [loomUrl, setLoomUrl] = useState('https://www.loom.com/share/demo-chronos-stream-2027');
-  const [repoUrl, setRepoUrl] = useState('https://github.com/kairos2027/chronos-stream');
+  const [teamCode, setTeamCode] = useState('');
+  const [loomUrl, setLoomUrl] = useState('');
+  const [repoUrl, setRepoUrl] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const assignedSlot = {
-    date: 'Saturday, January 03, 2027',
-    time: '11:00 AM  to  11:10 AM IST (7-Minute Live Defense)',
-    room: 'Virtual-Meet-02',
-    meetUrl: 'https://meet.google.com/kairos-r1-eval-02',
-    leadArchitect: 'Vikrant Roy (AWS Principal Solutions Architect)'
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!teamCode.trim()) {
+      setError('Please provide your assigned Team Code.');
+      return;
+    }
     setSubmitting(true);
     setError('');
 
@@ -42,9 +38,9 @@ export default function OnlineQualifierPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          teamCode,
-          loomVideoUrl: loomUrl,
-          githubUrl: repoUrl
+          teamCode: teamCode.trim().toUpperCase(),
+          loomVideoUrl: loomUrl.trim(),
+          githubUrl: repoUrl.trim()
         }),
       });
 
@@ -82,52 +78,37 @@ export default function OnlineQualifierPage() {
             </p>
           </div>
 
-          {/* Assigned Google Meet Defense Slot Card */}
+          {/* Virtual Defense Scheduling Notice */}
           <div className="p-6 sm:p-8 rounded-3xl bg-aws-squidInk border border-purple-500/40 shadow-xl space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Video className="w-5 h-5 text-purple-400" />
                 <h3 className="text-lg font-bold text-white font-display">
-                  Your Assigned Google Meet Virtual Defense Slot
+                  Round 1 Google Meet Virtual Defense Scheduling
                 </h3>
               </div>
-              <span className="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                SLOT CONFIRMED
+              <span className="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                ROUND 0 EVALUATION IN PROGRESS
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-mono pt-2">
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px]">DATE</span>
-                <span className="text-white font-bold block mt-0.5">{assignedSlot.date}</span>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px]">TIME SLOT</span>
-                <span className="text-purple-300 font-bold block mt-0.5">{assignedSlot.time.split('(')[0]}</span>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px]">VIRTUAL ROOM</span>
-                <span className="text-sky-300 font-bold block mt-0.5">{assignedSlot.room}</span>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-slate-400 block text-[10px]">LEAD EVALUATOR</span>
-                <span className="text-slate-200 block mt-0.5 truncate">{assignedSlot.leadArchitect}</span>
-              </div>
-            </div>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Virtual defense slots for the <strong>Top 250 Semi-Finalist Teams</strong> will be officially scheduled and published on <strong>January 02, 2027</strong> following Round 0 architecture evaluation. Designated Google Meet defense rooms and evaluation time slots will be linked directly to your Team Code.
+            </p>
 
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10 text-xs">
-              <span className="text-slate-300">
-                Format: 4 minutes working demo screencast + 3 minutes technical Q&A with AWS Evaluator.
-              </span>
-              <a
-                href={assignedSlot.meetUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-xl font-bold bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors flex items-center gap-1.5 flex-shrink-0"
-              >
-                <span>Launch Google Meet Room ↗</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono pt-2">
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 block text-[10px]">EVALUATION DATES</span>
+                <span className="text-white font-bold block mt-0.5">Jan 02 – Jan 04, 2027</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 block text-[10px]">DEFENSE FORMAT</span>
+                <span className="text-purple-300 font-bold block mt-0.5">4 Min Demo + 3 Min Q&amp;A</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <span className="text-slate-400 block text-[10px]">EVALUATION PANEL</span>
+                <span className="text-sky-300 font-bold block mt-0.5">AWS Principal Architects</span>
+              </div>
             </div>
           </div>
 
@@ -142,9 +123,11 @@ export default function OnlineQualifierPage() {
                   Deadlines strictly enforce automated Git commit freeze. Zero extensions permitted.
                 </p>
               </div>
-              <span className="text-xs font-mono text-purple-400 font-bold">
-                Team Code: {teamCode}
-              </span>
+              {teamCode && (
+                <span className="text-xs font-mono text-purple-400 font-bold">
+                  Team: {teamCode}
+                </span>
+              )}
             </div>
 
             {error && (
@@ -159,7 +142,7 @@ export default function OnlineQualifierPage() {
                 <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
                 <h4 className="text-lg font-bold text-white">Round 1 Deliverables Submitted</h4>
                 <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
-                  Your Loom walkthrough and GitHub repository have been recorded into our evaluation pipeline. Please ensure all team members join the assigned Google Meet room 5 minutes ahead of schedule.
+                  Your Loom walkthrough and GitHub repository have been recorded into our evaluation pipeline. Please ensure all team members join your designated Google Meet room 5 minutes ahead of schedule once slots are published.
                 </p>
                 <div className="pt-2">
                   <Link
@@ -173,6 +156,25 @@ export default function OnlineQualifierPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 
+                {/* Team Code Input */}
+                <div className="space-y-2">
+                  <label className="text-xs font-mono text-slate-300 flex items-center gap-1.5 font-bold">
+                    <ShieldCheck className="w-4 h-4 text-purple-400" />
+                    <span>Your Team Code *</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={teamCode}
+                    onChange={e => setTeamCode(e.target.value.toUpperCase())}
+                    placeholder="e.g. KAIROS-T101"
+                    className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono uppercase"
+                  />
+                  <p className="text-[11px] text-slate-400">
+                    Enter the Team Code issued upon successful Round 0 team registration.
+                  </p>
+                </div>
+
                 {/* Loom Video Input */}
                 <div className="space-y-2">
                   <label className="text-xs font-mono text-slate-300 flex items-center gap-1.5 font-bold">

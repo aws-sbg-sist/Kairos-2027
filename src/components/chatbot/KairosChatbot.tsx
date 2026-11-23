@@ -21,7 +21,7 @@ const INITIAL_MESSAGES: Message[] = [
 I am the official AWS Student Builder Group AI Assistant. Ask me anything about:
 • **₹1,75,000** Total Cash Prize Pool & AWS Promotional Credits (Secret Split-Ups!)
 • **5 Technical Tracks** (Agentic AI, Cloud-Native, IoT, FinTech, Open Enterprise)
-• **Dual-Phase Selection** & 100% Free Registration
+• **Dual-Phase Selection** & Nationwide Registration
 • **Complimentary Meals & Transit Bus Fleet**
 • **Venue:** Indoor Auditorium, Sathyabama, Chennai
 
@@ -33,7 +33,7 @@ What would you like to know?`,
 const SUGGESTED_PROMPTS = [
   'Cash prize pool?',
   'What are the 5 tracks?',
-  'Is registration 100% free?',
+  'How does team registration work?',
   'Full 48-hour schedule?',
   'Where is the venue?',
   'Meals & transit buses?',

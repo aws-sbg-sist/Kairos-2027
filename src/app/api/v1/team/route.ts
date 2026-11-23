@@ -239,7 +239,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Team successfully registered with 100% Zero Entry Fee!',
+      message: 'Team successfully registered!',
       teamCode: newTeam.teamCode,
       inviteCode: newTeam.inviteCode,
       team: newTeam

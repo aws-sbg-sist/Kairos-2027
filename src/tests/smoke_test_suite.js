@@ -78,7 +78,7 @@ async function runSmokeTests() {
     { path: '/portal/pass', name: 'Digital Builder Pass' },
     { path: '/team/create', name: 'Create Squad' },
     { path: '/team/join', name: 'Join Squad' },
-    { path: '/register', name: 'Registration (100% Free)' },
+    { path: '/register', name: 'Registration Portal' },
     { path: '/members', name: 'Organizing Committee Members' },
     { path: '/members/leadership', name: 'Student Leadership Team' },
     { path: '/leaderboard', name: 'Live Leaderboard' },
@@ -143,7 +143,7 @@ async function runSmokeTests() {
   // Check Desktop action buttons
   assert(navbarSrc.includes('href="/dashboard"'), 'Navbar Action: "Dashboard" button is wired to /dashboard');
   assert(navbarSrc.includes('href="/admin/login"'), 'Navbar Action: "Admin" button is wired to /admin/login');
-  assert(navbarSrc.includes('href="/register"'), 'Navbar Action: "Register (100% Free)" button is wired to /register');
+  assert(navbarSrc.includes('href="/register"'), 'Navbar Action: "Register Team" button is wired to /register');
   assert(navbarSrc.includes('<ThemeToggle'), 'Navbar Action: ThemeToggle (Cyber Neon / AWS) is mounted');
   assert(navbarSrc.includes('sound?.toggle()'), 'Navbar Action: Sound/Audio Mute Toggle button is wired to sound.toggle()');
   assert(navbarSrc.includes('setMoreMenuOpen'), 'Navbar Action: "More ▾" button has dropdown toggle state');
@@ -158,7 +158,7 @@ async function runSmokeTests() {
 
   assert(
     heroSrc.includes('href="/register"') && (heroSrc.includes('Register Team') || heroSrc.includes('Submit Round 0 Project Abstract')),
-    'Hero Primary CTA: "Register Team (100% Free)" button targets /register'
+    'Hero Primary CTA: "Register Team" button targets /register'
   );
   assert(
     (heroSrc.includes('href="/tracks"') || heroSrc.includes('href="/sponsors"')) && (heroSrc.includes('Explore 5 Tracks') || heroSrc.includes('View Sponsorship Prospectus')),

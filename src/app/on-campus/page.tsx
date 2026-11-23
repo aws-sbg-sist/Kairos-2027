@@ -225,13 +225,13 @@ export default function OnCampusGuidePage() {
           <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
               <div>
-                <span role="status" className="text-xs font-mono text-sky-400 font-medium">Free Transit Shuttles</span>
+                <span role="status" className="text-xs font-mono text-sky-400 font-medium">Campus Transit Shuttles</span>
                 <h2 className="text-xl sm:text-2xl font-display font-black text-white">
                   Sathyabama Chartered Bus Fleet
                 </h2>
               </div>
-              <span className="text-xs font-mono text-emerald-400 font-bold">
-                100% Free for All Contestants
+              <span className="text-xs font-mono text-purple-400 font-bold">
+                Chartered for Shortlisted Teams
               </span>
             </div>
 

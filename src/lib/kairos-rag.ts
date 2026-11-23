@@ -32,7 +32,7 @@ export const KAIROS_KNOWLEDGE_BASE: KnowledgeChunk[] = [
     content: `KAIROS 2027 (Grand Edition) is India's premier national flagship 48-hour continuous technical hackathon organized by the AWS Student Builder Group (AWS SBG) — SIST Chapter, hosted at Sathyabama Institute of Science and Technology, Chennai.
 Tagline: "National 48-Hour Cloud Hackathon on AWS."
 Scale: 100 elite national finalist teams (400–600 builders), selected from 2,000+ national applications across two competitive technical tiers.
-Cost: 100% FREE — Exactly ₹0 registration fee for all students nationwide.
+Cost: Registration and fee updates will be communicated directly to your squad once registered.
 Prize Pool: ₹1,75,000 Total Cash Prize Pool + $50,000+ in AWS Cloud Promotional Credits. (The individual prize split-ups are kept as a top secret and mystery to be revealed during the grand finale).
 Dates: January 22–24, 2027 (48 hours non-stop hacking).
 Venue: Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai, Tamil Nadu, India.`
@@ -101,7 +101,7 @@ Track 05: Open Enterprise & Campus Life Innovation
     title: 'Dual-Phase Merit Qualification Pipeline & Submission Guidelines',
     keywords: ['qualifier', 'round 0', 'round 1', 'round 2', 'selection', 'how to join', 'steps', 'pipeline', 'github', 'submission', 'apply', 'procedure', 'defense'],
     content: `The KAIROS 2027 selection pipeline is 100% merit-based across 2 competitive phases:
-- Phase 0 (Free Online Registration): Submit project abstract and architecture blueprint online at the website before Dec 28, 2026. Teams of 4–6 builders. Mandatory Meetup RSVP and AWS Builder Center profile.
+- Phase 0 (Online Registration): Submit project abstract and architecture blueprint online at the website before Dec 28, 2026. Teams of 4–6 builders. Mandatory Meetup RSVP and AWS Builder Center profile.
 - Round 1 (Online Technical Qualifier, Jan 02–04, 2027): Shortlisted teams submit a working GitHub repository prototype with architecture documentation, followed by a virtual technical defense session with solutions architects. (No Loom video required).
 - Round 2 (On-Campus 48-Hour Grand Finale, Jan 22–24, 2027): The Top 100 elite teams receive official on-campus qualification passes to assemble at the Indoor Auditorium, Sathyabama in Chennai for 48 hours of continuous building.
 Submission Requirements:
@@ -116,7 +116,7 @@ Submission Requirements:
 - Eligibility: All registered undergraduate and postgraduate engineering and technology students across accredited institutions in India.
 - Team Size: Strictly 4 to 6 builders per team. Teams can be formed across different departments or across different colleges/universities (inter-college teams are fully permitted!).
 - Solo Builders: Individual builders can register and find squad teammates using the on-site Builder Squad Radar before final team locking.
-- Registration Fee: Exactly ₹0. Zero entry fee, zero hidden charges. 100% free qualification.
+- Registration Fee: Fee structures and logistics updates will be communicated directly to your squad once registered.
 - Code Authenticity: All project code must be authored during the 48-hour hackathon. Pre-existing codebases or pre-built complete apps are strictly disqualified. Open-source libraries, foundation models, pre-trained weights, and public APIs are fully allowed.
 - Hardware & Devices: Contestants bring their own laptops and hardware peripherals. Wi-Fi connectivity and power access are provided at team bays.
 - Intellectual Property (IP): Participants retain 100% ownership of their source code, models, and blueprints. Zero equity or IP claims are made by AWS, Sathyabama, or sponsors.`
@@ -420,10 +420,10 @@ Please contact the club at **sistawscc@gmail.com** for confirmation on animal ac
   // Edge Case: Unverified / Missing Policy: Flight / Travel Reimbursement
   if ((q.includes('flight') || q.includes('ticket') || q.includes('reimburse')) && (q.includes('delhi') || q.includes('travel') || q.includes('train') || q.includes('flight'))) {
     return `**What I can confirm:**
-Sathyabama provides complimentary chartered university bus shuttles across Chennai transit hubs (Central, Airport, Tambaram, CMBT) and 100% free hot meals during the 48 hours.
+Sathyabama provides complimentary chartered university bus shuttles across Chennai transit hubs (Central, Airport, Tambaram, CMBT) and chef-curated hot meals during the 48 hours.
 
 **What needs confirmation:**
-Long-distance outstation travel expenses (such as domestic flights or train fares) are not automatically covered in the standard free registration package.
+Long-distance outstation travel expenses (such as domestic flights or train fares) are not automatically covered in the standard registration package.
 
 **Next step:**
 Please contact **sistawscc@gmail.com** if your institution requires special travel grant documentation or on-duty approval.`;
@@ -457,7 +457,7 @@ Please email **sistawscc@gmail.com** with your Team Code and registration detail
 The grand on-campus 48-hour finale is hosted at:
 • **Venue:** **Indoor Auditorium**, Sathyabama Institute of Science and Technology
 • **Address:** Jeppiaar Nagar, Rajiv Gandhi Salai (OMR), Chennai, Tamil Nadu - 600119
-• **Complimentary Transit:** Free university chartered transit buses will connect Chennai Central, Tambaram Station, Airport, and CMBT Koyambedu directly to the venue.`;
+• **Complimentary Transit:** University chartered transit buses will connect Chennai Central, Tambaram Station, Airport, and CMBT Koyambedu directly to the venue.`;
   }
 
   // 3. 5 Technical Tracks
@@ -496,15 +496,15 @@ KAIROS 2027 features 5 core technical tracks:
 • **Grand Demos & Valedictory:** Sunday, Jan 24, 2027 (09:00 AM – 04:30 PM IST)`;
   }
 
-  // 5. Registration Cost & Zero Fee
+  // 5. Registration Cost & Fee Updates
   if ((/\bfree\b/i.test(q) && !q.includes('freeze')) || q.includes('fee') || q.includes('cost') || q.includes('price') || q.includes('charge')) {
-    return `### ✨ Registration Fee: 100% Free (₹0 Entry Fee)
+    return `### ✨ Registration & Fee Structure
 
-KAIROS 2027 has **zero registration fee** for all students nationwide. Every qualified finalist team receives:
+Fee structures and qualification logistics will be updated and communicated directly to your squad once you register on the portal. Every qualified finalist team receives:
 • Full campus access for 48 hours of continuous building at the Indoor Auditorium
-• 7 complimentary hot buffet meals, 24/7 filter coffee & midnight snack drops
+• 7 chef-curated hot buffet meals, 24/7 filter coffee & midnight snack drops
 • Smart NFC builder badges & exclusive swag kits
-• Complimentary Sathyabama chartered bus fleet transit within Chennai
+• Sathyabama chartered bus fleet transit within Chennai
 • 100% intellectual property ownership — participants retain all rights to their code and blueprints.`;
   }
 
@@ -525,9 +525,9 @@ For all inquiries, please reach out directly through the official club channels:
   if (q.includes('food') || q.includes('meal') || q.includes('stay') || q.includes('accommodation') || q.includes('sleep') || q.includes('travel') || q.includes('bus') || q.includes('shuttle') || q.includes('wifi') || q.includes('internet') || q.includes('speed')) {
     return `### 🏨 Food, Accommodation, Travel & Builder Logistics
 
-• **Complimentary Meals:** 100% free hot meals (7 total services across the 48 hours) + 24/7 filter coffee/tea bars and 01:30 AM midnight energy snack drops.
+• **Complimentary Meals:** 7 total services across the 48 hours + 24/7 filter coffee/tea bars and 01:30 AM midnight energy snack drops.
 • **Rest Facilities:** Designated resting spaces are provided on campus for builders (dedicated AC resting bays are not guaranteed).
-• **Transit Bus Fleet:** Free chartered Sathyabama buses connecting Chennai Central, Tambaram, Airport, and CMBT Koyambedu directly to the Indoor Auditorium.
+• **Transit Bus Fleet:** Chartered Sathyabama buses connecting Chennai Central, Tambaram, Airport, and CMBT Koyambedu directly to the Indoor Auditorium.
 • **Power & Wi-Fi:** Wi-Fi connectivity and multi-socket power strips are provided at team bays (specific network speeds are not guaranteed).
 • **Safety:** Campus night lock-in strictly enforced from 10:00 PM to 06:00 AM with campus security and 24/7 first aid.`;
   }
@@ -558,5 +558,5 @@ For all inquiries, please reach out directly through the official club channels:
 ${topChunk.content}
 
 ---
-💡 *Need more specific details? You can ask about tracks, the 48-hour schedule, rules, free food, or email the club at **sistawscc@gmail.com**.*`;
+💡 *Need more specific details? You can ask about tracks, the 48-hour schedule, rules, logistics, or email the club at **sistawscc@gmail.com**.*`;
 }

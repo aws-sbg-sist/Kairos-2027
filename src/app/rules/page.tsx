@@ -152,7 +152,7 @@ export default function RulesPage() {
                 <Users className="w-6 h-6" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white">2. Team Formation, Dual Registration & Zero Fees</h2>
+                <h2 className="text-xl font-bold text-white">2. Team Formation & Dual Registration</h2>
                 <p className="text-xs text-slate-400">Merit-based admission with mandatory AWS SBGL community compliance</p>
               </div>
             </div>
@@ -165,9 +165,9 @@ export default function RulesPage() {
                   <div className="text-[11px] text-slate-400 mt-1">Cross-institutional teams permitted</div>
                 </div>
                 <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
-                  <div className="text-xs text-slate-400 font-mono">Entry Fee</div>
-                  <div className="text-lg font-bold text-emerald-400">₹0 (100% Free)</div>
-                  <div className="text-[11px] text-slate-400 mt-1">Meals, stay, swag & transit free</div>
+                  <div className="text-xs text-slate-400 font-mono">Entry Status</div>
+                  <div className="text-lg font-bold text-purple-400">Merit Screening</div>
+                  <div className="text-[11px] text-slate-400 mt-1">Updated upon registration</div>
                 </div>
                 <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
                   <div className="text-xs text-slate-400 font-mono">AWS Verification</div>

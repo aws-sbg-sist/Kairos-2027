@@ -82,7 +82,7 @@ Scale & Metrics:
 - 100 Shortlisted National Teams (400 to 600 Elite Hackers)
 - 2,000+ Online Applications Nationwide
 - ₹1,75,000 Total Prize Pool
-- 100% Free Merit Hackathon :  Zero Entry Fee for Students
+- Merit Hackathon : Two-Tier Evaluation Framework
 - Venue: Indoor Auditorium, Sathyabama IST, Chennai - 600119
 - Date: January 22 to 24, 2027 (48-Hour On-Campus Sprint)
 
@@ -228,10 +228,10 @@ Target Domain: https://kairos.sathyabama.ac.in
             <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-4">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <div className="text-3xl font-black text-white font-mono mb-1">100% Free</div>
+            <div className="text-3xl font-black text-white font-mono mb-1">Dual-Tier</div>
             <div className="text-xs text-purple-400 font-semibold  mb-2">Authentic Merit</div>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Zero registration fees eliminates pay-to-play economics, attracting authentic tier-1 engineering talent from every corner of India.
+              Rigorous two-phase screening eliminates pay-to-play economics, attracting authentic tier-1 engineering talent from every corner of India.
             </p>
           </div>
         </div>

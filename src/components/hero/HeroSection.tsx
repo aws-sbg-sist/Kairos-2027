@@ -101,13 +101,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
             {/* Wordmark Graphic + Kinetic Headline */}
             <div className="space-y-4">
               <ScrollReveal direction="none" delay={0.1} immediate={true}>
-                <div className="relative w-full max-w-[280px] sm:max-w-md lg:max-w-lg mx-auto lg:mx-0 h-12 sm:h-16 lg:h-20">
+                <div className="relative w-full max-w-[260px] xs:max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] mx-auto lg:mx-0 h-28 xs:h-32 sm:h-36 lg:h-40">
                   <Image
                     src="/assets/kairos-wordmark.png"
                     alt="KAIROS 2027"
                     fill
                     priority
-                    className="object-contain object-center lg:object-left filter drop-shadow-xl"
+                    className="object-contain object-center lg:object-left filter drop-shadow-2xl"
                   />
                 </div>
               </ScrollReveal>
@@ -212,8 +212,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
                     onMouseEnter={() => sound?.playHover()}
                     className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 transition-colors duration-200 ease-entrance flex items-center justify-center gap-2 group active:scale-[0.97]"
                   >
-                    <span className="hidden sm:inline">Submit Round 0 Project Abstract (Free)</span>
-                    <span className="sm:hidden inline">Submit Round 0 Abstract (Free)</span>
+                    <span className="hidden sm:inline">Submit Round 0 Project Abstract</span>
+                    <span className="sm:hidden inline">Submit Round 0 Abstract</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
                   </Link>
                 </MagneticButton>

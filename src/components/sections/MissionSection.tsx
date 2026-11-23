@@ -114,8 +114,8 @@ export const MissionSection: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-purple-500/20 text-xs font-mono relative z-10">
                   <div className="p-3 rounded-xl bg-purple-950/50 border border-purple-500/30 text-purple-200">
-                    <span className="block text-white font-bold mb-0.5">100% Free Entry</span>
-                    <span className="text-[11px] text-slate-400">Zero entry or kit fees</span>
+                    <span className="block text-white font-bold mb-0.5">Merit Selection</span>
+                    <span className="text-[11px] text-slate-400">Updates upon registration</span>
                   </div>
                   <div className="p-3 rounded-xl bg-purple-950/50 border border-purple-500/30 text-purple-200">
                     <span className="block text-white font-bold mb-0.5">Total Prize Pool ₹1.75L</span>

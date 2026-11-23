@@ -201,7 +201,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                         }}
                         className="text-purple-300 font-bold hover:text-white flex items-center gap-1.5 group/btn"
                       >
-                        <span>Apply Free</span>
+                        <span>Apply Now</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
                       </Link>
                     )}

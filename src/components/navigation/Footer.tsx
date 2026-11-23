@@ -166,7 +166,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 Official Meetup Chapter ↗
               </a>
               <span>|</span>
-              <span className="text-emerald-400 font-mono">100% Free - ₹0 Fee</span>
+              <span className="text-purple-400 font-mono">National Hackathon</span>
             </div>
           </div>
         </div>

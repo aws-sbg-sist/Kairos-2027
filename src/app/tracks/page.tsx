@@ -282,14 +282,14 @@ export default function TracksPage() {
             {/* Footer Action */}
             <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
               <span className="text-xs text-slate-400">
-                Zero registration fee. Free sandbox AWS credits provided to all shortlisted teams.
+                Sandbox AWS cloud promotional credits provided to all shortlisted teams.
               </span>
               <div className="flex items-center gap-3">
                 <Link
                   href="/register"
                   className="px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors"
                 >
-                  Register Team Free
+                  Register Team
                 </Link>
               </div>
             </div>

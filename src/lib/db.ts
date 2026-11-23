@@ -69,9 +69,9 @@ const DEFAULT_MEMBERS: OrgMember[] = [
     contributions: [
       {
         category: 'Macro Leadership & Governance',
-        title: 'Institutional Sanction & ₹0 Free Merit Hackathon Framework',
-        description: 'Secured full institutional backing, campus facilities, and enforced zero fees for all students nationwide.',
-        impact: '100% Free Access for 600 Hackers',
+        title: 'Institutional Sanction & Merit Hackathon Framework',
+        description: 'Secured full institutional backing and campus facilities for students nationwide.',
+        impact: 'National Access for 600 Hackers',
         badgeTier: 'DIAMOND',
         verificationHash: '0x8f2d4e7b1a9c3e5f6a8b0d2c4e6f8a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f'
       },
@@ -302,78 +302,14 @@ const DEFAULT_MEMBERS: OrgMember[] = [
 ];
 
 const DEFAULT_STORE: StoreSchema = {
-  waitlist: [
-    {
-      id: 'demo-w1',
-      fullName: 'Aarav Sharma',
-      email: 'aarav.sharma@example.edu',
-      institution: 'IIT Madras',
-      yearOfStudy: '3rd Year',
-      department: 'Computer Science & Engineering',
-      preferredTrack: 'Agentic AI & Generative Intelligence',
-      meetupProfileUrl: 'https://www.meetup.com/members/48192831/',
-      meetupMemberId: '48192831',
-      meetupRsvpVerified: true,
-      awsBuilderCenterUrl: 'https://community.aws/@aarav',
-      portfolioUrl: 'https://github.com/aarav',
-      motivation: 'Building autonomous distributed agent systems for verifiable research synthesis using Bedrock and Claude 3.5.',
-      createdAt: '2026-10-24T10:15:00.000Z'
-    },
-    {
-      id: 'demo-w2',
-      fullName: 'Pooja Venkatesh',
-      email: 'pooja.v@example.edu',
-      institution: 'Sathyabama Institute of Science and Technology',
-      yearOfStudy: '4th Year',
-      department: 'School of Computing',
-      preferredTrack: 'Cloud-Native, High-Throughput & Distributed Systems',
-      meetupProfileUrl: 'https://www.meetup.com/members/59201948/',
-      meetupMemberId: '59201948',
-      meetupRsvpVerified: true,
-      awsBuilderCenterUrl: 'https://community.aws/@pooja-v',
-      portfolioUrl: 'https://github.com/pooja-v',
-      motivation: 'Exploring high-throughput distributed transaction settlement with event-driven consensus on ECS and DynamoDB.',
-      createdAt: '2026-10-24T14:30:00.000Z'
-    }
-  ],
-  sponsors: [
-    {
-      id: 'sp-1',
-      companyName: 'Aether Cloud Systems',
-      contactPerson: 'Karan Mehra',
-      contactEmail: 'partnerships@aethercloud.io',
-      contactPhone: '+91 98765 43210',
-      interestedTier: 'powered_by',
-      customRequirements: 'Interested in hosting a 10-minute technical masterclass on distributed vector indexing on Bedrock and OpenSearch.',
-      status: 'contacted',
-      createdAt: '2026-10-23T11:00:00.000Z'
-    }
-  ],
-  referrals: [
-    {
-      id: 'ref-1',
-      studentName: 'Rohan Deshmukh',
-      studentEmail: 'rohan.d@student.sathyabama.ac.in',
-      studentPhone: '+91 98401 23456',
-      studentCollege: 'Sathyabama Institute of Science and Technology',
-      companyName: 'NovaCloud AI Technologies',
-      companyPocName: 'Sanjay Varma',
-      companyPocRole: 'VP Engineering & Talent Acquisition',
-      companyPocContact: 'sanjay.varma@novacloud.ai',
-      targetTier: 'Co-Powered By Partner (₹1,00,000)',
-      introContext: 'NovaCloud is expanding their Chennai engineering campus and looking to recruit 15 cloud/AI interns.',
-      lockExpiryDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(),
-      status: 'DISCOVERY_SCHEDULED',
-      commissionRate: '12%',
-      estimatedPayout: '₹12,000 Direct Payout',
-      submittedAt: '2026-10-24T12:00:00.000Z'
-    }
-  ],
+  waitlist: [],
+  sponsors: [],
+  referrals: [],
   featureFlags: {
     registrationOpen: true,
     prizePoolConfirmed: true,
     demoSandboxMode: true,
-    announcementBanner: '★ NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
+    announcementBanner: '★ NATIONAL APPLICATIONS OPEN NOW • ₹1,75,000 TOTAL PRIZE POOL • SATHYABAMA CHENNAI',
     registrationDeadline: '2026-12-28T23:59:59+05:30'
   },
   auditLogs: [
@@ -385,139 +321,8 @@ const DEFAULT_STORE: StoreSchema = {
       details: 'Initialized KAIROS 2027 store with 100-team dual-phase pipeline and AWS SBGL guidelines.'
     }
   ],
-  teams: [
-    {
-      id: 'team-k100-01',
-      teamCode: 'KAIROS-T001',
-      teamName: 'Chronos Distributed',
-      inviteCode: 'KAIROS-7721',
-      trackId: 'cloud-native',
-      institutionName: 'Sathyabama Institute of Science and Technology',
-      city: 'Chennai',
-      state: 'Tamil Nadu',
-      leaderEmail: 'pooja.v@example.edu',
-      selectionStage: 'ON_CAMPUS_QUALIFIED',
-      problemTitle: 'Chronos Stream: Sub-millisecond Event Mesh for Urban Telemetry',
-      problemAbstract: 'A fault-tolerant stream processing engine handling 100k events/sec with distributed consensus, AWS EventBridge, and zero data loss.',
-      githubUrl: 'https://github.com/kairos2027/chronos-stream',
-      loomVideoUrl: 'https://www.loom.com/share/demo-chronos-stream-2027',
-      onlineQualifierScore: 94.5,
-      onlineDefenseSlot: '2027-01-03T11:00:00+05:30',
-      onlineMeetRoomId: 'Virtual-Meet-02',
-      deskBayAllocation: 'BAY-A12 (Indoor Auditorium Bay 1)',
-      checkedIn: true,
-      awsCreditVoucher: 'AWS-KAIROS-100-CHRONOS',
-      members: [
-        { id: 'm1', name: 'Pooja Venkatesh', email: 'pooja.v@example.edu', role: 'Leader', college: 'SIST', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/59201948/', tshirtSize: 'M', hoodieSize: 'M', confirmed: true },
-        { id: 'm2', name: 'Rohan Gupta', email: 'rohan.g@example.edu', role: 'Backend', college: 'SIST', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/59201949/', tshirtSize: 'L', hoodieSize: 'L', confirmed: true },
-        { id: 'm3', name: 'Swetha K', email: 'swetha.k@example.edu', role: 'AI / Cloud', college: 'SIST', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/59201950/', tshirtSize: 'S', hoodieSize: 'S', confirmed: true },
-        { id: 'm4', name: 'Aditya Nair', email: 'aditya.n@example.edu', role: 'UI/UX', college: 'SIST', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/59201951/', tshirtSize: 'XL', hoodieSize: 'XL', confirmed: true }
-      ],
-      createdAt: '2026-10-25T08:00:00.000Z'
-    },
-    {
-      id: 'team-k100-02',
-      teamCode: 'KAIROS-T002',
-      teamName: 'Aegis Swarm',
-      inviteCode: 'KAIROS-8832',
-      trackId: 'agentic-ai',
-      institutionName: 'IIT Madras',
-      city: 'Chennai',
-      state: 'Tamil Nadu',
-      leaderEmail: 'aarav.sharma@example.edu',
-      selectionStage: 'ON_CAMPUS_QUALIFIED',
-      problemTitle: 'Aegis Agent: Autonomous Multi-Agent DevSecOps Remediation',
-      problemAbstract: 'Coordinated autonomous agents running on Amazon Bedrock (Claude 3.5 Sonnet) that discover and autonomously repair cloud IAM vulnerabilities.',
-      githubUrl: 'https://github.com/aegis-swarm/aegis-core',
-      loomVideoUrl: 'https://www.loom.com/share/demo-aegis-swarm-2027',
-      onlineQualifierScore: 96.0,
-      onlineDefenseSlot: '2027-01-03T14:30:00+05:30',
-      onlineMeetRoomId: 'Virtual-Meet-01',
-      deskBayAllocation: 'BAY-A08 (Indoor Auditorium Bay 1)',
-      checkedIn: true,
-      awsCreditVoucher: 'AWS-KAIROS-100-AEGIS',
-      members: [
-        { id: 'm5', name: 'Aarav Sharma', email: 'aarav.sharma@example.edu', role: 'Leader', college: 'IIT Madras', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/48192831/', tshirtSize: 'L', hoodieSize: 'L', confirmed: true },
-        { id: 'm6', name: 'Kavya Raman', email: 'kavya.r@example.edu', role: 'AI / Cloud', college: 'IIT Madras', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/48192832/', tshirtSize: 'M', hoodieSize: 'M', confirmed: true },
-        { id: 'm7', name: 'Gautam Pillai', email: 'gautam.p@example.edu', role: 'Backend', college: 'IIT Madras', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/48192833/', tshirtSize: 'XL', hoodieSize: 'XL', confirmed: true },
-        { id: 'm8', name: 'Meera Iyer', email: 'meera.i@example.edu', role: 'Frontend', college: 'IIT Madras', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/48192834/', tshirtSize: 'S', hoodieSize: 'S', confirmed: true }
-      ],
-      createdAt: '2026-10-25T08:30:00.000Z'
-    },
-    {
-      id: 'team-k100-03',
-      teamCode: 'KAIROS-T003',
-      teamName: 'VoltEdge Smart Grid',
-      inviteCode: 'KAIROS-4412',
-      trackId: 'edge-iot',
-      institutionName: 'NIT Tiruchirappalli',
-      city: 'Tiruchirappalli',
-      state: 'Tamil Nadu',
-      leaderEmail: 'karthik.s@nitt.edu',
-      selectionStage: 'ONLINE_SEMI_FINALIST',
-      problemTitle: 'VoltEdge: Renewable Microgrid Load Balancer with IoT Core',
-      problemAbstract: 'Decentralized IoT microcontroller telemetry streaming solar battery metrics to AWS IoT Core and Timestream to balance local microgrids.',
-      githubUrl: 'https://github.com/voltedge/smart-grid',
-      loomVideoUrl: 'https://www.loom.com/share/demo-voltedge-2027',
-      onlineQualifierScore: 89.0,
-      onlineDefenseSlot: '2027-01-04T10:00:00+05:30',
-      onlineMeetRoomId: 'Virtual-Meet-04',
-      awsCreditVoucher: 'AWS-KAIROS-50-VOLT',
-      members: [
-        { id: 'm9', name: 'Karthik S', email: 'karthik.s@nitt.edu', role: 'Leader', college: 'NITT', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/61298410/', tshirtSize: 'M', hoodieSize: 'M', confirmed: true },
-        { id: 'm10', name: 'Deepak V', email: 'deepak.v@nitt.edu', role: 'Backend', college: 'NITT', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/61298411/', tshirtSize: 'L', hoodieSize: 'L', confirmed: true },
-        { id: 'm11', name: 'Siddharth M', email: 'sid.m@nitt.edu', role: 'AI / Cloud', college: 'NITT', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/61298412/', tshirtSize: 'L', hoodieSize: 'L', confirmed: true },
-        { id: 'm12', name: 'Ananya Rao', email: 'ananya.r@nitt.edu', role: 'Frontend', college: 'NITT', meetupRsvpVerified: true, meetupProfileUrl: 'https://www.meetup.com/members/61298413/', tshirtSize: 'S', hoodieSize: 'S', confirmed: true }
-      ],
-      createdAt: '2026-10-25T09:00:00.000Z'
-    }
-  ],
-  radarSignals: [
-    {
-      id: 'sig-1',
-      builderName: 'Vikram Sundaram',
-      role: 'AI / ML Specialist',
-      trackId: 'agentic-ai',
-      skills: ['LangGraph', 'Amazon Bedrock', 'FastAPI', 'OpenSearch Vector Search'],
-      college: 'Sathyabama Institute of Science and Technology',
-      seeking: 'Looking for a solid Frontend/Web engineer and DevOps builder to form a team for multi-agent autonomous consensus.',
-      contactUrl: 'https://github.com/vikram-sundaram',
-      createdAt: '2026-10-25T07:30:00.000Z'
-    },
-    {
-      id: 'sig-2',
-      builderName: 'Ananya Deshmukh',
-      role: 'Systems & DevOps',
-      trackId: 'cloud-native',
-      skills: ['Rust', 'AWS ECS', 'Kubernetes', 'Amazon EventBridge'],
-      college: 'IIT Madras',
-      seeking: 'Distributed systems engineer looking for a backend architect and UI builder to tackle sub-millisecond event streaming.',
-      contactUrl: 'https://github.com/ananya-desh',
-      createdAt: '2026-10-25T08:15:00.000Z'
-    },
-    {
-      id: 'sig-3',
-      builderName: 'Rohan Iyer',
-      role: 'Web3 & Security',
-      trackId: 'fintech-trust',
-      skills: ['AWS KMS', 'Zero-Knowledge Proofs', 'Cognito', 'Aurora Serverless'],
-      college: 'Anna University, CEG',
-      seeking: 'Security researcher seeking frontend engineer (Next.js/Tailwind) for verifiable decentralized credential escrow.',
-      contactUrl: 'https://github.com/rohan-iyer',
-      createdAt: '2026-10-25T09:00:00.000Z'
-    },
-    {
-      id: 'sig-4',
-      builderName: 'Sneha Patel',
-      role: 'UI/UX & Frontend',
-      trackId: 'open-enterprise',
-      skills: ['Next.js 14', 'Three.js', 'Tailwind CSS', 'Amazon Textract'],
-      college: 'Sathyabama Institute of Science and Technology',
-      seeking: 'Frontend & motion designer looking for Python/FastAPI builders to craft a high-fidelity institutional healthcare triage app.',
-      contactUrl: 'https://github.com/sneha-patel',
-      createdAt: '2026-10-25T09:45:00.000Z'
-    }
-  ],
+  teams: [],
+  radarSignals: [],
   judges: [
     {
       id: 'judge-1',
@@ -550,49 +355,9 @@ const DEFAULT_STORE: StoreSchema = {
       isActive: true
     }
   ],
-  evaluations: [
-    {
-      id: 'eval-1',
-      teamId: 'team-k100-01',
-      judgeId: 'judge-1',
-      checkpointGate: 1,
-      criterion1Score: 28, // Arch (out of 30)
-      criterion2Score: 24, // Originality (out of 25)
-      criterion3Score: 24, // Prototype (out of 25)
-      criterion4Score: 19, // Pitch (out of 20)
-      rawTotalScore: 95,
-      normalizedZScore: 1.45,
-      qualitativeFeedback: 'Exceptional event-mesh resilience on AWS EventBridge. IAM policies are neatly isolated.',
-      evaluatedAt: '2027-01-22T17:30:00.000Z'
-    },
-    {
-      id: 'eval-2',
-      teamId: 'team-k100-02',
-      judgeId: 'judge-1',
-      checkpointGate: 1,
-      criterion1Score: 29,
-      criterion2Score: 25,
-      criterion3Score: 24,
-      criterion4Score: 19,
-      rawTotalScore: 97,
-      normalizedZScore: 1.72,
-      qualitativeFeedback: 'Brilliant Bedrock multi-agent orchestration. Hallucination guardrails are tightly implemented.',
-      evaluatedAt: '2027-01-22T18:00:00.000Z'
-    }
-  ],
+  evaluations: [],
   commitEvents: [],
-  csat: [
-    {
-      id: 'csat-1',
-      overallSatisfaction: 5,
-      npsScore: 10,
-      cloudServicesUsed: ['Amazon Bedrock', 'AWS Lambda', 'Amazon DynamoDB', 'Amazon OpenSearch'],
-      pursuingAwsCertification: 'YES',
-      eventFeedback: 'The zero-fee model, seamless Wi-Fi, and live mentorship by AWS Solutions Architects made this the best hackathon in the country.',
-      testimonialQuote: 'KAIROS 2027 showed us what real cloud engineering at scale feels like.',
-      submittedAt: '2027-01-24T16:00:00.000Z'
-    }
-  ],
+  csat: [],
   members: DEFAULT_MEMBERS,
   studentAccounts: [],
   notificationLogs: []

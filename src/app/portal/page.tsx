@@ -119,7 +119,7 @@ export default function ParticipantPortalPage() {
               href="/register"
               className="w-full py-2.5 px-4 rounded-xl bg-white/5 border border-slate-700 hover:border-slate-600 text-slate-300 text-xs transition-colors flex items-center justify-center gap-2"
             >
-              <span>Create New Builder Account (Free)</span>
+              <span>Create New Builder Account</span>
             </Link>
           </div>
 

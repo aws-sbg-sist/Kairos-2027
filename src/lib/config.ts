@@ -5,7 +5,7 @@ export const EVENT_CONFIG = {
   edition: 'Grand Edition',
   tagline: 'National 48-Hour Cloud Hackathon on AWS.',
   subtitle: '48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors.',
-  notificationBar: 'NATIONAL APPLICATIONS OPEN NOW • 100% FREE (ZERO ENTRY FEE) • ₹1,75,000 TOTAL PRIZE POOL',
+  notificationBar: 'NATIONAL APPLICATIONS OPEN NOW • ₹1,75,000 TOTAL PRIZE POOL • 48-HOUR CLOUD HACKATHON',
   organizer: {
     name: 'AWS Student Builder Group (AWS SBG)',
     chapter: 'AWS Student Builder Group — SIST Chapter',
@@ -52,7 +52,7 @@ export const EVENT_CONFIG = {
     onlineSemiFinalists: '250 Online Semi-Finalists (Top 250 Teams)',
     onCampusFinalists: '100 Elite On-Campus Teams',
     organizingCadre: '106 Student Organizers, Leads & Volunteers',
-    registrationFee: '₹0 (100% Free — Zero Entry Fee for All Students)',
+    registrationFee: 'Details and fee updates will be communicated once registered',
     cashPrizePool: '₹1,75,000 Total Prize Pool',
     totalPrizesWithCredits: '₹1,75,000 Total Prize Pool + $50,000+ AWS Cloud Promotional Credits',
     mealsProvided: '100% Complimentary Meals, Midnight Sustenance, Swag & Campus Stay',
@@ -232,11 +232,11 @@ export const JUDGING_CRITERIA = [
 export const DUAL_PHASE_PIPELINE = [
   {
     step: 'Phase 0',
-    title: 'Free Round 0 Abstract & Cloud Blueprint',
+    title: 'Round 0 Abstract & Cloud Blueprint',
     dates: 'Now – 28 Dec 2026',
     scale: '2,000+ National Teams',
-    description: 'Teams of 4–6 register for 100% free with their Meetup RSVP and AWS Builder Center profile. Submit project abstract and cloud architecture blueprint.',
-    badge: '100% Free Registration',
+    description: 'Teams of 4–6 register with their Meetup RSVP and AWS Builder Center profile. Submit project abstract and cloud architecture blueprint.',
+    badge: 'National Registration',
     status: 'ACTIVE_NOW'
   },
   {
@@ -269,7 +269,7 @@ export const EVENT_SCHEDULE = [
       {
         time: '09:30 AM – 10:45 AM',
         title: 'Grand Red-Carpet Check-In & Builder Kit Distribution',
-        desc: 'Report to Campus Foyer at Sathyabama Institute of Science and Technology. Photo ID verification, receive free builder kit (T-shirt, smart NFC badge, stickers), hack bay allocation & high-speed Wi-Fi onboarding.',
+        desc: 'Report to Campus Foyer at Sathyabama Institute of Science and Technology. Photo ID verification, receive official builder kit (T-shirt, smart NFC badge, stickers), hack bay allocation & high-speed Wi-Fi onboarding.',
         category: 'CHECK-IN'
       },
       {
@@ -720,7 +720,7 @@ export const AWS_RESOURCE_LIBRARY = [
 export const FAQS = [
   {
     q: 'Is there any entry fee or payment required?',
-    a: 'NO. KAIROS 2027 is 100% FREE. There are ZERO registration fees, ZERO qualifier fees, and ZERO attendance fees. All meals, on-campus stay, builder tees, smart badges, bus transit, and AWS credits are completely complimentary.'
+    a: 'Registration and fee details will be updated and communicated directly to your squad once you register on the portal.'
   },
   {
     q: 'Who can participate and what is the required team size?',

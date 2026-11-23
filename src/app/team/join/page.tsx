@@ -128,7 +128,7 @@ function JoinTeamContent() {
               Join an Existing <span className="gradient-text-kairos">Squad</span>
             </h1>
             <p className="text-sm sm:text-base text-slate-300 max-w-lg mx-auto">
-              Enter your squad's unique Team Code, submit your profile, and claim your place on the official roster (100% free).
+              Enter your squad's unique Team Code, submit your profile, and claim your place on the official roster.
             </p>
           </div>
 
@@ -194,7 +194,7 @@ function JoinTeamContent() {
               {targetTeam && (
                 <form onSubmit={handleJoinSubmit} className="space-y-6 pt-4 border-t border-white/10 animate-fadeIn">
                   <h3 className="text-xs font-mono  text-purple-300 font-bold">
-                    2. Confirm Your Member Details & Free Swag Sizing
+                    2. Confirm Your Member Details & Official Swag Sizing
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -272,11 +272,11 @@ function JoinTeamContent() {
                       />
                     </div>
 
-                    {/* Complimentary Swag Sizing */}
+                    {/* Swag Sizing */}
                     <div className="space-y-1">
                       <label className="text-xs font-mono text-slate-300 flex items-center gap-1">
                         <Shirt className="w-3 h-3 text-purple-400" />
-                        <span>Builder T-Shirt Size (Free)</span>
+                        <span>Builder T-Shirt Size</span>
                       </label>
                       <select
                         value={formData.tshirtSize}
@@ -294,7 +294,7 @@ function JoinTeamContent() {
                     <div className="space-y-1">
                       <label className="text-xs font-mono text-slate-300 flex items-center gap-1">
                         <Shirt className="w-3 h-3 text-purple-400" />
-                        <span>Finalist Hoodie Size (Free)</span>
+                        <span>Finalist Hoodie Size</span>
                       </label>
                       <select
                         value={formData.hoodieSize}
@@ -315,7 +315,7 @@ function JoinTeamContent() {
                     disabled={joining}
                     className="w-full py-4 rounded-xl font-bold text-sm text-white btn-primary-themed shadow-lg shadow-purple-900/40 transition-colors flex items-center justify-center gap-2"
                   >
-                    <span>{joining ? 'Joining Team Roster...' : `Join ${targetTeam.teamName} Roster (100% Free)`}</span>
+                    <span>{joining ? 'Joining Team Roster...' : `Join ${targetTeam.teamName} Roster`}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </form>
@@ -330,8 +330,8 @@ function JoinTeamContent() {
               </div>
 
               <div className="space-y-2">
-                <span className="text-xs font-mono text-emerald-400 font-bold ">
-                  Roster Confirmed • 100% Free Admission
+                <span className="text-xs font-mono text-purple-400 font-bold ">
+                  Roster Confirmed • Official Admission
                 </span>
                 <h2 className="text-3xl font-display font-black text-white">
                   You are on Team {targetTeam?.teamName}!
