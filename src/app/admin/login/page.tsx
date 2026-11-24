@@ -26,7 +26,10 @@ export default function AdminLoginPage() {
 function AdminLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTarget = searchParams?.get('redirect') || '/admin';
+  const requestedRedirect = searchParams?.get('redirect');
+  const redirectTarget = requestedRedirect && /^\/admin(?:\/|\?|$)/.test(requestedRedirect)
+    ? requestedRedirect
+    : '/admin';
 
   const [selectedLeadId, setSelectedLeadId] = useState<string>(ADMIN_LEADS[0].id);
   const [passkey, setPasskey] = useState('');
