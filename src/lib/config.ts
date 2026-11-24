@@ -86,7 +86,7 @@ export const TECHNICAL_TRACKS = [
     number: '01',
     title: 'Agentic AI & Generative Intelligence',
     shortTitle: 'Agentic AI & GenAI',
-    shortDescription: 'Architect autonomous multi-agent swarms, self-healing developer pipelines, and production generative AI workflows powered by Amazon Bedrock and Claude.',
+    shortDescription: 'Build research agents, natural-language workflow automation, or a multimodal assistant that understands text, images, and audio.',
     longDescription: 'Go beyond single prompt-response interfaces. Construct coordinated autonomous agent squads that interact with external tools, APIs, and real-time data environments to automate end-to-end multi-step reasoning while maintaining verifiable truthfulness and deterministic bounds.',
     themes: [
       'Multi-agent collaborative workflows & task routing',
@@ -102,7 +102,7 @@ export const TECHNICAL_TRACKS = [
     number: '02',
     title: 'Cloud-Native, High-Throughput & Distributed Systems',
     shortTitle: 'Cloud-Native & Distributed',
-    shortDescription: 'Build hyper-scale event-driven architectures, resilient distributed ledgers, and zero-downtime microservices capable of sustaining millions of concurrent events.',
+    shortDescription: 'Tackle cloud resource optimization, distributed real-time event processing, or automated recovery from service failures.',
     longDescription: 'Architect resilient backend systems built to withstand extreme traffic, network partitions, and cascading failures. Focus on serverless durability, low-latency stream processing, distributed transaction orchestration, and observable telemetry.',
     themes: [
       'Ultra-low-latency event architectures (EventBridge, SQS, Kafka)',
@@ -118,7 +118,7 @@ export const TECHNICAL_TRACKS = [
     number: '03',
     title: 'Autonomous Edge IoT & Sustainable Green Energy',
     shortTitle: 'Edge IoT & Clean Energy',
-    shortDescription: 'Deploy hardware microcontrollers, intelligent sensor networks, and edge inference systems optimizing renewable energy distribution and smart mobility.',
+    shortDescription: 'Create energy monitoring, local environmental early warnings, or renewable generation and battery optimization systems.',
     longDescription: 'Solve urgent physical-world challenges through resilient software engineering and IoT telemetry integration. Tackle resource distribution, renewable energy microgrid balancing, environmental monitoring, and intelligent community utilities.',
     themes: [
       'Smart grid balancing & renewable energy demand response',
@@ -134,7 +134,7 @@ export const TECHNICAL_TRACKS = [
     number: '04',
     title: 'FinTech, Trust & Cryptographic Security',
     shortTitle: 'FinTech & Cryptography',
-    shortDescription: 'Engineer low-latency settlement systems, real-time algorithmic fraud prevention, and zero-knowledge identity architectures.',
+    shortDescription: 'Explore explainable fraud detection, privacy-preserving document verification, or cryptographically verifiable certificates.',
     longDescription: 'Re-engineer digital financial rails with mathematical integrity. Build high-volume transaction verification, instant anomaly and synthetic identity fraud detection, and automated audit trails while upholding privacy and regulatory compliance.',
     themes: [
       'Sub-millisecond fraud pattern recognition using graph neural networks',
@@ -150,7 +150,7 @@ export const TECHNICAL_TRACKS = [
     number: '05',
     title: 'Open Enterprise & Campus Life Innovation',
     shortTitle: 'Open Enterprise & Campus',
-    shortDescription: 'Tackle pressing institutional and societal bottlenecks across healthcare diagnostics, agricultural supply chains, and automated university operations.',
+    shortDescription: 'Improve campus resource booking, personalized student career guidance, or issue reporting and resolution.',
     longDescription: 'Engineer high-impact institutional and social systems. Transform enterprise workflows, automate campus student experiences, modernize medical diagnostics triage, and build accessible tools for underserved demographics.',
     themes: [
       'Institutional document automation & intelligent OCR pipelines',

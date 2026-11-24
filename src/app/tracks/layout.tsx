@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '5 Technical Tracks | KAIROS 2027',
-  description: 'Explore the 5 Enterprise Tracks at KAIROS 2027: Agentic AI, Cloud-Native, Edge IoT, FinTech, and Open Enterprise. Scalable cloud problem statements for elite student engineering teams.',
+  title: '15 Official Problem Statements | KAIROS 2027',
+  description: 'Explore 15 official 48-hour hackathon problem statements across five KAIROS 2027 tracks, with full briefs and evaluation criteria.',
 };
 
 export default function TracksLayout({ children }: { children: React.ReactNode }) {
