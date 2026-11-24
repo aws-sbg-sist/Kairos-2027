@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -20,6 +20,10 @@ import {
 import { ADMIN_LEADS } from '@/lib/cadre_leads';
 
 export default function AdminLoginPage() {
+  return <Suspense fallback={<div className="min-h-screen bg-aws-canvas" />}><AdminLoginForm /></Suspense>;
+}
+
+function AdminLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTarget = searchParams?.get('redirect') || '/admin';
