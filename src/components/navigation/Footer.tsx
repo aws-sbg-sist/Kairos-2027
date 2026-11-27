@@ -15,7 +15,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
     <footer className="relative bg-[#07070b] border-t border-white/10 pt-16 pb-28 sm:pb-36 overflow-hidden text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
-          
+
           {/* Column 1: Brand & Institutional Identity */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
@@ -101,14 +101,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 className="min-h-[40px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-emerald-500/45 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-all hover:-translate-y-0.5 shine-hover"
               >
                 Meetup <ExternalLink className="w-2.5 h-2.5 text-emerald-400" />
-              </a>
-              <a
-                href={EVENT_CONFIG.socialHandles.xUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-[40px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-purple-400/45 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-all hover:-translate-y-0.5 shine-hover"
-              >
-                X <ExternalLink className="w-2.5 h-2.5 text-slate-400" />
               </a>
             </div>
 
@@ -205,7 +197,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
               <p className="text-xs text-slate-400 leading-snug">
                 President Thenappan T - Executive Leadership - Faculty Patrons
               </p>
-            <div className="pt-1 flex flex-col gap-2">
+              <div className="pt-1 flex flex-col gap-2">
                 <Link
                   href="/members/leadership"
                   className="min-h-[40px] inline-flex items-center gap-1.5 text-xs text-purple-300 hover:text-white px-3 py-2 rounded bg-purple-950/50 border border-purple-500/30 transition-colors"

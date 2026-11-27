@@ -72,13 +72,10 @@ export const EVENT_CONFIG = {
     '#WomenInStudentBuilderGroups'
   ],
   socialHandles: {
-    x: '@awssbg_sist',
-    xUrl: 'https://x.com/awssbg_sist',
-    xTag: '@awsdevelopers',
     linkedin: 'AWS Student Builder Group — SIST',
-    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-sist',
-    instagram: '@awssbg_sist',
-    instagramUrl: 'https://instagram.com/awssbg_sist',
+    linkedinUrl: 'https://www.linkedin.com/company/107990279',
+    instagram: '@aws_sbg_sist',
+    instagramUrl: 'https://www.instagram.com/aws_sbg_sist',
     meetup: 'https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/',
   },
   downloads: {
@@ -601,7 +598,7 @@ export const HIGHER_MANAGEMENT = {
       email: 'sistawscc@gmail.com',
       phone: '+91 6381801640',
       linkedin: 'https://linkedin.com/in/thenappan-t',
-      instagram: 'https://instagram.com/awssbg_sist'
+      instagram: 'https://www.instagram.com/aws_sbg_sist'
     }
   },
   facultyCoordinators: [

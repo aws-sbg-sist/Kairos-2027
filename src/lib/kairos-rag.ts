@@ -163,8 +163,8 @@ Checkpoint Scoring System:
     content: `Official AWS Student Builder Group (SIST Chapter) Helpdesk & Social Links:
 For all official queries, permissions, team updates, and event questions, please contact the club through our official communication channels:
 - Official Support Email: sistawscc@gmail.com
-- Club LinkedIn: https://www.linkedin.com/company/aws-student-builder-group-sist
-- Club Instagram: https://instagram.com/awssbg_sist (@awssbg_sist)
+- Club LinkedIn: https://www.linkedin.com/company/107990279
+- Club Instagram: https://www.instagram.com/aws_sbg_sist (@aws_sbg_sist)
 - Official Meetup Chapter: https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/
 - Physical Venue: Indoor Auditorium, Sathyabama Institute of Science and Technology, Jeppiaar Nagar, Rajiv Gandhi Salai (OMR), Chennai, Tamil Nadu - 600119.`
   },
@@ -210,7 +210,7 @@ export function expandQueryWithHistory(currentQuery: string, history?: ChatMessa
   if (!history || history.length === 0) return clean;
 
   const lowerQuery = clean.toLowerCase();
-  
+
   // Follow-up / pronoun / ambiguous indicator detection
   const hasPronounOrFollowUp =
     /\b(it|they|them|this|that|these|those|more|less|also|what about|how about|can we|can i|is it|are they|why|who|where|how much|when|what if)\b/i.test(lowerQuery) ||
@@ -516,8 +516,8 @@ Round 0 abstract screening and the Round 1 Online Technical Qualifier are 100% f
 For all inquiries, please reach out directly through the official club channels:
 
 • **Official Support Email:** [sistawscc@gmail.com](mailto:sistawscc@gmail.com)
-• **LinkedIn:** [AWS Student Builder Group — SIST Chapter](https://www.linkedin.com/company/aws-student-builder-group-sist)
-• **Instagram:** [@awssbg_sist](https://instagram.com/awssbg_sist)
+• **LinkedIn:** [AWS Student Builder Group — SIST Chapter](https://www.linkedin.com/company/107990279)
+• **Instagram:** [@aws_sbg_sist](https://www.instagram.com/aws_sbg_sist)
 • **Meetup:** [AWS SBG SIST Chapter](https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/)
 • **Venue:** Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai`;
   }
@@ -550,7 +550,7 @@ For all inquiries, please reach out directly through the official club channels:
 
 • **About KAIROS 2027:** It is an intense 48-hour continuous technical hackathon where teams architect, build, and deploy production-grade software prototypes on AWS.
 • **How to Prepare:** Review the 5 technical tracks, familiarize your squad with Amazon Bedrock, ECS, Lambda, and DynamoDB, and draft your architecture diagram before the Round 0 deadline.
-• **Need Help?** For any specific queries, contact the club at **sistawscc@gmail.com** or connect with us on Instagram ([@awssbg_sist](https://instagram.com/awssbg_sist)) or [LinkedIn](https://www.linkedin.com/company/aws-student-builder-group-sist).`;
+• **Need Help?** For any specific queries, contact the club at **sistawscc@gmail.com** or connect with us on Instagram ([@aws_sbg_sist](https://www.instagram.com/aws_sbg_sist)) or [LinkedIn](https://www.linkedin.com/company/107990279).`;
   }
 
   // 13. General synthesized response from top retrieved knowledge

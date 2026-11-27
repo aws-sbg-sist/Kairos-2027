@@ -75,12 +75,6 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'KAIROS 2027: 48-Hour AWS Cloud Hackathon',
-    description: 'National 48-Hour Cloud Hackathon on AWS. ₹1,75,000 Total Prize Pool. Dual-Phase National Selection.',
-    creator: '@awssbg_sist',
-  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
