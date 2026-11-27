@@ -828,14 +828,14 @@ export const JURY_AND_MENTORS_SHOWCASE = {
       focus: 'AWS Cloud Architecture & Tradeoff Clinic'
     },
     {
-      name: 'Shanmugapriyan S',
-      role: 'Technical Team Lead · AWS SBG SIST',
-      focus: 'Git Commit Telemetry, CI/CD & Serverless Scaling'
-    },
-    {
       name: 'Viswanathan Ashok',
       role: 'Hands-On Builder Lead · AWS SBG SIST',
       focus: 'Arena Operations, Bay Setup & Prototyping Support'
+    },
+    {
+      name: 'Shanmugapriyan S',
+      role: 'Technical Team Lead · AWS SBG SIST',
+      focus: 'Git Commit Telemetry, CI/CD & Serverless Scaling'
     }
   ],
   externalPanelNote: {
