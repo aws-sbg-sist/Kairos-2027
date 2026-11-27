@@ -10,9 +10,8 @@ import {
   User, 
   ArrowLeft, 
   AlertCircle, 
-  Eye, 
-  EyeOff, 
-  Sparkles, 
+  Eye,
+  EyeOff,
   Lock,
   Workflow,
   CheckCircle2

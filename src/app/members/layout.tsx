@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Organizing Committee & Leads | KAIROS 2027',
   description: 'Meet the student architects and organizers behind KAIROS 2027 from AWS Student Builder Group SIST.',
+  alternates: { canonical: '/members' },
 };
 
 export default function MembersLayout({ children }: { children: React.ReactNode }) {

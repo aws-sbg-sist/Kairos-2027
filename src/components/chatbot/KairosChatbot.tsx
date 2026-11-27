@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { MessageSquare, X, Send, Sparkles, RotateCcw, Bot, User, CheckCircle2 } from 'lucide-react';
+import { MessageSquare, X, Send, RotateCcw, Bot, User, CheckCircle2 } from 'lucide-react';
 import { sound } from '@/lib/audio';
 
 interface Message {
@@ -216,13 +216,6 @@ export const KairosChatbot: React.FC = () => {
             <span className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
           </span>
-
-          {/* Micro Tooltip */}
-          {!hasInteracted && (
-            <span className="hidden sm:inline-block absolute -top-11 right-0 bg-aws-canvas/95 border border-purple-500/40 text-purple-300 text-xs font-ai font-medium px-3 py-1.5 rounded-lg shadow-lg pointer-events-none whitespace-nowrap">
-              Instant RAG answers about Kairos 2027
-            </span>
-          )}
         </button>
       )}
 
@@ -246,7 +239,7 @@ export const KairosChatbot: React.FC = () => {
                     Kairos Assistant
                   </span>
                   <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-purple-950/60 text-purple-300 border border-purple-500/40 font-ai">
-                    RAG
+                    GUIDE
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium font-ai">
@@ -259,7 +252,7 @@ export const KairosChatbot: React.FC = () => {
             <div className="flex items-center gap-1.5">
               <button
                 onClick={handleClearHistory}
-                className="p-2 rounded-xl text-slate-300 hover:text-purple-300 hover:bg-purple-950/50 transition-colors"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl text-slate-300 hover:text-purple-300 hover:bg-purple-950/50 transition-colors"
                 title="Restart conversation"
               >
                 <RotateCcw className="w-4 h-4" />
@@ -269,7 +262,7 @@ export const KairosChatbot: React.FC = () => {
                   sound?.playClick();
                   setIsOpen(false);
                 }}
-                className="p-2 rounded-xl text-slate-300 hover:text-purple-300 hover:bg-purple-950/50 transition-colors"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl text-slate-300 hover:text-purple-300 hover:bg-purple-950/50 transition-colors"
                 title="Close chat"
               >
                 <X className="w-4 h-4" />
@@ -286,16 +279,15 @@ export const KairosChatbot: React.FC = () => {
               >
                 {msg.role === 'assistant' && (
                   <div className="w-7 h-7 rounded-lg bg-purple-950/70 border border-purple-500/40 flex items-center justify-center flex-shrink-0 mt-0.5 text-purple-300">
-                    <Sparkles className="w-4 h-4 text-purple-400" />
+                    <Bot className="w-4 h-4 text-purple-400" />
                   </div>
                 )}
 
                 <div
-                  className={`max-w-[88%] rounded-2xl p-4 leading-relaxed font-ai text-[15px] sm:text-base ${
-                    msg.role === 'user'
+                  className={`max-w-[88%] rounded-2xl p-4 leading-relaxed font-ai text-[15px] sm:text-base ${msg.role === 'user'
                       ? 'bg-gradient-to-r from-purple-900/60 to-purple-950/70 border border-purple-500/50 text-white font-medium shadow-md'
                       : 'bg-aws-card/95 border border-purple-500/25 text-slate-100 shadow-md'
-                  }`}
+                    }`}
                 >
                   <div className="leading-relaxed select-text font-ai">
                     {msg.role === 'assistant' ? renderFormattedMessage(msg.content) : msg.content}
@@ -316,7 +308,7 @@ export const KairosChatbot: React.FC = () => {
             {isLoading && (
               <div className="flex gap-3 items-center text-slate-300 p-3 font-ai">
                 <div className="w-7 h-7 rounded-lg bg-purple-950/70 border border-purple-500/40 flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-4 h-4 text-purple-400 motion-safe:animate-spin" />
+                  <Bot className="w-4 h-4 text-purple-400 motion-safe:animate-pulse" />
                 </div>
                 <div className="flex items-center gap-2 font-ai text-sm text-purple-300 font-medium">
                   <span>Searching Kairos knowledge base</span>

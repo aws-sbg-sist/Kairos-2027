@@ -39,8 +39,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'KAIROS 2027 — National Flagship 48-Hour Hackathon | AWS Student Builder Group SIST',
-  description: 'Join elite student developers (teams of 3–6) at Sathyabama for KAIROS 2027. 48 hours continuous non-stop hacking on AWS Cloud. Free Round 0 & R1, ₹1,75,000 prize pool + $50,000+ AWS Credits.',
+  title: 'KAIROS 2027 — 48-Hour AWS Cloud Hackathon | Sathyabama IST',
+  description: '48-hour national AWS Cloud hackathon at Sathyabama IST, Chennai. Teams of 3–6, free Round 0/R1, ₹1,75,000 prize pool & $50,000+ AWS credits.',
   keywords: [
     'KAIROS 2027',
     'KAIROS Hackathon',
@@ -57,19 +57,18 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'AWS Student Builder Group — SIST Chapter' }],
   metadataBase: new URL(process.env.RENDER_EXTERNAL_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://kairos.sathyabama.ac.in'),
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: 'KAIROS 2027 | The Defining Moment to Build on AWS Cloud',
-    description: '48 Hours Non-Stop • ₹1,75,000 Total Prize Pool • 100 Elite Teams • Sathyabama Institute of Science and Technology, Chennai.',
-    url: process.env.RENDER_EXTERNAL_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://kairos.sathyabama.ac.in',
-    siteName: 'Kairos 2027 Hackathon',
-    images: [
-      {
-        url: '/assets/kairos-wordmark.png',
-        width: 1200,
-        height: 630,
-        alt: 'Kairos 2027 Grand Edition Banner',
-      },
-    ],
+    title: 'KAIROS 2027 | Architect and Deploy Live on AWS Cloud',
+    description: '48 Hours Non-Stop · ₹1,75,000 Total Prize Pool · 100 Elite Teams · Sathyabama Indoor Stadium, Chennai.',
+    url: '/',
+    siteName: 'KAIROS 2027 Hackathon',
     locale: 'en_IN',
     type: 'website',
   },
@@ -100,7 +99,7 @@ const jsonLd = {
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   location: {
     '@type': 'Place',
-    name: 'Indoor Auditorium, Sathyabama Institute of Science and Technology',
+    name: 'Indoor Stadium, Sathyabama Institute of Science and Technology',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR)',

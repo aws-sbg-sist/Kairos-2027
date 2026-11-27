@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from './ThemeProvider';
-import { Sparkles, Flame } from 'lucide-react';
+import { Zap, Flame } from 'lucide-react';
 import { sound } from '@/lib/audio';
 
 interface ThemeToggleProps {
@@ -38,7 +38,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
         onMouseEnter={() => sound?.playHover()}
         aria-label={`Toggle theme. Current: ${isCyber ? 'Cyber Neon (Primary)' : 'AWS Classic'}`}
         title={`Active: ${isCyber ? 'Cyber Neon (Default Adobe Palette)' : 'AWS Classic'} - Click to switch`}
-        className={`p-1.5 rounded-lg border transition-colors duration-200 ease-onscreen active:scale-[0.97] flex items-center justify-center relative overflow-hidden ${
+        className={`min-w-[44px] min-h-[44px] p-2 rounded-lg border transition-colors duration-200 ease-onscreen active:scale-[0.97] flex items-center justify-center relative overflow-hidden ${
           isCyber
             ? 'bg-purple-950/60 border-purple-500/50 text-purple-400 shadow-md shadow-purple-900/40'
             : 'bg-slate-900 border-purple-500/50 text-purple-400 shadow-md shadow-purple-900/40'
@@ -53,7 +53,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
               exit={{ opacity: 0, scale: 0.75, filter: 'blur(2px)' }}
               transition={{ duration: 0.17, ease: [0.4, 0, 0.2, 1] }}
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Zap className="w-3.5 h-3.5" />
             </motion.div>
           ) : (
             <motion.div
@@ -106,7 +106,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ compact = false, class
             transition={{ duration: 0.15, ease: [0, 0, 0.2, 1] }}
             className="flex items-center gap-1"
           >
-            <Sparkles className={`w-3 h-3 ${isCyber ? 'text-slate-950' : 'text-slate-400 group-hover:text-purple-400'}`} />
+            <Zap className={`w-3 h-3 ${isCyber ? 'text-slate-950' : 'text-slate-400 group-hover:text-purple-400'}`} />
             <span className={isCyber ? 'text-slate-950' : 'text-slate-400 hover:text-white'}>CYBER</span>
           </motion.div>
         </AnimatePresence>

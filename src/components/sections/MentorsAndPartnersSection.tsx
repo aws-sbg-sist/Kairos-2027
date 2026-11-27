@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { EVENT_CONFIG, JURY_AND_MENTORS_SHOWCASE, ECOSYSTEM_LOCKUPS } from '@/lib/config';
-import { ArrowRight, GraduationCap, Cloud, Users, Building2, Sparkles } from 'lucide-react';
+import { ArrowRight, GraduationCap, Cloud, Users, Building2, Award } from 'lucide-react';
 
 export const MentorsAndPartnersSection: React.FC = () => {
   return (
@@ -26,14 +26,14 @@ export const MentorsAndPartnersSection: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3 self-start md:self-auto shrink-0">
             <Link
               href="/schedule#clinics"
-              className="text-xs font-mono font-semibold text-slate-200 hover:text-white inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/15 hover:border-white/30 transition-colors"
+              className="min-h-[44px] text-xs font-mono font-semibold text-slate-200 hover:text-white inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/15 hover:border-white/30 transition-colors"
             >
               <span>Pre-Hack Clinics</span>
               <ArrowRight className="w-3.5 h-3.5 text-purple-400" />
             </Link>
             <Link
               href="/members/leadership"
-              className="text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-950/40 border border-purple-500/30 hover:border-purple-400/50 transition-colors"
+              className="min-h-[44px] text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-950/40 border border-purple-500/30 hover:border-purple-400/50 transition-colors"
             >
               <span>Full Committee</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -98,7 +98,7 @@ export const MentorsAndPartnersSection: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <Award className="w-4 h-4 text-amber-300" />
                   <span className="text-xs font-mono font-semibold text-slate-200 uppercase tracking-wider">
                     External Jury Panel
                   </span>
@@ -120,14 +120,14 @@ export const MentorsAndPartnersSection: React.FC = () => {
             <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
               <Link
                 href="/sponsors"
-                className="text-white hover:text-amber-300 font-semibold inline-flex items-center gap-1.5"
+                className="min-h-[44px] px-1 text-white hover:text-amber-300 font-semibold inline-flex items-center gap-1.5"
               >
                 <span>Join Jury / Sponsor a Track</span>
                 <ArrowRight className="w-3.5 h-3.5 text-amber-300" />
               </Link>
               <a
                 href={`mailto:${EVENT_CONFIG.organizer.contactEmail}`}
-                className="text-slate-400 hover:text-white inline-flex items-center gap-1"
+                className="min-h-[44px] px-1 text-slate-400 hover:text-white inline-flex items-center gap-1"
               >
                 <span>Contact Partnerships Desk</span>
               </a>
@@ -144,7 +144,7 @@ export const MentorsAndPartnersSection: React.FC = () => {
             </div>
             <Link
               href="/sponsors"
-              className="text-xs font-mono text-purple-300 hover:text-white inline-flex items-center gap-1"
+              className="min-h-[44px] px-1 text-xs font-mono text-purple-300 hover:text-white inline-flex items-center gap-1"
             >
               <Users className="w-3.5 h-3.5" />
               <span>Corporate &amp; Community Partners Welcome</span>

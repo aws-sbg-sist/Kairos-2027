@@ -121,7 +121,7 @@ export default async function Image() {
           </div>
 
           <div style={styles.quote}>
-            &ldquo;Where Innovation Meets Its Moment&rdquo;
+            &ldquo;Architect and Deploy Live on AWS Cloud&rdquo;
           </div>
         </div>
 
@@ -129,9 +129,9 @@ export default async function Image() {
         <div style={styles.footer}>
           {[
             'National Merit Selection',
-            '75 Elite Teams',
+            '100 Elite Teams',
             '5 Technical Tracks',
-            'Sathyabama Indoor Auditorium',
+            'Sathyabama Indoor Stadium',
           ].map((tag, i) => (
             <div key={i} style={styles.tag}>
               {tag}

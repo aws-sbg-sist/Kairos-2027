@@ -158,13 +158,13 @@ export const Navbar: React.FC<NavbarProps> = () => {
           <div className="lg:hidden flex items-center gap-2">
             <Link
               href="/register"
-              className="px-3 py-1.5 rounded-lg text-xs font-bold btn-primary-themed text-white shadow-sm whitespace-nowrap"
+              className="min-h-[44px] px-3.5 py-2 inline-flex items-center rounded-lg text-xs font-bold btn-primary-themed text-white shadow-sm whitespace-nowrap"
             >
               Register
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 focus:outline-none"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

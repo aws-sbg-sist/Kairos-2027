@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 href={EVENT_CONFIG.socialHandles.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+                className="min-h-[36px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
               >
                 Instagram <ExternalLink className="w-2.5 h-2.5 text-purple-400" />
               </a>
@@ -90,7 +90,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 href={EVENT_CONFIG.socialHandles.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+                className="min-h-[36px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
               >
                 LinkedIn <ExternalLink className="w-2.5 h-2.5 text-sky-400" />
               </a>
@@ -98,7 +98,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 href={EVENT_CONFIG.socialHandles.meetup}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+                className="min-h-[36px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
               >
                 Meetup <ExternalLink className="w-2.5 h-2.5 text-emerald-400" />
               </a>
@@ -106,7 +106,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 href={EVENT_CONFIG.socialHandles.xUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+                className="min-h-[36px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
               >
                 X <ExternalLink className="w-2.5 h-2.5 text-slate-400" />
               </a>
@@ -205,17 +205,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
               <p className="text-xs text-slate-400 leading-snug">
                 President Thenappan T - Executive Leadership - Faculty Patrons
               </p>
-              <div className="pt-1 flex flex-col gap-2">
+            <div className="pt-1 flex flex-col gap-2">
                 <Link
                   href="/members/leadership"
-                  className="inline-flex items-center gap-1.5 text-xs text-purple-300 hover:text-white px-2.5 py-1.5 rounded bg-purple-950/50 border border-purple-500/30 transition-colors"
+                  className="min-h-[40px] inline-flex items-center gap-1.5 text-xs text-purple-300 hover:text-white px-3 py-2 rounded bg-purple-950/50 border border-purple-500/30 transition-colors"
                 >
                   <Award className="w-3.5 h-3.5" />
                   <span>2026 to 27 Leadership Gallery</span>
                 </Link>
                 <Link
                   href="/members"
-                  className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded bg-white/5 border border-white/10 transition-colors"
+                  className="min-h-[40px] inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white px-3 py-2 rounded bg-white/5 border border-white/10 transition-colors"
                 >
                   <Users className="w-3.5 h-3.5" />
                   <span>106-Member Recognition Wall</span>

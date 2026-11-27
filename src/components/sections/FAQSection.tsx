@@ -32,7 +32,7 @@ export const FAQSection: React.FC = () => {
 
           <Link
             href="/rules"
-            className="text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5"
+            className="min-h-[44px] px-1 text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5"
           >
             <span>Complete Rules &amp; All FAQs</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -91,21 +91,21 @@ export const FAQSection: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={handleOpenAiChat}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 text-slate-200 font-semibold transition-colors"
+              className="min-h-[44px] inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 text-slate-200 font-semibold transition-colors"
             >
               <Bot className="w-3.5 h-3.5 text-purple-400" />
               <span>Ask Kairos AI</span>
             </button>
             <span>or reach us on</span>
-            <a href={EVENT_CONFIG.socialHandles.instagramUrl} target="_blank" rel="noopener noreferrer" className="text-slate-200 hover:text-white underline font-mono">
+            <a href={EVENT_CONFIG.socialHandles.instagramUrl} target="_blank" rel="noopener noreferrer" className="min-h-[44px] inline-flex items-center px-1 text-slate-200 hover:text-white underline font-mono">
               Instagram ({EVENT_CONFIG.socialHandles.instagram})
             </a>
             <span>·</span>
-            <a href={EVENT_CONFIG.socialHandles.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-slate-200 hover:text-white underline font-mono">
+            <a href={EVENT_CONFIG.socialHandles.linkedinUrl} target="_blank" rel="noopener noreferrer" className="min-h-[44px] inline-flex items-center px-1 text-slate-200 hover:text-white underline font-mono">
               LinkedIn
             </a>
             <span>·</span>
-            <a href="mailto:sistawscc@gmail.com" className="text-slate-200 hover:text-white underline font-mono">
+            <a href="mailto:sistawscc@gmail.com" className="min-h-[44px] inline-flex items-center px-1 text-slate-200 hover:text-white underline font-mono">
               sistawscc@gmail.com
             </a>
           </div>

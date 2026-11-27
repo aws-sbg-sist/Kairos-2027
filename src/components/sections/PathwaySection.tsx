@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CheckCircle2, ArrowRight, ShieldCheck, Send, User, Mail, School, BookOpen, Layers, ExternalLink, Sparkles } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ShieldCheck, Send, User, Mail, School, BookOpen, Layers, ExternalLink } from 'lucide-react';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
@@ -103,21 +103,19 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
               className="h-full"
             >
               <div
-                className={`p-5 rounded-2xl relative flex flex-col justify-between space-y-3 transition-colors h-full ${
-                  st.current
+                className={`p-5 rounded-2xl relative flex flex-col justify-between space-y-3 transition-colors h-full ${st.current
                     ? 'bg-purple-950/50 border-2 border-purple-500 shadow-xl shadow-purple-950/60 scale-[1.02]'
                     : 'glass-panel opacity-85 hover:opacity-100 hover:border-purple-500/40'
-                }`}
+                  }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-mono font-bold text-purple-400">STEP {st.number}</span>
                     <span
-                      className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
-                        st.current
+                      className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${st.current
                           ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 shadow-md shadow-emerald-950/30'
                           : 'bg-slate-900 text-slate-400'
-                      }`}
+                        }`}
                     >
                       {st.status}
                     </span>

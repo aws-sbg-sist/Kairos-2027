@@ -56,10 +56,11 @@ async function runPhase10_4_2_Tests() {
   assert(consolidatedSql.includes('BEGIN;') && consolidatedSql.includes('COMMIT;'), 'Atomic transaction wraps entire consolidated bundle');
   assert(!consolidatedSql.includes('20261112000003_rollback_guidance'), 'Rollback guidance 000003 is strictly excluded from bundle');
   assert(consolidatedSql.includes('20261112000001_initial_kairos_schema.sql') &&
-         consolidatedSql.includes('20261112000002_row_level_security_policies.sql') &&
-         consolidatedSql.includes('20261112000004_student_auth.sql') &&
-         consolidatedSql.includes('20261112000005_rbac_schema.sql') &&
-         consolidatedSql.includes('20261112000006_teams_admin_and_notifications.sql'), 'Includes all 5 forward migration scripts in bundle');
+    consolidatedSql.includes('20261112000002_row_level_security_policies.sql') &&
+    consolidatedSql.includes('20261112000004_student_auth.sql') &&
+    consolidatedSql.includes('20261112000005_rbac_schema.sql') &&
+    consolidatedSql.includes('20261112000006_teams_admin_and_notifications.sql') &&
+    consolidatedSql.includes('20261119000007_github_commit_telemetry.sql'), 'Includes all 6 forward migration scripts in bundle');
 
   // --------------------------------------------------------------------------
   // TASK 2: JUDGE CREATION RESPONSE CONTRACT & SECRET ISOLATION

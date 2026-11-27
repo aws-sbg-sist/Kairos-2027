@@ -1,13 +1,13 @@
-export type AdminTab = 
-  | 'analytics' 
-  | 'teams' 
-  | 'abstracts' 
-  | 'submissions' 
-  | 'judges' 
-  | 'checkin' 
-  | 'waitlist' 
-  | 'sponsors' 
-  | 'flags' 
+export type AdminTab =
+  | 'analytics'
+  | 'teams'
+  | 'abstracts'
+  | 'submissions'
+  | 'judges'
+  | 'checkin'
+  | 'waitlist'
+  | 'sponsors'
+  | 'flags'
   | 'audit';
 
 export interface AdminLead {
@@ -19,7 +19,6 @@ export interface AdminLead {
   pipelineDescription: string;
   allowedTabs: AdminTab[];
   envVarName: string;
-  defaultPasskey: string;
   badgeColor: string;
 }
 
@@ -33,7 +32,6 @@ export const ADMIN_LEADS: AdminLead[] = [
     pipelineDescription: 'Complete administrative oversight across all tournament pipelines, evaluations, and infrastructure.',
     allowedTabs: ['analytics', 'teams', 'abstracts', 'submissions', 'judges', 'checkin', 'waitlist', 'sponsors', 'flags', 'audit'],
     envVarName: 'LEAD_PASSKEY_THENAPPAN',
-    defaultPasskey: 'KAIROS@THENAPPAN#APEX2027',
     badgeColor: 'border-amber-500/40 text-amber-300 bg-amber-950/40'
   },
   {
@@ -45,7 +43,6 @@ export const ADMIN_LEADS: AdminLead[] = [
     pipelineDescription: 'Enterprise partner intake, tier commitments, sponsorship deliverables, and corporate communication.',
     allowedTabs: ['sponsors', 'analytics', 'waitlist', 'audit'],
     envVarName: 'LEAD_PASSKEY_NIKKI',
-    defaultPasskey: 'KAIROS@NIKKI#PARTNERS2027',
     badgeColor: 'border-emerald-500/40 text-emerald-300 bg-emerald-950/40'
   },
   {
@@ -57,7 +54,6 @@ export const ADMIN_LEADS: AdminLead[] = [
     pipelineDescription: 'Round 0 problem abstracts, Round 1 code repositories, Loom screencasts, and AWS credit vouchers.',
     allowedTabs: ['teams', 'abstracts', 'submissions', 'analytics', 'flags', 'audit'],
     envVarName: 'LEAD_PASSKEY_SHANMUGA',
-    defaultPasskey: 'KAIROS@SHANMUGA#TECH2027',
     badgeColor: 'border-purple-500/40 text-purple-300 bg-purple-950/40'
   },
   {
@@ -69,7 +65,6 @@ export const ADMIN_LEADS: AdminLead[] = [
     pipelineDescription: 'Physical desk bay allocation across 100 bays, live QR/barcode check-in scanner, and venue transit.',
     allowedTabs: ['checkin', 'teams', 'analytics', 'audit'],
     envVarName: 'LEAD_PASSKEY_VISWA',
-    defaultPasskey: 'KAIROS@VISWA#ARENA2027',
     badgeColor: 'border-sky-500/40 text-sky-300 bg-sky-950/40'
   },
   {
@@ -81,7 +76,6 @@ export const ADMIN_LEADS: AdminLead[] = [
     pipelineDescription: 'Team roster verification, builder kit sizing, dietary requirements, and post-hackathon feedback.',
     allowedTabs: ['teams', 'waitlist', 'analytics', 'audit'],
     envVarName: 'LEAD_PASSKEY_HEMA',
-    defaultPasskey: 'KAIROS@HEMA#EXPERIENCE2027',
     badgeColor: 'border-pink-500/40 text-pink-300 bg-pink-950/40'
   },
   {
@@ -93,7 +87,6 @@ export const ADMIN_LEADS: AdminLead[] = [
     pipelineDescription: 'Live stage screen announcements, broadcast alerts, leaderboard displays, and social media coverage.',
     allowedTabs: ['flags', 'analytics', 'teams', 'audit'],
     envVarName: 'LEAD_PASSKEY_MEDIA',
-    defaultPasskey: 'KAIROS@MEDIA#BROADCAST2027',
     badgeColor: 'border-indigo-500/40 text-indigo-300 bg-indigo-950/40'
   },
   {
@@ -105,7 +98,6 @@ export const ADMIN_LEADS: AdminLead[] = [
     pipelineDescription: 'Official institutional review, compliance logging, department reporting, and university administrative filings.',
     allowedTabs: ['analytics', 'teams', 'judges', 'sponsors', 'audit'],
     envVarName: 'LEAD_PASSKEY_FACULTY',
-    defaultPasskey: 'KAIROS@FACULTY#ADVISORY2027',
     badgeColor: 'border-cyan-500/40 text-cyan-300 bg-cyan-950/40'
   }
 ];

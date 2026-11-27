@@ -13,7 +13,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const item = PROBLEM_STATEMENTS.find((statement) => statement.id.toLowerCase() === id.toLowerCase());
-  return { title: item ? `${item.id}: ${item.title} | KAIROS 2027` : 'Problem Statement | KAIROS 2027', description: item?.challenge };
+  return {
+    title: item ? `${item.id}: ${item.title} | KAIROS 2027` : 'Problem Statement | KAIROS 2027',
+    description: item?.challenge,
+    alternates: { canonical: `/tracks/${id.toLowerCase()}` },
+  };
 }
 
 export default async function ProblemStatementPage({ params }: { params: Promise<{ id: string }> }) {

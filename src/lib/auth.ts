@@ -13,10 +13,23 @@ function getMasterSecret(): string {
   return secret;
 }
 
-export function getLeadPasskey(lead: AdminLead): string {
+const DEV_FALLBACK_LEAD_PASSKEYS: Record<string, string> = {
+  'org-thenappan': 'KAIROS@THENAPPAN#APEX2027',
+  'org-nikki': 'KAIROS@NIKKI#PARTNERS2027',
+  'org-shanmuga': 'KAIROS@SHANMUGA#TECH2027',
+  'org-viswa': 'KAIROS@VISWA#ARENA2027',
+  'org-hemavarshine': 'KAIROS@HEMA#EXPERIENCE2027',
+  'org-rikish': 'KAIROS@MEDIA#BROADCAST2027',
+  'org-faculty': 'KAIROS@FACULTY#ADVISORY2027',
+};
+
+export function getLeadPasskey(lead: AdminLead): string | null {
   const envVal = process.env[lead.envVarName]?.trim();
   if (envVal) return envVal;
-  return lead.defaultPasskey;
+  if (process.env.NODE_ENV === 'production') {
+    return null;
+  }
+  return DEV_FALLBACK_LEAD_PASSKEYS[lead.id] || null;
 }
 
 export function verifyLeadAuthentication(
@@ -54,6 +67,9 @@ export function verifyLeadAuthentication(
   }
 
   const expectedPasskey = getLeadPasskey(lead);
+  if (!expectedPasskey) {
+    return { success: false };
+  }
   const bufEntered = Buffer.from(cleanPass, 'utf8');
   const bufExpected = Buffer.from(expectedPasskey, 'utf8');
 

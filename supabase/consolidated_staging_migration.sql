@@ -1,16 +1,17 @@
 /*
 ================================================================================
    KAIROS 2027 — CONSOLIDATED STAGING POSTGRESQL MIGRATION BUNDLE
-   Generated on: 2026-11-13T18:30:19.363Z
+   Generated on: 2026-11-27T08:27:54.997Z
    Target: Supabase PostgreSQL (Staging / Production)
    Execution Mode: Single Atomic Transaction (BEGIN ... COMMIT)
 ================================================================================
    Execution order:
-     1. 20261112000001_initial_kairos_schema.sql (SHA-256: 1cff193a2290e1357a9e5b4e42645ef804d12139a1421fee5d42f54a61c61928)
-     2. 20261112000002_row_level_security_policies.sql (SHA-256: 740a9c0707da89373145f8a9ddac7328f040f300142e749fcf4477f4e57f9473)
-     3. 20261112000004_student_auth.sql (SHA-256: 91b5a3f32c8fe37b1a1eaac1709de0f259aa44f5cbbbfd79793e3d412cd2a226)
-     4. 20261112000005_rbac_schema.sql (SHA-256: 6afadb717be428ecb322df96b059d7de6e218849311e19d12f22624a87d4c5e6)
-     5. 20261112000006_teams_admin_and_notifications.sql (SHA-256: f2372761d5b9b9633698a89afe3b6a1e87a5864a7d7548992c3a824080540e53)
+     1. 20261112000001_initial_kairos_schema.sql (SHA-256: 54b15fac782326fdcfd8f00c20529076a7e9a669e959fbace57ff91c2d59372a)
+     2. 20261112000002_row_level_security_policies.sql (SHA-256: 48833b27fe44f8fd86f27560e8cf56848fc10fb724175f3af3012d5d12cd2c56)
+     3. 20261112000004_student_auth.sql (SHA-256: 8e001c101d212a20fde82c33f30b5b1018bd950d38b0da5f12db70eca5f87f83)
+     4. 20261112000005_rbac_schema.sql (SHA-256: 0d7707fadcad0e9fdfe3e38f12aa08979374cffb8d0faecba9aad5a4731cc7d9)
+     5. 20261112000006_teams_admin_and_notifications.sql (SHA-256: 80f86cf4c3e7ab8c6712d0f3bb46cab57f2b1f308f620ebc81cfa87fc640d009)
+     6. 20261119000007_github_commit_telemetry.sql (SHA-256: 6af0f63aa3f87c5ba04963f38dde033a5885fdacb8457e045c299615b4a17428)
 ================================================================================
 */
 
@@ -52,7 +53,8 @@ BEGIN
     '20261112000002_row_level_security_policies.sql',
     '20261112000004_student_auth.sql',
     '20261112000005_rbac_schema.sql',
-    '20261112000006_teams_admin_and_notifications.sql'
+    '20261112000006_teams_admin_and_notifications.sql',
+    '20261119000007_github_commit_telemetry.sql'
   );
 
   IF v_applied_count > 0 THEN
@@ -62,11 +64,12 @@ BEGIN
   -- 2. Verify checksum of any other existing records in _schema_migrations to prevent tampering
   FOR v_rec IN SELECT version, checksum FROM public._schema_migrations LOOP
     v_expected_checksum := CASE v_rec.version
-      WHEN '20261112000001_initial_kairos_schema.sql' THEN '1cff193a2290e1357a9e5b4e42645ef804d12139a1421fee5d42f54a61c61928'
-      WHEN '20261112000002_row_level_security_policies.sql' THEN '740a9c0707da89373145f8a9ddac7328f040f300142e749fcf4477f4e57f9473'
-      WHEN '20261112000004_student_auth.sql' THEN '91b5a3f32c8fe37b1a1eaac1709de0f259aa44f5cbbbfd79793e3d412cd2a226'
-      WHEN '20261112000005_rbac_schema.sql' THEN '6afadb717be428ecb322df96b059d7de6e218849311e19d12f22624a87d4c5e6'
-      WHEN '20261112000006_teams_admin_and_notifications.sql' THEN 'f2372761d5b9b9633698a89afe3b6a1e87a5864a7d7548992c3a824080540e53'
+      WHEN '20261112000001_initial_kairos_schema.sql' THEN '54b15fac782326fdcfd8f00c20529076a7e9a669e959fbace57ff91c2d59372a'
+      WHEN '20261112000002_row_level_security_policies.sql' THEN '48833b27fe44f8fd86f27560e8cf56848fc10fb724175f3af3012d5d12cd2c56'
+      WHEN '20261112000004_student_auth.sql' THEN '8e001c101d212a20fde82c33f30b5b1018bd950d38b0da5f12db70eca5f87f83'
+      WHEN '20261112000005_rbac_schema.sql' THEN '0d7707fadcad0e9fdfe3e38f12aa08979374cffb8d0faecba9aad5a4731cc7d9'
+      WHEN '20261112000006_teams_admin_and_notifications.sql' THEN '80f86cf4c3e7ab8c6712d0f3bb46cab57f2b1f308f620ebc81cfa87fc640d009'
+      WHEN '20261119000007_github_commit_telemetry.sql' THEN '6af0f63aa3f87c5ba04963f38dde033a5885fdacb8457e045c299615b4a17428'
       ELSE NULL
     END;
 
@@ -457,7 +460,7 @@ CREATE TRIGGER set_feature_flags_updated_at BEFORE UPDATE ON public.feature_flag
 
 -- Record migration in tracking table (Idempotent: prevents duplicate records)
 INSERT INTO public._schema_migrations (version, checksum)
-VALUES ('20261112000001_initial_kairos_schema.sql', '1cff193a2290e1357a9e5b4e42645ef804d12139a1421fee5d42f54a61c61928')
+VALUES ('20261112000001_initial_kairos_schema.sql', '54b15fac782326fdcfd8f00c20529076a7e9a669e959fbace57ff91c2d59372a')
 ON CONFLICT (version) DO NOTHING;
 
 -- ============================================================================
@@ -622,7 +625,7 @@ CREATE POLICY "org_members_public_read" ON public.org_members FOR SELECT TO anon
 
 -- Record migration in tracking table (Idempotent: prevents duplicate records)
 INSERT INTO public._schema_migrations (version, checksum)
-VALUES ('20261112000002_row_level_security_policies.sql', '740a9c0707da89373145f8a9ddac7328f040f300142e749fcf4477f4e57f9473')
+VALUES ('20261112000002_row_level_security_policies.sql', '48833b27fe44f8fd86f27560e8cf56848fc10fb724175f3af3012d5d12cd2c56')
 ON CONFLICT (version) DO NOTHING;
 
 -- ============================================================================
@@ -672,7 +675,7 @@ GRANT SELECT ON public.public_profiles TO anon, authenticated;
 
 -- Record migration in tracking table (Idempotent: prevents duplicate records)
 INSERT INTO public._schema_migrations (version, checksum)
-VALUES ('20261112000004_student_auth.sql', '91b5a3f32c8fe37b1a1eaac1709de0f259aa44f5cbbbfd79793e3d412cd2a226')
+VALUES ('20261112000004_student_auth.sql', '8e001c101d212a20fde82c33f30b5b1018bd950d38b0da5f12db70eca5f87f83')
 ON CONFLICT (version) DO NOTHING;
 
 -- ============================================================================
@@ -766,7 +769,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Record migration in tracking table (Idempotent: prevents duplicate records)
 INSERT INTO public._schema_migrations (version, checksum)
-VALUES ('20261112000005_rbac_schema.sql', '6afadb717be428ecb322df96b059d7de6e218849311e19d12f22624a87d4c5e6')
+VALUES ('20261112000005_rbac_schema.sql', '0d7707fadcad0e9fdfe3e38f12aa08979374cffb8d0faecba9aad5a4731cc7d9')
 ON CONFLICT (version) DO NOTHING;
 
 -- ============================================================================
@@ -837,7 +840,57 @@ CREATE POLICY "role_permissions_public_read" ON public.role_permissions
 
 -- Record migration in tracking table (Idempotent: prevents duplicate records)
 INSERT INTO public._schema_migrations (version, checksum)
-VALUES ('20261112000006_teams_admin_and_notifications.sql', 'f2372761d5b9b9633698a89afe3b6a1e87a5864a7d7548992c3a824080540e53')
+VALUES ('20261112000006_teams_admin_and_notifications.sql', '80f86cf4c3e7ab8c6712d0f3bb46cab57f2b1f308f620ebc81cfa87fc640d009')
+ON CONFLICT (version) DO NOTHING;
+
+-- ============================================================================
+-- MIGRATION: 20261119000007_github_commit_telemetry.sql
+-- ============================================================================
+-- KAIROS 2027 — signed GitHub push telemetry
+
+CREATE TABLE IF NOT EXISTS public.github_commit_events (
+    id TEXT PRIMARY KEY,
+    delivery_id TEXT NOT NULL,
+    team_id TEXT NOT NULL REFERENCES public.teams(id) ON DELETE CASCADE,
+    team_code TEXT NOT NULL,
+    repository TEXT NOT NULL,
+    branch TEXT NOT NULL,
+    sha TEXT NOT NULL,
+    short_sha TEXT NOT NULL,
+    message TEXT NOT NULL,
+    author_name TEXT NOT NULL,
+    committed_at TIMESTAMPTZ NOT NULL,
+    received_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    after_freeze BOOLEAN NOT NULL DEFAULT FALSE,
+    url TEXT,
+    CONSTRAINT github_commit_events_delivery_sha_unique UNIQUE (delivery_id, sha)
+);
+
+CREATE INDEX IF NOT EXISTS idx_github_commit_events_team
+    ON public.github_commit_events (team_id, committed_at DESC);
+CREATE INDEX IF NOT EXISTS idx_github_commit_events_committed_at
+    ON public.github_commit_events (committed_at DESC);
+CREATE INDEX IF NOT EXISTS idx_github_commit_events_after_freeze
+    ON public.github_commit_events (after_freeze)
+    WHERE after_freeze = TRUE;
+
+ALTER TABLE public.github_commit_events ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "service_role_all_github_commit_events" ON public.github_commit_events;
+CREATE POLICY "service_role_all_github_commit_events"
+    ON public.github_commit_events
+    FOR ALL
+    TO service_role
+    USING (TRUE)
+    WITH CHECK (TRUE);
+
+COMMENT ON TABLE public.github_commit_events IS
+    'Sanitized, HMAC-verified GitHub push metadata for KAIROS finalist repositories.';
+
+
+-- Record migration in tracking table (Idempotent: prevents duplicate records)
+INSERT INTO public._schema_migrations (version, checksum)
+VALUES ('20261119000007_github_commit_telemetry.sql', '6af0f63aa3f87c5ba04963f38dde033a5885fdacb8457e045c299615b4a17428')
 ON CONFLICT (version) DO NOTHING;
 
 COMMIT;

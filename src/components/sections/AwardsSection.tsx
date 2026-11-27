@@ -30,7 +30,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = () => {
 
           <Link
             href="/register"
-            className="text-xs font-mono font-semibold text-white hover:text-amber-200 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/15 hover:border-amber-400/40 transition-colors self-start md:self-auto shrink-0"
+            className="min-h-[44px] text-xs font-mono font-semibold text-white hover:text-amber-200 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/15 hover:border-amber-400/40 transition-colors self-start md:self-auto shrink-0"
           >
             <span>Compete for Podium</span>
             <ArrowRight className="w-3.5 h-3.5" />

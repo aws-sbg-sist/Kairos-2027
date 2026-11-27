@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EVENT_SCHEDULE, PRE_HACK_CLINICS } from '@/lib/config';
-import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight, Sparkles, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';

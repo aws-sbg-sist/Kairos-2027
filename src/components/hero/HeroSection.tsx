@@ -201,7 +201,7 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
                 </MagneticButton>
               </div>
               <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-1 text-xs font-mono text-slate-400">
-                <Link href="/radar" className="hover:text-white underline decoration-white/20 underline-offset-4 transition-colors">
+                <Link href="/radar" className="inline-flex items-center min-h-[44px] px-1 hover:text-white underline decoration-white/20 underline-offset-4 transition-colors">
                   Solo or 2 builders? Find teammates on Builder Radar →
                 </Link>
               </div>

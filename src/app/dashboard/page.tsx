@@ -24,7 +24,6 @@ import {
   AlertCircle,
   PlusCircle,
   Bell,
-  Sparkles,
   Github,
   LogOut,
   Radio,

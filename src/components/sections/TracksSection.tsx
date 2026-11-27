@@ -81,14 +81,14 @@ export const TracksSection: React.FC<TracksSectionProps> = () => {
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <Link
               href="/tracks"
-              className="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 flex items-center gap-2"
+              className="min-h-[44px] px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 flex items-center gap-2"
             >
               <span>Browse All 15 Challenges</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/radar"
-              className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 flex items-center gap-1.5 transition-colors"
+              className="min-h-[44px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 flex items-center gap-1.5 transition-colors"
             >
               <Radio className="w-3.5 h-3.5 text-purple-400" />
               <span>Need Teammates?</span>

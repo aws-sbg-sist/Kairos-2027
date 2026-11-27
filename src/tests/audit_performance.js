@@ -23,7 +23,7 @@ function percentile(arr, p) {
 async function measureRequest(path, options = {}) {
   const url = new URL(path, BASE_URL);
   const start = process.hrtime.bigint();
-  
+
   return new Promise((resolve, reject) => {
     const req = http.request(url, {
       method: options.method || 'GET',
@@ -77,12 +77,13 @@ async function runBenchmark() {
   const pages = [
     { name: 'Homepage (/)', path: '/' },
     { name: 'Tracks (/tracks)', path: '/tracks' },
+    { name: 'Problem PS01 (/tracks/ps01)', path: '/tracks/ps01' },
     { name: 'Schedule (/schedule)', path: '/schedule' },
-    { name: 'Prizes (/prizes)', path: '/prizes' },
-    { name: 'FAQ (/faq)', path: '/faq' },
-    { name: 'About (/about)', path: '/about' },
-    { name: 'Sponsors (/sponsor)', path: '/sponsor' },
-    { name: 'Waitlist (/waitlist)', path: '/waitlist' },
+    { name: 'Rules & FAQ (/rules)', path: '/rules' },
+    { name: 'Online Qualifier (/online-qualifier)', path: '/online-qualifier' },
+    { name: 'On-Campus Guide (/on-campus)', path: '/on-campus' },
+    { name: 'Sponsors (/sponsors)', path: '/sponsors' },
+    { name: 'Builder Radar (/radar)', path: '/radar' },
     { name: 'Leaderboard (/leaderboard)', path: '/leaderboard' },
     { name: 'Auth Login (/login)', path: '/login' },
     { name: 'Auth Register (/register)', path: '/register' },

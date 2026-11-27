@@ -42,7 +42,7 @@ export const MobileFloatingBar: React.FC = () => {
             sound?.playClick();
             haptics?.light();
           }}
-          className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-purple-300 border border-white/10 transition active:scale-95 text-[11px] font-mono shrink-0"
+          className="min-h-[44px] flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-purple-300 border border-white/10 transition active:scale-95 text-[11px] font-mono shrink-0"
         >
           <Layers className="w-3.5 h-3.5 text-purple-400" />
           <span>5 Tracks</span>
@@ -55,7 +55,7 @@ export const MobileFloatingBar: React.FC = () => {
             sound?.playClick();
             haptics?.heavy();
           }}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gradient-to-r from-aws-orange to-purple-600 text-white font-bold text-xs shadow-md shadow-purple-900/40 active:scale-[0.98] transition"
+          className="min-h-[44px] flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gradient-to-r from-aws-orange to-purple-600 text-white font-bold text-xs shadow-md shadow-purple-900/40 active:scale-[0.98] transition"
         >
           <span>Register Squad</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -68,7 +68,7 @@ export const MobileFloatingBar: React.FC = () => {
             setDismissed(true);
           }}
           aria-label="Dismiss quick action dock"
-          className="w-8 h-8 rounded-xl bg-white/5 text-slate-400 hover:text-white flex items-center justify-center border border-white/5 active:scale-90 transition shrink-0"
+          className="w-11 h-11 rounded-xl bg-white/5 text-slate-400 hover:text-white flex items-center justify-center border border-white/5 active:scale-90 transition shrink-0"
         >
           <X className="w-3.5 h-3.5" />
         </button>

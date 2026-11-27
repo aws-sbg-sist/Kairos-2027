@@ -99,7 +99,7 @@ async function runTests() {
   const { runMigrationPreflight } = require(path.join(ROOT_DIR, 'scripts', 'run_migrations.js'));
   const preflight = runMigrationPreflight();
 
-  assert(preflight.forwardMigrations.length === 5, 'Exactly 5 forward migrations discovered');
+  assert(preflight.forwardMigrations.length === 6, 'Exactly 6 forward migrations discovered');
   assert(preflight.excludedFiles.length === 1, 'Exactly 1 destructive/guidance file excluded');
   assert(preflight.excludedFiles[0].file === '20261112000003_rollback_guidance.sql', 'Rollback guidance 000003 is strictly excluded');
 

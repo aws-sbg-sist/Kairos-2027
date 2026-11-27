@@ -37,7 +37,7 @@ export const MissionSection: React.FC = () => {
           <div className="inline-flex p-1 rounded-xl bg-[#0d0d13] border border-white/10 text-xs font-mono self-start md:self-auto shrink-0">
             <button
               onClick={() => setActiveVisual('arena')}
-              className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition-colors ${
+              className={`min-h-[44px] inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition-colors ${
                 activeVisual === 'arena'
                   ? 'bg-white text-slate-950 font-bold'
                   : 'text-slate-300 hover:text-white'
@@ -48,7 +48,7 @@ export const MissionSection: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveVisual('brochure')}
-              className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition-colors ${
+              className={`min-h-[44px] inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition-colors ${
                 activeVisual === 'brochure'
                   ? 'bg-white text-slate-950 font-bold'
                   : 'text-slate-300 hover:text-white'
@@ -77,7 +77,6 @@ export const MissionSection: React.FC = () => {
                   fill
                   sizes="(max-width: 1024px) 100vw, 60vw"
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
-                  priority
                 />
               </div>
 
@@ -93,11 +92,10 @@ export const MissionSection: React.FC = () => {
                   fill
                   sizes="(max-width: 1024px) 100vw, 60vw"
                   className="object-contain bg-black p-1"
-                  priority
                 />
                 <button
                   onClick={() => setBrochureZoomed(true)}
-                  className="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-black/85 hover:bg-white text-white hover:text-slate-950 border border-white/25 text-xs font-mono font-semibold inline-flex items-center gap-1.5 transition-colors z-20"
+                  className="min-h-[44px] absolute bottom-3 right-3 px-3.5 py-2 rounded-lg bg-black/85 hover:bg-white text-white hover:text-slate-950 border border-white/25 text-xs font-mono font-semibold inline-flex items-center gap-1.5 transition-colors z-20"
                   aria-label="Inspect full resolution brochure"
                 >
                   <Maximize2 className="w-3.5 h-3.5" />
@@ -126,7 +124,7 @@ export const MissionSection: React.FC = () => {
               <a
                 href="/assets/downloads/KAIROS_2027_Official_Brochure.pdf"
                 download="KAIROS_2027_Official_Brochure.pdf"
-                className="px-3.5 py-2 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-slate-950 border border-white/15 inline-flex items-center gap-1.5 font-semibold transition-colors"
+                className="min-h-[44px] px-3.5 py-2 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-slate-950 border border-white/15 inline-flex items-center gap-1.5 font-semibold transition-colors"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Brochure &amp; OD Guide (PDF)</span>
@@ -134,7 +132,7 @@ export const MissionSection: React.FC = () => {
               <a
                 href="/assets/downloads/KAIROS_2027_Round0_Pitch_Template.pptx"
                 download="KAIROS_2027_Round0_Pitch_Template.pptx"
-                className="px-3.5 py-2 rounded-xl bg-purple-950/50 hover:bg-purple-900/70 text-purple-200 hover:text-white border border-purple-500/30 inline-flex items-center gap-1.5 font-semibold transition-colors"
+                className="min-h-[44px] px-3.5 py-2 rounded-xl bg-purple-950/50 hover:bg-purple-900/70 text-purple-200 hover:text-white border border-purple-500/30 inline-flex items-center gap-1.5 font-semibold transition-colors"
               >
                 <Download className="w-3.5 h-3.5 text-purple-300" />
                 <span>Round 0 PPT Template (.pptx)</span>
@@ -144,14 +142,14 @@ export const MissionSection: React.FC = () => {
             <div className="flex flex-wrap items-center justify-between gap-4 pt-1 text-xs font-mono">
               <Link
                 href="/on-campus"
-                className="text-slate-200 hover:text-white inline-flex items-center gap-1.5 font-semibold"
+                className="min-h-[44px] px-1 text-slate-200 hover:text-white inline-flex items-center gap-1.5 font-semibold"
               >
                 <span>Venue Map, Bus Fleet &amp; OD Checklist</span>
                 <ArrowRight className="w-3.5 h-3.5 text-purple-400" />
               </Link>
               <Link
                 href="/rules"
-                className="text-slate-400 hover:text-white inline-flex items-center gap-1.5"
+                className="min-h-[44px] px-1 text-slate-400 hover:text-white inline-flex items-center gap-1.5"
               >
                 <span>Rules &amp; Governance</span>
                 <ArrowRight className="w-3.5 h-3.5" />

@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Builder Portal & Roster Gateway | KAIROS 2027',
   description: 'Participant portal for KAIROS 2027. Manage your squad roster, verify teammates, view submission status, and access live telemetry.',
+  alternates: { canonical: '/portal' },
+  robots: { index: false, follow: false },
 };
 
 export default function PortalLayout({ children }: { children: React.ReactNode }) {

@@ -31,11 +31,11 @@ export const KAIROS_KNOWLEDGE_BASE: KnowledgeChunk[] = [
     keywords: ['kairos', 'overview', 'about', 'what is', 'sist', 'aws', 'sbgl', 'hackathon', 'mission', 'vision', 'scale', 'edition', 'venue', 'auditorium'],
     content: `KAIROS 2027 (Grand Edition) is India's premier national flagship 48-hour continuous technical hackathon organized by the AWS Student Builder Group (AWS SBG) — SIST Chapter, hosted at Sathyabama Institute of Science and Technology, Chennai.
 Tagline: "National 48-Hour Cloud Hackathon on AWS."
-Scale: 100 elite national finalist teams (400–600 builders), selected from 2,000+ national applications across two competitive technical tiers.
-Cost: Registration and fee updates will be communicated directly to your squad once registered.
+Scale: 100 elite national finalist teams (300–600 builders), selected from 2,000+ national applications across two competitive technical tiers.
+Cost: Registration is 100% free (₹0) for Round 0 abstract screening and Round 1 Online Technical Qualifier; only shortlisted Round 2 teams pay a nominal on-campus confirmation fee.
 Prize Pool: ₹1,75,000 Total Cash Prize Pool + $50,000+ in AWS Cloud Promotional Credits. (The individual prize split-ups are kept as a top secret and mystery to be revealed during the grand finale).
 Dates: January 22–24, 2027 (48 hours non-stop hacking).
-Venue: Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai, Tamil Nadu, India.`
+Venue: Indoor Stadium (Indoor Auditorium), Sathyabama Institute of Science and Technology, Chennai, Tamil Nadu, India.`
   },
   {
     id: 'dates-and-deadlines',

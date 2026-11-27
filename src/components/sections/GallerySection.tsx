@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Camera, LayoutGrid, SlidersHorizontal, Maximize2, Sparkles, MapPin, Eye, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import { Camera, LayoutGrid, SlidersHorizontal, Maximize2, MapPin, Eye, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
@@ -152,11 +152,10 @@ export const GallerySection: React.FC = () => {
                         sound?.playClick();
                         setSelectedCategory(cat);
                       }}
-                      className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-colors ${
-                        isActive
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-colors ${isActive
                           ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold shadow-md shadow-purple-900/30 scale-105'
                           : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/10'
-                      }`}
+                        }`}
                     >
                       {cat}
                     </button>
@@ -171,11 +170,10 @@ export const GallerySection: React.FC = () => {
                     sound?.playClick();
                     setViewMode('masonry');
                   }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
-                    viewMode === 'masonry'
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${viewMode === 'masonry'
                       ? 'bg-purple-950 text-purple-200 border border-purple-500/40 font-bold'
                       : 'text-slate-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <LayoutGrid className="w-3.5 h-3.5" />
                   <span>Masonry Grid</span>
@@ -186,11 +184,10 @@ export const GallerySection: React.FC = () => {
                     sound?.playClick();
                     setViewMode('carousel');
                   }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
-                    viewMode === 'carousel'
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${viewMode === 'carousel'
                       ? 'bg-purple-950 text-purple-200 border border-purple-500/40 font-bold'
                       : 'text-slate-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <SlidersHorizontal className="w-3.5 h-3.5" />
                   <span>Horizontal Strip</span>
@@ -319,11 +316,10 @@ export const GallerySection: React.FC = () => {
                           setCarouselIndex(idx);
                         }
                       }}
-                      className={`w-[82vw] max-w-[340px] sm:w-[370px] p-5 rounded-2xl transition-colors duration-300 flex flex-col justify-between shrink-0 cursor-pointer ${
-                        isActive
+                      className={`w-[82vw] max-w-[340px] sm:w-[370px] p-5 rounded-2xl transition-colors duration-300 flex flex-col justify-between shrink-0 cursor-pointer ${isActive
                           ? 'bg-aws-card/95 border-2 border-purple-500 shadow-2xl shadow-purple-900/40'
                           : 'bg-aws-card/70 border border-slate-700/60 hover:border-purple-500/40 hover:bg-slate-900/90'
-                      }`}
+                        }`}
                     >
                       <div className="space-y-4">
                         <div className="relative w-full h-52 rounded-xl bg-slate-950/80 overflow-hidden flex items-center justify-center border border-white/5">
@@ -379,11 +375,10 @@ export const GallerySection: React.FC = () => {
                     sound?.playClick();
                     setCarouselIndex(idx);
                   }}
-                  className={`h-2 rounded-full transition-all cursor-pointer ${
-                    idx === carouselIndex
+                  className={`h-2 rounded-full transition-all cursor-pointer ${idx === carouselIndex
                       ? 'w-8 bg-gradient-to-r from-purple-500 to-aws-orange shadow-md shadow-purple-900/50'
                       : 'w-2 bg-slate-800 hover:bg-slate-700'
-                  }`}
+                    }`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}

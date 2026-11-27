@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 import { JUDGING_CRITERIA } from '@/lib/config';
-import { Scale, CheckSquare, Eye, Lock, Play, RotateCcw, Cpu, Sparkles, ShieldCheck } from 'lucide-react';
+import { Scale, CheckSquare, Eye, Lock, Play, RotateCcw, Cpu, ShieldCheck } from 'lucide-react';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 import { sound } from '@/lib/audio';
@@ -120,9 +120,9 @@ export const JudgingSection: React.FC = () => {
                         animate={
                           isScanning
                             ? {
-                                scale: [1, 1.08, 1],
-                                borderColor: ['rgba(168, 85, 247, 0.4)', 'rgba(249, 115, 22, 0.8)', 'rgba(168, 85, 247, 0.4)'],
-                              }
+                              scale: [1, 1.08, 1],
+                              borderColor: ['rgba(168, 85, 247, 0.4)', 'rgba(249, 115, 22, 0.8)', 'rgba(168, 85, 247, 0.4)'],
+                            }
                             : {}
                         }
                         transition={{ duration: 1.2, repeat: isScanning ? 1 : 0 }}
@@ -160,11 +160,10 @@ export const JudgingSection: React.FC = () => {
                           delay: idx * 0.15,
                           ease: [0.22, 1, 0.36, 1],
                         }}
-                        className={`h-full rounded-full ${
-                          isScanning
+                        className={`h-full rounded-full ${isScanning
                             ? 'bg-gradient-to-r from-purple-500 via-aws-orange to-amber-400'
                             : 'bg-gradient-to-r from-purple-500/30 via-aws-orange/80 to-purple-500/30'
-                        }`}
+                          }`}
                       />
                     </div>
                     <div className="flex items-center justify-between text-xs font-mono text-slate-300">
