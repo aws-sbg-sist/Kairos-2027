@@ -40,10 +40,6 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-4 py-12 bg-kairos-darkest relative overflow-hidden">
-      
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-purple-950/20 blur-[130px] rounded-full pointer-events-none" />
-
       {/* Return home link */}
       <div className="absolute top-6 left-6 z-20">
         <Link
@@ -120,7 +116,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs tracking-wide shadow-lg shadow-purple-600/20 disabled:opacity-50 transition-all flex items-center justify-center gap-2 mt-2"
+                className="w-full py-3 px-4 rounded-xl btn-primary-themed hover:opacity-90 text-white font-semibold text-xs tracking-wide shadow-lg shadow-purple-600/20 disabled:opacity-50 transition-opacity flex items-center justify-center gap-2 mt-2"
               >
                 {loading ? (
                   <>

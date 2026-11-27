@@ -122,11 +122,6 @@ export default function CSATPage() {
 
   return (
     <div className="min-h-screen bg-aws-canvas text-slate-100 pt-28 pb-24">
-      {/* Background Glow */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
-      </div>
-
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Breadcrumb */}
@@ -280,7 +275,7 @@ export default function CSATPage() {
               {/* 3. Cloud Services Multi-Select */}
               <div className="pt-6 border-t border-slate-800">
                 <label className="block text-xs font-mono  text-slate-300 font-bold mb-3">
-                  3. Which AWS Cloud Services Did Your Team Leverage?
+                  3. Which AWS Cloud Services Did Your Team Use?
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {availableServices.map((service) => {

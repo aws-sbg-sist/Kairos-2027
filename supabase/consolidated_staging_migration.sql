@@ -1,7 +1,7 @@
 /*
 ================================================================================
    KAIROS 2027 — CONSOLIDATED STAGING POSTGRESQL MIGRATION BUNDLE
-   Generated on: 2026-11-27T08:27:54.997Z
+   Generated on: 2026-11-27T08:54:38.454Z
    Target: Supabase PostgreSQL (Staging / Production)
    Execution Mode: Single Atomic Transaction (BEGIN ... COMMIT)
 ================================================================================

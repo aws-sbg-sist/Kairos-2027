@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
       return createSuccessResponse(
         {
           success: true,
-          reply: `🛡️ I am the official **KAIROS 2027 AI Assistant**. I am dedicated strictly to helping participants with hackathon inquiries, technical tracks, rules, schedules, and builder logistics.
+          reply: `I am the official **KAIROS 2027 AI Assistant**. I am dedicated strictly to helping participants with hackathon inquiries, technical tracks, rules, schedules, and builder logistics.
 
 How can I assist you with KAIROS 2027 today?`,
           source: 'guardrail',

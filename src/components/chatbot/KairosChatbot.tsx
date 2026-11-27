@@ -198,7 +198,7 @@ export const KairosChatbot: React.FC = () => {
             sound?.playClick();
             setIsOpen(true);
           }}
-          className="relative group flex items-center justify-center gap-2.5 p-3 sm:px-5 sm:py-3.5 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-all duration-200 border border-purple-400/40 font-ai"
+          className="relative group flex items-center justify-center gap-2.5 p-3 sm:px-5 sm:py-3.5 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-[transform,box-shadow] duration-200 border border-purple-400/40 font-ai"
           aria-label="Open Kairos AI Chatbot"
         >
           <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 motion-safe:animate-pulse">

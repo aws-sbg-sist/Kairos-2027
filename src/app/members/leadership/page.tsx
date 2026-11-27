@@ -27,11 +27,6 @@ export default function LeadershipPage() {
     <div className="min-h-screen flex flex-col bg-aws-canvas text-slate-100">
       <Navbar />
       <div className="pt-28 pb-24 flex-grow relative">
-      {/* Background Ambience */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[550px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Breadcrumb */}

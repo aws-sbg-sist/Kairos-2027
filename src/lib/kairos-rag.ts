@@ -48,12 +48,12 @@ Venue: Indoor Stadium (Indoor Auditorium), Sathyabama Institute of Science and T
 - Round 2 Finalist Announcement (Top 100 Teams): January 08, 2027.
 - Grand Finale Check-In: Friday, January 22, 2027 at 09:30 AM IST (Kit distribution, smart NFC badge, onboarding).
 - Inauguration & Plenary: Jan 22, 2027 at 10:45 AM – 12:00 PM IST (Keynote by AWS Leadership).
-- 🚀 CLOCK STARTS: Friday, January 22, 2027 at 12:15 PM IST (48-Hour Sprint commences with GitHub webhook lock).
+- CLOCK STARTS: Friday, January 22, 2027 at 12:15 PM IST (48-Hour Sprint commences with GitHub webhook lock).
 - Checkpoint 1 (Architecture & Feasibility): Friday, Jan 22 at 04:00 PM – 06:30 PM (25 Points).
 - Campus Night Lock-In: Jan 22 & Jan 23 at 10:00 PM IST (Perimeter secured).
 - Checkpoint 2 (Code Velocity & APIs): Saturday, Jan 23 at 02:00 PM – 05:30 PM (35 Points).
 - Midnight Energy Drops: Saturday night / Sunday 01:30 AM (Snacks, filter coffee, energy boosters).
-- 🛑 HARD CODE FREEZE: Sunday, January 24, 2027 at 12:15 PM IST (Exactly 48.0 Hours, GitHub commit freeze).
+- HARD CODE FREEZE: Sunday, January 24, 2027 at 12:15 PM IST (Exactly 48.0 Hours, GitHub commit freeze).
 - Checkpoint 3 (Grand Finale Live Demos): Sunday, Jan 24 at 01:15 PM – 03:30 PM (40 Points; 4-min demo + 3-min jury Q&A).
 - Grand Valedictory & Awards Ceremony: Sunday, Jan 24 at 04:00 PM – 05:00 PM IST.
 - Return Bus Fleet Dispersal: Sunday, Jan 24 at 05:00 PM IST.
@@ -392,14 +392,14 @@ export function synthesizeLocalAnswer(query: string, retrieved: KnowledgeChunk[]
 
   // Guardrail against prompt injection / jailbreak attempts
   if (isPromptInjectionAttempt(query)) {
-    return `🛡️ I am the official **KAIROS 2027 AI Assistant**. I am dedicated strictly to helping participants with hackathon inquiries, technical tracks, rules, schedules, and builder logistics.
+    return `I am the official **KAIROS 2027 AI Assistant**. I am dedicated strictly to helping participants with hackathon inquiries, technical tracks, rules, schedules, and builder logistics.
 
 How can I assist you with KAIROS 2027 today?`;
   }
 
   // 0. Corporate Sponsorship Inquiry & Referral Policy
   if (q.includes('referral') || q.includes('rainmaker') || q.includes('commission') || (q.includes('sponsor') && (q.includes('earn') || q.includes('refer')))) {
-    return `### 💼 Corporate Sponsorships & Partnerships
+    return `### Corporate Sponsorships & Partnerships
 
 • **Sponsorship Inquiries:** KAIROS 2027 collaborates directly with industry leaders across Title Presenting, Co-Powered, Associate/Gold, and Track partnerships.
 • **Referral Fees:** KAIROS 2027 does not offer referral fees or cash commissions for sponsorships. All corporate partnerships are coordinated directly through our official institutional desk.
@@ -433,7 +433,7 @@ Please contact **sistawscc@gmail.com** if your institution requires special trav
   // Edge Case: Unverified / Missing Policy: Team Roster Modification
   if (q.includes('change') && (q.includes('member') || q.includes('team') || q.includes('roster'))) {
     return `**What I can confirm:**
-Team sizes must remain strictly between 4 and 6 members, and Round 0 registration closes on December 28, 2026.
+Team sizes must remain strictly between 3 and 6 members, and Round 0 registration closes on December 28, 2026.
 
 **What needs confirmation:**
 Team roster modifications after initial submission are not automatically approved via the portal and must be vetted by the organizing committee.
@@ -444,7 +444,7 @@ Please email **sistawscc@gmail.com** with your Team Code and registration detail
 
   // 1. Cash Prize Pool & Secret Split-Ups
   if (q.includes('prize') || q.includes('cash') || q.includes('bounty') || q.includes('money') || q.includes('pool') || q.includes('champion') || q.includes('stipend') || q.includes('first place') || q.includes('second place') || q.includes('split') || q.includes('moolah')) {
-    return `### 🏆 KAIROS 2027 Prize Pool: ₹1,75,000 Cash + $50,000+ AWS Credits
+    return `### KAIROS 2027 Prize Pool: ₹1,75,000 Cash + $50,000+ AWS Credits
 
 • **Total Cash Prize Pool:** **₹1,75,000** in direct cash prizes + **$50,000+** in AWS Cloud Promotional Credits!
 • **Prize Split-up & Distribution:** The exact split-ups and category distributions are kept as an exciting **secret and mystery** by the organizers! We won't disclose individual amounts—they will be revealed live on stage during the grand finale.
@@ -453,7 +453,7 @@ Please email **sistawscc@gmail.com** with your Team Code and registration detail
 
   // 2. Venue Inquiry
   if (q.includes('venue') || q.includes('location') || q.includes('where is') || q.includes('place') || q.includes('auditorium') || q.includes('address')) {
-    return `### 📍 KAIROS 2027 Venue
+    return `### KAIROS 2027 Venue
 
 The grand on-campus 48-hour finale is hosted at:
 • **Venue:** **Indoor Auditorium**, Sathyabama Institute of Science and Technology
@@ -463,7 +463,7 @@ The grand on-campus 48-hour finale is hosted at:
 
   // 3. 5 Technical Tracks
   if (q.includes('track') || q.includes('theme') || q.includes('topic') || q.includes('problem')) {
-    return `### ⚡ The 5 Grand Enterprise Technical Tracks
+    return `### The 5 Grand Enterprise Technical Tracks
 
 KAIROS 2027 features 5 core technical tracks:
 
@@ -486,7 +486,7 @@ KAIROS 2027 features 5 core technical tracks:
 
   // 4. Dates, Timetable, Deadlines & Hard Freeze
   if (q.includes('date') || q.includes('when') || q.includes('schedule') || q.includes('time') || q.includes('timeline') || q.includes('deadline') || q.includes('freeze')) {
-    return `### 📅 KAIROS 2027 Key Dates & Timetable
+    return `### KAIROS 2027 Key Dates & Timetable
 
 • **Round 0 Applications Close:** December 28, 2026 at 11:59 PM IST
 • **Round 1 Online Qualifier (Top Shortlisted Teams):** January 02–04, 2027 (GitHub POC submission + virtual defense)
@@ -499,11 +499,11 @@ KAIROS 2027 features 5 core technical tracks:
 
   // 5. Registration Cost & Fee Updates
   if ((/\bfree\b/i.test(q) && !q.includes('freeze')) || q.includes('fee') || q.includes('cost') || q.includes('price') || q.includes('charge')) {
-    return `### ✨ Registration & Fee Structure
+    return `### Registration & Fee Structure
 
-Fee structures and qualification logistics will be updated and communicated directly to your squad once you register on the portal. Every qualified finalist team receives:
+Round 0 abstract screening and the Round 1 Online Technical Qualifier are 100% free (₹0); only squads shortlisted among the Top 100 finalists for Round 2 pay a nominal on-campus confirmation fee. Every qualified finalist team receives:
 • Full campus access for 48 hours of continuous building at the Indoor Auditorium
-• 7 chef-curated hot buffet meals, 24/7 filter coffee & midnight snack drops
+• 7 complimentary hot buffet meals, 24/7 filter coffee & midnight snack drops
 • Smart NFC builder badges & exclusive swag kits
 • Sathyabama chartered bus fleet transit within Chennai
 • 100% intellectual property ownership — participants retain all rights to their code and blueprints.`;
@@ -511,7 +511,7 @@ Fee structures and qualification logistics will be updated and communicated dire
 
   // 6. Leadership, Organizers & Official Support Contacts (No personal names)
   if (q.includes('organizer') || q.includes('organizing') || q.includes('president') || q.includes('who is') || q.includes('heading') || q.includes('contact') || q.includes('email') || q.includes('faculty') || q.includes('helpdesk') || q.includes('social') || q.includes('instagram') || q.includes('linkedin') || q.includes('meetup')) {
-    return `### 📬 Official Club Contact & Community Channels
+    return `### Official Club Contact & Community Channels
 
 For all inquiries, please reach out directly through the official club channels:
 
@@ -524,7 +524,7 @@ For all inquiries, please reach out directly through the official club channels:
 
   // 7. Food, Stay, Travel & Logistics (No guaranteed resting bays or net speed)
   if (q.includes('food') || q.includes('meal') || q.includes('stay') || q.includes('accommodation') || q.includes('sleep') || q.includes('travel') || q.includes('bus') || q.includes('shuttle') || q.includes('wifi') || q.includes('internet') || q.includes('speed')) {
-    return `### 🏨 Food, Accommodation, Travel & Builder Logistics
+    return `### Food, Accommodation, Travel & Builder Logistics
 
 • **Complimentary Meals:** 7 total services across the 48 hours + 24/7 filter coffee/tea bars and 01:30 AM midnight energy snack drops.
 • **Rest Facilities:** Designated resting spaces are provided on campus for builders (dedicated AC resting bays are not guaranteed).
@@ -535,7 +535,7 @@ For all inquiries, please reach out directly through the official club channels:
 
   // 9. Team Size, Eligibility & Solo Matching
   if (q.includes('team') || q.includes('member') || q.includes('size') || q.includes('alone') || q.includes('solo') || q.includes('college') || q.includes('cross') || q.includes('inter')) {
-    return `### 👥 Team Composition & Eligibility
+    return `### Team Composition & Eligibility
 
 • **Team Size:** **3 to 6 builders** per squad.
 • **Fee Policy:** **Free (₹0)** for Round 0 & Round 1 Qualifier; nominal fee only if shortlisted for the Round 2 Grand Finale.
@@ -546,7 +546,7 @@ For all inquiries, please reach out directly through the official club channels:
 
   // 12. General educational query handler
   if (q.includes('what is aws') || q.includes('what is a hackathon') || q.includes('how to prepare') || q.includes('what is bedrock')) {
-    return `### 💡 Hackathon Guidance
+    return `### Hackathon Guidance
 
 • **About KAIROS 2027:** It is an intense 48-hour continuous technical hackathon where teams architect, build, and deploy production-grade software prototypes on AWS.
 • **How to Prepare:** Review the 5 technical tracks, familiarize your squad with Amazon Bedrock, ECS, Lambda, and DynamoDB, and draft your architecture diagram before the Round 0 deadline.
@@ -555,10 +555,10 @@ For all inquiries, please reach out directly through the official club channels:
 
   // 13. General synthesized response from top retrieved knowledge
   const topChunk = retrieved[0] || KAIROS_KNOWLEDGE_BASE[0];
-  return `### ℹ️ ${topChunk.title}
+  return `### ${topChunk.title}
 
 ${topChunk.content}
 
 ---
-💡 *Need more specific details? You can ask about tracks, the 48-hour schedule, rules, logistics, or email the club at **sistawscc@gmail.com**.*`;
+*Need more specific details? You can ask about tracks, the 48-hour schedule, rules, logistics, or email the club at **sistawscc@gmail.com**.*`;
 }

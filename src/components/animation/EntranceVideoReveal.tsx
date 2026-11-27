@@ -107,16 +107,15 @@ export const EntranceVideoReveal: React.FC<EntranceVideoRevealProps> = ({
         isFadingOut ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
       }`}
     >
-      {/* Background ambient lighting effects */}
+      {/* Subtle grid vignette */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-r from-aws-orange/25 via-aws-blue/20 to-aws-purple/20 blur-[140px] rounded-full animate-pulse" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,var(--color-ink-canvas)_95%)]" />
+        <div className="absolute inset-0 tech-grid-pattern opacity-35" />
       </div>
 
       {/* Top Header Bar inside reveal */}
       <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-20">
         <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/60 backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 animate-ping" />
+          <span className="w-2 h-2 rounded-full bg-aws-orange animate-ping" />
           <span className="text-[11px] font-mono font-bold text-slate-300">
             AWS SBGL - KAIROS 2027 Logo Reveal
           </span>

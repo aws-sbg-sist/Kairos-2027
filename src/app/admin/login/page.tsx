@@ -68,16 +68,11 @@ function AdminLoginForm() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-4 py-12 bg-aws-canvas text-aws-snow relative overflow-hidden select-none">
-      
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[400px] bg-purple-950/25 blur-[160px] rounded-full pointer-events-none" />
-      <div className="absolute -bottom-20 left-1/4 w-[450px] h-[300px] bg-sky-950/20 blur-[140px] rounded-full pointer-events-none" />
-
       {/* Return home link */}
       <div className="absolute top-6 left-6 z-20">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-mono font-medium text-slate-400 hover:text-white px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-purple-500/40 backdrop-blur-md transition-all duration-200"
+          className="inline-flex items-center gap-2 text-xs font-mono font-medium text-slate-400 hover:text-white px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-purple-500/40 backdrop-blur-md transition-colors duration-200"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Exit to Public Portal</span>
@@ -113,7 +108,7 @@ function AdminLoginForm() {
 
         {/* Main Sleek Login Card */}
         <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-white/10 shadow-2xl backdrop-blur-xl relative overflow-hidden space-y-5">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-indigo-500 to-sky-500" />
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-aws-orange/80" />
 
           {errorMessage && (
             <div className="p-3.5 rounded-2xl bg-rose-950/60 border border-rose-500/40 text-rose-200 text-xs flex items-start gap-2.5 animate-fadeIn">
@@ -159,7 +154,7 @@ function AdminLoginForm() {
             </div>
 
             {/* Dynamic Pipeline Preview Card */}
-            <div className={`p-4 rounded-2xl border text-xs space-y-2 transition-all duration-300 ${currentLead.badgeColor}`}>
+            <div className={`p-4 rounded-2xl border text-xs space-y-2 transition-colors duration-300 ${currentLead.badgeColor}`}>
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5 font-bold font-mono text-[11px]">
                   <Workflow className="w-3.5 h-3.5" />
@@ -224,7 +219,7 @@ function AdminLoginForm() {
             <button
               type="submit"
               disabled={loading || !passkey}
-              className="w-full py-3.5 rounded-xl font-bold text-xs sm:text-sm text-white btn-primary-themed shadow-xl shadow-purple-900/30 transition-all flex items-center justify-center gap-2 group active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3.5 rounded-xl font-bold text-xs sm:text-sm text-white btn-primary-themed shadow-xl shadow-purple-900/30 transition-[transform,opacity] flex items-center justify-center gap-2 group active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ShieldCheck className="w-4 h-4 group-hover:scale-110 transition-transform" />
               <span>{loading ? 'Authenticating Cadre...' : 'Unlock Executive Pipeline'}</span>

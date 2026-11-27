@@ -72,8 +72,6 @@ export default function ParticipantPassPage() {
   if (!passData) {
     return (
       <div className="min-h-screen bg-kairos-darkest text-slate-100 flex flex-col justify-center items-center px-4 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-purple-950/20 blur-[130px] rounded-full pointer-events-none" />
-        
         <div className="w-full max-w-md bg-slate-900/80 border border-purple-500/30 rounded-3xl p-8 backdrop-blur-xl text-center z-10 shadow-2xl space-y-6">
           {error && (
             <div className="p-3 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-200 text-xs">
@@ -96,7 +94,7 @@ export default function ParticipantPassPage() {
           <div className="flex flex-col gap-3">
             <Link
               href="/login"
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 text-white font-semibold text-xs tracking-wide shadow-lg shadow-purple-600/20 flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 rounded-xl btn-primary-themed hover:opacity-90 text-white font-semibold text-xs tracking-wide shadow-lg shadow-purple-600/20 flex items-center justify-center gap-2"
             >
               <span>Sign In to View Pass</span>
               <ArrowRight className="w-4 h-4" />
@@ -122,10 +120,6 @@ export default function ParticipantPassPage() {
 
   return (
     <div className="min-h-screen bg-kairos-darkest text-slate-100 flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden">
-      
-      {/* Background illumination */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-purple-950/25 blur-[150px] pointer-events-none rounded-full" />
-
       {/* Navigation & Controls */}
       <div className="w-full max-w-md flex items-center justify-between mb-6 z-10">
         <Link

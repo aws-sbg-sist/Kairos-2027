@@ -1,19 +1,21 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Outfit, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google';
+import { IBM_Plex_Sans, Space_Grotesk, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { KairosChatbot } from '@/components/chatbot/KairosChatbot';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { KeyboardShortcutsModal } from '@/components/modals/KeyboardShortcutsModal';
 import { MobileFloatingBar } from '@/components/navigation/MobileFloatingBar';
 
-const inter = Inter({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-inter',
   display: 'swap',
 });
 
-const outfit = Outfit({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
+  weight: ['500', '600', '700'],
   variable: '--font-outfit',
   display: 'swap',
 });
@@ -74,7 +76,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'KAIROS 2027 — Build the Future in 48 Hours',
+    title: 'KAIROS 2027: 48-Hour AWS Cloud Hackathon',
     description: 'National 48-Hour Cloud Hackathon on AWS. ₹1,75,000 Total Prize Pool. Dual-Phase National Selection.',
     creator: '@awssbg_sist',
   },
@@ -139,7 +141,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="cyber" className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} ${plusJakarta.variable} dark`}>
+    <html lang="en" data-theme="cyber" className={`${ibmPlexSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${plusJakarta.variable} dark`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

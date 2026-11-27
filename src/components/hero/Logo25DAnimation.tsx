@@ -75,7 +75,7 @@ export const Logo25DAnimation: React.FC = () => {
             LAYER 0: Deep Ambient Glow & Radial Diffusion (Z: -60px)
             ================================================================= */}
         <div
-          className="absolute w-72 h-72 sm:w-88 sm:h-88 rounded-full blur-[80px] opacity-45 pointer-events-none transition-all duration-500"
+          className="absolute w-72 h-72 sm:w-88 sm:h-88 rounded-full blur-[80px] opacity-45 pointer-events-none transition-[transform,opacity] duration-500"
           style={{
             transform: 'translateZ(-60px)',
             background: 'radial-gradient(circle, var(--aws-orange) 0%, #7630d9 45%, #0511f2 80%, transparent 100%)',
@@ -143,7 +143,7 @@ export const Logo25DAnimation: React.FC = () => {
           <div className="w-full h-full rounded-full border border-purple-500/40 shadow-[0_0_20px_rgba(118,48,217,0.35)] relative animate-orbit-spin">
             {/* Satellite 1: Neon Magenta Node */}
             <div
-              className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 shadow-[0_0_14px_var(--aws-orange)] flex items-center justify-center animate-pulse"
+              className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-aws-orange shadow-[0_0_14px_var(--aws-orange)] flex items-center justify-center animate-pulse"
             >
               <div className="w-1.5 h-1.5 rounded-full bg-white" />
             </div>
@@ -176,7 +176,7 @@ export const Logo25DAnimation: React.FC = () => {
         >
           {/* Logo Drop Shadow Projected Behind */}
           <div
-            className="absolute inset-0 rounded-full blur-2xl opacity-50 transition-all duration-200 pointer-events-none"
+            className="absolute inset-0 rounded-full blur-2xl opacity-50 transition-[transform,opacity] duration-200 pointer-events-none"
             style={{
               background: 'radial-gradient(circle, var(--aws-orange) 0%, #7630d9 60%, transparent 100%)',
               transform: `translate(${shadowX}px, ${shadowY}px) scale(0.9)`,
@@ -231,7 +231,7 @@ export const Logo25DAnimation: React.FC = () => {
           className="absolute top-2 right-4 sm:right-6 px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-950/90 border border-purple-500/40 text-purple-200 shadow-lg shadow-black/60 backdrop-blur-md flex items-center gap-1.5 pointer-events-none"
           style={{ transform: 'translateZ(75px)' }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 animate-ping" />
+          <span className="w-1.5 h-1.5 rounded-full bg-aws-orange animate-ping" />
           <span className="font-bold tracking-wider text-white">48H SAND SYNC</span>
         </div>
 

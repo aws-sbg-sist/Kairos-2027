@@ -30,7 +30,7 @@ export default function NotFound() {
           <div className="pt-2">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:opacity-90 transition shadow-lg shadow-purple-900/30"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-bold btn-primary-themed text-white hover:opacity-90 transition-opacity shadow-lg shadow-purple-900/30"
             >
               <Home className="w-4 h-4" />
               <span>Back to KAIROS 2027 Mainframe</span>

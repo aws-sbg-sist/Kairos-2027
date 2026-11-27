@@ -49,7 +49,7 @@ export default function GlobalError({
           </button>
           <Link
             href="/"
-            className="flex-1 py-3 px-4 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90 text-white transition flex items-center justify-center gap-2"
+            className="flex-1 py-3 px-4 rounded-xl text-xs font-bold btn-primary-themed hover:opacity-90 text-white transition-opacity flex items-center justify-center gap-2"
           >
             <Home className="w-4 h-4" />
             <span>Return Home</span>

@@ -66,9 +66,6 @@ export const PathwaySection: React.FC<PathwaySectionProps> = ({ initialTrack, re
 
   return (
     <section id="pathway" className="relative py-24 lg:py-32 overflow-hidden bg-kairos-bg">
-      {/* Background illumination */}
-      <div className="absolute top-1/2 left-0 w-[600px] h-[350px] bg-purple-900/15 blur-[160px] pointer-events-none rounded-full" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">

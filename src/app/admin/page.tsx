@@ -615,8 +615,8 @@ export default function AdminDashboardPage() {
           </div>
 
           <div className="p-3.5 rounded-2xl bg-slate-900/70 border border-purple-500/20">
-            <span className="text-[10px] font-mono text-indigo-300 block mb-0.5">CHECK-IN RATE</span>
-            <span className="text-2xl font-bold text-indigo-300 block">
+            <span className="text-[10px] font-mono text-sky-300 block mb-0.5">CHECK-IN RATE</span>
+            <span className="text-2xl font-bold text-sky-300 block">
               {teams.length > 0 ? Math.round((teams.filter(t => t.checkedIn).length / teams.length) * 100) : 0}%
             </span>
             <span className="text-[10px] text-slate-400 block mt-0.5">
@@ -657,7 +657,7 @@ export default function AdminDashboardPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as AdminTab)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 ${
                   isActive
                     ? 'bg-purple-900/60 text-white border border-purple-500/40 shadow-sm'
                     : isPermitted
@@ -719,7 +719,7 @@ export default function AdminDashboardPage() {
                       </div>
                       <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
                         <div
-                          className="bg-gradient-to-r from-purple-600 to-indigo-500 h-full rounded-full"
+                          className="btn-primary-themed h-full rounded-full"
                           style={{ width: `${Math.max(pct, trackTeams.length > 0 ? 8 : 0)}%` }}
                         />
                       </div>
@@ -1536,7 +1536,7 @@ export default function AdminDashboardPage() {
                                 <a href={item.meetupProfileUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-white underline">Meetup</a>
                               )}
                               {item.awsBuilderCenterUrl && (
-                                <a href={item.awsBuilderCenterUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-300 hover:text-white underline">AWS Builder</a>
+                                <a href={item.awsBuilderCenterUrl} target="_blank" rel="noopener noreferrer" className="text-sky-300 hover:text-white underline">AWS Builder</a>
                               )}
                             </div>
                           </td>
@@ -1853,7 +1853,7 @@ export default function AdminDashboardPage() {
                           </a>
                         )}
                         {m.awsBuilderCenterUrl && (
-                          <a href={m.awsBuilderCenterUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-300 hover:text-white underline">
+                          <a href={m.awsBuilderCenterUrl} target="_blank" rel="noopener noreferrer" className="text-sky-300 hover:text-white underline">
                             AWS Builder Center ↗
                           </a>
                         )}

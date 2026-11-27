@@ -94,7 +94,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
             </p>
             <button
               onClick={onClose}
-              className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 transition-all"
+              className="px-6 py-2.5 rounded-xl text-xs font-bold text-white btn-primary-themed transition-opacity hover:opacity-90"
             >
               Done
             </button>
@@ -193,7 +193,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, p
             <button
               type="submit"
               disabled={submitting}
-              className="w-full mt-2 py-3 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-purple-600 to-sky-500 hover:from-purple-500 hover:to-sky-400 shadow-md shadow-purple-950 transition-all flex items-center justify-center gap-2"
+              className="w-full mt-2 py-3 rounded-xl font-bold text-xs text-white btn-primary-themed shadow-md shadow-purple-950 transition-opacity hover:opacity-90 flex items-center justify-center gap-2"
             >
               {submitting ? (
                 <span>Registering...</span>

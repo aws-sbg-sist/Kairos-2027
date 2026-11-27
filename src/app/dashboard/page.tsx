@@ -347,8 +347,6 @@ export default function DashboardPage() {
       <div className="min-h-screen flex flex-col bg-aws-canvas text-aws-snow">
         <Navbar />
         <main className="flex-grow flex items-center justify-center pt-32 pb-24 px-4 relative overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-purple-950/20 blur-[130px] rounded-full pointer-events-none" />
-          
           <div className="w-full max-w-md bg-slate-900/90 border border-purple-500/30 rounded-3xl p-8 backdrop-blur-xl text-center z-10 shadow-2xl space-y-6">
             <div className="w-14 h-14 bg-purple-500/10 border border-purple-500/30 rounded-full flex items-center justify-center mx-auto text-purple-400">
               <ShieldCheck className="w-8 h-8" />
@@ -366,7 +364,7 @@ export default function DashboardPage() {
             <div className="flex flex-col gap-3">
               <Link
                 href="/login"
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 text-white font-semibold text-xs tracking-wide shadow-lg shadow-purple-600/20 flex items-center justify-center gap-2"
+                className="w-full py-3 px-4 rounded-xl btn-primary-themed hover:opacity-90 text-white font-semibold text-xs tracking-wide shadow-lg shadow-purple-600/20 flex items-center justify-center gap-2"
               >
                 <span>Sign In to Dashboard</span>
                 <ArrowRight className="w-4 h-4" />

@@ -10,8 +10,6 @@ import { Hourglass3DModel } from '@/components/animation/Hourglass3DModel';
 export const FinalCTASection: React.FC = () => {
   return (
     <section className="relative py-16 lg:py-24 overflow-hidden bg-[#07070b] select-none border-t border-white/10">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[420px] bg-gradient-to-r from-aws-orange/15 via-purple-900/25 to-aws-blue/15 blur-[160px] pointer-events-none rounded-full" />
-
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
         <ScrollReveal direction="none" delay={0.05}>
           <div className="relative flex items-center justify-center scale-90">

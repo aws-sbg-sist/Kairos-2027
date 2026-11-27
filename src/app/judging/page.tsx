@@ -428,7 +428,7 @@ export default function JudgingPortalPage() {
                               <button
                                 key={t.id}
                                 onClick={() => setSelectedTeamCode(t.teamCode || t.id)}
-                                className={`w-full text-left p-3 rounded-xl transition-all border ${
+                                className={`w-full text-left p-3 rounded-xl transition-colors border ${
                                   isSelected 
                                     ? 'bg-purple-950/60 border-purple-500 shadow-md' 
                                     : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'

@@ -99,10 +99,7 @@ export default function StageScreenMode() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 sm:p-10 flex flex-col justify-between font-sans selection:bg-gradient-to-r from-purple-700 to-purple-900 selection:text-black overflow-hidden relative">
-      
-      {/* Background Subtle Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-purple-950/40 blur-[180px] pointer-events-none rounded-full" />
+    <div className="min-h-screen bg-black text-white p-6 sm:p-10 flex flex-col justify-between font-sans selection:bg-aws-orange selection:text-black overflow-hidden relative">
       <div className="absolute inset-0 tech-grid-pattern opacity-40 pointer-events-none" />
 
       {/* Top Header Bar */}

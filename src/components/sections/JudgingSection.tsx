@@ -74,7 +74,7 @@ export const JudgingSection: React.FC = () => {
             <div className="pt-2 flex items-center justify-center">
               <button
                 onClick={handleTriggerManualSweep}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold bg-purple-950/70 hover:bg-purple-900/80 border border-purple-500/40 text-purple-200 hover:text-white transition-all shadow-md group active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold bg-purple-950/70 hover:bg-purple-900/80 border border-purple-500/40 text-purple-200 hover:text-white transition-colors shadow-md group active:scale-95 cursor-pointer"
                 title="Trigger simulated live jury calibration telemetry"
               >
                 <Cpu className={`w-3.5 h-3.5 text-purple-400 ${simulationActive ? 'animate-spin' : 'group-hover:rotate-45'} transition-transform`} />

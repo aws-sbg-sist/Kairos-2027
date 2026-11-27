@@ -213,7 +213,7 @@ export function evaluateScopeGuardrail(text: string): { isOutOfScope: boolean; r
     if (pattern.test(normalized)) {
       return {
         isOutOfScope: true,
-        redirectResponse: `👋 I am the dedicated **KAIROS 2027 Hackathon Assistant**! 
+        redirectResponse: `I am the dedicated **KAIROS 2027 Hackathon Assistant**. 
 
 I'm primarily here to help with event inquiries, technical tracks, rules, schedules, venue details, and software preparation for the hackathon. 
 
@@ -240,7 +240,7 @@ export function inspectAndSanitizeModelOutput(outputText: string): string {
 
   // Check for verbatim system prompt leaks
   if (cleaned.includes('CORE PRINCIPLES & ANTI-HALLUCINATION POLICY:') && cleaned.includes('SPECIFIC EVENT CONSTRAINTS & POLICIES (MANDATORY):')) {
-    return `### ℹ️ KAIROS 2027 Information
+    return `### KAIROS 2027 Information
 I am the official **KAIROS 2027 AI Assistant**. How can I help you with the hackathon tracks, schedule, rules, or venue at the Indoor Auditorium today?`;
   }
 

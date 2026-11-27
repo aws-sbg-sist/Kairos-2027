@@ -49,9 +49,6 @@ export function TeamRadarSection() {
 
   return (
     <section id="radar" className="py-8 lg:py-14 relative overflow-hidden bg-aws-canvas">
-      {/* Background ambient radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-purple-950/20 blur-[140px] rounded-full pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
@@ -104,11 +101,10 @@ export function TeamRadarSection() {
             <button
               onClick={() => { sound?.playClick(); setSelectedTrack('all'); }}
               onMouseEnter={() => sound?.playHover()}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 ${
-                selectedTrack === 'all'
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 ${selectedTrack === 'all'
                   ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-white shadow-md shadow-purple-900/40 font-bold'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
-              }`}
+                }`}
             >
               All Tracks
             </button>
@@ -117,11 +113,10 @@ export function TeamRadarSection() {
                 key={t.id}
                 onClick={() => { sound?.playClick(); setSelectedTrack(t.id); }}
                 onMouseEnter={() => sound?.playHover()}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 ${
-                  selectedTrack === t.id
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 ${selectedTrack === t.id
                     ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-white shadow-md shadow-purple-900/40 font-bold'
                     : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
-                }`}
+                  }`}
               >
                 {t.title.split('&')[0]}
               </button>
@@ -145,11 +140,10 @@ export function TeamRadarSection() {
                 key={r.id}
                 onClick={() => { sound?.playClick(); setSelectedRole(r.id); }}
                 onMouseEnter={() => sound?.playHover()}
-                className={`px-3 py-1 rounded-md text-xs font-mono transition-colors shrink-0 ${
-                  selectedRole === r.id
+                className={`px-3 py-1 rounded-md text-xs font-mono transition-colors shrink-0 ${selectedRole === r.id
                     ? 'bg-purple-600 text-white font-bold border border-purple-400/40 shadow-sm'
                     : 'bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/5'
-                }`}
+                  }`}
               >
                 {r.label}
               </button>
@@ -210,9 +204,8 @@ export function TeamRadarSection() {
                 <button
                   onClick={() => handleConnect(sig)}
                   onMouseEnter={() => sound?.playHover()}
-                  className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-white/5 hover:bg-purple-950/50 border border-white/10 hover:border-purple-500/40 text-slate-200 hover:text-white transition-colors duration-200 ease-entrance active:scale-[0.97] flex items-center justify-center gap-2 group/btn ${
-                    copiedId === sig.id ? 'animate-success-pulse border-emerald-500/50 bg-emerald-950/30' : ''
-                  }`}
+                  className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold bg-white/5 hover:bg-purple-950/50 border border-white/10 hover:border-purple-500/40 text-slate-200 hover:text-white transition-colors duration-200 ease-entrance active:scale-[0.97] flex items-center justify-center gap-2 group/btn ${copiedId === sig.id ? 'animate-success-pulse border-emerald-500/50 bg-emerald-950/30' : ''
+                    }`}
                 >
                   {copiedId === sig.id ? (
                     <span className="text-emerald-400 font-mono">Contact Copied to Clipboard!</span>

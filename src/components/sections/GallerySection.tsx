@@ -112,10 +112,6 @@ export const GallerySection: React.FC = () => {
 
   return (
     <section id="gallery" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
-      {/* Background illumination */}
-      <div className="absolute top-1/3 left-1/4 -translate-y-1/2 w-[700px] h-[400px] bg-purple-950/20 blur-[160px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[350px] bg-purple-950/40 blur-[150px] pointer-events-none rounded-full" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
@@ -375,7 +371,7 @@ export const GallerySection: React.FC = () => {
                     sound?.playClick();
                     setCarouselIndex(idx);
                   }}
-                  className={`h-2 rounded-full transition-all cursor-pointer ${idx === carouselIndex
+                  className={`h-2 rounded-full transition-[width,background-color] cursor-pointer ${idx === carouselIndex
                       ? 'w-8 bg-gradient-to-r from-purple-500 to-aws-orange shadow-md shadow-purple-900/50'
                       : 'w-2 bg-slate-800 hover:bg-slate-700'
                     }`}

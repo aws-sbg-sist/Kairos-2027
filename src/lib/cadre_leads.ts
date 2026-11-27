@@ -87,7 +87,7 @@ export const ADMIN_LEADS: AdminLead[] = [
     pipelineDescription: 'Live stage screen announcements, broadcast alerts, leaderboard displays, and social media coverage.',
     allowedTabs: ['flags', 'analytics', 'teams', 'audit'],
     envVarName: 'LEAD_PASSKEY_MEDIA',
-    badgeColor: 'border-indigo-500/40 text-indigo-300 bg-indigo-950/40'
+    badgeColor: 'border-sky-500/40 text-sky-300 bg-sky-950/40'
   },
   {
     id: 'org-faculty',

@@ -61,11 +61,6 @@ export default function MembersPage() {
     <div className="min-h-screen bg-aws-canvas text-slate-100 flex flex-col justify-between">
       <Navbar />
       <div className="pt-28 pb-24 flex-1">
-      {/* Glow */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Breadcrumb */}

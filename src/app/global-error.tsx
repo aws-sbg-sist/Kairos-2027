@@ -40,7 +40,7 @@ export default function RootGlobalError({
             </button>
             <Link
               href="/"
-              className="flex-1 min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-white transition flex items-center justify-center gap-2"
+              className="flex-1 min-h-[44px] px-4 py-2.5 rounded-xl text-xs font-bold bg-white text-slate-950 hover:bg-slate-200 transition-colors flex items-center justify-center gap-2"
             >
               <Home className="w-4 h-4" />
               <span>Return Home</span>

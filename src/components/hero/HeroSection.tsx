@@ -142,8 +142,8 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
                     {countdownStatus === 'upcoming'
                       ? 'Countdown to 48-Hour Kickoff (IST)'
                       : countdownStatus === 'live'
-                      ? '⚡ 48-Hour Clock Active'
-                      : 'Competition Concluded'}
+                        ? 'Live: 48-Hour Clock Active'
+                        : 'Competition Concluded'}
                   </span>
                   <span>Asia/Kolkata</span>
                 </div>
