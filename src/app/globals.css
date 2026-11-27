@@ -381,30 +381,35 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-/* Primary Themed Button Gradient Class */
+/* Primary Themed Button Gradient Class - Majestic Hackathon Accent */
 .btn-primary-themed {
   background: linear-gradient(135deg, var(--btn-grad-start) 0%, var(--btn-grad-mid) 50%, var(--btn-grad-end) 100%);
   color: var(--aws-snow) !important;
-  box-shadow: 0 8px 24px -4px var(--aws-orange-glow);
-  transition: background 0.22s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.22s cubic-bezier(0, 0, 0.2, 1), transform 0.075s cubic-bezier(0.4, 0, 1, 1);
+  box-shadow: 0 4px 20px -2px var(--aws-orange-glow);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.25s cubic-bezier(0.23, 1, 0.32, 1), transform 0.15s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.btn-primary-themed:hover {
-  background: linear-gradient(135deg, var(--btn-grad-mid) 0%, var(--btn-grad-start) 100%);
-  box-shadow: 0 12px 28px -4px var(--aws-orange-glow);
+@media (hover: hover) {
+  .btn-primary-themed:hover {
+    background: linear-gradient(135deg, var(--btn-grad-mid) 0%, var(--btn-grad-start) 100%);
+    box-shadow: 0 8px 30px 2px var(--aws-orange-glow), 0 0 20px -2px var(--border-glow);
+    transform: translateY(-1.5px);
+  }
 }
 
 /* =========================================================================
-   ANIMATION & MOTION DESIGN DOCTRINE
+   ANIMATION & MOTION DESIGN DOCTRINE (EMIL KOWALSKI & BETTER-UI STANDARD)
    ========================================================================= */
 
-/* Scale buttons to 0.97 on press */
-button:active,
-a[role="button"]:active,
-.btn-primary-themed:active,
-.btn-tactile:active {
-  transform: scale(0.97) !important;
-  transition-duration: 75ms !important;
+/* Button press scales to 0.96 with ease-press curve (better-ui exact standard) */
+button:not(:disabled):active,
+a[role="button"]:not(:disabled):active,
+.btn-primary-themed:not(:disabled):active,
+.btn-tactile:not(:disabled):active {
+  transform: scale(0.96) !important;
+  transition-duration: 90ms !important;
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1) !important;
 }
 
@@ -716,6 +721,59 @@ a[role="button"]:active,
 .hud-frame:hover {
   border-color: rgba(238, 5, 242, 0.4);
   box-shadow: 0 0 25px -5px var(--aws-orange-glow);
+}
+
+/* Majestic Hackathon Surface Elevation Card (Desktop & Mobile) */
+.majestic-card {
+  position: relative;
+  background: rgba(var(--aws-card-rgb) / 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .majestic-card:hover {
+    transform: translateY(-2.5px);
+    border-color: rgba(238, 5, 242, 0.35);
+    box-shadow: 0 14px 36px -8px rgba(0, 0, 0, 0.8), 0 0 24px -6px var(--aws-orange-glow);
+  }
+}
+
+.majestic-card:not(:disabled):active {
+  transform: scale(0.98) translateY(0);
+}
+
+/* Touch Target Minimum Standard (WCAG 2.5.5 / 2.5.8 & Mobile Design Skill) */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Breathing Beacon Indicator for Live Hackathon Telemetry */
+@keyframes beaconPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.8));
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 1));
+  }
+}
+
+.animate-beacon {
+  animation: beaconPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Aerospace Calibrated Reticle */

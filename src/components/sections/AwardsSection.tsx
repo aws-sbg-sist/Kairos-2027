@@ -76,14 +76,18 @@ export const AwardsSection: React.FC<AwardsSectionProps> = () => {
                 return (
                   <div
                     key={item.position}
-                    className={`py-5 px-3 transition-colors ${isFirst ? 'bg-amber-500/[0.04]' : ''}`}
+                    className={`py-5 px-3.5 rounded-xl transition-all duration-300 ${
+                      isFirst
+                        ? 'bg-amber-500/[0.06] border border-amber-400/30 shadow-lg shadow-amber-950/30 my-1'
+                        : 'hover:bg-white/[0.03]'
+                    }`}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                       <div className="flex items-center gap-2.5">
                         <span
-                          className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono text-xs font-bold ${
+                          className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono text-xs font-bold transition-transform duration-200 ${
                             isFirst
-                              ? 'bg-amber-400 text-slate-950'
+                              ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/30 scale-105'
                               : 'bg-white/10 text-white'
                           }`}
                         >
@@ -95,7 +99,7 @@ export const AwardsSection: React.FC<AwardsSectionProps> = () => {
                       </div>
                       <span className={`text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full border ${
                         isFirst
-                          ? 'border-amber-400/40 bg-amber-400/10 text-amber-300'
+                          ? 'border-amber-400/50 bg-amber-400/15 text-amber-300 shadow-sm shadow-amber-400/20'
                           : 'border-white/15 bg-white/5 text-slate-300'
                       }`}>
                         {item.badge}
@@ -117,20 +121,20 @@ export const AwardsSection: React.FC<AwardsSectionProps> = () => {
 
             {/* Compact Additional Honors Row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-              <div className="p-4 rounded-xl bg-[#0d0d13] border border-white/10 space-y-1">
-                <span className="font-mono text-purple-300 font-bold block">Startup Fast-Track</span>
+              <div className="p-4 rounded-xl bg-[#0d0d13] border border-white/10 hover:border-purple-500/40 hover:bg-[#12101c] transition-all duration-200 space-y-1 group">
+                <span className="font-mono text-purple-300 font-bold block group-hover:text-purple-200">Startup Fast-Track</span>
                 <p className="text-slate-400 leading-relaxed">
                   VC &amp; angel Demo Day introductions for finalist prototypes ready to spin out.
                 </p>
               </div>
-              <div className="p-4 rounded-xl bg-[#0d0d13] border border-white/10 space-y-1">
-                <span className="font-mono text-emerald-400 font-bold block">Diversity &amp; Architecture</span>
+              <div className="p-4 rounded-xl bg-[#0d0d13] border border-white/10 hover:border-emerald-500/40 hover:bg-[#0c1613] transition-all duration-200 space-y-1 group">
+                <span className="font-mono text-emerald-400 font-bold block group-hover:text-emerald-300">Diversity &amp; Architecture</span>
                 <p className="text-slate-400 leading-relaxed">
                   Special honors for Best All-Women Squad &amp; Most Scalable Serverless Design.
                 </p>
               </div>
-              <div className="p-4 rounded-xl bg-[#0d0d13] border border-white/10 space-y-1">
-                <span className="font-mono text-sky-400 font-bold block">All 100 Finalist Squads</span>
+              <div className="p-4 rounded-xl bg-[#0d0d13] border border-white/10 hover:border-sky-500/40 hover:bg-[#0c131a] transition-all duration-200 space-y-1 group">
+                <span className="font-mono text-sky-400 font-bold block group-hover:text-sky-300">All 100 Finalist Squads</span>
                 <p className="text-slate-400 leading-relaxed">
                   $500–$5,000 in AWS Cloud Promotional Credits distributed to run Bedrock &amp; clusters.
                 </p>

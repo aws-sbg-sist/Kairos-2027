@@ -5,6 +5,7 @@ import { KairosChatbot } from '@/components/chatbot/KairosChatbot';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { KeyboardShortcutsModal } from '@/components/modals/KeyboardShortcutsModal';
 import { MobileFloatingBar } from '@/components/navigation/MobileFloatingBar';
+import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ['latin'],
@@ -161,6 +162,8 @@ export default function RootLayout({
             Skip to main content
           </a>
           {children}
+          {/* Subtle Desktop Hardware-Accelerated Ambient Cursor Luminescence */}
+          <MagneticGlowCursor />
           {/* Global Mobile Quick Registration Dock & Keyboard Shortcuts HUD */}
           <MobileFloatingBar />
           <KeyboardShortcutsModal />

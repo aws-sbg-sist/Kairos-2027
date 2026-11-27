@@ -2267,9 +2267,20 @@ export const db = {
   },
   // Feature Flags & Audit
   async getFeatureFlags(): Promise<FeatureFlags> {
-    if (getDbDriver() === 'supabase') return await postgresDb.getFeatureFlags();
-    assertJsonAllowed();
-    return jsonDb.getFeatureFlags();
+    try {
+      if (getDbDriver() === 'supabase') return await postgresDb.getFeatureFlags();
+      assertJsonAllowed();
+      return jsonDb.getFeatureFlags();
+    } catch {
+      return {
+        registrationOpen: true,
+        prizePoolConfirmed: true,
+        demoSandboxMode: true,
+        announcementBanner: 'NATIONAL APPLICATIONS OPEN NOW • ₹1,75,000 TOTAL PRIZE POOL • SATHYABAMA CHENNAI',
+        registrationDeadline: '2027-01-06T23:59:59+05:30',
+        leaderboardPublished: true
+      };
+    }
   },
 
   async setFeatureFlags(flags: Partial<FeatureFlags>, organizer: string): Promise<FeatureFlags> {

@@ -32,7 +32,7 @@ export const MobileFloatingBar: React.FC = () => {
     <div
       role="region"
       aria-label="Mobile Quick Registration Dock"
-      className="fixed bottom-3 left-3 right-3 z-[60] md:hidden pointer-events-auto animate-in slide-in-from-bottom-4 duration-300"
+      className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] left-3 right-3 z-[60] md:hidden pointer-events-auto animate-in slide-in-from-bottom-4 duration-300"
     >
       <div className="flex items-center justify-between gap-2 p-2 rounded-2xl bg-aws-squidInk/95 border border-purple-500/40 shadow-2xl shadow-black/80 backdrop-blur-xl">
         {/* Left: Event & Status Pill */}
@@ -42,7 +42,7 @@ export const MobileFloatingBar: React.FC = () => {
             sound?.playClick();
             haptics?.light();
           }}
-          className="min-h-[44px] flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-purple-300 border border-white/10 transition active:scale-95 text-[11px] font-mono shrink-0"
+          className="min-h-[44px] flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-purple-300 border border-white/10 transition active:scale-[0.96] text-[11px] font-mono shrink-0"
         >
           <Layers className="w-3.5 h-3.5 text-purple-400" />
           <span>5 Tracks</span>
@@ -55,7 +55,7 @@ export const MobileFloatingBar: React.FC = () => {
             sound?.playClick();
             haptics?.heavy();
           }}
-          className="min-h-[44px] flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gradient-to-r from-aws-orange to-purple-600 text-white font-bold text-xs shadow-md shadow-purple-900/40 active:scale-[0.98] transition"
+          className="min-h-[44px] flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl btn-primary-themed text-white font-bold text-xs shadow-md shadow-purple-900/40 active:scale-[0.96] transition shine-hover"
         >
           <span>Register Squad</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -68,7 +68,7 @@ export const MobileFloatingBar: React.FC = () => {
             setDismissed(true);
           }}
           aria-label="Dismiss quick action dock"
-          className="w-11 h-11 rounded-xl bg-white/5 text-slate-400 hover:text-white flex items-center justify-center border border-white/5 active:scale-90 transition shrink-0"
+          className="min-h-[44px] min-w-[44px] rounded-xl bg-white/5 text-slate-400 hover:text-white flex items-center justify-center border border-white/5 active:scale-[0.96] transition shrink-0"
         >
           <X className="w-3.5 h-3.5" />
         </button>

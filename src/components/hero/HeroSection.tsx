@@ -134,41 +134,44 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
               </div>
             </ScrollReveal>
 
-            {/* Minimalist Monochrome Countdown HUD */}
+            {/* Minimalist Monochrome Countdown HUD with Live Telemetry */}
             <ScrollReveal direction="up" distance={14} delay={0.25} immediate={true}>
-              <div className="p-3.5 sm:p-4 rounded-2xl border border-white/10 max-w-xl mx-auto lg:mx-0 bg-[#0d0d13]/90 relative overflow-hidden">
+              <div className="p-3.5 sm:p-4 rounded-2xl border border-white/10 max-w-xl mx-auto lg:mx-0 bg-[#0d0d13]/90 relative overflow-hidden backdrop-blur-md shadow-xl shadow-black/40">
                 <div className="flex items-center justify-between mb-2.5 text-[11px] font-mono text-slate-400">
-                  <span className="font-semibold text-slate-200">
-                    {countdownStatus === 'upcoming'
-                      ? 'Countdown to 48-Hour Kickoff (IST)'
-                      : countdownStatus === 'live'
-                        ? 'Live: 48-Hour Clock Active'
-                        : 'Competition Concluded'}
-                  </span>
-                  <span>Asia/Kolkata</span>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon" />
+                    <span className="font-semibold text-slate-200">
+                      {countdownStatus === 'upcoming'
+                        ? 'Countdown to 48-Hour Kickoff (IST)'
+                        : countdownStatus === 'live'
+                          ? 'Live: 48-Hour Clock Active'
+                          : 'Competition Concluded'}
+                    </span>
+                  </div>
+                  <span className="text-slate-500 font-mono">Asia/Kolkata</span>
                 </div>
 
                 <div className="grid grid-cols-4 gap-2 sm:gap-3 text-center">
-                  <div className="bg-[#09090d] rounded-xl p-2 sm:p-2.5 border border-white/10">
-                    <span className="font-display font-bold text-xl sm:text-2xl text-white block">
+                  <div className="bg-[#09090d] rounded-xl p-2 sm:p-2.5 border border-white/10 hover:border-white/20 transition-colors">
+                    <span className="font-display font-bold text-xl sm:text-2xl text-white block tabular-nums">
                       {String(timeLeft.days).padStart(2, '0')}
                     </span>
                     <span className="text-[11px] font-mono text-slate-400">Days</span>
                   </div>
-                  <div className="bg-[#09090d] rounded-xl p-2 sm:p-2.5 border border-white/10">
-                    <span className="font-display font-bold text-xl sm:text-2xl text-white block">
+                  <div className="bg-[#09090d] rounded-xl p-2 sm:p-2.5 border border-white/10 hover:border-white/20 transition-colors">
+                    <span className="font-display font-bold text-xl sm:text-2xl text-white block tabular-nums">
                       {String(timeLeft.hours).padStart(2, '0')}
                     </span>
                     <span className="text-[11px] font-mono text-slate-400">Hours</span>
                   </div>
-                  <div className="bg-[#09090d] rounded-xl p-2 sm:p-2.5 border border-white/10">
-                    <span className="font-display font-bold text-xl sm:text-2xl text-white block">
+                  <div className="bg-[#09090d] rounded-xl p-2 sm:p-2.5 border border-white/10 hover:border-white/20 transition-colors">
+                    <span className="font-display font-bold text-xl sm:text-2xl text-white block tabular-nums">
                       {String(timeLeft.minutes).padStart(2, '0')}
                     </span>
                     <span className="text-[11px] font-mono text-slate-400">Minutes</span>
                   </div>
-                  <div className="bg-[#12101c] rounded-xl p-2 sm:p-2.5 border border-purple-500/35">
-                    <span className="font-display font-bold text-xl sm:text-2xl text-purple-300 block animate-pulse">
+                  <div className="bg-[#12101c] rounded-xl p-2 sm:p-2.5 border border-purple-500/35 hover:border-purple-400/50 transition-colors">
+                    <span className="font-display font-bold text-xl sm:text-2xl text-purple-300 block animate-pulse tabular-nums">
                       {String(timeLeft.seconds).padStart(2, '0')}
                     </span>
                     <span className="text-[11px] font-mono text-purple-300/80">Seconds</span>
@@ -183,17 +186,17 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
                 <MagneticButton pullStrength={6} className="w-full sm:w-auto">
                   <Link
                     href="/register"
-                    className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/30 transition-colors duration-200 flex items-center justify-center gap-2 group active:scale-[0.97]"
+                    className="w-full sm:w-auto min-h-[48px] px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 transition-transform duration-200 flex items-center justify-center gap-2 group active:scale-[0.96] shine-hover"
                   >
                     <span>Submit Round 0 Abstract</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                   </Link>
                 </MagneticButton>
 
                 <MagneticButton pullStrength={5} className="w-full sm:w-auto">
                   <Link
                     href="/tracks"
-                    className="w-full sm:w-auto px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-white/30 transition-colors flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto min-h-[48px] px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-purple-500/40 transition-colors flex items-center justify-center gap-2 active:scale-[0.96]"
                   >
                     <Layers className="w-4 h-4 text-purple-400" />
                     <span>Explore 15 Challenges</span>

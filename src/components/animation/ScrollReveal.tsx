@@ -35,7 +35,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setForceVisible(true);
-    }, 1200 + delay * 1000);
+    }, 350 + delay * 400);
     return () => clearTimeout(timer);
   }, [delay]);
 
@@ -61,25 +61,17 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
 
   const initialPos = getInitialPosition();
 
-  // Above-the-fold or immediate entrance: visible immediately on first paint without blocking behind opacity:0
+  // Above-the-fold or immediate entrance: rendered immediately on first paint
   if (immediate) {
     return (
-      <motion.div
-        initial={false}
-        animate={{
-          opacity: 1,
-          x: 0,
-          y: 0,
-          scale: 1,
-        }}
-        transition={{
-          duration: 0.3,
-          ease: [0.21, 0.47, 0.32, 0.98],
-        }}
+      <div
         className={className}
+        style={{
+          animation: 'fadeIn 0.35s cubic-bezier(0.23, 1, 0.32, 1) forwards',
+        }}
       >
         {children}
-      </motion.div>
+      </div>
     );
   }
 

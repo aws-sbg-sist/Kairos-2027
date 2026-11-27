@@ -4,7 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, ArrowUpRight, ChevronDown, Sparkles } from 'lucide-react';
+import { sound } from '@/lib/audio';
+import { haptics } from '@/lib/haptics';
 
 interface NavLinkItem {
   label: string;
@@ -29,6 +32,18 @@ export const Navbar: React.FC<NavbarProps> = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   const primaryNavLinks: NavLinkItem[] = [
     { label: 'Tracks', href: '/tracks' },
@@ -61,7 +76,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
           {/* Logo & Chapter Lockup */}
           <Link
             href="/"
-            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-aws-orange rounded-lg p-1"
+            onClick={() => {
+              sound?.playClick();
+              haptics?.light();
+            }}
+            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded-lg p-1"
           >
             <div className="relative w-9 h-9 flex-shrink-0">
               <Image
@@ -69,13 +88,13 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 alt="KAIROS 2027 Logo"
                 fill
                 sizes="36px"
-                className="object-contain filter drop-shadow-md group-hover:scale-105 transition-transform"
+                className="object-contain filter drop-shadow-md group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300"
                 priority
               />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="font-display font-black text-lg tracking-wider text-white">
+                <span className="font-display font-black text-lg tracking-wider text-white group-hover:text-purple-300 transition-colors">
                   KAIROS
                 </span>
                 <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-500/40">
@@ -96,9 +115,13 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <Link
                   key={link.label}
                   href={link.href}
+                  onClick={() => {
+                    sound?.playClick();
+                    haptics?.light();
+                  }}
                   className={`px-3 py-1.5 rounded-md transition-colors relative whitespace-nowrap flex-shrink-0 ${
                     isActive
-                      ? 'text-white bg-purple-950/60 font-semibold border border-purple-500/40'
+                      ? 'text-white bg-purple-950/70 font-semibold border border-purple-500/40 shadow-sm shadow-purple-900/30'
                       : 'hover:text-white hover:bg-white/5 text-slate-300'
                   }`}
                 >
@@ -110,7 +133,10 @@ export const Navbar: React.FC<NavbarProps> = () => {
             {/* Streamlined "More" Dropdown */}
             <div className="relative" onMouseLeave={() => setMoreMenuOpen(false)}>
               <button
-                onClick={() => setMoreMenuOpen(!moreMenuOpen)}
+                onClick={() => {
+                  sound?.playHover();
+                  setMoreMenuOpen(!moreMenuOpen);
+                }}
                 onMouseEnter={() => setMoreMenuOpen(true)}
                 className="flex items-center gap-1 px-2.5 py-1.5 rounded-md hover:text-white hover:bg-white/5 text-slate-300 transition-colors"
                 aria-expanded={moreMenuOpen}
@@ -119,20 +145,32 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${moreMenuOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              {moreMenuOpen && (
-                <div className="absolute top-full right-0 mt-1.5 w-48 py-2 rounded-xl bg-slate-950/95 border border-white/10 shadow-2xl backdrop-blur-xl z-50 origin-top-right animate-popover-in stagger-rows">
-                  {secondaryNavLinks.map((subLink) => (
-                    <Link
-                      key={subLink.label}
-                      href={subLink.href}
-                      onClick={() => setMoreMenuOpen(false)}
-                      className="block px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
-                    >
-                      {subLink.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
+              <AnimatePresence>
+                {moreMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                    transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
+                    className="absolute top-full right-0 mt-1.5 w-48 py-2 rounded-xl bg-slate-950/95 border border-white/10 shadow-2xl backdrop-blur-xl z-50 origin-top-right"
+                  >
+                    {secondaryNavLinks.map((subLink) => (
+                      <Link
+                        key={subLink.label}
+                        href={subLink.href}
+                        onClick={() => {
+                          sound?.playClick();
+                          haptics?.light();
+                          setMoreMenuOpen(false);
+                        }}
+                        className="block px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                      >
+                        {subLink.label}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </nav>
 
@@ -140,72 +178,127 @@ export const Navbar: React.FC<NavbarProps> = () => {
           <div className="hidden lg:flex items-center gap-2.5 flex-shrink-0">
             <Link
               href="/dashboard"
-              className="text-xs font-semibold text-slate-200 hover:text-white px-3.5 py-2 rounded-lg border border-white/15 hover:border-purple-500/40 transition-colors"
+              onClick={() => sound?.playClick()}
+              className="text-xs font-semibold text-slate-200 hover:text-white px-3.5 py-2 rounded-lg border border-white/15 hover:border-purple-500/40 hover:bg-white/5 transition-colors"
             >
               Dashboard
             </Link>
 
             <Link
               href="/register"
-              className="relative group px-4 py-2 rounded-lg text-xs font-bold text-white btn-primary-themed shadow-md shadow-purple-900/30 transition-colors duration-300 active:scale-95 flex items-center gap-1.5 whitespace-nowrap"
+              onClick={() => {
+                sound?.playClick();
+                haptics?.medium();
+              }}
+              className="relative group px-4 py-2 rounded-lg text-xs font-bold text-white btn-primary-themed shadow-md shadow-purple-900/40 transition-transform active:scale-[0.96] flex items-center gap-1.5 whitespace-nowrap shine-hover"
             >
               <span>Register Team</span>
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button & Quick CTA */}
           <div className="lg:hidden flex items-center gap-2">
             <Link
               href="/register"
-              className="min-h-[44px] px-3.5 py-2 inline-flex items-center rounded-lg text-xs font-bold btn-primary-themed text-white shadow-sm whitespace-nowrap"
+              onClick={() => {
+                sound?.playClick();
+                haptics?.medium();
+              }}
+              className="min-h-[44px] px-3.5 py-2 inline-flex items-center rounded-lg text-xs font-bold btn-primary-themed text-white shadow-sm whitespace-nowrap active:scale-[0.96]"
             >
               Register
             </Link>
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 focus:outline-none"
+              onClick={() => {
+                sound?.playClick();
+                haptics?.light();
+                setMobileMenuOpen(!mobileMenuOpen);
+              }}
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 active:scale-95 transition-transform"
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 p-4 rounded-xl glass-panel border border-purple-500/20 space-y-3 animate-fadeIn bg-aws-squidInk/95 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain">
-            <div className="grid grid-cols-2 gap-1.5 pb-3 border-b border-white/10">
-              {allNavLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-lg text-xs text-slate-200 hover:text-white hover:bg-purple-950/50 font-medium flex items-center justify-between"
-                >
-                  <span>{link.label}</span>
-                </Link>
-              ))}
-            </div>
+        {/* Mobile Navigation Drawer with Smooth Slide & Backdrop Overlay */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <>
+              {/* Backdrop Overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setMobileMenuOpen(false)}
+                className="fixed inset-0 bg-black/75 backdrop-blur-sm z-[-1]"
+                aria-hidden="true"
+              />
 
-            <div className="grid grid-cols-2 gap-2 text-xs pt-1">
-              <Link
-                href="/dashboard"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-center py-2.5 rounded-lg bg-slate-900 border border-white/10 text-slate-200 font-semibold"
+              {/* Drawer Container */}
+              <motion.div
+                initial={{ opacity: 0, y: -12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -12, scale: 0.98 }}
+                transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
+                className="lg:hidden mt-3 p-4 rounded-2xl glass-panel border border-purple-500/30 space-y-3 bg-aws-squidInk/98 max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain shadow-2xl shadow-black"
               >
-                Dashboard
-              </Link>
-              <Link
-                href="/register"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-center py-2.5 rounded-lg font-bold btn-primary-themed text-white"
-              >
-                Register Team
-              </Link>
-            </div>
-          </div>
-        )}
+                <div className="grid grid-cols-2 gap-2 pb-3 border-b border-white/10">
+                  {allNavLinks.map((link) => {
+                    const isActive = pathname === link.href || pathname?.startsWith(`${link.href}/`);
+                    return (
+                      <Link
+                        key={link.label}
+                        href={link.href}
+                        onClick={() => {
+                          sound?.playClick();
+                          haptics?.light();
+                          setMobileMenuOpen(false);
+                        }}
+                        className={`min-h-[44px] px-3 py-2 rounded-xl text-xs sm:text-sm font-medium flex items-center justify-between transition-colors ${
+                          isActive
+                            ? 'bg-purple-950/70 text-white font-semibold border border-purple-500/40'
+                            : 'text-slate-300 hover:text-white hover:bg-white/5 active:bg-white/10'
+                        }`}
+                      >
+                        <span>{link.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs pt-1">
+                  <Link
+                    href="/dashboard"
+                    onClick={() => {
+                      sound?.playClick();
+                      haptics?.light();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="min-h-[44px] flex items-center justify-center py-2.5 rounded-xl bg-slate-900 border border-white/10 text-slate-200 font-semibold hover:text-white hover:border-purple-500/30 active:scale-[0.97] transition"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => {
+                      sound?.playClick();
+                      haptics?.medium();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="min-h-[44px] flex items-center justify-center py-2.5 rounded-xl font-bold btn-primary-themed text-white active:scale-[0.97] transition shadow-md shadow-purple-900/30"
+                  >
+                    Register Squad
+                  </Link>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );

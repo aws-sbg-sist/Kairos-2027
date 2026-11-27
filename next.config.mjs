@@ -2,15 +2,21 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  compress: true,
   outputFileTracingRoot: process.cwd(),
   // Strict in-memory cache limit for 512MB RAM PaaS containers (Render Free/Starter)
-  cacheMaxMemorySize: 25 * 1024 * 1024,
+  cacheMaxMemorySize: 20 * 1024 * 1024,
   productionBrowserSourceMaps: false,
   experimental: {
     // Tree-shake icons so unused icons are never loaded into server heap (only lucide-react, NOT framer-motion)
     optimizePackageImports: ['lucide-react'],
   },
   images: {
+    // Prevent Sharp from allocating 60MB+ memory buffers for 3840px/2048px images on 512MB containers
+    deviceSizes: [640, 750, 828, 1080, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ['image/webp'],
+    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days immutable image caching
     remotePatterns: [
       {
         protocol: 'https',

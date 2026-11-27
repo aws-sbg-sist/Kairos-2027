@@ -13,7 +13,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: NODE_OPTIONS
-        value: "--max-old-space-size=384"
+        value: "--max-old-space-size=256 --optimize_for_size"
       - key: ADMIN_MASTER_SECRET
         generateValue: true
       - key: NEXT_PUBLIC_APP_URL

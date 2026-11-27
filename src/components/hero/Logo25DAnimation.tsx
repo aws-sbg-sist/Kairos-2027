@@ -43,6 +43,25 @@ export const Logo25DAnimation: React.FC = () => {
     setTilt({ x: 0, y: 0 });
   };
 
+  // Touch parallax movement handler for mobile devices
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (!containerRef.current || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = (touch.clientX - rect.left) / rect.width - 0.5;
+    const y = (touch.clientY - rect.top) / rect.height - 0.5;
+    setTilt({
+      x: -y * 20,
+      y: x * 20,
+    });
+    setIsHovered(true);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    setIsHovered(false);
+    setTilt({ x: 0, y: 0 });
+  }, []);
+
   // Dynamic shadow offset based on tilt
   const shadowX = isHovered ? -tilt.y * 1.5 : 0;
   const shadowY = isHovered ? tilt.x * 1.5 + 20 : 20;
@@ -53,9 +72,11 @@ export const Logo25DAnimation: React.FC = () => {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       className="relative w-full aspect-square max-w-[420px] sm:max-w-[480px] mx-auto flex items-center justify-center cursor-crosshair select-none"
       style={{ perspective: '1100px' }}
-      title="Interactive 2.5D Hologram — Move cursor to tilt perspective"
+      title="Interactive 2.5D Hologram — Move cursor or drag to tilt perspective"
     >
       {/* 2.5D Rotating & Tilting Stage */}
       <div
