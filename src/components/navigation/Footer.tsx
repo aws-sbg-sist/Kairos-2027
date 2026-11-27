@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Mail, MapPin, Calendar, Download, ShieldCheck, Heart, ExternalLink, Award, Users } from 'lucide-react';
@@ -11,6 +11,21 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
+  const [memberCount, setMemberCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    fetch('/api/v1/members')
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => {
+        if (!active || !data?.success) return;
+        const count = typeof data.count === 'number' ? data.count : Array.isArray(data.members) ? data.members.length : null;
+        setMemberCount(count);
+      })
+      .catch(() => {});
+    return () => { active = false; };
+  }, []);
+
   return (
     <footer className="relative bg-[#07070b] border-t border-white/10 pt-16 pb-28 sm:pb-36 overflow-hidden text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -218,7 +233,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                   className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded bg-white/5 border border-white/10 transition-colors"
                 >
                   <Users className="w-3.5 h-3.5" />
-                  <span>106-Member Recognition Wall</span>
+                  <span>{memberCount !== null && memberCount > 0 ? `${memberCount}-Member Recognition Wall` : 'Member Recognition Wall'}</span>
                 </Link>
               </div>
             </div>

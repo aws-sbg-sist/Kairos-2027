@@ -174,36 +174,21 @@ export const PRIZE_POOL_CARDS = [
   {
     position: '1st Place — Overall Grand Champion',
     cashPrize: 'Total Prize Pool & Honors',
-    perks: [
-      'Grand Kairos Acrylic & Brass Champion Trophy',
-      'VC Angel Incubation Fast-Track Pitching',
-      '$5,000 in AWS Cloud Promotional Credits',
-      'Direct Tier-1 Tech Interview Fast-Track',
-      'Streetwear Swag Kit & Gold Certificates'
-    ],
+    perks: ['TBD'],
     highlight: true,
     badge: 'National Grand Champion'
   },
   {
     position: '2nd Place — First Runner-Up',
     cashPrize: 'Total Prize Pool & Honors',
-    perks: [
-      '1st Runner-Up Acrylic Trophy',
-      '$2,500 in AWS Cloud Promotional Credits',
-      'Priority Interview Opportunities with Enterprise Sponsors',
-      'Streetwear Swag Kit & Silver Certificates'
-    ],
+    perks: ['TBD'],
     highlight: false,
     badge: 'First Runner-Up'
   },
   {
     position: '3rd Place — Second Runner-Up',
     cashPrize: 'Total Prize Pool & Honors',
-    perks: [
-      '2nd Runner-Up Acrylic Trophy',
-      '$1,000 in AWS Cloud Promotional Credits',
-      'Streetwear Swag Kit & Bronze Certificates'
-    ],
+    perks: ['TBD'],
     highlight: false,
     badge: 'Second Runner-Up'
   }
@@ -641,52 +626,52 @@ export const HIGHER_MANAGEMENT = {
   },
   superHeads: [
     {
-      code: 'SUPER_HEAD_1',
-      title: 'Chief Partnership & Finance Officer (CPFO)',
+      code: 'LEAD_1',
+      title: 'Events and Management Team Lead',
       leadName: 'Nangaiyar M (Nikki)',
-      registerNo: '44612059',
-      division: 'Division 1: Capital, Sponsorships & Corporate Relations',
-      mandate: 'Leading corporate outreach, ₹3.5L capital management, sponsor closing, and corporate relations execution.'
+      registerNo: '',
+      division: 'Division 1: Events, Operations & Sponsorships',
+      mandate: 'Leading event management, corporate outreach, ₹3.5L capital management, sponsor closing, and execution.'
     },
     {
-      code: 'SUPER_HEAD_2',
-      title: 'Chief Technology & Infrastructure Officer (CTO)',
+      code: 'LEAD_2',
+      title: 'Technical Team Lead',
       leadName: 'Shanmugapriyan',
-      registerNo: '44111257',
+      registerNo: '',
       division: 'Division 2: Cloud Systems & Technical Infrastructure',
       mandate: 'Architecting the portal, 1Gbps high-density arena Wi-Fi mesh, GitHub commit webhook telemetry, and automated Z-score scoring pipeline.'
     },
     {
-      code: 'SUPER_HEAD_3',
-      title: 'Chief Operating Officer (COO)',
+      code: 'LEAD_3',
+      title: 'Vice-President & Hands-On AWS Builder Team Lead',
       leadName: 'Viswanathan Ashok',
-      registerNo: '44110907',
-      division: 'Division 3: Ground Operations, Venue & Transit Logistics',
-      mandate: 'Overseeing venue allocations in Indoor Auditorium, 100-team bay setups, and Sathyabama transit bus fleet operations.'
+      registerNo: '',
+      division: 'Division 3: Hands-On AWS Builder Workshops & Arena Ops',
+      mandate: 'Leading hands-on AWS builder clinics, venue allocations in Indoor Auditorium, 100-team bay setups, and transit operations.'
     },
     {
-      code: 'SUPER_HEAD_4',
-      title: 'Chief Experience Officer (CXO)',
+      code: 'LEAD_4',
+      title: 'Documentation Team Lead',
       leadName: 'Hemavarshine S',
-      registerNo: '44110263',
-      division: 'Division 4: Builder Experience, Hospitality & Dining',
-      mandate: 'Directing 7 complimentary meal services, midnight energy booster drops, and builder welfare throughout 48 hours.'
+      registerNo: '',
+      division: 'Division 4: Documentation, Hospitality & Builder Experience',
+      mandate: 'Directing official hackathon documentation, rulebooks, builder welfare, and hospitality throughout 48 hours.'
     },
     {
-      code: 'SUPER_HEAD_5',
-      title: 'Chief Creative & Media Officer (CCMO)',
-      leadName: 'Rikish B, Caroline Mary McPherson & Harshith Raj S',
-      registerNo: '44110664 / 44110124',
-      division: 'Division 5: Creative Direction, Branding & Media Relations',
-      mandate: 'Official AWS SBGL brand compliance, 20x10ft 4K LED stage visuals, video production, and social broadcasting.'
+      code: 'LEAD_5',
+      title: 'Media Team Lead & Media Team Co-Lead',
+      leadName: 'Caroline Mary McPherson & Harshith Raj S',
+      registerNo: '',
+      division: 'Division 5: Media Production & Social Broadcasting',
+      mandate: 'Video production, stage photography, live media coverage, and official social broadcasting.'
     },
     {
-      code: 'SUPER_HEAD_6',
-      title: 'Chief Safety & Governance Officer (CSO)',
-      leadName: 'Student Governance Cadre',
-      registerNo: '44110855-SEC',
-      division: 'Division 6: Safety, Medical Response & Institutional Compliance',
-      mandate: 'Enforcing 10 PM night lock-in protocols, segregated rest zones, 24/7 on-campus medical supervision, and 100% student IP protection.'
+      code: 'LEAD_6',
+      title: 'Design Team Lead',
+      leadName: 'Rikish B',
+      registerNo: '',
+      division: 'Division 6: Creative Direction & Brand Design',
+      mandate: 'Official AWS SBGL brand compliance, 20x10ft 4K LED stage visuals, event posters, and UI/UX design systems.'
     }
   ]
 };
