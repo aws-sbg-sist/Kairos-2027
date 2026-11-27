@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { EVENT_SCHEDULE } from '@/lib/config';
-import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { EVENT_SCHEDULE, PRE_HACK_CLINICS } from '@/lib/config';
+import { Calendar, Clock, Download, CheckCircle, AlertCircle, Shield, ChevronLeft, ChevronRight, Sparkles, ArrowRight } from 'lucide-react';
 import { sound } from '@/lib/audio';
 import { SpotlightCard } from '@/components/animation/SpotlightCard';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
@@ -33,7 +34,7 @@ export const ScheduleSection: React.FC = () => {
   };
 
   return (
-    <section id="schedule" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
+    <section id="schedule" className="relative py-8 lg:py-14 overflow-hidden bg-aws-canvas">
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-950/40 blur-[170px] pointer-events-none rounded-full" />
 
@@ -141,39 +142,9 @@ export const ScheduleSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Horizontal Timeline Track with Sideways Text Gutter */}
-            <div className="flex items-stretch gap-4">
-              {/* Sideways Text Gutter (Animation #5) */}
-              <div
-                className="hidden lg:flex flex-col items-center justify-between py-6 px-3 rounded-2xl bg-aws-card/75 border border-purple-500/30 backdrop-blur-md shrink-0 select-none shadow-lg shadow-purple-950/20"
-                style={{ minHeight: '340px' }}
-                aria-hidden="true"
-              >
-                <div className="flex flex-col items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-aws-orange animate-ping" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-aws-orange" />
-                </div>
-                
-                <div
-                  className="font-mono text-[11px] font-extrabold tracking-[0.28em] text-purple-300 uppercase whitespace-nowrap flex items-center gap-3"
-                  style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-                >
-                  <span className="text-purple-400">⚡</span>
-                  <span>48-Hour Continuous Hackathon Timeline</span>
-                  <span className="text-purple-400">•</span>
-                  <span className="text-slate-400">IST Operations</span>
-                </div>
-
-                <div className="flex flex-col items-center gap-1">
-                  <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-500/30">
-                    LIVE
-                  </span>
-                </div>
-              </div>
-
-              {/* Horizontal Timeline Track */}
-              <div className="overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin flex-1 min-w-0">
-                <div className="flex gap-4 min-w-max">
+            {/* Horizontal Timeline Track */}
+            <div className="overflow-x-auto pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-thin">
+              <div className="flex gap-4 min-w-max">
                 {activeDay.events.map((milestone, idx) => {
                   const badgeClass = getCategoryBadgeClass(milestone.category);
                   const isCheckpoint = milestone.title.toLowerCase().includes('checkpoint');
@@ -200,7 +171,7 @@ export const ScheduleSection: React.FC = () => {
                             <Clock className="w-3.5 h-3.5 text-purple-400" />
                             <span>{milestone.time}</span>
                           </span>
-                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border  font-semibold ${badgeClass}`}>
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border font-semibold ${badgeClass}`}>
                             {milestone.category}
                           </span>
                         </div>
@@ -234,9 +205,65 @@ export const ScheduleSection: React.FC = () => {
                 })}
               </div>
             </div>
-          </div>
           </motion.div>
         </AnimatePresence>
+
+        {/* Pre-Hackathon Enablement & AWS Clinics */}
+        <div id="clinics" className="mt-16 pt-12 border-t border-white/10 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div className="space-y-1.5">
+              <span className="text-xs font-mono uppercase tracking-widest text-purple-300 block">
+                Pre-Event Workshops &amp; Architecture Readiness
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-display font-black text-white">
+                Pre-Hackathon AWS Clinics (Dec 2026 – Jan 2027)
+              </h3>
+            </div>
+            <Link
+              href="/resources"
+              className="text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5 shrink-0"
+            >
+              <span>Full AWS Learning Library</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {PRE_HACK_CLINICS.map((clinic) => (
+              <div
+                key={clinic.id}
+                className="p-6 rounded-2xl bg-[#0d0d13] border border-white/10 flex flex-col justify-between space-y-4"
+              >
+                <div className="space-y-2.5">
+                  <span className="text-[11px] font-mono text-sky-300 block">{clinic.timing}</span>
+                  <h4 className="text-base font-bold text-white leading-snug">{clinic.title}</h4>
+                  <p className="text-xs text-slate-400 font-mono">{clinic.host}</p>
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{clinic.summary}</p>
+                </div>
+                <div className="pt-3 border-t border-white/10">
+                  {clinic.isDownload ? (
+                    <a
+                      href={clinic.ctaHref}
+                      download="KAIROS_2027_Round0_Pitch_Template.pptx"
+                      className="text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>{clinic.ctaLabel}</span>
+                    </a>
+                  ) : (
+                    <Link
+                      href={clinic.ctaHref}
+                      className="text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5"
+                    >
+                      <span>{clinic.ctaLabel}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

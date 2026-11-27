@@ -5,6 +5,7 @@ export interface WaitlistEntry {
   phone?: string;
   institution: string;
   college?: string;
+  collegeRegNo?: string;
   yearOfStudy: string;
   department: string;
   preferredTrack: string;
@@ -152,6 +153,8 @@ export interface ParticipantTeam {
   onlineQualifierScore?: number;
   onlineDefenseSlot?: string;
   onlineMeetRoomId?: string;
+  architectureSummary?: string;
+  defenseSlotRequested?: string;
 
   // Round 2 On-Campus
   deskBayAllocation?: string;
@@ -301,7 +304,12 @@ export interface StudentAccount {
   portfolioUrl?: string;
   githubUrl?: string;
   linkedinUrl?: string;
+  meetupProfileUrl?: string;
+  meetupRsvpVerified?: boolean;
+  awsBuilderCenterUrl?: string;
   tshirtSize?: string;
+  passwordResetToken?: string;
+  passwordResetExpiresAt?: string;
   createdAt: string;
   lastLoginAt?: string;
 }

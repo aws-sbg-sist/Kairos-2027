@@ -48,6 +48,7 @@ export type KairosPermission =
   | 'waitlist:read'
   | 'waitlist:update_status'
   | 'sponsors:read'
+  | 'sponsors:manage'
   | 'referrals:read'
   | 'teams:read_all'
   | 'teams:manage'
@@ -103,6 +104,7 @@ export const ROLE_PERMISSIONS: Record<KairosRole, Set<KairosPermission>> = {
     'waitlist:read',
     'waitlist:update_status',
     'sponsors:read',
+    'sponsors:manage',
     'referrals:read',
     'teams:read_all',
     'teams:manage',
@@ -130,6 +132,7 @@ export const ROLE_PERMISSIONS: Record<KairosRole, Set<KairosPermission>> = {
     'waitlist:update_status',
     'waitlist:export',
     'sponsors:read',
+    'sponsors:manage',
     'sponsors:export',
     'referrals:read',
     'teams:read_all',

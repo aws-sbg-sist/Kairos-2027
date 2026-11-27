@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { createStudentToken, STUDENT_COOKIE_NAME } from '@/lib/student_auth';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
+import { safeParseJson } from '@/lib/http';
 
 export async function POST(req: NextRequest) {
   // Rate limit: 10 login attempts per minute per IP to prevent brute-forcing
@@ -10,11 +11,13 @@ export async function POST(req: NextRequest) {
     return createRateLimitResponse(rateLimit.resetAt, rateLimit.limit);
   }
 
-  try {
-    const body = await req.json();
-    const { email, password } = body;
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
 
-    if (!email || !password) {
+  try {
+    const { email, password } = parsed.data;
+
+    if (!email || !password || typeof email !== 'string' || typeof password !== 'string') {
       return NextResponse.json(
         { success: false, error: 'Email and password are required.' },
         { status: 400 }

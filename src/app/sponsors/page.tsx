@@ -70,65 +70,6 @@ export default function SponsorsPage() {
     }
   };
 
-  const handleDownloadDeck = () => {
-    // Generate and trigger simulated download of official prospectus summary
-    const content = `KAIROS 2027 :  GRAND EDITION
-Official Corporate Sponsorship Prospectus
-Organized by: AWS Student Builder Group (SIST Chapter)
-Department of Computer Science & Engineering, Sathyabama Institute of Science and Technology
-Lead Organizer: Thenappan T (Register No: 44110855), President & SBGL
-
-Scale & Metrics:
-- 100 Shortlisted National Teams (400 to 600 Elite Hackers)
-- 2,000+ Online Applications Nationwide
-- ₹1,75,000 Total Prize Pool
-- Merit Hackathon : Two-Tier Evaluation Framework
-- Venue: Indoor Auditorium, Sathyabama IST, Chennai - 600119
-- Date: January 22 to 24, 2027 (48-Hour On-Campus Sprint)
-
-Corporate Partnership Tiers:
-1. Title Presenting Partner: ₹2,00,000
-   - Sole Title Branding ("KAIROS 2027 Presented by [Your Brand]")
-   - 20-Minute Keynote Address to all 600 contestants during Inaugural
-   - 2 Table-Side Judge Slots + Main Stage Grand Finale Trophy Handover
-   - Full Opt-In Resume Book of all 600 Builders + 2,000 Online Applicants
-
-2. Co-Powered By Partner: ₹1,00,000
-   - Co-Branding ("KAIROS 2027 Co-Powered by [Your Brand]")
-   - 10-Minute Technical Plenary Address
-   - 1 Judge Seat across Checkpoints & Finales
-   - Dedicated Booth / Hacker Lounge
-   - Full Opt-In Resume Book of Top 100 Finalists
-
-3. Associate / Gold Partner: ₹50,000
-   - 5-Minute Address to contestants
-   - Dedicated Company Technical Track
-   - Physical Standees across Arena corridors
-   - Access to Opt-in Resumes of Top 100 Finalists
-
-4. Technical Track Partner: ₹25,000
-   - Naming rights to 1 of 5 Technical Tracks
-   - Direct API or Problem Statement Alignment
-
-5. In-Kind Fuel / Cloud Partner
-   - Food, Beverages, Snacks, Developer Credits or Hardware Toolkits
-
-Contact:
-Thenappan T (President & SBGL) - sistawscc@gmail.com | +91 6381801640
-Nangaiyar M (CPFO) - Division of Corporate Partnerships
-Target Domain: https://kairos.sathyabama.ac.in
-`;
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'Kairos_2027_Sponsorship_Prospectus.txt';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <div className="min-h-screen bg-aws-canvas text-slate-100 flex flex-col justify-between">
       <Navbar />
@@ -162,9 +103,9 @@ Target Domain: https://kairos.sathyabama.ac.in
             <span>Strategic Enterprise Collaboration</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-6">
-            Partner with India’s Most <br />
+            Partner with India’s <br />
             <span className="gradient-text-kairos bg-clip-text text-transparent">
-              Rigorous Zero-Fee Hackathon
+              Flagship 48-Hour Cloud Hackathon
             </span>
           </h1>
           <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
@@ -172,13 +113,14 @@ Target Domain: https://kairos.sathyabama.ac.in
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <button 
-              onClick={handleDownloadDeck}
+            <a
+              href="/docs/KAIROS_2027_Sponsorship_Prospectus.pdf"
+              download="KAIROS_2027_Sponsorship_Prospectus.pdf"
               className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 via-purple-700 to-purple-900 text-white font-bold text-sm hover:brightness-110 transition shadow-lg shadow-purple-900/40"
             >
               <Download className="w-4 h-4" />
               Download Sponsorship Prospectus (PDF)
-            </button>
+            </a>
             <a 
               href="#inquiry-form"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-purple-500/50 text-slate-200 font-medium text-sm transition"

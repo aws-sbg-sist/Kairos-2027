@@ -55,9 +55,15 @@ export default function StageScreenMode() {
     let cancelled = false;
     const loadTelemetry = async () => {
       try {
-        const response = await fetch('/api/v1/github/webhook', { cache: 'no-store' });
-        const data = await response.json();
-        if (!cancelled && response.ok && data.success) {
+        const [ghRes, flagsRes] = await Promise.all([
+          fetch('/api/v1/github/webhook', { cache: 'no-store' }),
+          fetch('/api/v1/flags', { cache: 'no-store' }),
+        ]);
+        const [data, flagsData] = await Promise.all([
+          ghRes.json().catch(() => null),
+          flagsRes.json().catch(() => null),
+        ]);
+        if (!cancelled && ghRes.ok && data?.success) {
           setTelemetry({
             totalCommits: data.totalCommits || 0,
             activeTeams: Array.isArray(data.teamStats)
@@ -65,6 +71,9 @@ export default function StageScreenMode() {
               : 0,
             recentCommits: Array.isArray(data.recentCommits) ? data.recentCommits.slice(0, 5) : [],
           });
+        }
+        if (!cancelled && flagsRes.ok && flagsData?.success && flagsData.flags?.announcementBanner) {
+          setActiveAnnouncement(flagsData.flags.announcementBanner);
         }
       } catch {
         // Keep the last verified snapshot visible during a temporary network interruption.
@@ -159,7 +168,7 @@ export default function StageScreenMode() {
         {/* Giant Countdown Clock */}
         <div className="space-y-4">
           <span className="text-xs sm:text-sm font-mono   text-slate-400 block font-bold">
-            COUNTDOWN TO HARD CODE FREEZE (08:30 AM IST)
+            COUNTDOWN TO HARD CODE FREEZE (12:15 PM IST)
           </span>
 
           <div className="flex items-center justify-center gap-3 sm:gap-6 font-mono font-black text-6xl sm:text-8xl lg:text-9xl text-white ">

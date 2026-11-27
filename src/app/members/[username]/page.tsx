@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import { OrgMember } from '@/types';
 import { EVENT_CONFIG } from '@/lib/config';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 
 export default function MemberProfilePage() {
   const params = useParams();
@@ -85,15 +87,21 @@ Timestamp: ${new Date().toISOString()}
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-aws-canvas text-slate-100 pt-36 pb-24 text-center font-mono">
-        Loading verified builder portfolio dossier...
+      <div className="min-h-screen bg-aws-canvas text-slate-100 flex flex-col justify-between">
+        <Navbar />
+        <div className="pt-36 pb-24 text-center font-mono flex-1">
+          Loading verified builder portfolio dossier...
+        </div>
+        <Footer />
       </div>
     );
   }
 
   if (!member) {
     return (
-      <div className="min-h-screen bg-aws-canvas text-slate-100 pt-36 pb-24 text-center">
+      <div className="min-h-screen bg-aws-canvas text-slate-100 flex flex-col justify-between">
+        <Navbar />
+        <div className="pt-36 pb-24 text-center flex-1">
         <div className="max-w-md mx-auto p-8 rounded-3xl bg-slate-900 border border-slate-800">
           <h2 className="text-2xl font-bold text-white mb-2">Member Not Found</h2>
           <p className="text-xs text-slate-400 mb-6">
@@ -107,12 +115,16 @@ Timestamp: ${new Date().toISOString()}
             Back to Cadre Directory
           </Link>
         </div>
+        </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-aws-canvas text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen bg-aws-canvas text-slate-100 flex flex-col justify-between">
+      <Navbar />
+      <div className="pt-28 pb-24 flex-1">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
@@ -321,6 +333,8 @@ Timestamp: ${new Date().toISOString()}
         </div>
 
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

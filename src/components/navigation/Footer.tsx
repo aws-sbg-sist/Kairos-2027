@@ -12,29 +12,38 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
   return (
-    <footer className="relative bg-aws-squidInk/95 border-t border-purple-500/20 pt-16 pb-12 overflow-hidden text-slate-300">
-      {/* Background soft glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-purple-950/40 blur-[140px] pointer-events-none rounded-full" />
-
+    <footer className="relative bg-[#07070b] border-t border-white/10 pt-16 pb-28 sm:pb-36 overflow-hidden text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-700/60">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           
-          {/* Column 1: Brand & Identity */}
+          {/* Column 1: Brand & Institutional Identity */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10">
+              <div className="relative w-10 h-10 rounded-xl bg-white p-1 shrink-0 overflow-hidden shadow-sm">
+                <Image
+                  src="/assets/sist-logo.png"
+                  alt="Sathyabama Institute of Science and Technology"
+                  fill
+                  sizes="40px"
+                  className="object-contain p-0.5"
+                  loading="eager"
+                />
+              </div>
+              <div className="relative w-10 h-10 shrink-0">
                 <Image
                   src="/assets/kairos-hourglass.png"
                   alt="KAIROS 2027 Logo"
                   fill
+                  sizes="40px"
                   className="object-contain filter drop-shadow-md"
+                  loading="eager"
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-extrabold text-2xl tracking-wider text-white">
+                <span className="font-display font-extrabold text-xl tracking-wider text-white">
                   KAIROS <span className="text-sm font-mono text-purple-400 font-normal">2027</span>
                 </span>
-                <span className="text-xs text-slate-400 font-medium">Grand Edition - National Technical Hackathon</span>
+                <span className="text-xs text-slate-400 font-medium">Sathyabama IST · NAAC A++ (Category-1 University)</span>
               </div>
             </div>
 
@@ -45,9 +54,19 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
             <div className="pt-1 text-xs text-slate-300 space-y-2">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                <span>
-                  {EVENT_CONFIG.venue.name}, {EVENT_CONFIG.venue.campus}, Chennai
-                </span>
+                <div>
+                  <span>
+                    {EVENT_CONFIG.venue.name}, {EVENT_CONFIG.venue.campus}, Chennai
+                  </span>
+                  <a
+                    href={EVENT_CONFIG.venue.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-2 text-[11px] font-mono text-sky-400 hover:text-sky-300 underline inline-flex items-center gap-0.5"
+                  >
+                    Map <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-purple-400 flex-shrink-0" />
@@ -55,6 +74,42 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                   {EVENT_CONFIG.organizer.contactEmail}
                 </a>
               </div>
+            </div>
+
+            {/* Verified Community Channels */}
+            <div className="pt-1 flex flex-wrap gap-2 text-[11px] font-mono">
+              <a
+                href={EVENT_CONFIG.socialHandles.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+              >
+                Instagram <ExternalLink className="w-2.5 h-2.5 text-purple-400" />
+              </a>
+              <a
+                href={EVENT_CONFIG.socialHandles.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+              >
+                LinkedIn <ExternalLink className="w-2.5 h-2.5 text-sky-400" />
+              </a>
+              <a
+                href={EVENT_CONFIG.socialHandles.meetup}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+              >
+                Meetup <ExternalLink className="w-2.5 h-2.5 text-emerald-400" />
+              </a>
+              <a
+                href={EVENT_CONFIG.socialHandles.xUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+              >
+                X <ExternalLink className="w-2.5 h-2.5 text-slate-400" />
+              </a>
             </div>
 
             {/* Official Hashtags */}
@@ -74,10 +129,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
             </h4>
             <ul className="space-y-2 text-sm text-slate-300">
               <li><Link href="/tracks" className="hover:text-white transition-colors">5 Enterprise Tracks</Link></li>
-              <li><Link href="/#schedule" className="hover:text-white transition-colors">48-Hour Agenda</Link></li>
+              <li><Link href="/schedule" className="hover:text-white transition-colors">48-Hour Agenda</Link></li>
+              <li><Link href="/radar" className="hover:text-white transition-colors">Builder Radar</Link></li>
               <li><Link href="/online-qualifier" className="hover:text-white transition-colors">Round 1 Online Qualifier</Link></li>
               <li><Link href="/on-campus" className="hover:text-white transition-colors">Round 2 On-Campus Guide</Link></li>
-              <li><Link href="/leaderboard" className="hover:text-white transition-colors">Live Leaderboard & Z-Score</Link></li>
+              <li><Link href="/leaderboard" className="hover:text-white transition-colors">Live Leaderboard &amp; Z-Score</Link></li>
               <li><Link href="/stage" className="hover:text-white transition-colors">Auditorium Stage Screen</Link></li>
             </ul>
           </div>
@@ -90,13 +146,32 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
             <ul className="space-y-2 text-sm text-slate-300">
               <li><Link href="/resources" className="hover:text-white transition-colors text-sky-400">AWS SBG Learning Library</Link></li>
               <li><Link href="/sponsors" className="hover:text-white transition-colors">Sponsorship Prospectus</Link></li>
-              <li><Link href="/rules" className="hover:text-white transition-colors">100% Student IP & Rules</Link></li>
-              
+              <li><Link href="/rules" className="hover:text-white transition-colors">100% Student IP &amp; Rules</Link></li>
+              <li>
+                <a
+                  href={EVENT_CONFIG.downloads.brochurePdf}
+                  download="KAIROS_2027_Official_Brochure.pdf"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-slate-300"
+                >
+                  <Download className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Official Brochure (PDF)</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={EVENT_CONFIG.downloads.pitchTemplatePptx}
+                  download="KAIROS_2027_Round0_Pitch_Template.pptx"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-slate-300"
+                >
+                  <Download className="w-3.5 h-3.5 text-sky-400" />
+                  <span>Round 0 Pitch Deck (.pptx)</span>
+                </a>
+              </li>
               <li>
                 <a
                   href="/api/calendar"
                   download="KAIROS_2027_Schedule.ics"
-                  className="hover:text-white transition-colors flex items-center gap-1 text-slate-400"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-slate-400"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download .ICS Calendar</span>
@@ -112,12 +187,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
             </h4>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <div className="relative w-7 h-7 flex-shrink-0">
+                <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/15 flex-shrink-0">
                   <Image
                     src="/assets/aws-sbg-logo.png"
                     alt="AWS Student Builder Group"
                     fill
-                    className="object-contain"
+                    sizes="32px"
+                    className="object-cover"
+                    loading="eager"
                   />
                 </div>
                 <span className="text-xs text-slate-200 font-medium">
@@ -158,15 +235,25 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800 text-xs">
-            <p>© 2026 to 2027 KAIROS Hackathon. AWS Student Builder Group :  SIST Chapter. Sathyabama Institute of Science and Technology.</p>
-            <div className="flex items-center gap-4 text-slate-400">
-              <Link href="/rules" className="hover:text-white">IP & Conduct</Link>
+            <p>© 2026–2027 KAIROS Hackathon. AWS Student Builder Group · SIST Chapter, Sathyabama Institute of Science and Technology.</p>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-slate-400">
+              <Link href="/rules" className="hover:text-white">IP &amp; Conduct</Link>
+              {onOpenTerms && (
+                <>
+                  <span>|</span>
+                  <button type="button" onClick={onOpenTerms} className="hover:text-white">
+                    Terms &amp; Policy
+                  </button>
+                </>
+              )}
               <span>|</span>
               <a href="https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/" target="_blank" rel="noopener noreferrer" className="hover:text-white">
                 Official Meetup Chapter ↗
               </a>
               <span>|</span>
-              <span className="text-purple-400 font-mono">National Hackathon</span>
+              <Link href="/admin/login" className="hover:text-purple-300 font-mono text-[11px]">
+                Organizer Console
+              </Link>
             </div>
           </div>
         </div>

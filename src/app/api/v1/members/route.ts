@@ -15,21 +15,26 @@ export async function GET(req: NextRequest) {
   const search = searchParams.get('search') || undefined;
   const batch = searchParams.get('batch') || undefined;
 
-  const session = await getCurrentAdminSession();
-  const members = await db.getMembers({ tier, division, search, batch });
+  try {
+    const session = await getCurrentAdminSession();
+    const members = await db.getMembers({ tier, division, search, batch });
 
-  // Protect student PII: strip registerNo unless requested by an authenticated admin
-  const sanitizedMembers = session
-    ? members
-    : members.map(m => {
-        const { registerNo, ...sanitized } = m;
-        return sanitized;
-      });
+    // Protect student PII: strip registerNo unless requested by an authenticated admin
+    const sanitizedMembers = session
+      ? members
+      : members.map(m => {
+          const { registerNo, ...sanitized } = m;
+          return sanitized;
+        });
 
-  return NextResponse.json({
-    success: true,
-    totalCadre: 106,
-    returnedCount: sanitizedMembers.length,
-    members: sanitizedMembers
-  });
+    return NextResponse.json({
+      success: true,
+      totalCadre: 106,
+      returnedCount: sanitizedMembers.length,
+      members: sanitizedMembers
+    });
+  } catch (err: any) {
+    console.error('[API Members GET Error]:', err);
+    return NextResponse.json({ success: false, error: 'Failed to load organizing cadre.' }, { status: 500 });
+  }
 }

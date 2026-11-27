@@ -33,6 +33,7 @@ export default function CSATPage() {
 
   // Live Metrics for Organizers
   const [stats, setStats] = useState<any>(null);
+  const [isSuperadmin, setIsSuperadmin] = useState(false);
 
   const availableServices = [
     'Amazon Bedrock',
@@ -69,6 +70,23 @@ export default function CSATPage() {
     }
     loadStats();
   }, [submitted]);
+
+  useEffect(() => {
+    async function checkSuperadmin() {
+      try {
+        const res = await fetch('/api/admin/auth');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated && data.organizer?.isSuperadmin) {
+            setIsSuperadmin(true);
+          }
+        }
+      } catch {
+        // non-blocking
+      }
+    }
+    checkSuperadmin();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,14 +137,16 @@ export default function CSATPage() {
             <span className="text-emerald-400 font-mono">Post-Event CSAT Survey</span>
           </div>
 
-          <a
-            href="/api/v1/csat/export"
-            download="kairos_2027_csat_export.csv"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 hover:border-emerald-400 transition"
-          >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
-            Export AWS SBG CSV
-          </a>
+          {isSuperadmin && (
+            <a
+              href="/api/v1/csat/export"
+              download="kairos_2027_csat_export.csv"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 hover:border-emerald-400 transition"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
+              Export AWS SBG CSV
+            </a>
+          )}
         </div>
 
         {/* Header */}
@@ -142,7 +162,7 @@ export default function CSATPage() {
             </span>
           </h1>
           <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed">
-            Your honest evaluation helps our AWS Student Builder Group chapter continuously refine standards for zero-fee builder events across India.
+            Your honest evaluation helps our AWS Student Builder Group chapter continuously refine standards for student engineering events across India.
           </p>
         </div>
 
@@ -334,7 +354,7 @@ export default function CSATPage() {
                   rows={2}
                   value={testimonial}
                   onChange={e => setTestimonial(e.target.value)}
-                  placeholder="e.g. 'KAIROS 2027 showed us what real cloud engineering at scale feels like — the zero-fee merit model was unforgettable.'"
+                  placeholder="e.g. 'KAIROS 2027 showed us what real cloud engineering at scale feels like — the 48-hour merit sprint was unforgettable.'"
                   className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-400 text-sm text-white placeholder-slate-400 outline-none transition"
                 />
               </div>

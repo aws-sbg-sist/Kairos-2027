@@ -2,6 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 import { 
   Crown, 
   ShieldCheck, 
@@ -21,7 +24,9 @@ export default function LeadershipPage() {
   const apex = HIGHER_MANAGEMENT.apexLeader;
 
   return (
-    <div className="min-h-screen bg-aws-canvas text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen flex flex-col bg-aws-canvas text-slate-100">
+      <Navbar />
+      <div className="pt-28 pb-24 flex-grow relative">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[550px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
@@ -137,24 +142,61 @@ export default function LeadershipPage() {
             <h3 className="text-2xl sm:text-3xl font-bold text-white">Institutional Oversight & Deans</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-8">
             {HIGHER_MANAGEMENT.facultyCoordinators.map((fac, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-xl flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-300 font-bold font-mono flex items-center justify-center shrink-0">
+              <div key={idx} className="p-6 rounded-2xl bg-[#0d0d13] border border-white/10 shadow-xl flex items-start gap-4">
+                <div className="w-11 h-11 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-300 font-bold font-mono flex items-center justify-center shrink-0">
                   FC
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-white mb-1">{fac.name}</h4>
-                  <div className="text-xs text-purple-400 font-mono mb-2">{fac.role}</div>
-                  <p className="text-xs text-slate-400">{fac.department}</p>
+                  <h4 className="text-base font-bold text-white mb-1">{fac.name}</h4>
+                  <div className="text-xs text-purple-400 font-mono mb-1.5">{fac.role}</div>
+                  <p className="text-xs text-slate-400 leading-snug">{fac.department}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 text-center max-w-3xl mx-auto text-xs text-slate-400 space-y-1 font-mono">
-            <div><strong className="text-slate-300">Dean Computing & HoD CSE:</strong> {HIGHER_MANAGEMENT.institutionalDeans.deanComputing}</div>
-            <div><strong className="text-slate-300">Vice Chancellor:</strong> {HIGHER_MANAGEMENT.institutionalDeans.viceChancellor}</div>
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 p-6 rounded-2xl bg-[#09090d] border border-white/10 text-xs">
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="relative w-10 h-10 rounded-xl bg-white p-1 shrink-0">
+                  <Image src="/assets/sist-logo.png" alt="Sathyabama Crest" fill className="object-contain p-0.5" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 block">Chief Patrons</span>
+                  <span className="font-bold text-white">Sathyabama Management</span>
+                </div>
+              </div>
+              {HIGHER_MANAGEMENT.chiefPatrons.map((p) => (
+                <div key={p.name} className="text-slate-300">
+                  <strong className="text-white">{p.name}</strong> · <span className="text-slate-400">{p.title}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-2 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-5">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 block">Patron</span>
+              <div className="text-slate-300 pb-3">
+                <strong className="text-white">{HIGHER_MANAGEMENT.patron.name}</strong> · <span className="text-slate-400">{HIGHER_MANAGEMENT.patron.title}</span>
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-sky-300 block">Official Chapter</span>
+              <div className="flex items-center gap-2.5 pt-1">
+                <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/15 shrink-0">
+                  <Image src="/assets/aws-sbg-logo.png" alt="AWS SBG SIST" fill className="object-cover" />
+                </div>
+                <span className="text-slate-300 font-medium">AWS Student Builder Group · SIST</span>
+              </div>
+            </div>
+
+            <div className="space-y-2 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-5">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 block">Convenors</span>
+              {HIGHER_MANAGEMENT.convenors.map((c) => (
+                <div key={c.name} className="text-slate-300">
+                  <strong className="text-white">{c.name}</strong> · <span className="text-slate-400">{c.title}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -219,6 +261,8 @@ export default function LeadershipPage() {
         </div>
 
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

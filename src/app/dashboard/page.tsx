@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { 
@@ -24,9 +25,18 @@ import {
   PlusCircle,
   Bell,
   Sparkles,
-  Github
+  Github,
+  LogOut,
+  Radio,
+  Pencil,
+  UserPlus,
+  Trash2,
+  Crown,
+  FileText
 } from 'lucide-react';
 import { ParticipantTeam, WaitlistEntry, CheckpointEvaluation } from '@/types';
+import { TECHNICAL_TRACKS } from '@/lib/config';
+import { DeckUploader } from '@/components/forms/DeckUploader';
 
 interface StudentProfile {
   id: string;
@@ -55,7 +65,9 @@ interface Announcement {
 }
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [loggingOut, setLoggingOut] = useState(false);
   const [student, setStudent] = useState<StudentProfile | null>(null);
   const [team, setTeam] = useState<ParticipantTeam | null>(null);
   const [waitlist, setWaitlist] = useState<WaitlistEntry | null>(null);
@@ -63,6 +75,24 @@ export default function DashboardPage() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [copiedVoucher, setCopiedVoucher] = useState(false);
   const [copiedInvite, setCopiedInvite] = useState(false);
+  const [actionMsg, setActionMsg] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
+
+  // Squad Management States (Edit, Invite, Transfer, Leave/Remove)
+  const [showEditTeam, setShowEditTeam] = useState(false);
+  const [savingTeam, setSavingTeam] = useState(false);
+  const [editForm, setEditForm] = useState({
+    teamName: '',
+    trackId: TECHNICAL_TRACKS[0].id,
+    problemTitle: '',
+    problemAbstract: '',
+    architecturePdfUrl: '',
+    githubUrl: '',
+  });
+  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviting, setInviting] = useState(false);
+  const [newLeaderEmail, setNewLeaderEmail] = useState('');
+  const [transferring, setTransferring] = useState(false);
+  const [removingEmail, setRemovingEmail] = useState<string | null>(null);
 
   useEffect(() => {
     // 1. Fetch authenticated student profile and team details
@@ -78,6 +108,16 @@ export default function DashboardPage() {
         if (data && data.success) {
           setStudent(data.student || null);
           setTeam(data.team || null);
+          if (data.team) {
+            setEditForm({
+              teamName: data.team.teamName || '',
+              trackId: data.team.trackId || TECHNICAL_TRACKS[0].id,
+              problemTitle: data.team.problemTitle || '',
+              problemAbstract: data.team.problemAbstract || '',
+              architecturePdfUrl: data.team.architecturePdfUrl || '',
+              githubUrl: data.team.githubUrl || '',
+            });
+          }
           setWaitlist(data.waitlist || null);
           setEvaluations(data.evaluations || []);
         }
@@ -108,6 +148,161 @@ export default function DashboardPage() {
     setTimeout(() => setCopiedInvite(false), 2000);
   };
 
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      router.push('/login');
+    } catch (err) {
+      console.error('[Logout Error]:', err);
+      setLoggingOut(false);
+    }
+  };
+
+  const syncTeamState = (updatedTeam: ParticipantTeam) => {
+    setTeam(updatedTeam);
+    setEditForm({
+      teamName: updatedTeam.teamName || '',
+      trackId: updatedTeam.trackId || TECHNICAL_TRACKS[0].id,
+      problemTitle: updatedTeam.problemTitle || '',
+      problemAbstract: updatedTeam.problemAbstract || '',
+      architecturePdfUrl: updatedTeam.architecturePdfUrl || '',
+      githubUrl: updatedTeam.githubUrl || '',
+    });
+  };
+
+  const isTeamLeader = Boolean(
+    team &&
+    student &&
+    (team.leaderEmail?.toLowerCase() === student.email.toLowerCase() ||
+      (team.members || []).some(m => m.email?.toLowerCase() === student.email.toLowerCase() && m.role === 'Leader'))
+  );
+
+  const handleSaveTeamEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!team) return;
+    setSavingTeam(true);
+    setActionMsg(null);
+    try {
+      const res = await fetch('/api/v1/team', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          teamCode: team.teamCode || team.id,
+          ...editForm,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success && data.team) {
+        syncTeamState(data.team);
+        setShowEditTeam(false);
+        setActionMsg({ type: 'ok', text: 'Team details and deliverables saved!' });
+      } else {
+        setActionMsg({ type: 'err', text: data.error || 'Failed to update team details.' });
+      }
+    } catch {
+      setActionMsg({ type: 'err', text: 'Network error updating team details.' });
+    } finally {
+      setSavingTeam(false);
+    }
+  };
+
+  const handleInviteTeammate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!team || !inviteEmail.trim()) return;
+    setInviting(true);
+    setActionMsg(null);
+    try {
+      const res = await fetch('/api/v1/team/invite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          teamCode: team.teamCode || team.id,
+          inviteeEmail: inviteEmail.trim(),
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setActionMsg({ type: 'ok', text: data.message || `Invitation sent to ${inviteEmail.trim()}` });
+        setInviteEmail('');
+      } else {
+        setActionMsg({ type: 'err', text: data.error || 'Failed to send invite.' });
+      }
+    } catch {
+      setActionMsg({ type: 'err', text: 'Network error sending invitation.' });
+    } finally {
+      setInviting(false);
+    }
+  };
+
+  const handleRemoveOrLeaveMember = async (memberEmail: string) => {
+    if (!team) return;
+    const isSelf = student?.email.toLowerCase() === memberEmail.toLowerCase();
+    if (!confirm(isSelf ? 'Are you sure you want to leave this squad?' : `Remove ${memberEmail} from your squad?`)) {
+      return;
+    }
+    setRemovingEmail(memberEmail);
+    setActionMsg(null);
+    try {
+      const res = await fetch('/api/v1/team/members', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          teamCode: team.teamCode || team.id,
+          memberEmail,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        if (isSelf) {
+          setTeam(null);
+          setActionMsg({ type: 'ok', text: 'You have left the squad.' });
+        } else if (data.team) {
+          syncTeamState(data.team);
+          setActionMsg({ type: 'ok', text: data.message || 'Member removed.' });
+        }
+      } else {
+        setActionMsg({ type: 'err', text: data.error || 'Failed to remove member.' });
+      }
+    } catch {
+      setActionMsg({ type: 'err', text: 'Network error updating roster.' });
+    } finally {
+      setRemovingEmail(null);
+    }
+  };
+
+  const handleTransferLeadership = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!team || !newLeaderEmail) return;
+    if (!confirm(`Transfer Team Leader captaincy to ${newLeaderEmail}? You will become a Backend squad member.`)) {
+      return;
+    }
+    setTransferring(true);
+    setActionMsg(null);
+    try {
+      const res = await fetch('/api/v1/team/transfer-leadership', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          teamCode: team.teamCode || team.id,
+          newLeaderEmail,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success && data.team) {
+        syncTeamState(data.team);
+        setNewLeaderEmail('');
+        setActionMsg({ type: 'ok', text: data.message || 'Leadership transferred.' });
+      } else {
+        setActionMsg({ type: 'err', text: data.error || 'Failed to transfer leadership.' });
+      }
+    } catch {
+      setActionMsg({ type: 'err', text: 'Network error transferring leadership.' });
+    } finally {
+      setTransferring(false);
+    }
+  };
+
   const getStageBadge = (stage?: string) => {
     switch (stage) {
       case 'ON_CAMPUS_QUALIFIED':
@@ -125,7 +320,7 @@ export default function DashboardPage() {
       default:
         return {
           title: 'STAGE 0: ROUND 0 APPLICANT',
-          desc: 'Abstract under initial technical review. Ensure your team has 4–6 verified members.',
+          desc: 'Abstract under initial technical review. Ensure your team has 3–6 verified members.',
           badgeClass: 'bg-purple-950/60 text-purple-300 border-purple-500/40'
         };
     }
@@ -227,7 +422,7 @@ export default function DashboardPage() {
               </h1>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <Link
                 href="/portal/pass"
                 className="px-4 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 text-white border border-white/20 flex items-center gap-2 transition-colors shadow-sm"
@@ -237,11 +432,20 @@ export default function DashboardPage() {
               </Link>
               <Link
                 href="/online-qualifier"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors shadow-md flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-purple-700 to-purple-900 text-white hover:brightness-110 transition-colors shadow-md flex items-center gap-1.5"
               >
                 <Video className="w-4 h-4" />
                 <span>Round 1 Qualifier Bay</span>
               </Link>
+              <button
+                onClick={handleLogout}
+                disabled={loggingOut}
+                className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-rose-300 hover:bg-rose-500/10 border border-white/10 hover:border-rose-500/30 transition-colors flex items-center gap-1.5"
+                title="Sign Out"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">{loggingOut ? 'Signing Out...' : 'Sign Out'}</span>
+              </button>
             </div>
           </div>
 
@@ -338,7 +542,7 @@ export default function DashboardPage() {
                     You have an active builder identity, but are not enrolled in a hackathon squad yet.
                   </h3>
                   <p className="text-xs text-slate-300">
-                    KAIROS 2027 requires squads of 4 to 6 builders. Create your team or join with an invite code.
+                    KAIROS 2027 requires squads of 3 to 6 builders. Create your team or join with an invite code.
                   </p>
                 </div>
 
@@ -357,6 +561,14 @@ export default function DashboardPage() {
                   >
                     <span>Join with Code</span>
                   </Link>
+
+                  <Link
+                    href="/radar"
+                    className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-purple-300 border border-purple-500/30 text-xs font-semibold transition-colors flex items-center gap-1.5"
+                  >
+                    <Radio className="w-3.5 h-3.5" />
+                    <span>Find Teammates on Radar</span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -370,68 +582,280 @@ export default function DashboardPage() {
               
               {/* Team Roster Card */}
               {team ? (
-                <div className="p-6 rounded-3xl bg-aws-card border border-slate-700/60 space-y-4">
-                  <div className="flex items-center justify-between">
+                <div className="p-6 rounded-3xl bg-aws-card border border-slate-700/60 space-y-5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <Users className="w-5 h-5 text-purple-400" />
                       <h3 className="text-base font-bold text-white font-display">
                         Verified Squad Roster ({team.members?.length || 0} / 6 Builders)
                       </h3>
                     </div>
-                    {team.inviteCode && (
-                      <button
-                        onClick={() => copyInvite(team.inviteCode || '')}
-                        className="px-3 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-purple-500/30 text-xs font-mono text-purple-300 flex items-center gap-1.5 transition-colors"
-                        title="Copy Squad Join Code"
-                      >
-                        {copiedInvite ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>Code: {team.inviteCode}</span>
-                      </button>
-                    )}
+                    <div className="flex flex-wrap items-center gap-2">
+                      {isTeamLeader && (
+                        <button
+                          type="button"
+                          onClick={() => setShowEditTeam(prev => !prev)}
+                          className="px-3 py-1 rounded-xl bg-purple-900/50 hover:bg-purple-800/60 border border-purple-500/40 text-xs font-semibold text-purple-200 flex items-center gap-1.5 transition-colors"
+                        >
+                          <Pencil className="w-3.5 h-3.5" />
+                          <span>{showEditTeam ? 'Close Editor' : 'Edit Team & Deck'}</span>
+                        </button>
+                      )}
+                      {team.inviteCode && (
+                        <button
+                          onClick={() => copyInvite(team.inviteCode || '')}
+                          className="px-3 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-purple-500/30 text-xs font-mono text-purple-300 flex items-center gap-1.5 transition-colors"
+                          title="Copy Squad Join Code"
+                        >
+                          {copiedInvite ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                          <span>Code: {team.inviteCode}</span>
+                        </button>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {team.members?.map((m: any, i: number) => (
-                      <div key={m.id || m.email || i} className="p-4 rounded-2xl bg-slate-900/90 border border-slate-700/60 flex items-start justify-between">
+                  {actionMsg && (
+                    <div className={`p-3 rounded-xl text-xs border ${
+                      actionMsg.type === 'ok'
+                        ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300'
+                        : 'bg-rose-950/50 border-rose-500/40 text-rose-300'
+                    }`}>
+                      {actionMsg.text}
+                    </div>
+                  )}
+
+                  {/* Team Leader Editor (PATCH /api/v1/team) */}
+                  {isTeamLeader && showEditTeam && (
+                    <form onSubmit={handleSaveTeamEdit} className="p-4 rounded-2xl bg-slate-950/80 border border-purple-500/30 space-y-4">
+                      <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                        <span className="text-xs font-mono font-bold text-purple-300">UPDATE SQUAD DETAILS &amp; PITCH DECK</span>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <h4 className="text-sm font-bold text-white">{m.name}</h4>
-                            {m.role === 'Leader' && (
-                              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-purple-950/60 text-purple-400">
-                                LEAD
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-xs text-purple-300 font-mono">{m.role || 'Builder'} • {m.college || 'SIST'}</p>
-                          <p className="text-[11px] text-slate-400 font-mono truncate">{m.email}</p>
+                          <label className="text-[11px] font-mono text-slate-300">Team Name</label>
+                          <input
+                            type="text"
+                            required
+                            value={editForm.teamName}
+                            onChange={e => setEditForm({ ...editForm, teamName: e.target.value })}
+                            className="w-full px-3 py-2 rounded-xl glass-input text-xs"
+                          />
                         </div>
-                        <div className="text-right">
-                          <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${m.confirmed || m.meetupRsvpVerified ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' : 'bg-slate-800 text-slate-400 border-slate-700'}`}>
-                            {m.confirmed || m.meetupRsvpVerified ? 'RSVP Verified' : 'Confirmed'}
-                          </span>
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-mono text-slate-300">Technical Track</label>
+                          <select
+                            value={editForm.trackId}
+                            onChange={e => setEditForm({ ...editForm, trackId: e.target.value })}
+                            className="w-full px-3 py-2 rounded-xl glass-input text-xs bg-slate-900"
+                          >
+                            {TECHNICAL_TRACKS.map(t => (
+                              <option key={t.id} value={t.id}>{t.title}</option>
+                            ))}
+                          </select>
                         </div>
                       </div>
-                    ))}
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-mono text-slate-300">Project Title</label>
+                        <input
+                          type="text"
+                          required
+                          value={editForm.problemTitle}
+                          onChange={e => setEditForm({ ...editForm, problemTitle: e.target.value })}
+                          className="w-full px-3 py-2 rounded-xl glass-input text-xs"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-mono text-slate-300">Project Abstract (Max 300 words)</label>
+                        <textarea
+                          rows={3}
+                          required
+                          value={editForm.problemAbstract}
+                          onChange={e => setEditForm({ ...editForm, problemAbstract: e.target.value })}
+                          className="w-full px-3 py-2 rounded-xl glass-input text-xs"
+                        />
+                      </div>
+                      <DeckUploader
+                        label="Round 0 / Architecture Pitch Deck (.pdf or .pptx)"
+                        artifactType="pitch_deck"
+                        value={editForm.architecturePdfUrl}
+                        onChange={url => setEditForm({ ...editForm, architecturePdfUrl: url })}
+                      />
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-mono text-slate-300">GitHub Repository URL</label>
+                        <input
+                          type="url"
+                          value={editForm.githubUrl}
+                          onChange={e => setEditForm({ ...editForm, githubUrl: e.target.value })}
+                          placeholder="https://github.com/org/repo"
+                          className="w-full px-3 py-2 rounded-xl glass-input text-xs font-mono"
+                        />
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setShowEditTeam(false)}
+                          className="px-4 py-2 rounded-xl text-xs text-slate-300 bg-white/5 hover:bg-white/10"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={savingTeam}
+                          className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 disabled:opacity-50"
+                        >
+                          {savingTeam ? 'Saving...' : 'Save Team Changes'}
+                        </button>
+                      </div>
+                    </form>
+                  )}
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {team.members?.map((m: any, i: number) => {
+                      const isSelf = student.email.toLowerCase() === m.email?.toLowerCase();
+                      const canRemove =
+                        (isTeamLeader && m.role !== 'Leader') ||
+                        (!isTeamLeader && isSelf);
+                      return (
+                        <div key={m.id || m.email || i} className="p-4 rounded-2xl bg-slate-900/90 border border-slate-700/60 flex items-start justify-between gap-2">
+                          <div className="space-y-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <h4 className="text-sm font-bold text-white truncate">{m.name}</h4>
+                              {m.role === 'Leader' && (
+                                <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-purple-950/60 text-purple-400">
+                                  LEAD
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-purple-300 font-mono">{m.role || 'Builder'} • {m.college || 'SIST'}</p>
+                            <p className="text-[11px] text-slate-400 font-mono truncate">{m.email}</p>
+                          </div>
+                          <div className="text-right flex flex-col items-end gap-1.5 shrink-0">
+                            <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${m.confirmed || m.meetupRsvpVerified ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' : 'bg-slate-800 text-slate-400 border-slate-700'}`}>
+                              {m.confirmed || m.meetupRsvpVerified ? 'RSVP Verified' : 'Confirmed'}
+                            </span>
+                            {canRemove && (
+                              <button
+                                type="button"
+                                disabled={removingEmail === m.email}
+                                onClick={() => handleRemoveOrLeaveMember(m.email)}
+                                className="inline-flex items-center gap-1 text-[10px] font-mono text-rose-400 hover:text-rose-300"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                                <span>{isSelf ? 'Leave Squad' : 'Remove'}</span>
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
 
-                  {/* Problem Abstract Card */}
+                  {/* Team Leader Invite & Leadership Transfer Controls */}
+                  {isTeamLeader && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                      {(team.members?.length || 0) < 6 && (
+                        <form onSubmit={handleInviteTeammate} className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-2">
+                          <label className="text-[11px] font-mono text-purple-300 font-bold flex items-center gap-1.5">
+                            <UserPlus className="w-3.5 h-3.5" />
+                            <span>Invite Teammate via Email</span>
+                          </label>
+                          <div className="flex gap-2">
+                            <input
+                              type="email"
+                              required
+                              value={inviteEmail}
+                              onChange={e => setInviteEmail(e.target.value)}
+                              placeholder="teammate@college.edu"
+                              className="flex-1 min-w-0 px-3 py-1.5 rounded-xl glass-input text-xs"
+                            />
+                            <button
+                              type="submit"
+                              disabled={inviting}
+                              className="px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-600 text-white text-xs font-bold shrink-0"
+                            >
+                              {inviting ? 'Sending...' : 'Invite'}
+                            </button>
+                          </div>
+                        </form>
+                      )}
+
+                      {(team.members?.filter(m => m.role !== 'Leader').length || 0) > 0 && (
+                        <form onSubmit={handleTransferLeadership} className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-2">
+                          <label className="text-[11px] font-mono text-amber-300 font-bold flex items-center gap-1.5">
+                            <Crown className="w-3.5 h-3.5" />
+                            <span>Transfer Team Captaincy</span>
+                          </label>
+                          <div className="flex gap-2">
+                            <select
+                              required
+                              value={newLeaderEmail}
+                              onChange={e => setNewLeaderEmail(e.target.value)}
+                              className="flex-1 min-w-0 px-3 py-1.5 rounded-xl glass-input text-xs bg-slate-900"
+                            >
+                              <option value="">Select squad member...</option>
+                              {team.members
+                                .filter(m => m.role !== 'Leader')
+                                .map(m => (
+                                  <option key={m.email} value={m.email}>
+                                    {m.name} ({m.email})
+                                  </option>
+                                ))}
+                            </select>
+                            <button
+                              type="submit"
+                              disabled={transferring || !newLeaderEmail}
+                              className="px-3 py-1.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-xs font-bold shrink-0 disabled:opacity-50"
+                            >
+                              {transferring ? '...' : 'Transfer'}
+                            </button>
+                          </div>
+                        </form>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Problem Abstract & Deliverables Card */}
                   {team.problemTitle && (
-                    <div className="p-4 rounded-2xl bg-slate-950/60 border border-purple-500/20 space-y-2 pt-3">
-                      <div className="flex items-center justify-between">
+                    <div className="p-4 rounded-2xl bg-slate-950/60 border border-purple-500/20 space-y-2.5 pt-3">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
                         <span className="text-[10px] font-mono text-purple-400 uppercase font-bold">
-                          SUBMITTED ROUND 0 DELIVERABLE
+                          SUBMITTED DELIVERABLES &amp; ABSTRACT
                         </span>
-                        {team.githubUrl && (
-                          <a
-                            href={team.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs text-purple-300 hover:text-white flex items-center gap-1 font-mono"
-                          >
-                            <Github className="w-3.5 h-3.5" />
-                            <span>Repository</span>
-                          </a>
-                        )}
+                        <div className="flex flex-wrap items-center gap-3">
+                          {team.architecturePdfUrl && (
+                            <a
+                              href={team.architecturePdfUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-sky-300 hover:text-white flex items-center gap-1 font-mono underline"
+                            >
+                              <FileText className="w-3.5 h-3.5" />
+                              <span>Pitch Deck / Architecture</span>
+                            </a>
+                          )}
+                          {team.githubUrl && (
+                            <a
+                              href={team.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-purple-300 hover:text-white flex items-center gap-1 font-mono underline"
+                            >
+                              <Github className="w-3.5 h-3.5" />
+                              <span>Repository</span>
+                            </a>
+                          )}
+                          {team.loomVideoUrl && (
+                            <a
+                              href={team.loomVideoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-emerald-300 hover:text-white flex items-center gap-1 font-mono underline"
+                            >
+                              <Video className="w-3.5 h-3.5" />
+                              <span>R1 Video</span>
+                            </a>
+                          )}
+                        </div>
                       </div>
                       <h4 className="text-sm font-bold text-white">{team.problemTitle}</h4>
                       <p className="text-xs text-slate-300 leading-relaxed">{team.problemAbstract}</p>

@@ -3,13 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Calendar, MapPin, Download, ShieldCheck, Play, Users, Sparkles } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Users, Trophy, Layers } from 'lucide-react';
 import { EVENT_CONFIG } from '@/lib/config';
 import { Logo25DAnimation } from './Logo25DAnimation';
-import { sound } from '@/lib/audio';
 import { CosmicBackground } from '@/components/animation/CosmicBackground';
-import { LayeredParallax } from '@/components/animation/LayeredParallax';
-import { KineticText } from '@/components/animation/KineticText';
 import { MagneticButton } from '@/components/animation/MagneticButton';
 import { ScrollReveal } from '@/components/animation/ScrollReveal';
 
@@ -18,7 +15,7 @@ interface HeroSectionProps {
   onOpenProspectus?: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpenProspectus }) => {
+export const HeroSection: React.FC<HeroSectionProps> = () => {
   const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
     days: 0,
     hours: 0,
@@ -63,190 +60,159 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenWaitlist, onOpen
   }, []);
 
   return (
-    <section className="relative min-h-[92dvh] pt-24 sm:pt-32 lg:pt-40 pb-14 sm:pb-20 lg:pb-28 flex flex-col justify-center overflow-hidden">
-      {/* Layered Parallax Environment (Animation #1) */}
-      <LayeredParallax />
-
-      {/* Cosmic Environment Background with Orbital Rings & Star Dust */}
-      <CosmicBackground particleCount={50} interactive={true} />
+    <section className="relative pt-24 sm:pt-28 lg:pt-28 pb-14 sm:pb-16 lg:pb-20 flex flex-col justify-center overflow-hidden bg-[#09090d]">
+      <CosmicBackground particleCount={35} interactive={true} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* Left Column: Hero Typography & CTAs (7 cols) */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
-            {/* Event Category Badge & Watch Logo Reveal Button */}
-            <ScrollReveal direction="down" distance={20} delay={0.05} immediate={true}>
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-aws-squidInk/90 border border-purple-500/30 text-purple-300 text-xs sm:text-sm font-mono shadow-md backdrop-blur-md">
-                  <ShieldCheck className="w-4 h-4 text-purple-400 shrink-0" />
-                  <span>AWS Student Builder Group SIST - National Flagship Hackathon</span>
-                </div>
-
-                <button
-                  onClick={() => {
-                    sound?.playClick();
-                    if (typeof window !== 'undefined') {
-                      window.dispatchEvent(new CustomEvent('kairos:replay-reveal'));
-                    }
-                  }}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-aws-orange/20 to-indigo-600/10 hover:from-aws-orange/30 hover:to-indigo-600/20 border border-purple-500/40 text-purple-300 text-xs font-mono font-semibold transition-colors hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
-                  title="Replay cinematic entrance logo animation"
-                >
-                  <Play className="w-3 h-3 text-purple-400 fill-purple-400 group-hover:scale-110 transition-transform" />
-                  <span>Watch Logo Reveal</span>
-                </button>
-              </div>
-            </ScrollReveal>
-
-            {/* Wordmark Graphic + Kinetic Headline */}
-            <div className="space-y-4">
-              <ScrollReveal direction="none" delay={0.1} immediate={true}>
-                <div className="relative w-full max-w-[260px] xs:max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] mx-auto lg:mx-0 h-28 xs:h-32 sm:h-36 lg:h-40">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column (7 cols) */}
+          <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
+            {/* Official Co-Branded Institutional & Chapter Lockup */}
+            <ScrollReveal direction="down" distance={14} delay={0.05} immediate={true}>
+              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs font-mono text-slate-200 backdrop-blur-md">
+                <div className="relative w-6 h-6 rounded-full bg-white p-0.5 shrink-0 overflow-hidden">
                   <Image
-                    src="/assets/kairos-wordmark.png"
-                    alt="KAIROS 2027"
+                    src="/assets/sist-logo.png"
+                    alt="Sathyabama Institute of Science and Technology"
                     fill
+                    sizes="24px"
+                    className="object-contain p-0.5"
                     priority
-                    className="object-contain object-center lg:object-left filter drop-shadow-2xl"
                   />
                 </div>
-              </ScrollReveal>
+                <span className="text-white font-semibold">Sathyabama IST</span>
+                <span className="text-slate-500">×</span>
+                <div className="relative w-5 h-5 rounded overflow-hidden shrink-0">
+                  <Image
+                    src="/assets/aws-sbg-logo.png"
+                    alt="AWS Student Builder Group"
+                    fill
+                    sizes="20px"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+                <span className="text-slate-300">AWS SBG · Round 0 Live</span>
+              </div>
+            </ScrollReveal>
 
-              <ScrollReveal direction="up" distance={24} delay={0.15} immediate={true}>
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black tracking-tight text-white leading-[1.1]">
-                  Architect and Deploy <br />
-                  <span className="gradient-text-kairos">Live on AWS Cloud.</span>
-                </h1>
-              </ScrollReveal>
+            <ScrollReveal direction="up" distance={16} delay={0.1} immediate={true}>
+              <h1 className="text-3xl sm:text-5xl lg:text-[3.5rem] font-display font-black tracking-tight text-white leading-[1.07]">
+                Architect and Deploy <br />
+                <span className="gradient-text-kairos">Live on AWS Cloud.</span>
+              </h1>
+            </ScrollReveal>
 
-              <ScrollReveal direction="up" distance={20} delay={0.2} immediate={true}>
-                <p className="text-lg sm:text-2xl text-slate-200 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                  48 Hours of Non-Stop Cloud Engineering, Real-Time Architecture Reviews, and Prestigious Cloud Honors & Grants.
-                </p>
-              </ScrollReveal>
-            </div>
+            <ScrollReveal direction="up" distance={14} delay={0.15} immediate={true}>
+              <p className="text-base sm:text-lg text-slate-300 font-normal max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                48 continuous hours of cloud systems engineering at Sathyabama Indoor Stadium, live architecture reviews, and ₹1,75,000 in cash prizes plus $50,000+ in AWS Credits.
+              </p>
+            </ScrollReveal>
 
-            {/* Event Details Chip */}
-            <ScrollReveal direction="up" distance={16} delay={0.25} immediate={true}>
-              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-2.5 p-2.5 sm:p-3 rounded-xl bg-slate-900/90 border border-purple-500/30 text-xs sm:text-sm text-slate-200 font-mono shadow-md backdrop-blur-md">
-                <span className="flex items-center gap-1.5 text-white font-semibold">
+            {/* Hairline Metadata Strip */}
+            <ScrollReveal direction="up" distance={12} delay={0.2} immediate={true}>
+              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-2 py-2 px-3.5 rounded-xl bg-[#0f0f15]/90 border border-white/10 text-[11.5px] text-slate-200 font-mono">
+                <span className="flex items-center gap-1.5 text-white font-medium whitespace-nowrap">
                   <Calendar className="w-3.5 h-3.5 text-purple-400 shrink-0" />
-                  January 22 to 24, 2027
+                  Jan 22–24, 2027
                 </span>
-                <span className="text-slate-500 hidden sm:inline">|</span>
-                <span className="flex items-center gap-1.5 text-white">
+                <span className="text-slate-600 hidden sm:inline">·</span>
+                <span className="flex items-center gap-1.5 text-slate-200 whitespace-nowrap">
                   <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                  Indoor Auditorium, Sathyabama, Chennai
+                  Indoor Stadium, SIST
                 </span>
-                <span className="text-slate-500 hidden sm:inline">|</span>
-                <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                <span className="text-slate-600 hidden sm:inline">·</span>
+                <span className="flex items-center gap-1.5 text-emerald-400 font-semibold whitespace-nowrap">
                   <Users className="w-3.5 h-3.5 shrink-0" />
-                  100 Elite National Teams
+                  Free R0/R1 · 3–6
+                </span>
+                <span className="text-slate-600 hidden sm:inline">·</span>
+                <span className="flex items-center gap-1.5 text-amber-300 font-semibold whitespace-nowrap">
+                  <Trophy className="w-3.5 h-3.5 shrink-0" />
+                  ₹1,75,000 Pool
                 </span>
               </div>
             </ScrollReveal>
 
-            {/* 48-Hour Live Countdown Timer with Glassmorphism HUD */}
-            <ScrollReveal direction="up" distance={20} delay={0.3} immediate={true}>
-              <div className="p-4 sm:p-5 rounded-2xl glass-panel border border-purple-500/30 max-w-xl mx-auto lg:mx-0 bg-aws-squidInk/70 shadow-2xl relative overflow-hidden group">
-                {/* Subtle top glow line */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-aws-orange to-transparent opacity-60" />
-
-                <div className="flex items-center justify-between mb-3 text-xs font-mono text-purple-300">
-                  <div className="flex items-center gap-2">
-                    <div className="relative w-5 h-5 shrink-0">
-                      <Image
-                        src="/assets/duration.png"
-                        alt="48 Hours Duration"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <span className="font-semibold ">
-                      {countdownStatus === 'upcoming'
-                        ? 'Countdown to Clock Start (IST)'
-                        : countdownStatus === 'live'
-                        ? '⚡ 48-Hour Clock Active!'
-                        : 'Competition Concluded'}
-                    </span>
-                  </div>
-                  <span className="text-slate-400">Chennai - Asia/Kolkata</span>
+            {/* Minimalist Monochrome Countdown HUD */}
+            <ScrollReveal direction="up" distance={14} delay={0.25} immediate={true}>
+              <div className="p-3.5 sm:p-4 rounded-2xl border border-white/10 max-w-xl mx-auto lg:mx-0 bg-[#0d0d13]/90 relative overflow-hidden">
+                <div className="flex items-center justify-between mb-2.5 text-[11px] font-mono text-slate-400">
+                  <span className="font-semibold text-slate-200">
+                    {countdownStatus === 'upcoming'
+                      ? 'Countdown to 48-Hour Kickoff (IST)'
+                      : countdownStatus === 'live'
+                      ? '⚡ 48-Hour Clock Active'
+                      : 'Competition Concluded'}
+                  </span>
+                  <span>Asia/Kolkata</span>
                 </div>
 
-                <div className="grid grid-cols-4 gap-2 sm:gap-4 text-center">
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
-                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
+                <div className="grid grid-cols-4 gap-2 sm:gap-3 text-center">
+                  <div className="bg-[#09090d] rounded-xl p-2 sm:p-2.5 border border-white/10">
+                    <span className="font-display font-bold text-xl sm:text-2xl text-white block">
                       {String(timeLeft.days).padStart(2, '0')}
                     </span>
-                    <span className="text-xs font-mono font-semibold text-slate-300">Days</span>
+                    <span className="text-[11px] font-mono text-slate-400">Days</span>
                   </div>
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
-                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
+                  <div className="bg-[#09090d] rounded-xl p-2 sm:p-2.5 border border-white/10">
+                    <span className="font-display font-bold text-xl sm:text-2xl text-white block">
                       {String(timeLeft.hours).padStart(2, '0')}
                     </span>
-                    <span className="text-xs font-mono font-semibold text-slate-300">Hours</span>
+                    <span className="text-[11px] font-mono text-slate-400">Hours</span>
                   </div>
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-white/10 group-hover:border-purple-500/20 transition-colors">
-                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-white block">
+                  <div className="bg-[#09090d] rounded-xl p-2 sm:p-2.5 border border-white/10">
+                    <span className="font-display font-bold text-xl sm:text-2xl text-white block">
                       {String(timeLeft.minutes).padStart(2, '0')}
                     </span>
-                    <span className="text-xs font-mono font-semibold text-slate-300">Minutes</span>
+                    <span className="text-[11px] font-mono text-slate-400">Minutes</span>
                   </div>
-                  <div className="bg-slate-950/80 rounded-xl p-2.5 sm:p-3.5 border border-purple-500/40 bg-purple-950/30">
-                    <span className="font-display font-extrabold text-2xl sm:text-3xl text-purple-400 block animate-pulse">
+                  <div className="bg-[#12101c] rounded-xl p-2 sm:p-2.5 border border-purple-500/35">
+                    <span className="font-display font-bold text-xl sm:text-2xl text-purple-300 block animate-pulse">
                       {String(timeLeft.seconds).padStart(2, '0')}
                     </span>
-                    <span className="text-xs font-mono font-semibold text-purple-300">Seconds</span>
+                    <span className="text-[11px] font-mono text-purple-300/80">Seconds</span>
                   </div>
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Primary & Secondary Call-to-Action Buttons with Magnetic Physics */}
-            <ScrollReveal direction="up" distance={20} delay={0.35} immediate={true}>
-              <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-3.5 pt-2 w-full">
-                <MagneticButton pullStrength={10} className="w-full sm:w-auto">
+            {/* Primary & Secondary CTAs cleanly above the fold */}
+            <ScrollReveal direction="up" distance={14} delay={0.3} immediate={true}>
+              <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center lg:justify-start gap-3 pt-1 w-full">
+                <MagneticButton pullStrength={6} className="w-full sm:w-auto">
                   <Link
                     href="/register"
-                    onClick={() => sound?.playClick()}
-                    onMouseEnter={() => sound?.playHover()}
-                    className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/40 transition-colors duration-200 ease-entrance flex items-center justify-center gap-2 group active:scale-[0.97]"
+                    className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold text-white btn-primary-themed shadow-xl shadow-purple-900/30 transition-colors duration-200 flex items-center justify-center gap-2 group active:scale-[0.97]"
                   >
-                    <span className="hidden sm:inline">Submit Round 0 Project Abstract</span>
-                    <span className="sm:hidden inline">Submit Round 0 Abstract</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+                    <span>Submit Round 0 Abstract</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </MagneticButton>
 
-                <MagneticButton pullStrength={8} className="w-full sm:w-auto">
+                <MagneticButton pullStrength={5} className="w-full sm:w-auto">
                   <Link
-                    href="/sponsors"
-                    onClick={() => sound?.playClick()}
-                    onMouseEnter={() => sound?.playHover()}
-                    className="w-full sm:w-auto px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-purple-500/40 transition-colors flex items-center justify-center gap-2 backdrop-blur-sm"
+                    href="/tracks"
+                    className="w-full sm:w-auto px-5 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-white/30 transition-colors flex items-center justify-center gap-2"
                   >
-                    <Download className="w-4 h-4 text-purple-400" />
-                    <span>View Sponsorship Prospectus (PDF)</span>
+                    <Layers className="w-4 h-4 text-purple-400" />
+                    <span>Explore 15 Challenges</span>
                   </Link>
                 </MagneticButton>
+              </div>
+              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-1 text-xs font-mono text-slate-400">
+                <Link href="/radar" className="hover:text-white underline decoration-white/20 underline-offset-4 transition-colors">
+                  Solo or 2 builders? Find teammates on Builder Radar →
+                </Link>
               </div>
             </ScrollReveal>
           </div>
 
-          {/* Right Column: 2.5D Holographic Logo & Parallax Astrolabe (5 cols) */}
+          {/* Right Column: Interactive 2.5D Centerpiece (5 cols) */}
           <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
-            <ScrollReveal direction="left" distance={30} delay={0.2} immediate={true}>
-              <div className="relative w-full aspect-square max-w-[420px] sm:max-w-[480px]">
+            <ScrollReveal direction="left" distance={24} delay={0.2} immediate={true}>
+              <div className="relative w-full aspect-square max-w-[320px] sm:max-w-[390px] lg:max-w-[420px]">
                 <Logo25DAnimation />
-              </div>
-
-              {/* Interactive Status Indicator */}
-              <div className="mt-8 sm:mt-10 flex items-center gap-2 text-xs font-mono text-slate-300">
-                <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-purple-500/40 text-purple-200 shadow-md backdrop-blur-md">
-                  <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-700 to-purple-900 animate-pulse" />
-                  <span>2.5D Hologram Active</span>
-                </span>
-                <span className="hidden sm:inline text-slate-400">· Interactive Parallax Tilt</span>
               </div>
             </ScrollReveal>
           </div>

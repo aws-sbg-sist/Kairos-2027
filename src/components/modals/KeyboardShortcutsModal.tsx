@@ -67,7 +67,7 @@ export const KeyboardShortcutsModal: React.FC = () => {
           router.push('/register');
         } else if (e.key.toLowerCase() === 's') {
           e.preventDefault();
-          router.push('/#schedule');
+          router.push('/schedule');
         } else if (e.key.toLowerCase() === 'k') {
           e.preventDefault();
           router.push('/tracks');

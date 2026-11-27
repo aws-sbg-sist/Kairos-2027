@@ -6,6 +6,7 @@ import { getCurrentStudentSession } from '@/lib/student_auth';
 import { verifyTeamLeader } from '@/lib/rbac';
 import { TECHNICAL_TRACKS } from '@/lib/config';
 import { sendTransactionalEmail, buildTeamCreationEmail, buildTeamJoiningConfirmationEmail } from '@/lib/email';
+import { isValidHttpUrl, safeParseJson } from '@/lib/http';
 
 export async function GET(req: NextRequest) {
   const rateLimitResult = checkRateLimit(req, { limit: 30, windowMs: 60_000 });
@@ -125,8 +126,21 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
   try {
-    const body = await req.json();
+    const studentSession = await getCurrentStudentSession();
+    const adminSession = await getCurrentAdminSession();
+    if (!studentSession && !adminSession) {
+      return NextResponse.json({
+        success: false,
+        error: 'Authentication required. Please register or sign in before creating a squad.',
+        code: 'UNAUTHORIZED'
+      }, { status: 401 });
+    }
+
+    const body = parsed.data;
     const { 
       teamName, 
       trackId, 
@@ -136,16 +150,19 @@ export async function POST(req: NextRequest) {
       lead 
     } = body;
 
-    // Support both nested lead object and flat leader properties
-    const leadName = lead?.fullName || body.leaderName;
-    const leadEmail = (lead?.email || body.leaderEmail || '').trim().toLowerCase();
+    // Derive leader email from verified student session (unless superadmin/organizer is creating on behalf)
+    const leadName = lead?.fullName || body.leaderName || studentSession?.fullName;
+    const leadEmail = (
+      studentSession
+        ? studentSession.email
+        : (lead?.email || body.leaderEmail || '')
+    ).trim().toLowerCase();
     const leadPhone = lead?.phone || body.leaderPhone || '';
     const leadCollegeRegNo = lead?.registerNo || body.leaderCollegeRegNo || '';
-    const leadCollege = lead?.college || body.institutionName || 'SIST';
+    const leadCollege = lead?.college || body.institutionName || studentSession?.institution || 'SIST';
     const leadCity = body.city || 'Chennai';
     const leadState = body.state || 'Tamil Nadu';
     const leadMeetupUrl = lead?.meetupProfileUrl || body.leaderMeetupUrl || '';
-    const leadMeetupVerified = lead?.meetupVerified ?? body.meetupVerified ?? true;
     const leadAwsUrl = lead?.awsBuilderCenterUrl || body.leaderAwsBuilderCenterUrl || '';
     const title = abstractTitle || body.problemTitle;
     const text = abstractText || body.problemAbstract;
@@ -156,6 +173,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ 
         success: false, 
         error: 'Missing required fields: teamName, trackId, problemTitle, problemAbstract, leaderName, leaderEmail are mandatory.' 
+      }, { status: 400 });
+    }
+
+    if (
+      (blueprint && !isValidHttpUrl(String(blueprint))) ||
+      (github && !isValidHttpUrl(String(github))) ||
+      (leadMeetupUrl && !isValidHttpUrl(String(leadMeetupUrl))) ||
+      (leadAwsUrl && !isValidHttpUrl(String(leadAwsUrl)))
+    ) {
+      return NextResponse.json({
+        success: false,
+        error: 'Architecture deck, GitHub, Meetup, and AWS Builder Center URLs must begin with https:// or http://.'
       }, { status: 400 });
     }
 
@@ -279,19 +308,36 @@ export async function PUT(req: NextRequest) {
     }
   }
 
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
   try {
-    const body = await req.json();
+    const studentSession = await getCurrentStudentSession();
+    const adminSession = await getCurrentAdminSession();
+    if (!studentSession && !adminSession) {
+      return NextResponse.json({
+        success: false,
+        error: 'Authentication required. Please register or sign in before joining a squad.',
+        code: 'UNAUTHORIZED'
+      }, { status: 401 });
+    }
+
+    const body = parsed.data;
     const { teamCode, member } = body;
 
-    if (!teamCode || !member?.fullName && !member?.name || !member?.email) {
+    const derivedEmail = studentSession
+      ? studentSession.email
+      : (member?.email || '');
+
+    if (!teamCode || (!member?.fullName && !member?.name && !studentSession?.fullName) || !derivedEmail) {
       return NextResponse.json({ 
         success: false, 
-        error: 'Missing required fields: teamCode, member.fullName, member.email are mandatory.' 
+        error: 'Missing required fields: teamCode and member profile are mandatory.' 
       }, { status: 400 });
     }
 
-    const memberName = member.fullName || member.name;
-    const memberEmail = member.email.trim().toLowerCase();
+    const memberName = member?.fullName || member?.name || studentSession?.fullName || '';
+    const memberEmail = derivedEmail.trim().toLowerCase();
 
     // Input length validation
     if (
@@ -340,13 +386,14 @@ export async function PUT(req: NextRequest) {
     const joinResult = await db.joinTeam(teamCode.trim().toUpperCase(), {
       name: memberName.trim(),
       email: memberEmail,
-      phone: member.phone?.trim() || '',
-      college: member.college?.trim() || 'SIST',
-      collegeRegNo: member.registerNo?.trim() || member.collegeRegNo?.trim() || '',
+      phone: member?.phone?.trim() || '',
+      college: member?.college?.trim() || studentSession?.institution || 'SIST',
+      collegeRegNo: member?.registerNo?.trim() || member?.collegeRegNo?.trim() || '',
       role: roleMapping,
-      meetupProfileUrl: member.meetupProfileUrl?.trim() || '',
-      awsBuilderCenterUrl: member.awsBuilderCenterUrl?.trim() || '',
-      tshirtSize: member.tShirtSize || member.tshirtSize || 'L',
+      meetupProfileUrl: member?.meetupProfileUrl?.trim() || '',
+      awsBuilderCenterUrl: member?.awsBuilderCenterUrl?.trim() || '',
+      tshirtSize: member?.tShirtSize || member?.tshirtSize || 'L',
+      hoodieSize: member?.hoodieSize || member?.tShirtSize || member?.tshirtSize || 'L',
     });
 
     if (!joinResult.success) {
@@ -378,6 +425,14 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
+  const rateLimitResult = checkRateLimit(req, { limit: 20, windowMs: 60_000 });
+  if (!rateLimitResult.allowed) {
+    return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
+  }
+
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
   try {
     const studentSession = await getCurrentStudentSession();
     if (!studentSession) {
@@ -388,11 +443,34 @@ export async function PATCH(req: NextRequest) {
       }, { status: 401 });
     }
 
-    const body = await req.json();
-    const { teamCode, teamName, trackId, problemTitle, problemAbstract, architecturePdfUrl, githubUrl } = body;
+    const { teamCode, teamName, trackId, problemTitle, problemAbstract, architecturePdfUrl, githubUrl } = parsed.data;
 
-    if (!teamCode) {
+    if (!teamCode || typeof teamCode !== 'string') {
       return NextResponse.json({ success: false, error: 'Team code is required.' }, { status: 400 });
+    }
+
+    if (
+      (teamName && String(teamName).length > 100) ||
+      (trackId && String(trackId).length > 50) ||
+      (problemTitle && String(problemTitle).length > 200) ||
+      (problemAbstract && String(problemAbstract).length > 3000) ||
+      (architecturePdfUrl && String(architecturePdfUrl).length > 500) ||
+      (githubUrl && String(githubUrl).length > 300)
+    ) {
+      return NextResponse.json({
+        success: false,
+        error: 'One or more team fields exceed maximum allowed character length.'
+      }, { status: 400 });
+    }
+
+    if (
+      (architecturePdfUrl && !isValidHttpUrl(String(architecturePdfUrl))) ||
+      (githubUrl && !isValidHttpUrl(String(githubUrl)))
+    ) {
+      return NextResponse.json({
+        success: false,
+        error: 'Architecture deck and GitHub URLs must start with https:// or http://.'
+      }, { status: 400 });
     }
 
     // RBAC: Verify that the caller is the authorized Team Leader

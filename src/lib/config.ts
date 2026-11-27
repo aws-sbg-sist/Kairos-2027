@@ -19,7 +19,7 @@ export const EVENT_CONFIG = {
     targetDomain: process.env.NEXT_PUBLIC_APP_URL || process.env.RENDER_EXTERNAL_URL || 'https://kairos.sathyabama.ac.in',
   },
   venue: {
-    name: 'Indoor Auditorium',
+    name: 'Indoor Stadium (Indoor Auditorium)',
     campus: 'Sathyabama Institute of Science and Technology',
     address: 'Jeppiaar Nagar, Rajiv Gandhi Salai (OMR), Chennai',
     city: 'Chennai',
@@ -46,13 +46,13 @@ export const EVENT_CONFIG = {
   },
   scale: {
     maxTeams: 100,
-    teamSize: '4 to 6 Builders',
-    estimatedBuilders: '400–600 Contestants',
+    teamSize: '3 to 6 Builders',
+    estimatedBuilders: '300–600 Contestants',
     onlineApplications: '2,000+ Online Applications',
     onlineSemiFinalists: '250 Online Semi-Finalists (Top 250 Teams)',
     onCampusFinalists: '100 Elite On-Campus Teams',
     organizingCadre: '106 Student Organizers, Leads & Volunteers',
-    registrationFee: 'Details and fee updates will be communicated once registered',
+    registrationFee: 'Free for Round 0 & Round 1 · Nominal fee only if shortlisted for Round 2',
     cashPrizePool: '₹1,75,000 Total Prize Pool',
     totalPrizesWithCredits: '₹1,75,000 Total Prize Pool + $50,000+ AWS Cloud Promotional Credits',
     mealsProvided: '100% Complimentary Meals, Midnight Sustenance, Swag & Campus Stay',
@@ -73,10 +73,17 @@ export const EVENT_CONFIG = {
   ],
   socialHandles: {
     x: '@awssbg_sist',
+    xUrl: 'https://x.com/awssbg_sist',
     xTag: '@awsdevelopers',
-    linkedin: 'AWS Developers',
+    linkedin: 'AWS Student Builder Group — SIST',
+    linkedinUrl: 'https://www.linkedin.com/company/aws-student-builder-group-sist',
     instagram: '@awssbg_sist',
+    instagramUrl: 'https://instagram.com/awssbg_sist',
     meetup: 'https://www.meetup.com/aws-sbg-at-sathyabama-inst-science-and-tech-chennai-campus/',
+  },
+  downloads: {
+    brochurePdf: '/assets/downloads/KAIROS_2027_Official_Brochure.pdf',
+    pitchTemplatePptx: '/assets/downloads/KAIROS_2027_Round0_Pitch_Template.pptx',
   }
 };
 
@@ -234,9 +241,9 @@ export const DUAL_PHASE_PIPELINE = [
     step: 'Phase 0',
     title: 'Round 0 Abstract & Cloud Blueprint',
     dates: 'Now – 28 Dec 2026',
-    scale: '2,000+ National Teams',
-    description: 'Teams of 4–6 register with their Meetup RSVP and AWS Builder Center profile. Submit project abstract and cloud architecture blueprint.',
-    badge: 'National Registration',
+    scale: 'Free Entry · 2,000+ Teams',
+    description: 'Teams of 3–6 register free with their Meetup RSVP and AWS Builder Center profile. Submit project abstract and Round 0 pitch blueprint.',
+    badge: 'Free National Screening',
     status: 'ACTIVE_NOW'
   },
   {
@@ -584,7 +591,7 @@ export const HIGHER_MANAGEMENT = {
     role: 'President & Student Builder Group Leader (SBGL)',
     chapter: 'AWS Student Builder Group — SIST Chapter',
     photo: '/assets/members/thenappan_t.webp',
-    mandate: 'Directing macro-systems, institutional administration, and external partnerships for India\'s premier zero-fee hackathon.',
+    mandate: 'Directing macro-systems, institutional administration, and external partnerships for India\'s flagship 48-hour merit cloud hackathon.',
     quote: 'When financial barriers are dropped to zero, authentic engineering brilliance takes the stage.',
     credentials: [
       'AWS Certified Solutions Architect – Associate',
@@ -600,18 +607,37 @@ export const HIGHER_MANAGEMENT = {
   facultyCoordinators: [
     {
       name: 'Dr. K. Ashok Kumar',
-      role: 'Faculty Coordinator',
+      role: 'Faculty Coordinator · Professor',
       department: 'Department of Computer Science & Engineering, SIST'
     },
     {
-      name: 'Dr. Balapriya .S',
-      role: 'Faculty Coordinator',
+      name: 'Dr. S. Balapriya',
+      role: 'Faculty Coordinator · Assistant Professor',
+      department: 'Department of Computer Science & Engineering, SIST'
+    },
+    {
+      name: 'Ms. U. A. Ranjini',
+      role: 'Faculty Coordinator · Assistant Professor',
       department: 'Department of Computer Science & Engineering, SIST'
     }
   ],
+  chiefPatrons: [
+    { name: 'Dr. Mariazeena Johnson', title: 'Chancellor' },
+    { name: 'Dr. Marie Johnson', title: 'President' },
+    { name: 'Ms. Maria Catherine Johnson', title: 'Vice President' }
+  ],
+  patron: {
+    name: 'Dr. B. Sheela Rani',
+    title: 'Vice Chancellor'
+  },
+  convenors: [
+    { name: 'Dr. L. Lakshmanan', title: 'Dean — School of Computing' },
+    { name: 'Dr. P. Ajitha', title: 'HOD, CSE (AI, BCT, CS, IOT, AIDS, CSBS)' },
+    { name: 'Dr. Senduru Srinivasulu', title: 'HOD, CSE (AIML, AIR, DS)' }
+  ],
   institutionalDeans: {
-    deanComputing: 'Dr. L. Lakshmanan, Dean — School of Computing & HoD CSE',
-    viceChancellor: 'Dr. T. Sasipraba, Vice Chancellor'
+    deanComputing: 'Dr. L. Lakshmanan, Dean — School of Computing',
+    viceChancellor: 'Dr. B. Sheela Rani, Vice Chancellor'
   },
   superHeads: [
     {
@@ -649,7 +675,7 @@ export const HIGHER_MANAGEMENT = {
     {
       code: 'SUPER_HEAD_5',
       title: 'Chief Creative & Media Officer (CCMO)',
-      leadName: 'Rikish B & Caroline Mary McPherson',
+      leadName: 'Rikish B, Caroline Mary McPherson & Harshith Raj S',
       registerNo: '44110664 / 44110124',
       division: 'Division 5: Creative Direction, Branding & Media Relations',
       mandate: 'Official AWS SBGL brand compliance, 20x10ft 4K LED stage visuals, video production, and social broadcasting.'
@@ -719,28 +745,126 @@ export const AWS_RESOURCE_LIBRARY = [
 
 export const FAQS = [
   {
-    q: 'Is there any entry fee or payment required?',
-    a: 'Registration and fee details will be updated and communicated directly to your squad once you register on the portal.'
+    q: 'Who can participate and what is the required team size?',
+    a: 'Open to all undergraduate and postgraduate engineering and technology students across India. Teams must comprise 3 to 6 builders. Cross-college, cross-department, and cross-year teams are fully permitted — solo builders or 2-person duos can find teammates on our built-in Builder Radar.'
   },
   {
-    q: 'Who can participate and what is the required team size?',
-    a: 'Open to all undergraduate and postgraduate engineering and technology students across India. Teams must comprise 4 to 6 builders. Cross-college, cross-department, and cross-year teams are fully permitted and encouraged.'
+    q: 'How do registration and fee details work?',
+    a: 'Round 0 abstract submission and the Round 1 Online Technical Qualifier are 100% free (₹0). Only squads shortlisted among the Top 100 finalists for the on-campus Round 2 Grand Finale pay a nominal confirmation fee covering 48-hour arena hospitality, 7 meals, and builder kits.'
   },
   {
     q: 'What is the Round 1 Online Technical Qualifier?',
-    a: 'The Top 250 semi-finalist teams will participate in a virtual qualifier from January 02–04, 2027. Teams submit a working GitHub repository proof-of-concept and a 3-minute video demo, followed by a virtual architecture defense with AWS Solutions Architects. The Top 100 teams advance to the physical finale.'
+    a: 'The Top 250 semi-finalist teams will participate in a virtual qualifier from January 02–04, 2027 (free entry). Teams submit a working GitHub repository proof-of-concept and attend a virtual architecture defense with evaluators. The Top 100 teams advance to the physical finale.'
   },
   {
     q: 'What are the grand finale dates and venue?',
-    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 (48 continuous non-stop hours) at Sathyabama Institute of Science and Technology, Chennai (Indoor Auditorium).'
+    a: 'The on-campus grand finale runs from Friday, January 22 to Sunday, January 24, 2027 (48 continuous non-stop hours) at Sathyabama Institute of Science and Technology, Chennai (Indoor Stadium / Indoor Auditorium).'
   },
   {
     q: 'Who owns the intellectual property (IP)?',
     a: 'You own 100% of your code, blueprints, and intellectual property. Zero equity or IP claims are made by the organizers, university, or sponsors.'
   },
   {
-    q: 'What meals, travel support, and hardware are provided?',
-    a: 'Seven principal meal services are provided on-campus (all meals from Friday lunch through Sunday lunch), alongside midnight energy snacks and continuous hydration. Complimentary chartered Sathyabama buses run from major Chennai transit hubs, and teams receive surge-protected power drops and 1Gbps arena Wi-Fi.'
+    q: 'Do outstation builders get On-Duty (OD) letters, meals & campus travel?',
+    a: 'Yes. Seven principal meal services, midnight snacks, and chartered Sathyabama pickup buses from Chennai Central, Tambaram, Airport, and CMBT are arranged for finalists. Download the Official Brochure PDF alongside your registered Team Code for college OD requests, or email sistawscc@gmail.com for verification.'
+  }
+];
+
+export const PRE_HACK_CLINICS = [
+  {
+    id: 'clinic-01',
+    timing: 'Dec 2026 · Virtual Session',
+    title: 'Round 0 Pitch & Architecture Clinic',
+    host: 'AWS SBG SIST Engineering Cadre',
+    summary: 'Live walkthrough of the 6-slide Round 0 pitch template, problem-statement selection across PS01–PS15, and cloud system boundary diagrams.',
+    ctaLabel: 'Download PPT Template',
+    ctaHref: '/assets/downloads/KAIROS_2027_Round0_Pitch_Template.pptx',
+    isDownload: true
+  },
+  {
+    id: 'clinic-02',
+    timing: 'Dec 2026 – Jan 2027 · Hands-On Lab',
+    title: 'Amazon Bedrock, Lambda & Hybrid RAG Lab',
+    host: 'AWS SBGL Cloud Leads & Mentors',
+    summary: 'Turnkey foundation model starter kits, AWS Cloud Quest tournaments, and serverless prototyping patterns before Round 1 coding begins.',
+    ctaLabel: 'Explore Learning Hub',
+    ctaHref: '/resources',
+    isDownload: false
+  },
+  {
+    id: 'clinic-03',
+    timing: 'Jan 01, 2027 · Pre-Qualifier Brief',
+    title: 'Round 1 GitHub POC & Virtual Defense Prep',
+    host: 'Faculty Coordinators & Evaluation Committee',
+    summary: 'Rubric breakdown, repo commit hygiene standards, and pitching tradeoffs clearly ahead of the Jan 02–04 online evaluation bay.',
+    ctaLabel: 'Inspect Qualifier Portal',
+    ctaHref: '/online-qualifier',
+    isDownload: false
+  }
+];
+
+export const JURY_AND_MENTORS_SHOWCASE = {
+  facultyMentors: [
+    {
+      name: 'Dr. K. Ashok Kumar',
+      role: 'Professor · CSE',
+      focus: 'Distributed Cloud Systems & Academic Oversight'
+    },
+    {
+      name: 'Dr. S. Balapriya',
+      role: 'Assistant Professor · CSE',
+      focus: 'Intelligent Computing, AI Systems & Evaluation'
+    },
+    {
+      name: 'Ms. U. A. Ranjini',
+      role: 'Assistant Professor · CSE',
+      focus: 'Software Engineering, Ideation & Builder Mentoring'
+    }
+  ],
+  chapterMentors: [
+    {
+      name: 'Thenappan T',
+      role: 'AWS Certified SA – Associate · SBGL',
+      focus: 'AWS Cloud Architecture & Tradeoff Clinic'
+    },
+    {
+      name: 'Shanmugapriyan S',
+      role: 'Technical Team Lead · AWS SBG SIST',
+      focus: 'Git Commit Telemetry, CI/CD & Serverless Scaling'
+    },
+    {
+      name: 'Viswanathan Ashok',
+      role: 'Hands-On Builder Lead · AWS SBG SIST',
+      focus: 'Arena Operations, Bay Setup & Prototyping Support'
+    }
+  ],
+  externalPanelNote: {
+    status: 'RELEASING DEC 2026',
+    title: 'External Industry Jury & AWS Solutions Architects',
+    description: 'Table-side checkpoints and the Z-Score Grand Finale panel bring together visiting AWS Solutions Architects, senior cloud engineers from Chennai tech firms, and VC incubation leads.'
+  }
+};
+
+export const ECOSYSTEM_LOCKUPS = [
+  {
+    name: 'Sathyabama IST',
+    sub: 'NAAC A++ · Category-1 University (UGC)',
+    type: 'Host Institution'
+  },
+  {
+    name: 'AWS Student Builder Group',
+    sub: 'SIST Chapter · Cloud Builder Community',
+    type: 'Organizing Chapter'
+  },
+  {
+    name: 'School of Computing (CSE)',
+    sub: 'NBA · NIRF · ABET Accredited Faculty',
+    type: 'Academic Convenor'
+  },
+  {
+    name: "Institution's Innovation Council",
+    sub: 'Ministry of Education IIC · Sathyabama',
+    type: 'Innovation Cell'
   }
 ];
 

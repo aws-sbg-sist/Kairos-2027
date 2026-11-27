@@ -54,7 +54,12 @@ function profileToStudentAccount(row: any): StudentAccount {
     portfolioUrl: row.portfolio_url || undefined,
     githubUrl: row.github_url || undefined,
     linkedinUrl: row.linkedin_url || undefined,
+    meetupProfileUrl: row.meetup_profile_url || undefined,
+    meetupRsvpVerified: Boolean(row.meetup_rsvp_verified),
+    awsBuilderCenterUrl: row.aws_builder_center_url || undefined,
     tshirtSize: row.tshirt_size || undefined,
+    passwordResetToken: row.password_reset_token || undefined,
+    passwordResetExpiresAt: row.password_reset_expires_at || undefined,
     createdAt: row.created_at || new Date().toISOString(),
     lastLoginAt: row.last_login_at || undefined,
   };
@@ -125,6 +130,67 @@ function commitRowToEntity(row: any): GitHubCommitEvent {
     url: row.url || undefined,
   };
 }
+
+function teamRowToEntity(t: any): ParticipantTeam {
+  const members = (t.team_members || []).map((m: any) => ({
+    id: m.id,
+    name: m.name,
+    email: m.email,
+    phone: m.phone,
+    collegeRegNo: m.college_reg_no,
+    role: m.role,
+    college: m.college,
+    meetupProfileUrl: m.meetup_profile_url,
+    meetupMemberId: m.meetup_member_id,
+    meetupRsvpVerified: m.meetup_rsvp_verified,
+    awsBuilderCenterUrl: m.aws_builder_center_url,
+    tshirtSize: m.tshirt_size,
+    hoodieSize: m.hoodie_size,
+    busRoute: m.bus_route,
+    confirmed: m.confirmed
+  }));
+  const leaderMember =
+    members.find((m: any) => m.role === 'Leader') ||
+    members.find((m: any) => m.email?.toLowerCase() === t.leader_email?.toLowerCase());
+
+  return {
+    id: t.id,
+    teamCode: t.team_code,
+    teamName: t.team_name,
+    inviteCode: t.invite_code,
+    trackId: t.track_id,
+    institutionName: t.institution_name,
+    city: t.city,
+    state: t.state,
+    leaderEmail: t.leader_email,
+    leaderName: leaderMember?.name || undefined,
+    selectionStage: t.selection_stage,
+    status: t.status,
+    members,
+    problemTitle: t.problem_title,
+    problemAbstract: t.problem_abstract,
+    projectTitle: t.project_title,
+    projectAbstract: t.project_abstract,
+    architectureSummary: t.project_abstract || undefined,
+    architecturePdfUrl: t.architecture_pdf_url,
+    githubUrl: t.github_url,
+    commitWebhookSecret: t.commit_webhook_secret,
+    loomVideoUrl: t.loom_video_url,
+    onlineQualifierScore: t.online_qualifier_score ? Number(t.online_qualifier_score) : undefined,
+    onlineDefenseSlot: t.online_defense_slot,
+    defenseSlotRequested: t.online_defense_slot || undefined,
+    onlineMeetRoomId: t.online_meet_room_id,
+    deskBayAllocation: t.desk_bay_allocation,
+    checkedIn: t.checked_in,
+    checkedInAt: t.checked_in_at,
+    checkedInBy: t.checked_in_by,
+    reviewerNotes: t.reviewer_notes,
+    reviewedBy: t.reviewed_by,
+    reviewedAt: t.reviewed_at,
+    awsCreditVoucher: t.aws_credit_voucher,
+    createdAt: t.created_at
+  };
+}
 export const postgresDb = {
   isAvailable(): boolean {
     return isSupabaseConfigured();
@@ -138,30 +204,44 @@ export const postgresDb = {
     fullName: string;
     phone?: string;
     institution?: string;
+    collegeRegNo?: string;
     yearOfStudy?: string;
     department?: string;
     portfolioUrl?: string;
     githubUrl?: string;
     linkedinUrl?: string;
+    meetupProfileUrl?: string;
+    meetupRsvpVerified?: boolean;
+    awsBuilderCenterUrl?: string;
     tshirtSize?: string;
   }) {
     const supabase = getSupabaseAdminClient();
     if (!supabase) throw new Error('Supabase client not configured');
 
     const normEmail = profileData.email.trim().toLowerCase();
+    const { data: existingProfile } = await supabase
+      .from('profiles')
+      .select('id, phone, college_reg_no, year_of_study, department, portfolio_url, github_url, linkedin_url, meetup_profile_url, meetup_rsvp_verified, aws_builder_center_url, tshirt_size')
+      .eq('email', normEmail)
+      .maybeSingle();
+
     const { data, error } = await supabase
       .from('profiles')
       .upsert({
         email: normEmail,
         full_name: profileData.fullName,
-        phone: profileData.phone || null,
+        phone: profileData.phone ?? existingProfile?.phone ?? null,
         institution: profileData.institution || 'Sathyabama Institute of Science and Technology',
-        year_of_study: profileData.yearOfStudy || null,
-        department: profileData.department || null,
-        portfolio_url: profileData.portfolioUrl || null,
-        github_url: profileData.githubUrl || null,
-        linkedin_url: profileData.linkedinUrl || null,
-        tshirt_size: profileData.tshirtSize || null,
+        college_reg_no: profileData.collegeRegNo ?? existingProfile?.college_reg_no ?? null,
+        year_of_study: profileData.yearOfStudy ?? existingProfile?.year_of_study ?? null,
+        department: profileData.department ?? existingProfile?.department ?? null,
+        portfolio_url: profileData.portfolioUrl ?? existingProfile?.portfolio_url ?? null,
+        github_url: profileData.githubUrl ?? existingProfile?.github_url ?? null,
+        linkedin_url: profileData.linkedinUrl ?? existingProfile?.linkedin_url ?? null,
+        meetup_profile_url: profileData.meetupProfileUrl ?? existingProfile?.meetup_profile_url ?? null,
+        meetup_rsvp_verified: profileData.meetupRsvpVerified ?? existingProfile?.meetup_rsvp_verified ?? false,
+        aws_builder_center_url: profileData.awsBuilderCenterUrl ?? existingProfile?.aws_builder_center_url ?? null,
+        tshirt_size: profileData.tshirtSize ?? existingProfile?.tshirt_size ?? null,
       }, { onConflict: 'email' })
       .select()
       .single();
@@ -191,33 +271,42 @@ export const postgresDb = {
 
     const { data, error } = await supabase
       .from('waitlist')
-      .select('*')
+      .select('*, profiles(github_url, linkedin_url, meetup_profile_url, meetup_rsvp_verified, aws_builder_center_url, college_reg_no)')
       .order('created_at', { ascending: false });
 
     if (error) throw new Error(`Waitlist fetch error: ${error.message}`);
-    return (data || []).map((row: any) => ({
-      id: row.id,
-      fullName: row.full_name,
-      email: row.email,
-      phone: row.phone,
-      institution: row.institution,
-      yearOfStudy: row.year_of_study,
-      department: row.department,
-      preferredTrack: row.preferred_track,
-      portfolioUrl: row.portfolio_url,
-      motivation: row.motivation,
-      teamStatus: row.team_status,
-      teamCode: row.team_code,
-      experienceLevel: row.experience_level,
-      tShirtSize: row.tshirt_size,
-      status: row.status,
-      ipAddress: row.ip_address,
-      userAgent: row.user_agent,
-      createdAt: row.created_at
-    }));
+    return (data || []).map((row: any) => {
+      const prof = Array.isArray(row.profiles) ? row.profiles[0] : row.profiles;
+      return {
+        id: row.id,
+        fullName: row.full_name,
+        email: row.email,
+        phone: row.phone,
+        institution: row.institution,
+        collegeRegNo: prof?.college_reg_no || undefined,
+        yearOfStudy: row.year_of_study,
+        department: row.department,
+        preferredTrack: row.preferred_track,
+        portfolioUrl: row.portfolio_url,
+        githubUrl: prof?.github_url || undefined,
+        linkedinUrl: prof?.linkedin_url || undefined,
+        meetupProfileUrl: prof?.meetup_profile_url || undefined,
+        meetupRsvpVerified: Boolean(prof?.meetup_rsvp_verified),
+        awsBuilderCenterUrl: prof?.aws_builder_center_url || undefined,
+        motivation: row.motivation,
+        teamStatus: row.team_status,
+        teamCode: row.team_code,
+        experienceLevel: row.experience_level,
+        tShirtSize: row.tshirt_size,
+        status: row.status,
+        ipAddress: row.ip_address,
+        userAgent: row.user_agent,
+        createdAt: row.created_at
+      };
+    });
   },
 
-  async addWaitlistEntry(entry: Omit<WaitlistEntry, 'id' | 'createdAt'>): Promise<{ success: boolean; entry?: WaitlistEntry; error?: string }> {
+  async addWaitlistEntry(entry: Omit<WaitlistEntry, 'id' | 'createdAt'> & { collegeRegNo?: string }): Promise<{ success: boolean; entry?: WaitlistEntry; error?: string }> {
     const supabase = getSupabaseAdminClient();
     if (!supabase) return { success: false, error: 'Database not configured' };
 
@@ -228,11 +317,15 @@ export const postgresDb = {
         fullName: entry.fullName,
         phone: entry.phone,
         institution: entry.institution || entry.college,
+        collegeRegNo: entry.collegeRegNo,
         yearOfStudy: entry.yearOfStudy,
         department: entry.department,
         portfolioUrl: entry.portfolioUrl,
         githubUrl: entry.githubUrl,
         linkedinUrl: entry.linkedinUrl,
+        meetupProfileUrl: entry.meetupProfileUrl,
+        meetupRsvpVerified: entry.meetupRsvpVerified,
+        awsBuilderCenterUrl: entry.awsBuilderCenterUrl,
         tshirtSize: entry.tShirtSize
       });
 
@@ -279,6 +372,11 @@ export const postgresDb = {
           department: data.department,
           preferredTrack: data.preferred_track,
           portfolioUrl: data.portfolio_url,
+          githubUrl: profile?.github_url || undefined,
+          linkedinUrl: profile?.linkedin_url || undefined,
+          meetupProfileUrl: profile?.meetup_profile_url || undefined,
+          meetupRsvpVerified: Boolean(profile?.meetup_rsvp_verified),
+          awsBuilderCenterUrl: profile?.aws_builder_center_url || undefined,
           motivation: data.motivation,
           teamStatus: data.team_status,
           teamCode: data.team_code,
@@ -323,128 +421,41 @@ export const postgresDb = {
 
     if (teamsError) throw new Error(`Teams fetch error: ${teamsError.message}`);
 
-    return (teamsData || []).map((t: any) => ({
-      id: t.id,
-      teamCode: t.team_code,
-      teamName: t.team_name,
-      inviteCode: t.invite_code,
-      trackId: t.track_id,
-      institutionName: t.institution_name,
-      city: t.city,
-      state: t.state,
-      leaderEmail: t.leader_email,
-      selectionStage: t.selection_stage,
-      status: t.status,
-      members: (t.team_members || []).map((m: any) => ({
-        id: m.id,
-        name: m.name,
-        email: m.email,
-        phone: m.phone,
-        collegeRegNo: m.college_reg_no,
-        role: m.role,
-        college: m.college,
-        meetupProfileUrl: m.meetup_profile_url,
-        meetupMemberId: m.meetup_member_id,
-        meetupRsvpVerified: m.meetup_rsvp_verified,
-        awsBuilderCenterUrl: m.aws_builder_center_url,
-        tshirtSize: m.tshirt_size,
-        hoodieSize: m.hoodie_size,
-        busRoute: m.bus_route,
-        confirmed: m.confirmed
-      })),
-      problemTitle: t.problem_title,
-      problemAbstract: t.problem_abstract,
-      projectTitle: t.project_title,
-      projectAbstract: t.project_abstract,
-      architecturePdfUrl: t.architecture_pdf_url,
-      githubUrl: t.github_url,
-      commitWebhookSecret: t.commit_webhook_secret,
-      loomVideoUrl: t.loom_video_url,
-      onlineQualifierScore: t.online_qualifier_score ? Number(t.online_qualifier_score) : undefined,
-      onlineDefenseSlot: t.online_defense_slot,
-      onlineMeetRoomId: t.online_meet_room_id,
-      deskBayAllocation: t.desk_bay_allocation,
-      checkedIn: t.checked_in,
-      checkedInAt: t.checked_in_at,
-      checkedInBy: t.checked_in_by,
-      reviewerNotes: t.reviewer_notes,
-      reviewedBy: t.reviewed_by,
-      reviewedAt: t.reviewed_at,
-      awsCreditVoucher: t.aws_credit_voucher,
-      createdAt: t.created_at
-    }));
+    return (teamsData || []).map(teamRowToEntity);
   },
 
   async getTeamByCode(code: string): Promise<ParticipantTeam | null> {
     const supabase = getSupabaseAdminClient();
     if (!supabase) return null;
 
-    const normCode = code.trim().toUpperCase();
-    let { data, error } = await supabase
+    const rawCode = code.trim();
+    const normCode = rawCode.toUpperCase();
+    let { data } = await supabase
       .from('teams')
       .select('*, team_members(*)')
       .eq('team_code', normCode)
-      .single();
+      .maybeSingle();
 
     if (!data) {
-      const { data: fallback } = await supabase
+      const { data: byInvite } = await supabase
         .from('teams')
         .select('*, team_members(*)')
-        .or(`id.eq.${code.trim()},invite_code.eq.${normCode}`)
-        .limit(1);
-      if (fallback && fallback.length > 0) {
-        data = fallback[0];
-      }
+        .eq('invite_code', normCode)
+        .maybeSingle();
+      data = byInvite;
+    }
+
+    if (!data) {
+      const { data: byId } = await supabase
+        .from('teams')
+        .select('*, team_members(*)')
+        .eq('id', rawCode)
+        .maybeSingle();
+      data = byId;
     }
 
     if (!data) return null;
-
-    return {
-      id: data.id,
-      teamCode: data.team_code,
-      teamName: data.team_name,
-      inviteCode: data.invite_code,
-      trackId: data.track_id,
-      institutionName: data.institution_name,
-      city: data.city,
-      state: data.state,
-      leaderEmail: data.leader_email,
-      selectionStage: data.selection_stage,
-      status: data.status,
-      members: (data.team_members || []).map((m: any) => ({
-        id: m.id,
-        name: m.name,
-        email: m.email,
-        phone: m.phone,
-        collegeRegNo: m.college_reg_no,
-        role: m.role,
-        college: m.college,
-        meetupProfileUrl: m.meetup_profile_url,
-        meetupMemberId: m.meetup_member_id,
-        meetupRsvpVerified: m.meetup_rsvp_verified,
-        awsBuilderCenterUrl: m.aws_builder_center_url,
-        tshirtSize: m.tshirt_size,
-        hoodieSize: m.hoodie_size,
-        busRoute: m.bus_route,
-        confirmed: m.confirmed
-      })),
-      projectTitle: data.project_title,
-      projectAbstract: data.project_abstract,
-      githubUrl: data.github_url,
-      loomVideoUrl: data.loom_video_url,
-      onlineQualifierScore: data.online_qualifier_score ? Number(data.online_qualifier_score) : undefined,
-      onlineDefenseSlot: data.online_defense_slot,
-      onlineMeetRoomId: data.online_meet_room_id,
-      deskBayAllocation: data.desk_bay_allocation,
-      checkedIn: data.checked_in,
-      checkedInAt: data.checked_in_at,
-      checkedInBy: data.checked_in_by,
-      reviewerNotes: data.reviewer_notes,
-      reviewedBy: data.reviewed_by,
-      reviewedAt: data.reviewed_at,
-      awsCreditVoucher: data.aws_credit_voucher,
-      createdAt: data.created_at
-    };
+    return teamRowToEntity(data);
   },
 
   async createTeam(teamData: {
@@ -917,15 +928,18 @@ export const postgresDb = {
         prizePoolConfirmed: false,
         demoSandboxMode: true,
         announcementBanner: 'KAIROS 2027 Early-Interest Waitlist is now live!',
-        registrationDeadline: '2027-01-06T23:59:59+05:30'
+        registrationDeadline: '2027-01-06T23:59:59+05:30',
+        leaderboardPublished: true
       };
     }
 
-    const { data, error } = await supabase
+    const { data: rows, error } = await supabase
       .from('feature_flags')
       .select('*')
-      .eq('id', 'global')
-      .single();
+      .in('id', ['global', 'leaderboard_published']);
+
+    const data = rows?.find((r: any) => r.id === 'global');
+    const lbRow = rows?.find((r: any) => r.id === 'leaderboard_published');
 
     if (error || !data) {
       return {
@@ -933,7 +947,8 @@ export const postgresDb = {
         prizePoolConfirmed: false,
         demoSandboxMode: true,
         announcementBanner: 'KAIROS 2027 Early-Interest Waitlist is now live!',
-        registrationDeadline: '2027-01-06T23:59:59+05:30'
+        registrationDeadline: '2027-01-06T23:59:59+05:30',
+        leaderboardPublished: true
       };
     }
 
@@ -942,7 +957,8 @@ export const postgresDb = {
       prizePoolConfirmed: data.prize_pool_confirmed,
       demoSandboxMode: data.demo_sandbox_mode,
       announcementBanner: data.announcement_banner,
-      registrationDeadline: data.registration_deadline
+      registrationDeadline: data.registration_deadline,
+      leaderboardPublished: lbRow ? Boolean(lbRow.registration_open) : true
     };
   },
 
@@ -957,23 +973,30 @@ export const postgresDb = {
     if (flags.announcementBanner !== undefined) updatePayload.announcement_banner = flags.announcementBanner;
     if (flags.registrationDeadline !== undefined) updatePayload.registration_deadline = flags.registrationDeadline;
 
-    const { data, error } = await supabase
-      .from('feature_flags')
-      .update(updatePayload)
-      .eq('id', 'global')
-      .select()
-      .single();
+    if (Object.keys(updatePayload).length > 1) {
+      const { error } = await supabase
+        .from('feature_flags')
+        .update(updatePayload)
+        .eq('id', 'global');
+      if (error) throw new Error(`Failed to update feature flags: ${error.message}`);
+    }
 
-    if (error) throw new Error(`Failed to update feature flags: ${error.message}`);
+    if (flags.leaderboardPublished !== undefined) {
+      const { error: lbErr } = await supabase
+        .from('feature_flags')
+        .upsert(
+          {
+            id: 'leaderboard_published',
+            registration_open: Boolean(flags.leaderboardPublished),
+            updated_by: organizer
+          },
+          { onConflict: 'id' }
+        );
+      if (lbErr) throw new Error(`Failed to update leaderboard flag: ${lbErr.message}`);
+    }
+
     await this.addAuditLog(organizer, 'UPDATE_FLAGS', `Updated feature flags: ${JSON.stringify(flags)}`);
-
-    return {
-      registrationOpen: data.registration_open,
-      prizePoolConfirmed: data.prize_pool_confirmed,
-      demoSandboxMode: data.demo_sandbox_mode,
-      announcementBanner: data.announcement_banner,
-      registrationDeadline: data.registration_deadline
-    };
+    return this.getFeatureFlags();
   },
 
   // --------------------------------------------------------------------------
@@ -1391,7 +1414,10 @@ export const postgresDb = {
       teams = teams.filter(t => (t.trackId || '').toLowerCase().replace(/^track-/, '') === normFilter);
     }
 
-    const { data: allEvals } = await supabase.from('evaluations').select('*');
+    const [{ data: allEvals }, commitEvents] = await Promise.all([
+      supabase.from('evaluations').select('*'),
+      this.getCommitEvents(),
+    ]);
     const evaluations = (allEvals || []).map((d: any) => ({
       id: d.id,
       teamId: d.team_id,
@@ -1436,10 +1462,17 @@ export const postgresDb = {
         : 0;
       const zScoreStr = `${avgZ >= 0 ? '+' : ''}${avgZ.toFixed(2)}σ`;
 
-      const commitCount = team.githubUrl 
-        ? 45 + Math.abs((team.teamCode || team.teamName).split('').reduce((acc, c) => acc + c.charCodeAt(0), 0) % 55) 
-        : 0;
-      const velocity = commitCount >= 70 ? 'High Velocity' : (commitCount >= 40 ? 'Sustained Velocity' : 'Active');
+      const commitCount = commitEvents.filter(
+        c => targetIds.has(c.teamId.toLowerCase()) || (c.teamCode && targetIds.has(c.teamCode.toLowerCase()))
+      ).length;
+      const velocity =
+        commitCount >= 10
+          ? 'High Velocity'
+          : commitCount >= 4
+          ? 'Sustained Velocity'
+          : commitCount > 0
+          ? 'Active'
+          : 'Awaiting Commits';
 
       let status: LeaderboardEntry['status'] = 'IN_EVALUATION';
       if (team.selectionStage === 'ON_CAMPUS_QUALIFIED') status = 'FINALIST';
@@ -1769,14 +1802,13 @@ export const postgresDb = {
       full_name: data.fullName.trim(),
       password_hash: passwordHash,
       email_verified: false,
-      verification_token: verificationToken,
       institution: (data.institution || 'Sathyabama Institute of Science and Technology').trim(),
       phone: data.phone?.trim() || null,
       department: data.department?.trim() || null,
       year_of_study: data.yearOfStudy || null,
       tshirt_size: data.tshirtSize || null,
       role: 'STUDENT',
-      created_at: new Date().toISOString()
+      created_at: existing?.createdAt || new Date().toISOString()
     };
 
     const { data: savedProfile, error } = await supabase
@@ -1903,9 +1935,23 @@ export const postgresDb = {
     if (!supabase) return { success: false, error: 'Database unconfigured' };
 
     const norm = result.email.toLowerCase();
-    const student = await this.getStudentByEmail(norm);
-    if (!student) {
+    const { data: profile, error: fetchErr } = await supabase
+      .from('profiles')
+      .select('id, password_reset_token, password_reset_expires_at')
+      .eq('email', norm)
+      .single();
+
+    if (fetchErr || !profile) {
       return { success: false, error: 'ACCOUNT_NOT_FOUND' };
+    }
+
+    // Enforce single-use server-stored reset token and active expiration
+    if (!profile.password_reset_token || profile.password_reset_token !== token) {
+      return { success: false, error: 'INVALID_OR_USED_TOKEN' };
+    }
+
+    if (profile.password_reset_expires_at && new Date(profile.password_reset_expires_at).getTime() <= Date.now()) {
+      return { success: false, error: 'TOKEN_EXPIRED' };
     }
 
     const passwordHash = hashPassword(newPassword);
@@ -1916,7 +1962,7 @@ export const postgresDb = {
         password_reset_token: null,
         password_reset_expires_at: null
       })
-      .eq('id', student.id);
+      .eq('id', profile.id);
 
     if (error) {
       return { success: false, error: error.message };
@@ -1934,12 +1980,21 @@ export const postgresDb = {
     if (updates.fullName !== undefined) pgUpdates.full_name = updates.fullName.trim();
     if (updates.phone !== undefined) pgUpdates.phone = updates.phone;
     if (updates.institution !== undefined) pgUpdates.institution = updates.institution.trim();
+    if (updates.collegeRegNo !== undefined) pgUpdates.college_reg_no = updates.collegeRegNo;
     if (updates.department !== undefined) pgUpdates.department = updates.department;
     if (updates.yearOfStudy !== undefined) pgUpdates.year_of_study = updates.yearOfStudy;
     if (updates.portfolioUrl !== undefined) pgUpdates.portfolio_url = updates.portfolioUrl;
     if (updates.githubUrl !== undefined) pgUpdates.github_url = updates.githubUrl;
     if (updates.linkedinUrl !== undefined) pgUpdates.linkedin_url = updates.linkedinUrl;
+    if (updates.meetupProfileUrl !== undefined) pgUpdates.meetup_profile_url = updates.meetupProfileUrl;
+    if (updates.meetupRsvpVerified !== undefined) pgUpdates.meetup_rsvp_verified = updates.meetupRsvpVerified;
+    if (updates.awsBuilderCenterUrl !== undefined) pgUpdates.aws_builder_center_url = updates.awsBuilderCenterUrl;
     if (updates.tshirtSize !== undefined) pgUpdates.tshirt_size = updates.tshirtSize;
+
+    if (Object.keys(pgUpdates).length === 0) {
+      const existing = await this.getStudentById(id);
+      return existing ? { success: true, account: existing } : { success: false, error: 'ACCOUNT_NOT_FOUND' };
+    }
 
     const { data, error } = await supabase
       .from('profiles')
@@ -2028,7 +2083,16 @@ export const postgresDb = {
   // --------------------------------------------------------------------------
   // 13. QUALIFIER & EVALUATION EXTENSIONS
   // --------------------------------------------------------------------------
-  async submitRound1Qualifier(teamCode: string, data: { loomVideoUrl: string; githubUrl: string }): Promise<boolean> {
+  async submitRound1Qualifier(
+    teamCode: string,
+    data: {
+      loomVideoUrl: string;
+      githubUrl: string;
+      architecturePdfUrl?: string;
+      architectureSummary?: string;
+      defenseSlotRequested?: string;
+    }
+  ): Promise<boolean> {
     const supabase = getSupabaseAdminClient();
     if (!supabase) return false;
 
@@ -2039,6 +2103,18 @@ export const postgresDb = {
       loom_video_url: data.loomVideoUrl,
       github_url: data.githubUrl,
     };
+    if (data.architecturePdfUrl) {
+      pgUpdates.architecture_pdf_url = data.architecturePdfUrl;
+    }
+    if (data.architectureSummary) {
+      pgUpdates.project_abstract = data.architectureSummary;
+    }
+    if (data.defenseSlotRequested) {
+      const slotMs = Date.parse(data.defenseSlotRequested);
+      if (!isNaN(slotMs)) {
+        pgUpdates.online_defense_slot = new Date(slotMs).toISOString();
+      }
+    }
     if (team.selectionStage === 'ROUND_0_APPLICANT') {
       pgUpdates.selection_stage = 'ONLINE_SEMI_FINALIST';
     }

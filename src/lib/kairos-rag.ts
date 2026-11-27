@@ -53,9 +53,9 @@ Venue: Indoor Auditorium, Sathyabama Institute of Science and Technology, Chenna
 - Campus Night Lock-In: Jan 22 & Jan 23 at 10:00 PM IST (Perimeter secured).
 - Checkpoint 2 (Code Velocity & APIs): Saturday, Jan 23 at 02:00 PM – 05:30 PM (35 Points).
 - Midnight Energy Drops: Saturday night / Sunday 01:30 AM (Snacks, filter coffee, energy boosters).
-- 🛑 HARD CODE FREEZE: Sunday, January 24, 2027 at 08:30 AM IST (Zero extensions, GitHub commit freeze).
-- Checkpoint 3 (Grand Finale Live Demos): Sunday, Jan 24 at 09:00 AM – 12:30 PM (40 Points; 4-min demo + 3-min jury Q&A).
-- Grand Valedictory & Awards Ceremony: Sunday, Jan 24 at 02:30 PM – 04:30 PM IST.
+- 🛑 HARD CODE FREEZE: Sunday, January 24, 2027 at 12:15 PM IST (Exactly 48.0 Hours, GitHub commit freeze).
+- Checkpoint 3 (Grand Finale Live Demos): Sunday, Jan 24 at 01:15 PM – 03:30 PM (40 Points; 4-min demo + 3-min jury Q&A).
+- Grand Valedictory & Awards Ceremony: Sunday, Jan 24 at 04:00 PM – 05:00 PM IST.
 - Return Bus Fleet Dispersal: Sunday, Jan 24 at 05:00 PM IST.
 Venue: Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai.`
   },
@@ -101,7 +101,7 @@ Track 05: Open Enterprise & Campus Life Innovation
     title: 'Dual-Phase Merit Qualification Pipeline & Submission Guidelines',
     keywords: ['qualifier', 'round 0', 'round 1', 'round 2', 'selection', 'how to join', 'steps', 'pipeline', 'github', 'submission', 'apply', 'procedure', 'defense'],
     content: `The KAIROS 2027 selection pipeline is 100% merit-based across 2 competitive phases:
-- Phase 0 (Online Registration): Submit project abstract and architecture blueprint online at the website before Dec 28, 2026. Teams of 4–6 builders. Mandatory Meetup RSVP and AWS Builder Center profile.
+- Phase 0 (Online Registration — Free ₹0): Submit project abstract and Round 0 pitch template before Dec 28, 2026. Teams of 3–6 builders. Mandatory Meetup RSVP and AWS Builder Center profile.
 - Round 1 (Online Technical Qualifier, Jan 02–04, 2027): Shortlisted teams submit a working GitHub repository prototype with architecture documentation, followed by a virtual technical defense session with solutions architects. (No Loom video required).
 - Round 2 (On-Campus 48-Hour Grand Finale, Jan 22–24, 2027): The Top 100 elite teams receive official on-campus qualification passes to assemble at the Indoor Auditorium, Sathyabama in Chennai for 48 hours of continuous building.
 Submission Requirements:
@@ -114,9 +114,9 @@ Submission Requirements:
     keywords: ['rules', 'eligibility', 'team size', 'cost', 'fee', 'free', 'who can apply', 'college', 'students', 'guidelines', 'members', 'solo', 'individual', 'code', 'ip', 'intellectual property', 'pre-existing'],
     content: `Rules & Eligibility for KAIROS 2027:
 - Eligibility: All registered undergraduate and postgraduate engineering and technology students across accredited institutions in India.
-- Team Size: Strictly 4 to 6 builders per team. Teams can be formed across different departments or across different colleges/universities (inter-college teams are fully permitted!).
-- Solo Builders: Individual builders can register and find squad teammates using the on-site Builder Squad Radar before final team locking.
-- Registration Fee: Fee structures and logistics updates will be communicated directly to your squad once registered.
+- Team Size: Strictly 3 to 6 builders per team. Teams can be formed across different departments or across different colleges/universities (inter-college teams are fully permitted!).
+- Solo / Duo Builders: Individual builders or 2-person teams can register and find squad teammates using the on-site Builder Squad Radar (/radar) before final team locking.
+- Registration Fee: Round 0 abstract screening and the Round 1 Online Technical Qualifier are 100% free (₹0). Only squads shortlisted among the Top 100 finalists for Round 2 pay a nominal on-campus confirmation fee.
 - Code Authenticity: All project code must be authored during the 48-hour hackathon. Pre-existing codebases or pre-built complete apps are strictly disqualified. Open-source libraries, foundation models, pre-trained weights, and public APIs are fully allowed.
 - Hardware & Devices: Contestants bring their own laptops and hardware peripherals. Wi-Fi connectivity and power access are provided at team bays.
 - Intellectual Property (IP): Participants retain 100% ownership of their source code, models, and blueprints. Zero equity or IP claims are made by AWS, Sathyabama, or sponsors.`
@@ -176,10 +176,11 @@ For all official queries, permissions, team updates, and event questions, please
     content: `Frequently Asked Questions & Special Policies:
 - Where is the venue? Indoor Auditorium, Sathyabama Institute of Science and Technology, Chennai.
 - Can members be from different colleges? YES. Cross-college and cross-department teams are fully welcome!
-- Can I participate alone / solo? The competition requires teams of 4 to 6 builders. However, you can register as an individual and match with teammates using the on-site Builder Squad Radar before the hackathon begins.
+- Can I participate alone / solo? The competition requires teams of 3 to 6 builders. However, you can register as an individual or 2-person duo and match with teammates using the on-site Builder Squad Radar (/radar) before the deadline.
 - Can team members be changed after registration? Any modifications to team rosters must be officially requested via email to sistawscc@gmail.com before the Round 0 registration deadline (Dec 28, 2026), subject to organizer approval.
-- What should we bring? Every participant must bring their own laptop, charger, valid college ID card, government photo ID, and any specific IoT/microcontroller hardware needed for Track 3.
-- Are attendance OD letters or participation certificates provided? YES. Official on-duty (OD) formal letters and verified digital credentials/certificates are issued to all verified attendees.`
+- What should we bring? Every participant must bring their own laptop, charger, extension surge board, valid college ID card, government photo ID, printed On-Duty letter if required, and warm outerwear for air-conditioned halls.
+- Are attendance OD letters, pitch templates, or downloadable brochures provided? YES. Download the Official Brochure PDF (/assets/downloads/KAIROS_2027_Official_Brochure.pdf) and Round 0 Pitch PPTX Template (/assets/downloads/KAIROS_2027_Round0_Pitch_Template.pptx) directly from the site, and email sistawscc@gmail.com for OD verification.
+- Venue Google Maps Link: https://maps.google.com/?q=Sathyabama+Institute+of+Science+and+Technology+Chennai`
   }
 ];
 
@@ -492,8 +493,8 @@ KAIROS 2027 features 5 core technical tracks:
 • **Finalist Announcement (Top 100 Teams):** January 08, 2027
 • **On-Campus Grand Finale:** January 22–24, 2027 at **Indoor Auditorium, Sathyabama, Chennai**
 • **Hackathon Clock Starts:** Friday, Jan 22, 2027 at 12:15 PM IST
-• **Hard Code Freeze:** Sunday, Jan 24, 2027 at 08:30 AM IST (Zero extensions)
-• **Grand Demos & Valedictory:** Sunday, Jan 24, 2027 (09:00 AM – 04:30 PM IST)`;
+• **Hard Code Freeze:** Sunday, Jan 24, 2027 at 12:15 PM IST (Exactly 48.0 Hours)
+• **Grand Demos & Valedictory:** Sunday, Jan 24, 2027 (01:15 PM – 05:00 PM IST)`;
   }
 
   // 5. Registration Cost & Fee Updates
@@ -536,9 +537,10 @@ For all inquiries, please reach out directly through the official club channels:
   if (q.includes('team') || q.includes('member') || q.includes('size') || q.includes('alone') || q.includes('solo') || q.includes('college') || q.includes('cross') || q.includes('inter')) {
     return `### 👥 Team Composition & Eligibility
 
-• **Team Size:** Strictly **4 to 6 builders** per squad.
+• **Team Size:** **3 to 6 builders** per squad.
+• **Fee Policy:** **Free (₹0)** for Round 0 & Round 1 Qualifier; nominal fee only if shortlisted for the Round 2 Grand Finale.
 • **Cross-College Teams:** Fully allowed! Students from different colleges and departments can team up freely.
-• **Solo Builders:** Individual builders can register and find squad teammates using the **Builder Squad Radar** on the homepage before final team freezing.
+• **Solo / 2-Member Builders:** Individual builders and duos can find teammates on **Builder Squad Radar** (/radar) before final team freezing.
 • **Eligibility:** Registered undergraduate and postgraduate engineering and technology students across India.`;
   }
 

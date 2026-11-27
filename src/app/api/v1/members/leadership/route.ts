@@ -10,39 +10,44 @@ export async function GET(req: NextRequest) {
     return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
   }
 
-  const session = await getCurrentAdminSession();
-  const allMembers = await db.getMembers();
-  const higherManagementMembers = allMembers.filter(m => m.isHigherManagement);
+  try {
+    const session = await getCurrentAdminSession();
+    const allMembers = await db.getMembers();
+    const higherManagementMembers = allMembers.filter(m => m.isHigherManagement);
 
-  const sanitizedRoster = session
-    ? higherManagementMembers
-    : higherManagementMembers.map(m => {
-        const { registerNo, ...sanitized } = m;
-        return sanitized;
-      });
+    const sanitizedRoster = session
+      ? higherManagementMembers
+      : higherManagementMembers.map(m => {
+          const { registerNo, ...sanitized } = m;
+          return sanitized;
+        });
 
-  const sanitizedLeadership = session
-    ? HIGHER_MANAGEMENT
-    : {
-        ...HIGHER_MANAGEMENT,
-        apexLeader: {
-          ...HIGHER_MANAGEMENT.apexLeader,
-          registerNo: undefined,
-          contact: {
-            ...HIGHER_MANAGEMENT.apexLeader.contact,
-            phone: undefined
-          }
-        },
-        superHeads: HIGHER_MANAGEMENT.superHeads.map(sh => ({
-          ...sh,
-          registerNo: undefined
-        }))
-      };
+    const sanitizedLeadership = session
+      ? HIGHER_MANAGEMENT
+      : {
+          ...HIGHER_MANAGEMENT,
+          apexLeader: {
+            ...HIGHER_MANAGEMENT.apexLeader,
+            registerNo: undefined,
+            contact: {
+              ...HIGHER_MANAGEMENT.apexLeader.contact,
+              phone: undefined
+            }
+          },
+          superHeads: HIGHER_MANAGEMENT.superHeads.map(sh => ({
+            ...sh,
+            registerNo: undefined
+          }))
+        };
 
-  return NextResponse.json({
-    success: true,
-    batch: HIGHER_MANAGEMENT.batchTitle,
-    leadership: sanitizedLeadership,
-    roster: sanitizedRoster
-  });
+    return NextResponse.json({
+      success: true,
+      batch: HIGHER_MANAGEMENT.batchTitle,
+      leadership: sanitizedLeadership,
+      roster: sanitizedRoster
+    });
+  } catch (err: any) {
+    console.error('[API Members Leadership GET Error]:', err);
+    return NextResponse.json({ success: false, error: 'Failed to load leadership roster.' }, { status: 500 });
+  }
 }

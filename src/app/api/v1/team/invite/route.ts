@@ -88,11 +88,11 @@ export async function POST(req: NextRequest) {
       }, { status: 409 });
     }
 
-    // Check maximum squad capacity (5 members)
-    if (team.members.length >= 5) {
+    // Check maximum squad capacity (6 builders)
+    if (team.members.length >= 6) {
       return NextResponse.json({
         success: false,
-        error: 'Team has already reached maximum squad capacity (5 members).',
+        error: 'Team has already reached maximum squad capacity (6 builders).',
         code: 'TEAM_FULL'
       }, { status: 400 });
     }

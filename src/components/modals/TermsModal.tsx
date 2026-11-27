@@ -46,8 +46,8 @@ export const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
             <span>1. 48-Hour Competition Rules</span>
           </h4>
           <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
-            <li>Teams must consist of 4 to 6 eligible student members enrolled in an accredited higher-education institution.</li>
-            <li>All application code must be authored between Friday, 22 January 2027 at 11:30 AM IST and Sunday, 24 January 2027 at 11:30 AM IST.</li>
+            <li>Teams must consist of 3 to 6 eligible student members enrolled in an accredited higher-education institution.</li>
+            <li>All application code must be authored between Friday, 22 January 2027 at 12:15 PM IST and Sunday, 24 January 2027 at 12:15 PM IST (48.0 Hours).</li>
             <li>Open-source libraries, frameworks, cloud primitives, and foundation models are fully permitted. Pre-built proprietary applications or unfinished projects authored prior to the clock start are strictly prohibited.</li>
             <li>Repository commit history must reflect steady, authentic development across the 48-hour timeline and will be audited during mandatory checkpoints.</li>
           </ul>

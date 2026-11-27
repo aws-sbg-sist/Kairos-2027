@@ -33,8 +33,8 @@ export default function StudentLoginPage() {
         throw new Error(data.error || 'Authentication failed. Please check your credentials.');
       }
 
-      // Successful login - redirect to builder portal
-      router.push('/portal');
+      // Successful login - redirect to canonical builder dashboard
+      router.push('/dashboard');
     } catch (err: any) {
       setErrorMessage(err.message || 'Login failed.');
     } finally {

@@ -5,7 +5,10 @@ import { AdminTab, AdminLead, ADMIN_LEADS } from './cadre_leads';
 function getMasterSecret(): string {
   const secret = process.env.ADMIN_MASTER_SECRET?.trim() || process.env.SESSION_SECRET?.trim();
   if (!secret) {
-    return 'kairos2027-sist-admin-secure-master-secret-apex';
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('ADMIN_MASTER_SECRET (or SESSION_SECRET) environment variable is mandatory in production');
+    }
+    return 'kairos-local-dev-admin-secret-do-not-use-in-prod';
   }
   return secret;
 }

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { sendTransactionalEmail, buildEmailVerificationEmail } from '@/lib/email';
+import { createStudentToken, STUDENT_COOKIE_NAME } from '@/lib/student_auth';
+import { safeParseJson } from '@/lib/http';
 
 export async function POST(req: NextRequest) {
   // Rate limit: 5 registration requests per minute per IP
@@ -10,11 +12,14 @@ export async function POST(req: NextRequest) {
     return createRateLimitResponse(rateLimit.resetAt, rateLimit.limit);
   }
 
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
   try {
-    const body = await req.json();
+    const body = parsed.data;
     const { email, password, fullName, institution, phone, department, yearOfStudy, tshirtSize } = body;
 
-    if (!email || !password || !fullName) {
+    if (!email || !password || !fullName || typeof email !== 'string' || typeof password !== 'string' || typeof fullName !== 'string') {
       return NextResponse.json(
         { success: false, error: 'Full name, email address, and a secure password are required.' },
         { status: 400 }
@@ -29,7 +34,7 @@ export async function POST(req: NextRequest) {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(email.trim())) {
       return NextResponse.json(
         { success: false, error: 'Please enter a valid email address.' },
         { status: 400 }
@@ -47,7 +52,7 @@ export async function POST(req: NextRequest) {
       tshirtSize
     });
 
-    if (!result.success) {
+    if (!result.success || !result.account) {
       if (result.error === 'EMAIL_ALREADY_REGISTERED') {
         return NextResponse.json(
           { 
@@ -65,7 +70,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Attempt to send verification email (truthful local simulation or live AWS SES)
-    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000'}/auth/verify?token=${result.verificationToken}`;
+    const appOrigin = process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin;
+    const verificationUrl = `${appOrigin}/auth/verify?token=${encodeURIComponent(result.verificationToken || '')}`;
     try {
       sendTransactionalEmail(buildEmailVerificationEmail({
         to: email.trim().toLowerCase(),
@@ -76,18 +82,43 @@ export async function POST(req: NextRequest) {
       console.warn('[Register Email Warning]:', emailErr);
     }
 
-    return NextResponse.json({
+    const exposeDevTokens =
+      process.env.NODE_ENV === 'test' ||
+      (process.env.NODE_ENV !== 'production' && process.env.KAIROS_EXPOSE_DEV_TOKENS === 'true');
+
+    const account = result.account;
+    const sessionToken = createStudentToken({
+      studentId: account.id,
+      email: account.email,
+      fullName: account.fullName,
+      institution: account.institution,
+      emailVerified: account.emailVerified
+    });
+
+    const response = NextResponse.json({
       success: true,
       message: 'Account successfully created! Please check your email to verify your identity.',
-      verificationToken: result.verificationToken, // included for local development & testing convenience
+      ...(exposeDevTokens ? { verificationToken: result.verificationToken } : {}),
       student: {
-        id: result.account?.id,
-        email: result.account?.email,
-        fullName: result.account?.fullName,
-        institution: result.account?.institution,
-        emailVerified: result.account?.emailVerified
+        id: account.id,
+        email: account.email,
+        fullName: account.fullName,
+        institution: account.institution,
+        emailVerified: account.emailVerified
       }
     }, { status: 201 });
+
+    response.cookies.set({
+      name: STUDENT_COOKIE_NAME,
+      value: sessionToken,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60
+    });
+
+    return response;
   } catch (err: any) {
     console.error('[API Register Error]:', err);
     return NextResponse.json(

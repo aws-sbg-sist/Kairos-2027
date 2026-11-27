@@ -12,7 +12,8 @@ import {
   ShieldCheck, 
   AlertCircle, 
   Search, 
-  Shirt
+  Shirt,
+  Lock
 } from 'lucide-react';
 
 function JoinTeamContent() {
@@ -38,11 +39,34 @@ function JoinTeamContent() {
     hoodieSize: 'L' as 'S' | 'M' | 'L' | 'XL' | 'XXL',
   });
 
+  const [authLoading, setAuthLoading] = useState(true);
+  const [signedInEmail, setSignedInEmail] = useState<string | null>(null);
   const [targetTeam, setTargetTeam] = useState<any>(null);
   const [searching, setSearching] = useState(false);
   const [joining, setJoining] = useState(false);
   const [joinedSuccess, setJoinedSuccess] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetch('/api/v1/student/me')
+      .then(res => (res.status === 401 ? null : res.json()))
+      .then(data => {
+        if (data?.success && data.student) {
+          const s = data.student;
+          setSignedInEmail(s.email);
+          setFormData(prev => ({
+            ...prev,
+            name: prev.name || s.fullName || '',
+            email: s.email || prev.email,
+            phone: prev.phone || s.phone || '',
+            college: prev.college || s.institution || '',
+            tshirtSize: (s.tshirtSize as any) || prev.tshirtSize,
+          }));
+        }
+      })
+      .catch(() => {})
+      .finally(() => setAuthLoading(false));
+  }, []);
 
   // Fetch team details if code is provided
   useEffect(() => {
@@ -132,7 +156,35 @@ function JoinTeamContent() {
             </p>
           </div>
 
-          {!joinedSuccess ? (
+          {authLoading ? (
+            <div className="p-10 rounded-3xl bg-aws-card border border-slate-700/60 text-center text-xs font-mono text-slate-400">
+              Checking verified builder session...
+            </div>
+          ) : !signedInEmail ? (
+            <div className="p-8 rounded-3xl bg-aws-card border border-purple-500/40 text-center space-y-4 shadow-xl">
+              <div className="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-300 mx-auto flex items-center justify-center">
+                <Lock className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-display font-bold text-white">Builder Account Required</h3>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
+                Sign in or register first before joining a squad so your verified identity links cleanly to your team roster and pass.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <Link
+                  href="/register"
+                  className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-colors"
+                >
+                  Register Account →
+                </Link>
+                <Link
+                  href="/login"
+                  className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 text-xs font-semibold transition-colors"
+                >
+                  Sign In
+                </Link>
+              </div>
+            </div>
+          ) : !joinedSuccess ? (
             <div className="p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-8">
               
               {/* Step A: Team Code Lookup */}
@@ -215,9 +267,22 @@ function JoinTeamContent() {
                       <input
                         type="email"
                         required
+                        disabled={Boolean(signedInEmail)}
                         value={formData.email}
                         onChange={e => setFormData({ ...formData, email: e.target.value })}
                         placeholder="you@college.edu"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm disabled:opacity-60"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2 space-y-1">
+                      <label className="text-xs font-mono text-slate-300">Institution / College Name *</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.college}
+                        onChange={e => setFormData({ ...formData, college: e.target.value })}
+                        placeholder="e.g. Sathyabama Institute of Science and Technology"
                         className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
                       />
                     </div>
