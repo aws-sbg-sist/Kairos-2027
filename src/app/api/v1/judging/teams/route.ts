@@ -1,47 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { getJudgeSessionFromRequest } from '@/lib/judge_auth';
-import { verifyJudgeAuthorization } from '@/lib/rbac';
 
 export async function GET(req: NextRequest) {
   try {
-    let judgeId: string | undefined;
-
-    // 1. Try session token
     const session = getJudgeSessionFromRequest(req);
-    if (session) {
-      judgeId = session.judgeId;
-    } else {
-      // 2. Try query params fallback
-      const { searchParams } = new URL(req.url);
-      const paramJudgeId = searchParams.get('judgeId');
-      const paramPin = searchParams.get('judgePin');
-
-      if (paramJudgeId && paramPin) {
-        const auth = await verifyJudgeAuthorization(paramJudgeId, paramPin);
-        if (auth.authorized && auth.judge) {
-          judgeId = auth.judge.id;
-        } else {
-          return NextResponse.json({
-            success: false,
-            error: auth.error || 'Invalid judge credentials.'
-          }, { status: auth.statusCode });
-        }
-      }
-    }
-
-    if (!judgeId) {
+    if (!session) {
       return NextResponse.json({
         success: false,
-        error: 'Unauthorized: Active judge session or valid credentials required.'
+        error: 'Unauthorized: Active judge session required. Please authenticate via POST /api/v1/judging/auth.'
       }, { status: 401 });
     }
 
-    const assignedTeams = await db.getAssignedTeamsForJudge(judgeId);
+    const judges = await db.getJudges();
+    const activeJudge = judges.find(j => j.id === session.judgeId && j.isActive);
+    if (!activeJudge) {
+      return NextResponse.json({
+        success: false,
+        error: 'Forbidden: Judge account is inactive or no longer exists.'
+      }, { status: 403 });
+    }
+
+    const assignedTeams = await db.getAssignedTeamsForJudge(activeJudge.id);
 
     return NextResponse.json({
       success: true,
-      judgeId,
+      judgeId: activeJudge.id,
       assignedTeamsCount: assignedTeams.length,
       assignedTeams
     });

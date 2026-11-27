@@ -412,7 +412,7 @@ export function buildRegistrationConfirmationEmail(data: {
     actionLabel: 'Access Builder Portal'
   });
 
-  const text = `Hello ${data.fullName},\n\nYour priority registration for KAIROS 2027 has been confirmed!\n\nRegistration ID: ${regId}\nSelected Track: ${data.track}\nEvent Dates: 22–24 January 2027\nVenue: Sathyabama Indoor Auditorium, Chennai\n\nNext Step: Form your squad of 4–6 builders and submit your architectural abstract.\n\nAccess portal: ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000'}/portal\n\nAWS Student Builder Group (SIST Chapter)`;
+  const text = `Hello ${data.fullName},\n\nYour priority registration for KAIROS 2027 has been confirmed!\n\nRegistration ID: ${regId}\nSelected Track: ${data.track}\nEvent Dates: 22–24 January 2027\nVenue: Sathyabama Indoor Auditorium, Chennai\n\nNext Step: Form your squad of 3–6 builders and submit your architectural abstract.\n\nAccess portal: ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000'}/portal\n\nAWS Student Builder Group (SIST Chapter)`;
 
   return {
     to: data.to,

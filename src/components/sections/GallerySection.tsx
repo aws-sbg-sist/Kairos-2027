@@ -15,7 +15,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
     title: 'The Arena: Indoor Auditorium',
     caption: 'Air-conditioned stadium with dedicated gigabit LAN drops, 24/7 power backups, and private team cubicles.',
     category: 'Arena',
-    src: '/assets/venue-illustration.png',
+    src: '/assets/visuals/arena-stage.jpg',
   },
   {
     id: 'coding-pits',
@@ -43,7 +43,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
     title: 'Grand Champion & National Honors',
     caption: '₹1,75,000 total prize pool, institutional trophies, and VC pitch fast-tracking.',
     category: 'Awards',
-    src: '/assets/achievement.png',
+    src: '/assets/visuals/trophy-pass.jpg',
   },
   {
     id: 'jury-pitches',
@@ -154,7 +154,7 @@ export const GallerySection: React.FC = () => {
                       }}
                       className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-colors ${
                         isActive
-                          ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-bold shadow-md shadow-purple-900/30 scale-105'
+                          ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold shadow-md shadow-purple-900/30 scale-105'
                           : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/10'
                       }`}
                     >
@@ -228,7 +228,7 @@ export const GallerySection: React.FC = () => {
                         className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 filter drop-shadow-md"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-end p-3">
-                        <span className="p-2 rounded-lg bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-md">
+                        <span className="p-2 rounded-lg bg-gradient-to-r from-purple-700 to-purple-900 text-white shadow-md">
                           <Maximize2 className="w-4 h-4" />
                         </span>
                       </div>

@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
 import { verifyJudgeAuthorization } from '@/lib/rbac';
 import { getJudgeSessionFromRequest } from '@/lib/judge_auth';
+import { safeParseJson } from '@/lib/http';
 
 export async function POST(req: NextRequest) {
   // Rate limiting to prevent brute force on judge PINs or spam
@@ -11,8 +12,11 @@ export async function POST(req: NextRequest) {
     return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
   }
 
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
   try {
-    const body = await req.json();
+    const body = parsed.data;
     let { 
       judgePin, 
       judgeId, 
@@ -33,18 +37,27 @@ export async function POST(req: NextRequest) {
     // Support teamCode as alias for teamId
     const targetTeam = teamId || teamCode;
 
-    // 1. Authenticate Judge: Check session cookie or explicit credentials
+    // 1. Authenticate Judge: Check session cookie (must still be active in DB) or explicit credentials
     let authenticatedJudge: { id: string; fullName: string; trackSpecialization?: string; organization: string } | null = null;
     const session = getJudgeSessionFromRequest(req);
 
     if (session) {
+      const judges = await db.getJudges();
+      const liveJudge = judges.find(j => j.id === session.judgeId && j.isActive);
+      if (!liveJudge) {
+        return NextResponse.json({
+          success: false,
+          error: 'Forbidden: Judge account is deactivated or not found.',
+          code: 'JUDGE_INACTIVE'
+        }, { status: 403 });
+      }
       authenticatedJudge = {
-        id: session.judgeId,
-        fullName: session.fullName,
-        trackSpecialization: session.trackSpecialization,
-        organization: session.organization
+        id: liveJudge.id,
+        fullName: liveJudge.fullName,
+        trackSpecialization: liveJudge.trackSpecialization,
+        organization: liveJudge.organization
       };
-      judgeId = session.judgeId;
+      judgeId = liveJudge.id;
     } else if (judgeId && judgePin) {
       const authResult = await verifyJudgeAuthorization(judgeId, judgePin, targetTeam);
       if (!authResult.authorized || !authResult.judge) {

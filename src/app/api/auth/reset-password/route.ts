@@ -1,12 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
+import { safeParseJson } from '@/lib/http';
 
 export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const { token, newPassword } = body;
+  const rateLimit = checkRateLimit(req, { limit: 10, windowMs: 60_000 });
+  if (!rateLimit.allowed) {
+    return createRateLimitResponse(rateLimit.resetAt, rateLimit.limit);
+  }
 
-    if (!token || !newPassword) {
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
+  try {
+    const { token, newPassword } = parsed.data;
+
+    if (!token || !newPassword || typeof token !== 'string' || typeof newPassword !== 'string') {
       return NextResponse.json(
         { success: false, error: 'Reset token and new password are required.' },
         { status: 400 }

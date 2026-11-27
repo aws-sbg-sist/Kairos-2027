@@ -3,7 +3,6 @@ import { Inter, Outfit, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/goog
 import './globals.css';
 import { KairosChatbot } from '@/components/chatbot/KairosChatbot';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
-import { MagneticGlowCursor } from '@/components/effects/MagneticGlowCursor';
 import { KeyboardShortcutsModal } from '@/components/modals/KeyboardShortcutsModal';
 import { MobileFloatingBar } from '@/components/navigation/MobileFloatingBar';
 
@@ -41,7 +40,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'KAIROS 2027 — National Flagship 48-Hour Hackathon | AWS Student Builder Group SIST',
-  description: 'Join 400–600 elite developers (teams of 4–6) at Sathyabama for KAIROS 2027. 48 hours continuous non-stop hacking on AWS Cloud. ₹1,75,000 total prize pool, two-tier technical screening, and tier-1 corporate sponsors. Register your team now!',
+  description: 'Join elite student developers (teams of 3–6) at Sathyabama for KAIROS 2027. 48 hours continuous non-stop hacking on AWS Cloud. Free Round 0 & R1, ₹1,75,000 prize pool + $50,000+ AWS Credits.',
   keywords: [
     'KAIROS 2027',
     'KAIROS Hackathon',
@@ -147,29 +146,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var t = localStorage.getItem('kairos-theme-v2');
-                  var resolved = (t === 'aws') ? 'aws' : 'cyber';
-                  document.documentElement.setAttribute('data-theme', resolved);
-                } catch(e) {
-                  document.documentElement.setAttribute('data-theme', 'cyber');
-                }
-              })();
-            `,
-          }}
-        />
-        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-gradient-to-r from-purple-700 to-purple-900 selection:text-white">
         <ThemeProvider>
-          {/* Ambient Magnetic Cursor Glow for Fine Pointers */}
-          <MagneticGlowCursor />
           {/* WCAG 2.4.1 Accessible Skip Navigation */}
           <a
             href="#main-content"
@@ -178,9 +160,8 @@ export default function RootLayout({
             Skip to main content
           </a>
           {children}
-          {/* Mobile Quick Action Registration Dock */}
+          {/* Global Mobile Quick Registration Dock & Keyboard Shortcuts HUD */}
           <MobileFloatingBar />
-          {/* Keyboard Shortcuts Command Center HUD */}
           <KeyboardShortcutsModal />
           {/* Floating Kairos AI Chatbot */}
           <KairosChatbot />

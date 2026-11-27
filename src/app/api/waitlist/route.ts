@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { sendTransactionalEmail, buildWaitlistConfirmationEmail } from '@/lib/email';
 import { getCurrentAdminSession } from '@/lib/auth';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
+import { safeParseJson } from '@/lib/http';
 
 export async function POST(req: NextRequest) {
   // Rate limit: 10 waitlist submissions per minute per IP
@@ -32,11 +33,13 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  try {
-    const body = await req.json();
-    const { fullName, email, institution, yearOfStudy, department, preferredTrack, portfolioUrl, motivation } = body;
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
 
-    if (!fullName || !email || !institution || !preferredTrack) {
+  try {
+    const { fullName, email, institution, yearOfStudy, department, preferredTrack, portfolioUrl, motivation } = parsed.data;
+
+    if (!fullName || !email || !institution || !preferredTrack || typeof fullName !== 'string' || typeof email !== 'string' || typeof institution !== 'string' || typeof preferredTrack !== 'string') {
       return NextResponse.json(
         { success: false, error: 'Full name, valid email, institution, and preferred track are required.' },
         { status: 400 }

@@ -26,8 +26,8 @@ export const FactsStrip: React.FC = () => {
       imageGlow: 'rgba(118,48,217,0.35)',
       numericValue: 100,
       suffix: ' Teams',
-      label: '4 to 6 Builders Per Team',
-      detail: '400–600 Shortlisted National Hackers',
+      label: '3 to 6 Builders Per Team',
+      detail: '300–600 Shortlisted National Hackers',
       badge: 'National Cohort',
     },
     {

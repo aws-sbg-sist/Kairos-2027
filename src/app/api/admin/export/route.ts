@@ -47,30 +47,56 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  // 2. Participants (All registered student builders)
+  // 2. Participants (All registered student builders: team members + solo registrants)
   if (type === 'participants') {
-    const teams = await db.getTeams();
-    const headers = ['Student ID', 'Full Name', 'Email', 'Phone', 'Institution', 'Department', 'Year', 'T-Shirt Size', 'Role', 'Team Code', 'Team Name', 'Confirmed'];
+    const [teams, waitlist] = await Promise.all([db.getTeams(), db.getWaitlist()]);
+    const headers = ['Student ID', 'Full Name', 'Email', 'Phone', 'Institution', 'Reg No / Dept', 'Year', 'T-Shirt Size', 'Role', 'Team Code', 'Team Name', 'Confirmed'];
     const rows: string[][] = [];
+    const seenEmails = new Set<string>();
+    const waitlistByEmail = new Map(waitlist.map(w => [w.email.trim().toLowerCase(), w]));
 
-    // Collect all unique members from teams
+    // Collect all members from teams
     teams.forEach(t => {
       (t.members || []).forEach(m => {
+        const norm = m.email.trim().toLowerCase();
+        seenEmails.add(norm);
+        const w = waitlistByEmail.get(norm);
         rows.push([
           sanitizeCsvCell(m.id),
           sanitizeCsvCell(m.name),
           sanitizeCsvCell(m.email),
-          sanitizeCsvCell(m.phone || ''),
-          sanitizeCsvCell(m.college || t.institutionName || ''),
-          sanitizeCsvCell(m.collegeRegNo || ''),
-          sanitizeCsvCell(''),
-          sanitizeCsvCell(m.tshirtSize || ''),
+          sanitizeCsvCell(m.phone || w?.phone || ''),
+          sanitizeCsvCell(m.college || t.institutionName || w?.institution || ''),
+          sanitizeCsvCell(m.collegeRegNo || w?.department || ''),
+          sanitizeCsvCell(w?.yearOfStudy || ''),
+          sanitizeCsvCell(m.tshirtSize || w?.tShirtSize || ''),
           sanitizeCsvCell(m.role),
           sanitizeCsvCell(t.teamCode || t.id),
           sanitizeCsvCell(t.teamName),
           sanitizeCsvCell(m.confirmed ? 'YES' : 'NO')
         ]);
       });
+    });
+
+    // Include solo registrants not yet in a squad
+    waitlist.forEach(w => {
+      const norm = w.email.trim().toLowerCase();
+      if (seenEmails.has(norm)) return;
+      seenEmails.add(norm);
+      rows.push([
+        sanitizeCsvCell(w.id),
+        sanitizeCsvCell(w.fullName),
+        sanitizeCsvCell(w.email),
+        sanitizeCsvCell(w.phone || ''),
+        sanitizeCsvCell(w.institution || w.college || ''),
+        sanitizeCsvCell(w.department || ''),
+        sanitizeCsvCell(w.yearOfStudy || ''),
+        sanitizeCsvCell(w.tShirtSize || ''),
+        sanitizeCsvCell('Solo / Unassigned'),
+        sanitizeCsvCell(w.teamCode || ''),
+        sanitizeCsvCell(''),
+        sanitizeCsvCell(w.meetupRsvpVerified ? 'YES' : 'NO')
+      ]);
     });
 
     const csvContent = [headers.map(sanitizeCsvCell).join(','), ...rows.map(r => r.join(','))].join('\n');
@@ -179,14 +205,16 @@ export async function GET(req: NextRequest) {
   // 6. Submissions
   if (type === 'submissions') {
     const teams = await db.getTeams();
-    const headers = ['Team Code', 'Team Name', 'Track', 'Leader Email', 'GitHub Repository', 'Loom Video URL', 'Selection Stage', 'Desk Bay'];
+    const headers = ['Team Code', 'Team Name', 'Track', 'Leader Email', 'Architecture Deck URL', 'GitHub Repository', 'Loom Video URL', 'Defense Slot', 'Selection Stage', 'Desk Bay'];
     const rows = teams.map(t => [
       sanitizeCsvCell(t.teamCode || t.id),
       sanitizeCsvCell(t.teamName),
       sanitizeCsvCell(t.trackId),
       sanitizeCsvCell(t.leaderEmail),
+      sanitizeCsvCell(t.architecturePdfUrl || ''),
       sanitizeCsvCell(t.githubUrl || ''),
       sanitizeCsvCell(t.loomVideoUrl || ''),
+      sanitizeCsvCell(t.onlineDefenseSlot || t.defenseSlotRequested || ''),
       sanitizeCsvCell(t.selectionStage || 'ROUND_0_APPLICANT'),
       sanitizeCsvCell(t.deskBayAllocation || 'Unassigned')
     ]);

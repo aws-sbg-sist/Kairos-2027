@@ -404,10 +404,27 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // Sponsor Status Update
+  // Sponsor Status Update (persisted via /api/admin/sponsor/status)
   const handleUpdateSponsorStatus = async (id: string, newStatus: any) => {
+    const previous = sponsors;
     setSponsors(prev => prev.map(s => s.id === id ? { ...s, status: newStatus } : s));
-    notify(`Sponsor status updated to ${newStatus}`);
+    try {
+      const res = await fetch('/api/admin/sponsor/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status: newStatus }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setSponsors(previous);
+        alert(data.error || 'Failed to persist sponsor status.');
+        return;
+      }
+      notify(`Sponsor status updated to ${newStatus}`);
+    } catch {
+      setSponsors(previous);
+      alert('Network error updating sponsor status.');
+    }
   };
 
   // Team Filtering
@@ -490,46 +507,51 @@ export default function AdminDashboardPage() {
               </div>
             )}
             
-            {/* Export Center Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setExportDropdownOpen(!exportDropdownOpen)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-purple-200 bg-purple-900/40 hover:bg-purple-900/60 border border-purple-500/30 transition-colors"
-              >
-                <Download className="w-3.5 h-3.5 text-purple-400" />
-                <span>Export Data</span>
-                <ChevronDown className="w-3 h-3 text-purple-400" />
-              </button>
+            {/* Export Center Dropdown (Super Admin Only) */}
+            {currentOrganizer?.isSuperadmin && (
+              <div className="relative">
+                <button
+                  onClick={() => setExportDropdownOpen(!exportDropdownOpen)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-purple-200 bg-purple-900/40 hover:bg-purple-900/60 border border-purple-500/30 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Export Data</span>
+                  <ChevronDown className="w-3 h-3 text-purple-400" />
+                </button>
 
-              {exportDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 rounded-xl bg-slate-900 border border-purple-500/30 shadow-2xl py-1 z-50 text-xs animate-fadeIn">
-                  <div className="px-3 py-1.5 font-mono text-[10px] text-purple-400 border-b border-white/5 font-semibold">
-                    FORMULA-INJECTION PROTECTED EXPORTS
+                {exportDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-64 rounded-xl bg-slate-900 border border-purple-500/30 shadow-2xl py-1 z-50 text-xs animate-fadeIn">
+                    <div className="px-3 py-1.5 font-mono text-[10px] text-purple-400 border-b border-white/5 font-semibold">
+                      SUPER ADMIN CSV EXPORTS
+                    </div>
+                    <a href="/api/admin/export?type=participants" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
+                      All Builders (Team + Solo) (.csv)
+                    </a>
+                    <a href="/api/admin/export?type=teams" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
+                      Teams Registry (.csv)
+                    </a>
+                    <a href="/api/admin/export?type=team-members" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
+                      Team Members &amp; Roles (.csv)
+                    </a>
+                    <a href="/api/admin/export?type=abstracts" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
+                      Abstracts &amp; Review Remarks (.csv)
+                    </a>
+                    <a href="/api/admin/export?type=submissions" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
+                      Submissions (Deck + GitHub + Loom) (.csv)
+                    </a>
+                    <a href="/api/admin/export?type=evaluations" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
+                      Judge Evaluations &amp; Z-Scores (.csv)
+                    </a>
+                    <a href="/api/admin/export?type=waitlist" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
+                      Early Waitlist Registrations (.csv)
+                    </a>
+                    <a href="/api/admin/export?type=sponsors" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
+                      Corporate Sponsor Leads (.csv)
+                    </a>
                   </div>
-                  <a href="/api/admin/export?type=teams" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
-                    Teams Registry (.csv)
-                  </a>
-                  <a href="/api/admin/export?type=team-members" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
-                    Team Members & Roles (.csv)
-                  </a>
-                  <a href="/api/admin/export?type=abstracts" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
-                    Abstracts & Review Remarks (.csv)
-                  </a>
-                  <a href="/api/admin/export?type=submissions" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
-                    Submissions (GitHub + Loom) (.csv)
-                  </a>
-                  <a href="/api/admin/export?type=evaluations" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
-                    Judge Evaluations & Z-Scores (.csv)
-                  </a>
-                  <a href="/api/admin/export?type=waitlist" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
-                    Early Waitlist Registrations (.csv)
-                  </a>
-                  <a href="/api/admin/export?type=sponsors" download className="block px-3 py-2 text-slate-200 hover:bg-purple-900/40 hover:text-white">
-                    Corporate Sponsor Leads (.csv)
-                  </a>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
 
             <button
               onClick={loadData}
@@ -1135,6 +1157,7 @@ export default function AdminDashboardPage() {
                     <tr>
                       <th className="p-3">Team Code</th>
                       <th className="p-3">Team Name</th>
+                      <th className="p-3">Pitch Deck / PDF</th>
                       <th className="p-3">GitHub Repository</th>
                       <th className="p-3">Loom Demo Video</th>
                       <th className="p-3">Status</th>
@@ -1143,6 +1166,7 @@ export default function AdminDashboardPage() {
                   </thead>
                   <tbody className="divide-y divide-purple-500/10">
                     {filteredTeams.map((team) => {
+                      const hasDeck = Boolean(team.architecturePdfUrl);
                       const hasGithub = Boolean(team.githubUrl);
                       const hasLoom = Boolean(team.loomVideoUrl);
                       const isComplete = hasGithub && hasLoom;
@@ -1155,6 +1179,26 @@ export default function AdminDashboardPage() {
                           <td className="p-3">
                             <span className="font-bold text-white block">{team.teamName}</span>
                             <span className="text-slate-400 text-[10px] block">{team.trackId}</span>
+                            {(team.onlineDefenseSlot || team.defenseSlotRequested) && (
+                              <span className="text-[10px] font-mono text-sky-300 block">
+                                Slot: {new Date(team.onlineDefenseSlot || team.defenseSlotRequested || '').toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+                              </span>
+                            )}
+                          </td>
+                          <td className="p-3">
+                            {hasDeck ? (
+                              <a
+                                href={team.architecturePdfUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-amber-300 hover:text-white underline font-mono flex items-center gap-1"
+                              >
+                                <FileText className="w-3 h-3" />
+                                <span>Open Deck</span>
+                              </a>
+                            ) : (
+                              <span className="text-slate-500 font-mono text-[10px]">No Deck</span>
+                            )}
                           </td>
                           <td className="p-3">
                             {hasGithub ? (
@@ -1428,14 +1472,16 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
 
-              <a
-                href="/api/admin/export?type=waitlist"
-                download
-                className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Export Waitlist CSV</span>
-              </a>
+              {currentOrganizer?.isSuperadmin && (
+                <a
+                  href="/api/admin/export?type=waitlist"
+                  download
+                  className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Export Waitlist CSV</span>
+                </a>
+              )}
             </div>
 
             <div className="rounded-2xl bg-slate-900/50 border border-purple-500/20 overflow-hidden">
@@ -1443,9 +1489,9 @@ export default function AdminDashboardPage() {
                 <table className="w-full text-left text-xs">
                   <thead className="bg-slate-950/80 border-b border-purple-500/20 text-purple-300 font-mono text-[11px]">
                     <tr>
-                      <th className="p-3">Candidate</th>
-                      <th className="p-3">Track</th>
-                      <th className="p-3">Institution & Dept</th>
+                      <th className="p-3">Candidate &amp; Contact</th>
+                      <th className="p-3">Track &amp; Links</th>
+                      <th className="p-3">Institution, Year &amp; Size</th>
                       <th className="p-3">Status</th>
                       <th className="p-3">Registered At</th>
                     </tr>
@@ -1460,17 +1506,45 @@ export default function AdminDashboardPage() {
                       )
                       .map((item) => (
                         <tr key={item.id} className="hover:bg-white/[0.02]">
-                          <td className="p-3">
+                          <td className="p-3 align-top">
                             <span className="font-bold text-white block">{item.fullName}</span>
                             <span className="text-slate-400 font-mono text-[11px] block">{item.email}</span>
+                            {item.phone && (
+                              <span className="text-slate-400 font-mono text-[10px] block">{item.phone}</span>
+                            )}
+                            {item.motivation && (
+                              <p className="text-[10px] text-slate-400 mt-1 max-w-xs line-clamp-2" title={item.motivation}>
+                                &ldquo;{item.motivation}&rdquo;
+                              </p>
+                            )}
                           </td>
-                          <td className="p-3">
-                            <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-900/40 text-purple-200 border border-purple-500/20">
+                          <td className="p-3 align-top space-y-1.5">
+                            <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-900/40 text-purple-200 border border-purple-500/20 inline-block">
                               {item.preferredTrack}
                             </span>
+                            <div className="flex flex-wrap gap-2 text-[10px] font-mono">
+                              {item.githubUrl && (
+                                <a href={item.githubUrl} target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-white underline">GitHub</a>
+                              )}
+                              {item.linkedinUrl && (
+                                <a href={item.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-sky-300 hover:text-white underline">LinkedIn</a>
+                              )}
+                              {item.portfolioUrl && (
+                                <a href={item.portfolioUrl} target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-white underline">Portfolio</a>
+                              )}
+                              {item.meetupProfileUrl && (
+                                <a href={item.meetupProfileUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-white underline">Meetup</a>
+                              )}
+                              {item.awsBuilderCenterUrl && (
+                                <a href={item.awsBuilderCenterUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-300 hover:text-white underline">AWS Builder</a>
+                              )}
+                            </div>
                           </td>
-                          <td className="p-3 max-w-xs truncate text-slate-300">
-                            {item.institution || item.college || 'SIST'} ({item.department || 'CSE'})
+                          <td className="p-3 max-w-xs align-top text-slate-300">
+                            <span className="block truncate">{item.institution || item.college || 'SIST'} ({item.department || 'CSE'})</span>
+                            <span className="text-[10px] font-mono text-slate-400 block mt-0.5">
+                              {item.yearOfStudy || 'N/A'} {item.tShirtSize ? `• Tee: ${item.tShirtSize}` : ''}
+                            </span>
                           </td>
                           <td className="p-3">
                             <select
@@ -1600,6 +1674,61 @@ export default function AdminDashboardPage() {
                 </button>
               </div>
 
+              {/* Demo Sandbox Flag */}
+              <div className="flex items-center justify-between p-4 rounded-xl bg-slate-950/50 border border-purple-500/20">
+                <div className="space-y-1 pr-4">
+                  <span className="text-sm font-bold text-white block">Demo Sandbox Mode</span>
+                  <span className="text-xs text-slate-400 block">Controls whether demo/sandbox hints appear on public Judging &amp; preview terminals.</span>
+                </div>
+                <button
+                  onClick={() => handleUpdateFlags({ demoSandboxMode: !flags.demoSandboxMode })}
+                  disabled={savingFlags}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
+                    flags.demoSandboxMode ? 'bg-amber-600 hover:bg-amber-500 text-white' : 'bg-slate-800 text-slate-300'
+                  }`}
+                >
+                  {flags.demoSandboxMode ? 'SANDBOX ON' : 'PRODUCTION CLEAN'}
+                </button>
+              </div>
+
+              {/* Leaderboard Published Flag */}
+              <div className="flex items-center justify-between p-4 rounded-xl bg-slate-950/50 border border-purple-500/20">
+                <div className="space-y-1 pr-4">
+                  <span className="text-sm font-bold text-white block">Publish Live Tournament Leaderboard</span>
+                  <span className="text-xs text-slate-400 block">Freeze public `/leaderboard` visibility during jury deliberation.</span>
+                </div>
+                <button
+                  onClick={() => handleUpdateFlags({ leaderboardPublished: flags.leaderboardPublished === false })}
+                  disabled={savingFlags}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
+                    flags.leaderboardPublished !== false ? 'bg-emerald-600 hover:bg-emerald-500 text-white' : 'bg-slate-800 text-slate-300'
+                  }`}
+                >
+                  {flags.leaderboardPublished !== false ? 'PUBLISHED LIVE' : 'FROZEN (DELIBERATION)'}
+                </button>
+              </div>
+
+              {/* Registration Deadline */}
+              <div className="space-y-3 pt-2">
+                <label className="text-xs font-mono text-purple-300 block">Registration Deadline (ISO-8601 / IST Timestamp)</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={flags.registrationDeadline || ''}
+                    onChange={(e) => setFlags({ ...flags, registrationDeadline: e.target.value })}
+                    placeholder="2027-01-06T23:59:59+05:30"
+                    className="flex-grow px-3.5 py-2.5 rounded-xl bg-slate-950 border border-purple-500/30 text-xs text-white font-mono"
+                  />
+                  <button
+                    onClick={() => handleUpdateFlags({ registrationDeadline: flags.registrationDeadline })}
+                    disabled={savingFlags}
+                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-purple-700 hover:bg-purple-600 shrink-0"
+                  >
+                    Save Deadline
+                  </button>
+                </div>
+              </div>
+
               {/* Announcement Banner */}
               <div className="space-y-3 pt-2">
                 <label className="text-xs font-mono text-purple-300 block">Global Hero Announcement Banner</label>
@@ -1691,42 +1820,91 @@ export default function AdminDashboardPage() {
                 <div><span className="text-slate-400">Stage:</span> <span className="text-emerald-400 font-bold">{selectedTeam.selectionStage || 'ROUND_0_APPLICANT'}</span></div>
                 <div><span className="text-slate-400">Desk Bay:</span> <span className="text-white">{selectedTeam.deskBayAllocation || 'Unassigned'}</span></div>
                 <div><span className="text-slate-400">Check-in:</span> <span className={selectedTeam.checkedIn ? 'text-emerald-400 font-bold' : 'text-slate-400'}>{selectedTeam.checkedIn ? 'Checked In' : 'Pending'}</span></div>
+                <div><span className="text-slate-400">Defense Slot:</span> <span className="text-sky-300">{selectedTeam.onlineDefenseSlot ? new Date(selectedTeam.onlineDefenseSlot).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : 'Unscheduled'}</span></div>
+                <div><span className="text-slate-400">AWS Voucher:</span> <span className="text-amber-300">{selectedTeam.awsCreditVoucher || 'Pending'}</span></div>
               </div>
 
               <div>
                 <span className="font-mono text-purple-300 font-bold block mb-1">TEAM ROSTER ({selectedTeam.members?.length || 0} / 6)</span>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   {(selectedTeam.members || []).map((m, idx) => (
-                    <div key={idx} className="p-2.5 rounded-lg bg-slate-950/40 border border-white/5 flex items-center justify-between">
-                      <div>
-                        <span className="font-bold text-white">{m.name}</span>
-                        <span className="text-slate-400 text-[10px] ml-2">({m.email})</span>
+                    <div key={idx} className="p-3 rounded-lg bg-slate-950/50 border border-white/5 space-y-1.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <div>
+                          <span className="font-bold text-white">{m.name}</span>
+                          <span className="text-slate-400 text-[10px] ml-2 font-mono">{m.email}</span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-950 text-purple-300">
+                          {m.role}
+                        </span>
                       </div>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-950 text-purple-300">
-                        {m.role}
-                      </span>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[10px] font-mono text-slate-400">
+                        <div>Phone: <span className="text-slate-200">{m.phone || '—'}</span></div>
+                        <div>Reg No: <span className="text-slate-200">{m.collegeRegNo || '—'}</span></div>
+                        <div>College: <span className="text-slate-200">{m.college || '—'}</span></div>
+                        <div>Swag: <span className="text-slate-200">T:{m.tshirtSize || '—'} / H:{m.hoodieSize || '—'}</span></div>
+                        <div>Bus: <span className="text-slate-200">{m.busRoute || '—'}</span></div>
+                        <div>Meetup RSVP: <span className={m.meetupRsvpVerified ? 'text-emerald-400' : 'text-amber-300'}>{m.meetupRsvpVerified ? 'Verified' : 'Unverified'}</span></div>
+                      </div>
+                      <div className="flex flex-wrap gap-3 text-[10px] font-mono">
+                        {m.meetupProfileUrl && (
+                          <a href={m.meetupProfileUrl} target="_blank" rel="noopener noreferrer" className="text-sky-300 hover:text-white underline">
+                            Meetup Profile ↗
+                          </a>
+                        )}
+                        {m.awsBuilderCenterUrl && (
+                          <a href={m.awsBuilderCenterUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-300 hover:text-white underline">
+                            AWS Builder Center ↗
+                          </a>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div>
-                <span className="font-mono text-purple-300 font-bold block mb-1">PROPOSED PROBLEM & ABSTRACT</span>
+                <span className="font-mono text-purple-300 font-bold block mb-1">PROPOSED PROBLEM &amp; ARCHITECTURE</span>
                 <div className="p-3 rounded-xl bg-slate-950/60 border border-purple-500/10 space-y-1.5">
                   <h4 className="font-bold text-white">{selectedTeam.problemTitle || 'No Title'}</h4>
                   <p className="text-slate-300 leading-relaxed">{selectedTeam.problemAbstract || 'No Abstract'}</p>
+                  {(selectedTeam.architectureSummary || selectedTeam.projectAbstract) && (
+                    <p className="text-sky-200/90 text-[11px] pt-1 border-t border-white/10">
+                      <strong>R1 AWS Summary:</strong> {selectedTeam.architectureSummary || selectedTeam.projectAbstract}
+                    </p>
+                  )}
                 </div>
               </div>
 
-              {selectedTeam.githubUrl && (
-                <div>
-                  <span className="font-mono text-purple-300 font-bold block mb-1">SUBMITTED REPOSITORY</span>
-                  <a href={selectedTeam.githubUrl} target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-white underline font-mono flex items-center gap-1">
-                    <ExternalLink className="w-3 h-3" />
-                    <span>{selectedTeam.githubUrl}</span>
-                  </a>
+              <div>
+                <span className="font-mono text-purple-300 font-bold block mb-1">UPLOADED DELIVERABLES &amp; LINKS</span>
+                <div className="p-3 rounded-xl bg-slate-950/60 border border-purple-500/10 flex flex-wrap gap-3 font-mono">
+                  {selectedTeam.architecturePdfUrl ? (
+                    <a href={selectedTeam.architecturePdfUrl} target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-white underline flex items-center gap-1">
+                      <FileText className="w-3 h-3" />
+                      <span>Pitch Deck / Architecture PDF</span>
+                    </a>
+                  ) : (
+                    <span className="text-slate-500">No Pitch Deck Uploaded</span>
+                  )}
+                  {selectedTeam.githubUrl ? (
+                    <a href={selectedTeam.githubUrl} target="_blank" rel="noopener noreferrer" className="text-purple-300 hover:text-white underline flex items-center gap-1">
+                      <ExternalLink className="w-3 h-3" />
+                      <span>GitHub Repository</span>
+                    </a>
+                  ) : (
+                    <span className="text-slate-500">No GitHub Repo</span>
+                  )}
+                  {selectedTeam.loomVideoUrl ? (
+                    <a href={selectedTeam.loomVideoUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-white underline flex items-center gap-1">
+                      <Video className="w-3 h-3" />
+                      <span>3-Min Loom Demo Video</span>
+                    </a>
+                  ) : (
+                    <span className="text-slate-500">No Loom Video</span>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
 
             <div className="flex justify-end gap-2 pt-3 border-t border-purple-500/20">

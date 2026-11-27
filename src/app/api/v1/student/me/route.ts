@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentStudentSession } from '@/lib/student_auth';
 import { db } from '@/lib/db';
+import { isValidHttpUrl, safeParseJson } from '@/lib/http';
 
 export async function GET() {
   const session = await getCurrentStudentSession();
@@ -58,9 +59,45 @@ export async function PUT(req: NextRequest) {
     );
   }
 
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
   try {
-    const body = await req.json();
-    const { fullName, phone, institution, department, yearOfStudy, portfolioUrl, githubUrl, linkedinUrl, tshirtSize } = body;
+    const { fullName, phone, institution, department, yearOfStudy, portfolioUrl, githubUrl, linkedinUrl, tshirtSize } = parsed.data;
+
+    if (
+      (fullName !== undefined && (typeof fullName !== 'string' || fullName.trim().length === 0 || fullName.length > 150)) ||
+      (phone !== undefined && (typeof phone !== 'string' || phone.length > 50)) ||
+      (institution !== undefined && (typeof institution !== 'string' || institution.length > 200)) ||
+      (department !== undefined && (typeof department !== 'string' || department.length > 150)) ||
+      (yearOfStudy !== undefined && (typeof yearOfStudy !== 'string' || yearOfStudy.length > 50)) ||
+      (tshirtSize !== undefined && (typeof tshirtSize !== 'string' || tshirtSize.length > 10)) ||
+      (portfolioUrl && !isValidHttpUrl(String(portfolioUrl))) ||
+      (githubUrl && !isValidHttpUrl(String(githubUrl))) ||
+      (linkedinUrl && !isValidHttpUrl(String(linkedinUrl)))
+    ) {
+      return NextResponse.json(
+        { success: false, error: 'One or more profile fields are invalid or exceed maximum length.' },
+        { status: 400 }
+      );
+    }
+
+    if (
+      fullName === undefined &&
+      phone === undefined &&
+      institution === undefined &&
+      department === undefined &&
+      yearOfStudy === undefined &&
+      portfolioUrl === undefined &&
+      githubUrl === undefined &&
+      linkedinUrl === undefined &&
+      tshirtSize === undefined
+    ) {
+      return NextResponse.json(
+        { success: false, error: 'Provide at least one profile field to update.' },
+        { status: 400 }
+      );
+    }
 
     const result = await db.updateStudentProfile(session.studentId, {
       fullName,

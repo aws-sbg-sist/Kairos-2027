@@ -17,20 +17,25 @@ export async function GET(
     return NextResponse.json({ success: false, error: 'Member ID or username is required.' }, { status: 400 });
   }
 
-  let member = await db.getMemberByUsername(id);
-  if (!member) {
-    const all = await db.getMembers();
-    member = all.find(m => m.id === id);
+  try {
+    let member = await db.getMemberByUsername(id);
+    if (!member) {
+      const all = await db.getMembers();
+      member = all.find(m => m.id === id);
+    }
+
+    if (!member) {
+      return NextResponse.json({ success: false, error: 'Member not found in organizing cadre.' }, { status: 404 });
+    }
+
+    const session = await getCurrentAdminSession();
+    const sanitizedMember = session
+      ? member
+      : (({ registerNo, ...rest }) => rest)(member);
+
+    return NextResponse.json({ success: true, member: sanitizedMember });
+  } catch (err: any) {
+    console.error('[API Member Profile GET Error]:', err);
+    return NextResponse.json({ success: false, error: 'Failed to load member profile.' }, { status: 500 });
   }
-
-  if (!member) {
-    return NextResponse.json({ success: false, error: 'Member not found in organizing cadre.' }, { status: 404 });
-  }
-
-  const session = await getCurrentAdminSession();
-  const sanitizedMember = session
-    ? member
-    : (({ registerNo, ...rest }) => rest)(member);
-
-  return NextResponse.json({ success: true, member: sanitizedMember });
 }

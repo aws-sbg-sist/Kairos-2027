@@ -5,18 +5,18 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
-import { TECHNICAL_TRACKS } from '@/lib/config';
+import { TECHNICAL_TRACKS, EVENT_CONFIG } from '@/lib/config';
 import { 
   Users, 
   ArrowRight, 
   CheckCircle2, 
   Copy, 
-  Share2, 
   FileText, 
-  UploadCloud, 
   Check, 
-  AlertCircle 
+  AlertCircle,
+  Lock
 } from 'lucide-react';
+import { DeckUploader } from '@/components/forms/DeckUploader';
 
 function CreateTeamContent() {
   const searchParams = useSearchParams();
@@ -44,17 +44,40 @@ function CreateTeamContent() {
     githubUrl: '',
   });
 
+  const [authLoading, setAuthLoading] = useState(true);
+  const [signedInEmail, setSignedInEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [createdTeam, setCreatedTeam] = useState<any>(null);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    fetch('/api/v1/student/me')
+      .then(res => (res.status === 401 ? null : res.json()))
+      .then(data => {
+        if (data?.success && data.student) {
+          const s = data.student;
+          setSignedInEmail(s.email);
+          setFormData(prev => ({
+            ...prev,
+            leaderName: prev.leaderName || s.fullName || '',
+            leaderEmail: s.email || prev.leaderEmail,
+            leaderPhone: prev.leaderPhone || s.phone || '',
+            institutionName: prev.institutionName || s.institution || '',
+            githubUrl: prev.githubUrl || s.githubUrl || '',
+          }));
+        }
+      })
+      .catch(() => {})
+      .finally(() => setAuthLoading(false));
+  }, []);
+
   const wordCount = formData.problemAbstract.trim() ? formData.problemAbstract.trim().split(/\s+/).length : 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (wordCount > 250) {
-      setError('Abstract exceeds maximum word limit of 250 words.');
+    if (wordCount > 300) {
+      setError('Abstract exceeds maximum word limit of 300 words.');
       return;
     }
 
@@ -106,11 +129,39 @@ function CreateTeamContent() {
               Create Team & <span className="gradient-text-kairos">Submit Abstract</span>
             </h1>
             <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto">
-              Register your squad name, choose an enterprise track, and submit your project abstract. Teams require 4 to 6 members to qualify.
+              Register your squad name, choose an enterprise track, and submit your project abstract. Teams require 3 to 6 members to qualify.
             </p>
           </div>
 
-          {!createdTeam ? (
+          {authLoading ? (
+            <div className="p-10 rounded-3xl bg-aws-card border border-slate-700/60 text-center text-xs font-mono text-slate-400">
+              Checking verified builder session...
+            </div>
+          ) : !signedInEmail ? (
+            <div className="p-8 rounded-3xl bg-aws-card border border-purple-500/40 text-center space-y-4 shadow-xl">
+              <div className="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-300 mx-auto flex items-center justify-center">
+                <Lock className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-display font-bold text-white">Builder Account Required</h3>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
+                Sign in or complete National Registration first so your Team Leader role and Round 0 pitch deck bind to your verified identity.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <Link
+                  href="/register"
+                  className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-colors"
+                >
+                  Register Account →
+                </Link>
+                <Link
+                  href="/login"
+                  className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 text-xs font-semibold transition-colors"
+                >
+                  Sign In
+                </Link>
+              </div>
+            </div>
+          ) : !createdTeam ? (
             <div className="p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl">
               {error && (
                 <div className="p-3.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2 mb-6">
@@ -217,14 +268,27 @@ function CreateTeamContent() {
                       <input
                         type="email"
                         required
+                        disabled={Boolean(signedInEmail)}
                         value={formData.leaderEmail}
                         onChange={e => setFormData({ ...formData, leaderEmail: e.target.value })}
                         placeholder="leader@college.edu"
+                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm disabled:opacity-60"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-mono text-slate-300">Leader WhatsApp Phone *</label>
+                      <input
+                        type="tel"
+                        required
+                        value={formData.leaderPhone}
+                        onChange={e => setFormData({ ...formData, leaderPhone: e.target.value })}
+                        placeholder="+91 98765 43210"
                         className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
                       />
                     </div>
 
-                    <div className="sm:col-span-2 space-y-1">
+                    <div className="space-y-1">
                       <label className="text-xs font-mono text-slate-300">Leader Meetup Profile URL *</label>
                       <input
                         type="url"
@@ -244,8 +308,8 @@ function CreateTeamContent() {
                     <h3 className="text-xs font-mono  text-purple-300 font-bold">
                       3. Round 0 Project Abstract
                     </h3>
-                    <span className={`text-xs font-mono ${wordCount > 250 ? 'text-rose-400 font-bold' : 'text-slate-400'}`}>
-                      {wordCount} / 250 words max
+                    <span className={`text-xs font-mono ${wordCount > 300 ? 'text-rose-400 font-bold' : 'text-slate-400'}`}>
+                      {wordCount} / 300 words max
                     </span>
                   </div>
 
@@ -273,17 +337,23 @@ function CreateTeamContent() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <label className="text-xs font-mono text-slate-300">Architecture PDF / Diagram URL (Optional)</label>
-                      <input
-                        type="url"
-                        value={formData.architecturePdfUrl}
-                        onChange={e => setFormData({ ...formData, architecturePdfUrl: e.target.value })}
-                        placeholder="https://drive.google.com/... or Figma"
-                        className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm font-mono"
-                      />
+                  <div className="space-y-4">
+                    <div className="flex justify-end">
+                      <a
+                        href={EVENT_CONFIG.downloads.pitchTemplatePptx}
+                        download="KAIROS_2027_Round0_Pitch_Template.pptx"
+                        className="text-[11px] font-mono text-purple-300 hover:text-white underline"
+                      >
+                        Download Official Round 0 .pptx Template →
+                      </a>
                     </div>
+
+                    <DeckUploader
+                      label="Round 0 Pitch Deck / Architecture File (Optional)"
+                      artifactType="pitch_deck"
+                      value={formData.architecturePdfUrl}
+                      onChange={url => setFormData({ ...formData, architecturePdfUrl: url })}
+                    />
 
                     <div className="space-y-1">
                       <label className="text-xs font-mono text-slate-300">GitHub Repository URL (Optional for R0)</label>
@@ -327,7 +397,7 @@ function CreateTeamContent() {
                   Team {createdTeam.teamName} Created!
                 </h2>
                 <p className="text-sm text-slate-300 max-w-md mx-auto">
-                  Share this unique Team Code with 3 to 5 teammates so they can join your official roster before the Round 0 deadline.
+                  Share this unique Team Code with 2 to 5 teammates so they can join your official roster before the Round 0 deadline.
                 </p>
               </div>
 
@@ -352,7 +422,7 @@ function CreateTeamContent() {
               <div className="max-w-md mx-auto p-4 rounded-xl bg-slate-900 border border-slate-700/60 text-left space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono text-slate-400">
                   <span>Current Roster (1 / 6 builders):</span>
-                  <span className="text-purple-300">Min 4 Required</span>
+                  <span className="text-purple-300">Min 3 Required</span>
                 </div>
                 <div className="p-2.5 rounded-lg bg-slate-950 flex items-center justify-between text-xs">
                   <span className="font-bold text-white">{formData.leaderName} (Team Leader)</span>
@@ -363,7 +433,7 @@ function CreateTeamContent() {
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/dashboard"
-                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors shadow-md"
+                  className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-white hover:brightness-110 transition-colors shadow-md"
                 >
                   Enter Hacker Dashboard
                 </Link>

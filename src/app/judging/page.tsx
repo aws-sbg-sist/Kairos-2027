@@ -33,6 +33,11 @@ interface AssignedTeam {
   deskBayAllocation?: string;
   githubUrl?: string;
   loomUrl?: string;
+  loomVideoUrl?: string;
+  architecturePdfUrl?: string;
+  problemTitle?: string;
+  problemAbstract?: string;
+  projectAbstract?: string;
   proposal?: {
     title?: string;
     summary?: string;
@@ -70,12 +75,21 @@ export default function JudgingPortalPage() {
   const [scoreSubmitting, setScoreSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [searchTeam, setSearchTeam] = useState('');
+  const [demoSandboxMode, setDemoSandboxMode] = useState(false);
 
   const rawTotal = scores.criterion1 + scores.criterion2 + scores.criterion3 + scores.criterion4;
 
-  // Check existing session on mount
+  // Check existing session & demo flag on mount
   useEffect(() => {
     checkActiveSession();
+    fetch('/api/v1/flags')
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => {
+        if (d?.success && d.flags) {
+          setDemoSandboxMode(Boolean(d.flags.demoSandboxMode));
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const checkActiveSession = async () => {
@@ -281,9 +295,11 @@ export default function JudgingPortalPage() {
                   autoFocus
                 />
 
-                <div className="text-[11px] font-mono text-slate-400">
-                  Official Demo PINs: <code className="text-purple-300 font-bold">202701</code> (Vikrant Roy), <code className="text-purple-300 font-bold">202702</code> (Peak Capital)
-                </div>
+                {demoSandboxMode && (
+                  <div className="text-[11px] font-mono text-slate-400">
+                    Sandbox Demo PINs: <code className="text-purple-300 font-bold">202701</code> (Vikrant Roy), <code className="text-purple-300 font-bold">202702</code> (Peak Capital)
+                  </div>
+                )}
 
                 <button
                   type="submit"
@@ -473,7 +489,19 @@ export default function JudgingPortalPage() {
                           </div>
 
                           {/* Submission Links */}
-                          <div className="flex items-center gap-2">
+                          <div className="flex flex-wrap items-center gap-2">
+                            {currentTeam.architecturePdfUrl && (
+                              <a
+                                href={currentTeam.architecturePdfUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1 text-[11px] font-mono px-3 py-1.5 rounded-lg bg-slate-900 border border-amber-500/40 hover:border-amber-400 text-amber-200 transition-colors"
+                              >
+                                <FileText className="w-3.5 h-3.5 text-amber-400" />
+                                <span>Pitch Deck / PDF</span>
+                                <ExternalLink className="w-2.5 h-2.5 text-slate-500" />
+                              </a>
+                            )}
                             {currentTeam.githubUrl && (
                               <a
                                 href={currentTeam.githubUrl}
@@ -486,9 +514,9 @@ export default function JudgingPortalPage() {
                                 <ExternalLink className="w-2.5 h-2.5 text-slate-500" />
                               </a>
                             )}
-                            {currentTeam.loomUrl && (
+                            {(currentTeam.loomUrl || currentTeam.loomVideoUrl) && (
                               <a
-                                href={currentTeam.loomUrl}
+                                href={currentTeam.loomUrl || currentTeam.loomVideoUrl}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-1 text-[11px] font-mono px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 hover:border-purple-500 text-slate-200 transition-colors"
@@ -502,14 +530,14 @@ export default function JudgingPortalPage() {
                         </div>
 
                         {/* Proposal / Abstract Snippet */}
-                        {currentTeam.proposal && (
+                        {(currentTeam.proposal || currentTeam.problemTitle || currentTeam.problemAbstract) && (
                           <div className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs space-y-1.5">
                             <div className="flex items-center gap-1.5 font-bold text-purple-300 font-mono text-[11px]">
                               <FileText className="w-3.5 h-3.5" />
-                              <span>Project Abstract: {currentTeam.proposal.title || currentTeam.teamName}</span>
+                              <span>Project Abstract: {currentTeam.proposal?.title || currentTeam.problemTitle || currentTeam.teamName}</span>
                             </div>
                             <p className="text-slate-300 text-[11px] leading-relaxed line-clamp-3">
-                              {currentTeam.proposal.summary || currentTeam.proposal.problemStatement || currentTeam.proposal.architectureOverview || 'Abstract submitted during qualifier stage.'}
+                              {currentTeam.proposal?.summary || currentTeam.proposal?.problemStatement || currentTeam.proposal?.architectureOverview || currentTeam.problemAbstract || currentTeam.projectAbstract || 'Abstract submitted during qualifier stage.'}
                             </p>
                           </div>
                         )}

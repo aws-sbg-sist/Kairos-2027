@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { OrgMember } from '@/types';
 import { EVENT_CONFIG } from '@/lib/config';
+import { Navbar } from '@/components/navigation/Navbar';
+import { Footer } from '@/components/navigation/Footer';
 
 export default function MembersPage() {
   const [members, setMembers] = useState<OrgMember[]>([]);
@@ -56,7 +58,9 @@ export default function MembersPage() {
   });
 
   return (
-    <div className="min-h-screen bg-aws-canvas text-slate-100 pt-28 pb-24">
+    <div className="min-h-screen bg-aws-canvas text-slate-100 flex flex-col justify-between">
+      <Navbar />
+      <div className="pt-28 pb-24 flex-1">
       {/* Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-purple-950/20 via-purple-900/10 to-transparent blur-[140px]" />
@@ -232,6 +236,8 @@ export default function MembersPage() {
         </div>
 
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

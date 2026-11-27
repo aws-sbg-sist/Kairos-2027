@@ -3,14 +3,20 @@ import { db } from '@/lib/db';
 import { getCurrentStudentSession } from '@/lib/student_auth';
 import { verifyTeamLeader } from '@/lib/rbac';
 import { sendTransactionalEmail, buildQualifierSubmissionEmail } from '@/lib/email';
+import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
+import { isValidHttpUrl, safeParseJson } from '@/lib/http';
 
 /**
  * PHASE 03 RBAC ENFORCEMENT (VULN-01 Resolved):
  * Qualifier submission writes require an authenticated student session AND verified
- * Team Leader status for the target team. Unauthenticated requests are rejected with 401,
- * and unauthorized members / non-leaders are rejected with 403 Forbidden.
+ * Team Leader status for the target team.
  */
 export async function POST(req: NextRequest) {
+  const rateLimit = checkRateLimit(req, { limit: 15, windowMs: 60_000, identifier: 'qualifier_submit' });
+  if (!rateLimit.allowed) {
+    return createRateLimitResponse(rateLimit.resetAt, rateLimit.limit);
+  }
+
   try {
     // 1. Verify Student Authentication
     const studentSession = await getCurrentStudentSession();
@@ -22,11 +28,13 @@ export async function POST(req: NextRequest) {
       }, { status: 401 });
     }
 
-    // 2. Parse submission payload
-    const body = await req.json();
+    // 2. Parse submission payload safely
+    const parsed = await safeParseJson(req);
+    if (!parsed.ok) return parsed.response;
+    const body = parsed.data;
     const { teamCode } = body;
 
-    if (!teamCode) {
+    if (!teamCode || typeof teamCode !== 'string') {
       return NextResponse.json({
         success: false,
         error: 'Team code is required.',
@@ -45,7 +53,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Process validated submission
-    const result = await processQualifierSubmission(body);
+    const result = await processQualifierSubmission(body as any);
     const statusCode = result.status || (result.success ? 200 : 400);
 
     if (result.success) {
@@ -56,8 +64,8 @@ export async function POST(req: NextRequest) {
           leaderName: team.leaderName || studentSession.fullName || 'Team Leader',
           teamName: team.teamName || 'Kairos Squad',
           teamCode: team.teamCode || team.id || 'KAIROS-SQUAD',
-          githubUrl: body.githubUrl.trim(),
-          loomVideoUrl: body.loomVideoUrl.trim(),
+          githubUrl: String(body.githubUrl).trim(),
+          loomVideoUrl: String(body.loomVideoUrl).trim(),
           defenseSlot: result.submission?.defenseSlot,
         })).catch(err => console.error('[Email Qualifier Submit Error]:', err));
       }
@@ -74,30 +82,48 @@ export async function POST(req: NextRequest) {
   }
 }
 
-/**
- * PRESERVED SUBMISSION HANDLER:
- * Kept intact for Phase 01 integration with authenticated student sessions.
- */
 async function processQualifierSubmission(body: {
   teamCode: string;
   loomVideoUrl: string;
   githubUrl: string;
+  architecturePdfUrl?: string;
   architectureSummary?: string;
   defenseSlotRequested?: string;
 }) {
-  const { teamCode, loomVideoUrl, githubUrl, defenseSlotRequested } = body;
+  const { teamCode, loomVideoUrl, githubUrl, architecturePdfUrl, architectureSummary, defenseSlotRequested } = body;
 
-  if (!teamCode || !loomVideoUrl || !githubUrl) {
+  if (!teamCode || !loomVideoUrl || !githubUrl || typeof loomVideoUrl !== 'string' || typeof githubUrl !== 'string') {
     return { success: false, error: 'Team code, Loom demo video URL, and GitHub repository URL are required.', status: 400 };
   }
 
-  if (!githubUrl.includes('github.com')) {
-    return { success: false, error: 'Please provide a valid GitHub repository URL.', status: 400 };
+  if (
+    loomVideoUrl.length > 500 ||
+    githubUrl.length > 300 ||
+    (architecturePdfUrl && String(architecturePdfUrl).length > 500) ||
+    (architectureSummary && String(architectureSummary).length > 3000) ||
+    (defenseSlotRequested && String(defenseSlotRequested).length > 100)
+  ) {
+    return { success: false, error: 'One or more submission fields exceed maximum allowed length.', status: 400 };
+  }
+
+  if (!isValidHttpUrl(loomVideoUrl)) {
+    return { success: false, error: 'Demo video URL must begin with https:// or http://.', status: 400 };
+  }
+
+  if (!isValidHttpUrl(githubUrl) || !githubUrl.toLowerCase().includes('github.com')) {
+    return { success: false, error: 'Please provide a valid GitHub repository URL (https://github.com/...).', status: 400 };
+  }
+
+  if (architecturePdfUrl && !isValidHttpUrl(String(architecturePdfUrl))) {
+    return { success: false, error: 'Architecture deck URL must be a valid uploaded file or https:// URL.', status: 400 };
   }
 
   const updated = await db.submitRound1Qualifier(teamCode.trim().toUpperCase(), {
     loomVideoUrl: loomVideoUrl.trim(),
-    githubUrl: githubUrl.trim()
+    githubUrl: githubUrl.trim(),
+    architecturePdfUrl: architecturePdfUrl ? String(architecturePdfUrl).trim() : undefined,
+    architectureSummary: architectureSummary ? String(architectureSummary).trim() : undefined,
+    defenseSlotRequested: defenseSlotRequested ? String(defenseSlotRequested).trim() : undefined,
   });
 
   if (!updated) {

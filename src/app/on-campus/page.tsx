@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
+import { EVENT_CONFIG } from '@/lib/config';
 import { 
   MapPin, 
   Bus, 
@@ -18,7 +19,11 @@ import {
   Building2, 
   PhoneCall, 
   ShieldCheck,
-  Compass
+  Compass,
+  Download,
+  ExternalLink,
+  ClipboardCheck,
+  FileText
 } from 'lucide-react';
 
 export default function OnCampusGuidePage() {
@@ -142,25 +147,37 @@ export default function OnCampusGuidePage() {
                   </h2>
                 </div>
               </div>
-              <span className="text-xs font-mono text-slate-400">
-                Rajiv Gandhi Salai (OMR), Chennai - 600119
-              </span>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="text-xs font-mono text-slate-400">
+                  Rajiv Gandhi Salai (OMR), Chennai - 600119
+                </span>
+                <a
+                  href={EVENT_CONFIG.venue.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 border border-sky-400/30 text-sky-300 text-xs font-mono font-semibold transition-colors"
+                >
+                  <Navigation className="w-3.5 h-3.5" />
+                  <span>Open in Google Maps</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
             </div>
 
             {/* Campus Architectural Panorama Illustration */}
             <div className="relative rounded-2xl overflow-hidden border border-purple-500/30 bg-slate-950/80 aspect-[21/9] max-h-[320px] w-full flex items-center justify-center group shadow-xl">
               <Image
-                src="/assets/venue-illustration.png"
-                alt="Sathyabama Indoor Auditorium Architectural Illustration"
+                src="/assets/visuals/arena-stage.jpg"
+                alt="Sathyabama Indoor Stadium Hackathon Arena"
                 fill
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90"
+                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-95"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
                 <span className="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700/60 backdrop-blur-md">
                   Indoor Auditorium - 100 Hacking Bays & 24/7 Operations Hub
                 </span>
-                <span className="hidden sm:inline-block bg-gradient-to-r from-purple-700 to-purple-900/90 text-slate-950 font-bold px-3 py-1 rounded-lg shadow-md">
+                <span className="hidden sm:inline-block bg-gradient-to-r from-purple-700 to-purple-900/90 text-white font-bold px-3 py-1 rounded-lg shadow-md">
                   100 Elite National Teams
                 </span>
               </div>
@@ -174,7 +191,7 @@ export default function OnCampusGuidePage() {
                   onClick={() => setSelectedFloor(floor)}
                   className={`p-3 rounded-xl text-xs font-bold font-mono transition-colors  ${
                     selectedFloor === floor
-                      ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-md'
+                      ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-white shadow-md'
                       : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
                   }`}
                 >
@@ -334,6 +351,56 @@ export default function OnCampusGuidePage() {
             </div>
           </div>
 
+          {/* Section 3.5: Mandatory Packing Checklist & OD Letter Support */}
+          <div className="p-6 sm:p-10 rounded-3xl bg-aws-card border border-slate-700/60 shadow-xl space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+              <div className="flex items-center gap-2.5">
+                <ClipboardCheck className="w-5 h-5 text-purple-400" />
+                <div>
+                  <span role="status" className="text-xs font-mono text-purple-400 font-medium">Finalist Preparation</span>
+                  <h2 className="text-xl sm:text-2xl font-display font-black text-white">
+                    Outstation Checklist &amp; College On-Duty (OD) Letters
+                  </h2>
+                </div>
+              </div>
+              <a
+                href={EVENT_CONFIG.downloads.brochurePdf}
+                download="KAIROS_2027_Official_Brochure.pdf"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-slate-950 border border-white/15 text-xs font-mono font-bold transition-colors shrink-0"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download Official Brochure / OD PDF</span>
+              </a>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+              <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+                <div className="flex items-center gap-2 font-mono text-purple-300 font-bold">
+                  <FileText className="w-4 h-4" />
+                  <span>College On-Duty (OD) Permission Protocol</span>
+                </div>
+                <p className="text-slate-300 leading-relaxed">
+                  Students requiring departmental OD permission for <strong>Jan 22–24, 2027</strong> can attach the downloadable Official Brochure PDF alongside their registered <strong>Team Code</strong> and Round 2 shortlist confirmation email.
+                </p>
+                <p className="text-slate-400 font-mono">
+                  Secretariat verification for faculty/HOD inquiries: sistawscc@gmail.com · +91 6381801640
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2.5">
+                <div className="font-mono text-emerald-400 font-bold mb-1">
+                  Mandatory Builder Packing List
+                </div>
+                <ul className="space-y-1.5 text-slate-200">
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" /><span>Valid physical College ID Card &amp; Government Photo ID (Aadhaar / PAN / DL)</span></li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" /><span>Digital Pass QR code screenshot or `/portal/pass` access for check-in</span></li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" /><span>Laptop, power brick, multi-plug extension strip &amp; Ethernet/USB-C dongle</span></li>
+                  <li className="flex items-start gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" /><span>Hoodie / light jacket for overnight indoor stadium air-conditioning</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           {/* Section 4: Complimentary Builder Streetwear Kit */}
           <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-aws-squidInk to-slate-950 border border-purple-500/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-2 text-center md:text-left">
@@ -347,7 +414,7 @@ export default function OnCampusGuidePage() {
             </div>
             <Link
               href="/register"
-              className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 transition-colors shadow-md flex-shrink-0"
+              className="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-white hover:brightness-110 transition-colors shadow-md flex-shrink-0"
             >
               Verify Your Tee Size in Registration
             </Link>

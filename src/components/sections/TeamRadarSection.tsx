@@ -48,7 +48,7 @@ export function TeamRadarSection() {
   };
 
   return (
-    <section id="radar" className="py-24 relative overflow-hidden bg-aws-canvas">
+    <section id="radar" className="py-8 lg:py-14 relative overflow-hidden bg-aws-canvas">
       {/* Background ambient radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-purple-950/20 blur-[140px] rounded-full pointer-events-none" />
 
@@ -73,7 +73,7 @@ export function TeamRadarSection() {
           </h2>
 
           <p className="text-base sm:text-lg text-slate-300">
-            KAIROS 2027 requires <strong className="text-white">4 to 6 builders</strong> per team. Looking for a systems engineer, smart contract auditor, or AI researcher? Find complementary builders or broadcast your beacon.
+            KAIROS 2027 requires <strong className="text-white">3 to 6 builders</strong> per team. Solo builder or 2-person squad? Find complementary engineers or broadcast your beacon.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
@@ -82,7 +82,7 @@ export function TeamRadarSection() {
               onMouseEnter={() => sound?.playHover()}
               className="px-6 py-3 rounded-xl font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 transition-colors flex items-center gap-2 group text-sm active:scale-95"
             >
-              <Radio className="w-4 h-4 text-slate-950" />
+              <Radio className="w-4 h-4 text-white" />
               <span>Broadcast Your Beacon</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
@@ -106,7 +106,7 @@ export function TeamRadarSection() {
               onMouseEnter={() => sound?.playHover()}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 ${
                 selectedTrack === 'all'
-                  ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
+                  ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-white shadow-md shadow-purple-900/40 font-bold'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
               }`}
             >
@@ -119,7 +119,7 @@ export function TeamRadarSection() {
                 onMouseEnter={() => sound?.playHover()}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 ${
                   selectedTrack === t.id
-                    ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 shadow-md shadow-purple-900/40 font-bold'
+                    ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-white shadow-md shadow-purple-900/40 font-bold'
                     : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/5'
                 }`}
               >

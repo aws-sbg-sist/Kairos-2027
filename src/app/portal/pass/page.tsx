@@ -75,6 +75,11 @@ export default function ParticipantPassPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-purple-950/20 blur-[130px] rounded-full pointer-events-none" />
         
         <div className="w-full max-w-md bg-slate-900/80 border border-purple-500/30 rounded-3xl p-8 backdrop-blur-xl text-center z-10 shadow-2xl space-y-6">
+          {error && (
+            <div className="p-3 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-200 text-xs">
+              {error}
+            </div>
+          )}
           <div className="w-14 h-14 bg-purple-500/10 border border-purple-500/30 rounded-full flex items-center justify-center mx-auto text-purple-400">
             <ShieldCheck className="w-8 h-8" />
           </div>

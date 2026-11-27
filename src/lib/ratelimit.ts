@@ -529,8 +529,8 @@ export function checkRateLimit(
   req: NextRequest | Request,
   options: { limit?: number; windowMs?: number; identifier?: string } = {}
 ) {
-  const isTest = process.env.NODE_ENV === 'test' || 
-    ('headers' in req && (req.headers.get('x-kairos-test-suite') === 'true' || req.headers.get('x-test-suite') === 'true'));
+  const isTest = process.env.NODE_ENV === 'test' ||
+    (process.env.NODE_ENV !== 'production' && 'headers' in req && (req.headers.get('x-kairos-test-suite') === 'true' || req.headers.get('x-test-suite') === 'true'));
   if (isTest) {
     return { allowed: true, remaining: 9999, resetAt: Date.now() + 60_000, limit: 9999 };
   }
@@ -540,7 +540,15 @@ export function checkRateLimit(
   const baseLimit = isLocalDev ? (options.limit ?? 15) * 50 : (options.limit ?? 15);
   const limit = baseLimit;
   const windowMs = options.windowMs ?? 60_000;
-  const key = options.identifier ? `${clientIp}:${options.identifier}` : clientIp;
+  let routeId = options.identifier;
+  if (!routeId && 'url' in req && req.url) {
+    try {
+      routeId = new URL(req.url).pathname;
+    } catch {
+      routeId = undefined;
+    }
+  }
+  const key = routeId ? `${clientIp}:${routeId}` : clientIp;
   const now = Date.now();
 
   const ipRecord = ipStore.get(key);

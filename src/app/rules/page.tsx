@@ -15,11 +15,14 @@ import {
   Clock, 
   CheckCircle2, 
   FileText,
-  Building
+  Building,
+  Download,
+  ArrowRight
 } from 'lucide-react';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
-import { EVENT_CONFIG } from '@/lib/config';
+import { EVENT_CONFIG, FAQS } from '@/lib/config';
+import { EVALUATION_CRITERIA } from '@/lib/problem-statements';
 
 export default function RulesPage() {
   return (
@@ -112,7 +115,7 @@ export default function RulesPage() {
 
             <div className="space-y-4 text-sm text-slate-300 leading-relaxed">
               <p>
-                <strong>Hacking Window:</strong> The official 48-hour sprint commences at <strong>12:15 PM IST on Friday, January 22, 2027</strong> and terminates strictly at <strong>08:30 AM IST on Sunday, January 24, 2027 (Hard Code Freeze)</strong>.
+                <strong>Hacking Window:</strong> The official 48-hour sprint commences at <strong>12:15 PM IST on Friday, January 22, 2027</strong> and terminates strictly at <strong>12:15 PM IST on Sunday, January 24, 2027 (Hard Code Freeze — 48.0 Hours)</strong>.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
                 <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 text-xs space-y-2">
@@ -134,7 +137,7 @@ export default function RulesPage() {
                   <ul className="list-disc list-inside space-y-1 text-slate-300">
                     <li>Pre-written proprietary business logic authored before the event</li>
                     <li>Finished applications with cosmetic frontend changes</li>
-                    <li>Commits pushed after the 08:30 AM Sunday hard freeze</li>
+                    <li>Commits pushed after the 12:15 PM IST Sunday hard freeze</li>
                     <li>Plagiarized codebases or clone wrappers with zero novel logic</li>
                   </ul>
                 </div>
@@ -161,18 +164,50 @@ export default function RulesPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                 <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
                   <div className="text-xs text-slate-400 font-mono">Roster Size</div>
-                  <div className="text-lg font-bold text-white">4 to 6 Builders</div>
+                  <div className="text-lg font-bold text-white">3 to 6 Builders</div>
                   <div className="text-[11px] text-slate-400 mt-1">Cross-institutional teams permitted</div>
                 </div>
                 <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
-                  <div className="text-xs text-slate-400 font-mono">Entry Status</div>
-                  <div className="text-lg font-bold text-purple-400">Merit Screening</div>
-                  <div className="text-[11px] text-slate-400 mt-1">Updated upon registration</div>
+                  <div className="text-xs text-slate-400 font-mono">Entry &amp; Fee Policy</div>
+                  <div className="text-lg font-bold text-emerald-400">Free R0 &amp; R1</div>
+                  <div className="text-[11px] text-slate-400 mt-1">Nominal fee only for R2 Finalists</div>
                 </div>
                 <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
                   <div className="text-xs text-slate-400 font-mono">AWS Verification</div>
                   <div className="text-lg font-bold text-purple-400">Meetup RSVP</div>
                   <div className="text-[11px] text-slate-400 mt-1">SIST chapter verification mandatory</div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-purple-950/25 border border-purple-500/30 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div className="space-y-0.5">
+                  <span className="font-bold text-white block">Starter Templates, Brochure &amp; Solo/Duo Pairing</span>
+                  <span className="text-slate-300">Download the Round 0 pitch template or find your 3rd teammate on Builder Radar.</span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <a
+                    href={EVENT_CONFIG.downloads.pitchTemplatePptx}
+                    download="KAIROS_2027_Round0_Pitch_Template.pptx"
+                    className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white text-white hover:text-slate-950 font-mono font-semibold inline-flex items-center gap-1.5 transition-colors"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Round 0 PPT (.pptx)</span>
+                  </a>
+                  <a
+                    href={EVENT_CONFIG.downloads.brochurePdf}
+                    download="KAIROS_2027_Official_Brochure.pdf"
+                    className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white text-white hover:text-slate-950 font-mono font-semibold inline-flex items-center gap-1.5 transition-colors"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Brochure / OD (PDF)</span>
+                  </a>
+                  <Link
+                    href="/radar"
+                    className="px-3 py-1.5 rounded-lg bg-purple-700 hover:bg-purple-600 text-white font-mono font-semibold inline-flex items-center gap-1 transition-colors"
+                  >
+                    <span>Builder Radar</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
                 </div>
               </div>
 
@@ -224,13 +259,30 @@ export default function RulesPage() {
 
             <div className="space-y-4 text-sm text-slate-300 leading-relaxed">
               <p>
-                <strong>Multi-Checkpoint Rubric:</strong> Evaluation is conducted across 3 rigorous gates:
+                <strong>Multi-Checkpoint Evaluation:</strong> Table-side evaluations are conducted across 3 gates on campus:
               </p>
-              <ul className="list-disc list-inside space-y-1 text-slate-400 text-xs">
-                <li>Checkpoint 1: Architecture & Feasibility Gate (Friday 04:00 PM – Weight Sealed)</li>
-                <li>Checkpoint 2: Mid-Point Prototype & Security Audit (Saturday 11:30 AM – Weight Sealed)</li>
-                <li>Checkpoint 3: Final Code Review & Working Demo (Saturday 09:30 PM – Weight Sealed)</li>
+              <ul className="list-disc list-inside space-y-1 text-slate-300 text-xs">
+                <li>Checkpoint 1: Architecture &amp; Cloud Feasibility Gate (Friday 04:00 PM – 06:30 PM IST)</li>
+                <li>Checkpoint 2: Code Velocity &amp; API Integration Gate (Saturday 02:00 PM – 05:30 PM IST)</li>
+                <li>Checkpoint 3: Grand Finale Live Demos &amp; Defense (Sunday 01:15 PM – 03:30 PM IST)</li>
               </ul>
+
+              <div className="pt-2">
+                <div className="text-xs font-mono font-bold text-purple-300 mb-3">
+                  Official Evaluation Matrix (100 Marks Total)
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {EVALUATION_CRITERIA.map((item) => (
+                    <div
+                      key={item.label}
+                      className="flex items-center justify-between gap-3 rounded-xl bg-slate-950/80 border border-slate-800 px-4 py-2.5 text-xs"
+                    >
+                      <span className="text-slate-200">{item.label}</span>
+                      <strong className="text-purple-300 font-mono">{item.points} pts</strong>
+                    </div>
+                  ))}
+                </div>
+              </div>
               <p>
                 <strong>Gaussian Normalization:</strong> Scores across all 25+ industry evaluators are normalized using standard Gaussian Z-scores (<span className="font-mono text-white">Z = (X - μ) / σ</span>) to eliminate deviations between lenient and strict judges.
               </p>
@@ -262,6 +314,22 @@ export default function RulesPage() {
               <p className="text-xs text-slate-400">
                 Participants asked to stop any harassing behavior are expected to comply immediately. Violators are subject to immediate expulsion from the hackathon and disqualification of their entire team, with zero eligibility for prizes, refunds, or certificates.
               </p>
+            </div>
+          </div>
+
+          {/* Complete Frequently Asked Questions Reference */}
+          <div id="faq" className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-xl">
+            <div className="mb-6">
+              <h2 className="text-xl font-bold text-white">6. Complete Participant FAQ</h2>
+              <p className="text-xs text-slate-400 mt-1">Full answers on team composition, qualifier deliverables, venue welfare, and registration</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {FAQS.map((item, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+                  <h3 className="text-sm font-bold text-white">{item.q}</h3>
+                  <p className="text-xs text-slate-300 leading-relaxed">{item.a}</p>
+                </div>
+              ))}
             </div>
           </div>
 

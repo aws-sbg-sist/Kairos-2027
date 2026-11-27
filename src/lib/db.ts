@@ -56,7 +56,7 @@ const DEFAULT_MEMBERS: OrgMember[] = [
     division: 'Executive Directorate',
     displayOrder: 1,
     photoUrl: '/assets/members/thenappan_t.webp',
-    bio: 'Apex student leader directing macro-systems, institutional administration, and strategic industry partnerships for India\'s premier zero-fee hackathon.',
+    bio: 'Apex student leader directing macro-systems, institutional administration, and strategic industry partnerships for India\'s flagship 48-hour merit hackathon.',
     builderPhilosophyQuote: 'When financial barriers are dropped to zero, authentic engineering brilliance takes the stage.',
     academicDepartment: 'Department of Computer Science & Engineering, SIST',
     graduationYear: 2027,
@@ -146,17 +146,17 @@ const DEFAULT_MEMBERS: OrgMember[] = [
     division: 'Division 1: Capital & Corporate Relations',
     displayOrder: 4,
     photoUrl: '/assets/members/nangaiyar_m.webp',
-    bio: 'Directing corporate partnerships, sponsor outreach, ₹3.5L operational treasury, and the crowdsourced rainmaker referral fund.',
+    bio: 'Directing corporate partnerships, sponsor outreach, and the ₹3.5L operational treasury for student builders.',
     builderPhilosophyQuote: 'Every rupee secured from enterprise sponsors directly fuels a student builder\'s dreams.',
     academicDepartment: 'Department of Computer Science & Engineering, SIST',
     graduationYear: 2027,
     awsCertifications: ['AWS Cloud Practitioner'],
-    badges: ['Master Rainmaker', 'Sponsorship Titan'],
+    badges: ['Partnerships Lead', 'Sponsorship Titan'],
     contributions: [
       {
         category: 'Capital Outreach',
-        title: 'Sponsorship Prospectus & Rainmaker Referral Hub',
-        description: 'Engineered multi-tier corporate partnership prospectus and crowdsourced student referral model.',
+        title: 'Sponsorship Prospectus & Partner Hub',
+        description: 'Engineered multi-tier corporate partnership prospectus and transparent sponsor onboarding workflow.',
         impact: '₹3.5L Working Capital Pipeline',
         badgeTier: 'DIAMOND',
         verificationHash: '0x7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b'
@@ -458,6 +458,22 @@ const jsonDb = {
     };
 
     store.waitlist.push(newEntry);
+
+    const acc = (store.studentAccounts || []).find(s => s.email.toLowerCase() === normalizedEmail);
+    if (acc) {
+      acc.fullName = entry.fullName.trim() || acc.fullName;
+      acc.phone = entry.phone || acc.phone;
+      acc.institution = entry.institution || acc.institution;
+      acc.department = entry.department || acc.department;
+      acc.yearOfStudy = entry.yearOfStudy || acc.yearOfStudy;
+      acc.githubUrl = entry.githubUrl || acc.githubUrl;
+      acc.linkedinUrl = entry.linkedinUrl || acc.linkedinUrl;
+      acc.meetupProfileUrl = entry.meetupProfileUrl || acc.meetupProfileUrl;
+      acc.meetupRsvpVerified = entry.meetupRsvpVerified ?? acc.meetupRsvpVerified;
+      acc.awsBuilderCenterUrl = entry.awsBuilderCenterUrl || acc.awsBuilderCenterUrl;
+      acc.tshirtSize = entry.tShirtSize || acc.tshirtSize;
+    }
+
     writeStore(store);
     return { success: true, entry: newEntry };
   },
@@ -545,6 +561,7 @@ const jsonDb = {
       city: teamData.city,
       state: teamData.state,
       leaderEmail: teamData.leaderEmail,
+      leaderName: teamData.leaderName,
       selectionStage: 'ROUND_0_APPLICANT',
       problemTitle: teamData.problemTitle,
       problemAbstract: teamData.problemAbstract,
@@ -735,7 +752,16 @@ const jsonDb = {
     return { success: true, team };
   },
 
-  submitRound1Qualifier(teamCode: string, data: { loomVideoUrl: string; githubUrl: string }): boolean {
+  submitRound1Qualifier(
+    teamCode: string,
+    data: {
+      loomVideoUrl: string;
+      githubUrl: string;
+      architecturePdfUrl?: string;
+      architectureSummary?: string;
+      defenseSlotRequested?: string;
+    }
+  ): boolean {
     const store = readStore();
     const clean = teamCode.trim().toUpperCase();
     const team = store.teams.find(t => (t.teamCode && t.teamCode.toUpperCase() === clean) || (t.id && t.id.toUpperCase() === clean) || (t.inviteCode && t.inviteCode.toUpperCase() === clean));
@@ -743,6 +769,15 @@ const jsonDb = {
 
     team.loomVideoUrl = data.loomVideoUrl;
     team.githubUrl = data.githubUrl;
+    if (data.architecturePdfUrl) team.architecturePdfUrl = data.architecturePdfUrl;
+    if (data.architectureSummary) {
+      team.architectureSummary = data.architectureSummary;
+      team.projectAbstract = data.architectureSummary;
+    }
+    if (data.defenseSlotRequested) {
+      team.defenseSlotRequested = data.defenseSlotRequested;
+      team.onlineDefenseSlot = data.defenseSlotRequested;
+    }
     if (team.selectionStage === 'ROUND_0_APPLICANT') {
       team.selectionStage = 'ONLINE_SEMI_FINALIST';
     }
@@ -1252,10 +1287,18 @@ const jsonDb = {
         : 0;
       const zScoreStr = `${avgZ >= 0 ? '+' : ''}${avgZ.toFixed(2)}σ`;
 
-      const commitCount = team.githubUrl 
-        ? 45 + Math.abs((team.teamCode || team.teamName).split('').reduce((acc, c) => acc + c.charCodeAt(0), 0) % 55) 
-        : 0;
-      const velocity = commitCount >= 70 ? 'High Velocity' : (commitCount >= 40 ? 'Sustained Velocity' : 'Active');
+      const commitEvents = store.commitEvents || [];
+      const commitCount = commitEvents.filter(
+        c => targetIds.has(c.teamId.toLowerCase()) || (c.teamCode && targetIds.has(c.teamCode.toLowerCase()))
+      ).length;
+      const velocity =
+        commitCount >= 10
+          ? 'High Velocity'
+          : commitCount >= 4
+          ? 'Sustained Velocity'
+          : commitCount > 0
+          ? 'Active'
+          : 'Awaiting Commits';
 
       let status: LeaderboardEntry['status'] = 'IN_EVALUATION';
       if (team.selectionStage === 'ON_CAMPUS_QUALIFIED') {
@@ -1655,29 +1698,36 @@ const jsonDb = {
       store.studentAccounts = [];
     }
 
-    if (store.studentAccounts.some(s => s.email.toLowerCase() === norm)) {
+    const existing = store.studentAccounts.find(s => s.email.toLowerCase() === norm);
+    if (existing && existing.passwordHash) {
       return { success: false, error: 'EMAIL_ALREADY_REGISTERED' };
     }
 
-    const id = `prof-${crypto.createHash('sha256').update(norm).digest('hex').substring(0, 16)}`;
+    const id = existing?.id || `prof-${crypto.createHash('sha256').update(norm).digest('hex').substring(0, 16)}`;
     const passwordHash = hashPassword(data.password);
     const verificationToken = generateVerificationToken(norm);
 
     const newAccount: StudentAccount = {
+      ...(existing || {}),
       id,
       email: norm,
       fullName: data.fullName.trim(),
       passwordHash,
       emailVerified: false,
       institution: (data.institution || 'Sathyabama Institute of Science and Technology').trim(),
-      phone: data.phone?.trim(),
-      department: data.department?.trim(),
-      yearOfStudy: data.yearOfStudy,
-      tshirtSize: data.tshirtSize,
-      createdAt: new Date().toISOString()
+      phone: data.phone?.trim() ?? existing?.phone,
+      department: data.department?.trim() ?? existing?.department,
+      yearOfStudy: data.yearOfStudy ?? existing?.yearOfStudy,
+      tshirtSize: data.tshirtSize ?? existing?.tshirtSize,
+      createdAt: existing?.createdAt || new Date().toISOString()
     };
 
-    store.studentAccounts.push(newAccount);
+    if (existing) {
+      const idx = store.studentAccounts.findIndex(s => s.id === existing.id);
+      store.studentAccounts[idx] = newAccount;
+    } else {
+      store.studentAccounts.push(newAccount);
+    }
     writeStore(store);
 
     return {
@@ -1738,12 +1788,17 @@ const jsonDb = {
   },
 
   requestPasswordReset(email: string): { success: boolean; resetToken?: string; error?: string } {
-    const student = this.getStudentByEmail(email);
+    const store = readStore();
+    const norm = email.trim().toLowerCase();
+    const student = (store.studentAccounts || []).find(s => s.email.toLowerCase() === norm);
     if (!student) {
       // Security: Never reveal whether an email is registered
       return { success: true };
     }
     const resetToken = generatePasswordResetToken(student.email);
+    student.passwordResetToken = resetToken;
+    student.passwordResetExpiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
+    writeStore(store);
     return { success: true, resetToken };
   },
 
@@ -1761,7 +1816,17 @@ const jsonDb = {
       return { success: false, error: 'ACCOUNT_NOT_FOUND' };
     }
 
+    if (!account.passwordResetToken || account.passwordResetToken !== token) {
+      return { success: false, error: 'INVALID_OR_USED_TOKEN' };
+    }
+
+    if (account.passwordResetExpiresAt && new Date(account.passwordResetExpiresAt).getTime() <= Date.now()) {
+      return { success: false, error: 'TOKEN_EXPIRED' };
+    }
+
     account.passwordHash = hashPassword(newPassword);
+    account.passwordResetToken = undefined;
+    account.passwordResetExpiresAt = undefined;
     writeStore(store);
 
     return { success: true };
@@ -1988,7 +2053,16 @@ export const db = {
     return jsonDb.transferTeamLeadership(teamCode, currentLeaderEmail, newLeaderEmail);
   },
 
-  async submitRound1Qualifier(teamCode: string, data: { loomVideoUrl: string; githubUrl: string }): Promise<boolean> {
+  async submitRound1Qualifier(
+    teamCode: string,
+    data: {
+      loomVideoUrl: string;
+      githubUrl: string;
+      architecturePdfUrl?: string;
+      architectureSummary?: string;
+      defenseSlotRequested?: string;
+    }
+  ): Promise<boolean> {
     if (getDbDriver() === 'supabase') return await postgresDb.submitRound1Qualifier(teamCode, data);
     assertJsonAllowed();
     return jsonDb.submitRound1Qualifier(teamCode, data);

@@ -101,13 +101,14 @@ export default function ResourcesPage() {
                       <span>View GitHub Template</span>
                     </a>
                   ) : (
-                    <button
-                      onClick={() => alert(`Starting download for ${item.title}... Module package will be saved.`)}
-                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 hover:bg-purple-600 flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                    <a
+                      href={`/api/v1/resources/${encodeURIComponent(item.id)}`}
+                      download
+                      className="w-full py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-700 to-purple-900 text-white hover:brightness-110 flex items-center justify-center gap-1.5 transition-colors shadow-sm"
                     >
                       <Download className="w-3.5 h-3.5" />
-                      <span>Download Starter Assets (Zip)</span>
-                    </button>
+                      <span>Download Starter Kit (.md)</span>
+                    </a>
                   )}
                 </div>
               </div>

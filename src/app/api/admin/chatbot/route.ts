@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
 import {
   getTelemetrySnapshot,
   getRateLimitConfig,
@@ -6,33 +7,42 @@ import {
   resetDailyBudgetCounter,
   resetRateLimitStoresForTesting
 } from '@/lib/ratelimit';
+import { resolveAuthContext, hasPermission } from '@/lib/rbac';
+import { safeParseJson } from '@/lib/http';
 
 /**
  * PRODUCTION CHATBOT ADMIN & TELEMETRY CONTROLS
  * Provides real-time metrics, budget tracking, maintenance mode toggle, and quota controls.
  */
 
-function isAuthorizedAdmin(req: NextRequest): boolean {
-  const masterKey = process.env.ADMIN_API_KEY || 'kairos-admin-master-key-2027';
-  const authHeader = req.headers.get('authorization');
-  const customHeader = req.headers.get('x-admin-key');
-
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    const token = authHeader.slice(7).trim();
-    if (token === masterKey) return true;
-  }
-
-  if (customHeader && customHeader.trim() === masterKey) {
+async function isAuthorizedAdmin(req: NextRequest): Promise<boolean> {
+  // 1. Standard Super Admin RBAC session
+  const authCtx = await resolveAuthContext();
+  if (hasPermission(authCtx.role, 'system:admin')) {
     return true;
   }
 
-  return false;
+  // 2. Optional explicit machine-to-machine ADMIN_API_KEY (never hardcoded)
+  const masterKey = process.env.ADMIN_API_KEY?.trim();
+  if (!masterKey) return false;
+
+  const authHeader = req.headers.get('authorization');
+  const customHeader = req.headers.get('x-admin-key');
+  const candidate = authHeader?.startsWith('Bearer ')
+    ? authHeader.slice(7).trim()
+    : customHeader?.trim();
+
+  if (!candidate) return false;
+
+  const bufA = Buffer.from(candidate, 'utf8');
+  const bufB = Buffer.from(masterKey, 'utf8');
+  return bufA.length === bufB.length && crypto.timingSafeEqual(bufA, bufB);
 }
 
 export async function GET(req: NextRequest) {
-  if (!isAuthorizedAdmin(req)) {
+  if (!(await isAuthorizedAdmin(req))) {
     return NextResponse.json(
-      { success: false, error: 'Unauthorized: Invalid admin credentials.' },
+      { success: false, error: 'Unauthorized: Super Admin session or valid ADMIN_API_KEY required.' },
       { status: 401 }
     );
   }
@@ -49,15 +59,18 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAuthorizedAdmin(req)) {
+  if (!(await isAuthorizedAdmin(req))) {
     return NextResponse.json(
-      { success: false, error: 'Unauthorized: Invalid admin credentials.' },
+      { success: false, error: 'Unauthorized: Super Admin session or valid ADMIN_API_KEY required.' },
       { status: 401 }
     );
   }
 
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
   try {
-    const body = await req.json();
+    const body = parsed.data;
     const action = body?.action;
 
     switch (action) {

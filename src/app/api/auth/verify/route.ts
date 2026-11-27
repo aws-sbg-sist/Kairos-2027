@@ -1,13 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { createStudentToken, getCurrentStudentSession, STUDENT_COOKIE_NAME } from '@/lib/student_auth';
+import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
+import { safeParseJson } from '@/lib/http';
 
 export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const { token } = body;
+  const rateLimit = checkRateLimit(req, { limit: 10, windowMs: 60_000 });
+  if (!rateLimit.allowed) {
+    return createRateLimitResponse(rateLimit.resetAt, rateLimit.limit);
+  }
 
-    if (!token) {
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
+  try {
+    const { token } = parsed.data;
+
+    if (!token || typeof token !== 'string') {
       return NextResponse.json(
         { success: false, error: 'Verification token is required.' },
         { status: 400 }

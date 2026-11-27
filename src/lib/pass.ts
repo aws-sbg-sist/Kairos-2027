@@ -184,7 +184,9 @@ export async function verifyPassToken(token: string): Promise<VerificationResult
     }
 
     const expectedSig = crypto.createHmac('sha256', secret).update(payloadStr).digest('hex');
-    if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
+    const sigBuf = Buffer.from(signature, 'utf8');
+    const expectedBuf = Buffer.from(expectedSig, 'utf8');
+    if (sigBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(sigBuf, expectedBuf)) {
       return { valid: false, error: 'Cryptographic signature verification failed. Token is invalid or forged.' };
     }
 
@@ -227,9 +229,9 @@ export async function verifyPassToken(token: string): Promise<VerificationResult
     if (!student.emailVerified) {
       eligible = false;
       reason = 'Student email address has not been verified yet.';
-    } else if (team && team.members.length < 4 && team.selectionStage === 'ON_CAMPUS_QUALIFIED') {
+    } else if (team && team.members.length < 3 && team.selectionStage === 'ON_CAMPUS_QUALIFIED') {
       eligible = false;
-      reason = 'Squad has fewer than the mandatory 4 builders.';
+      reason = 'Squad has fewer than the mandatory 3 builders.';
     }
 
     return {

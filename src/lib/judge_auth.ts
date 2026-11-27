@@ -48,7 +48,9 @@ export function verifyJudgeToken(token: string): JudgeSession | null {
 
     const secret = getMasterSecret();
     const expectedSig = crypto.createHmac('sha256', secret).update(payload).digest('hex');
-    if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
+    const sigBuf = Buffer.from(signature, 'utf8');
+    const expectedBuf = Buffer.from(expectedSig, 'utf8');
+    if (sigBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(sigBuf, expectedBuf)) {
       return null;
     }
 

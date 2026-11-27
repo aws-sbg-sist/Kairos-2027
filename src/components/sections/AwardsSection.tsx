@@ -3,241 +3,140 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { PRIZE_POOL_CARDS } from '@/lib/config';
-import { Trophy, Award, Shield, CheckCircle2, ArrowRight, Gift, Sparkles } from 'lucide-react';
-import { sound } from '@/lib/audio';
-import { SpotlightCard } from '@/components/animation/SpotlightCard';
-import { ScrollReveal } from '@/components/animation/ScrollReveal';
+import { CheckCircle2, ArrowRight, Trophy } from 'lucide-react';
 
 interface AwardsSectionProps {
   prizePoolConfirmed?: boolean;
 }
 
-export const AwardsSection: React.FC<AwardsSectionProps> = ({ prizePoolConfirmed = true }) => {
+export const AwardsSection: React.FC<AwardsSectionProps> = () => {
   return (
-    <section id="awards" className="relative py-24 lg:py-32 overflow-hidden bg-aws-canvas">
-      {/* Background illumination */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[700px] h-[400px] bg-purple-950/40 blur-[160px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-[500px] h-[350px] bg-purple-950/20 blur-[150px] rounded-full pointer-events-none" />
-
+    <section id="awards" className="relative py-16 lg:py-24 overflow-hidden bg-[#09090d] border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <ScrollReveal direction="down" distance={16}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono text-purple-300 bg-aws-squidInk/90 border border-purple-500/30 shadow-md backdrop-blur-md">
-              <div className="relative w-5 h-5 rounded overflow-hidden">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div className="space-y-2.5 max-w-2xl">
+            <span className="text-xs font-mono uppercase tracking-widest text-amber-300/90 block">
+              ₹1,75,000 Cash Pool + $50,000+ AWS Cloud Credits
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-display font-black text-white tracking-tight">
+              Awards, Honors &amp; <span className="text-amber-300">Incentives</span>
+            </h2>
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+              Direct awards to winning student builders, monolithic Kairos trophies, smart NFC arena credentials, and VC Demo Day fast-tracking.
+            </p>
+          </div>
+
+          <Link
+            href="/register"
+            className="text-xs font-mono font-semibold text-white hover:text-amber-200 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/15 hover:border-amber-400/40 transition-colors self-start md:self-auto shrink-0"
+          >
+            <span>Compete for Podium</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {/* Studio Product Visual (5 cols) + Hairline Podium Breakdown (7 cols) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          {/* Left: Physical Trophy & NFC Credential Studio Photograph */}
+          <div className="lg:col-span-5">
+            <div className="rounded-2xl overflow-hidden border border-white/15 bg-black group">
+              <div className="relative w-full aspect-[4/3]">
                 <Image
-                  src="/assets/prizes.png"
-                  alt="Prizes Badge"
+                  src="/assets/visuals/trophy-pass.jpg"
+                  alt="Monolithic KAIROS Championship Trophy and Smart NFC Builder Credential"
                   fill
-                  className="object-contain"
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               </div>
-              <span>₹1,75,000 Total Prize Pool</span>
+              <div className="p-5 bg-[#0d0d13] border-t border-white/10 grid grid-cols-3 gap-3 text-center">
+                <div>
+                  <span className="font-display font-bold text-base sm:text-lg text-amber-300 block">₹1.75L</span>
+                  <span className="text-[11px] font-mono text-slate-400">Cash Pool</span>
+                </div>
+                <div className="border-x border-white/10">
+                  <span className="font-display font-bold text-base sm:text-lg text-white block">$50K+</span>
+                  <span className="text-[11px] font-mono text-slate-400">AWS Credits</span>
+                </div>
+                <div>
+                  <span className="font-display font-bold text-base sm:text-lg text-emerald-400 block">Top 20</span>
+                  <span className="text-[11px] font-mono text-slate-400">Stage Pitch</span>
+                </div>
+              </div>
             </div>
-          </ScrollReveal>
+          </div>
 
-          <ScrollReveal direction="up" distance={20} delay={0.1}>
-            <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
-              Awards, Honors & <span className="gradient-text-kairos">Recognition</span>
-            </h2>
-          </ScrollReveal>
-
-          <ScrollReveal direction="up" distance={20} delay={0.2}>
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
-              Total prize pool awarded directly to winning student teams, alongside VC pitch fast-tracking and $50,000+ in AWS Cloud Promotional Credits.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal direction="up" distance={16} delay={0.25}>
-            <div className="p-3.5 rounded-2xl bg-purple-950/40 border border-purple-500/30 max-w-2xl mx-auto flex items-center justify-center gap-2.5 text-xs sm:text-sm text-purple-300 font-medium shadow-md">
-              <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
-              <span>
-                <strong>Merit Evaluation:</strong> Open to All Engineering Students | ₹1,75,000 Total Prize Pool | Fast-Track Incubation & Credits
-              </span>
-            </div>
-          </ScrollReveal>
-        </div>
-
-        {/* Podium 3 Cards (Champion, 1st Runner Up, 2nd Runner Up) — 3D Card Zoom (Animation #3) */}
-        <div
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12 items-stretch"
-          style={{ perspective: '1200px' }}
-        >
-          {PRIZE_POOL_CARDS.slice(0, 3).map((item, idx) => {
-            const isGrand = idx === 0;
-
-            return (
-              <ScrollReveal
-                key={item.position}
-                direction="up"
-                distance={24}
-                delay={idx * 0.1}
-                className="h-full"
-              >
-                <motion.div
-                  whileHover={{
-                    scale: isGrand ? 1.07 : 1.04,
-                    rotateX: -4,
-                    rotateY: idx === 0 ? 0 : idx === 1 ? -3 : 3,
-                    z: isGrand ? 24 : 12,
-                  }}
-                  transition={{ type: 'spring', stiffness: 280, damping: 20 }}
-                  style={{ transformStyle: 'preserve-3d' }}
-                  className="h-full"
-                >
-                  <SpotlightCard
-                    enableTilt={false}
-                    spotlightColor={isGrand ? 'rgba(238, 5, 242, 0.3)' : 'rgba(118, 48, 217, 0.2)'}
-                    borderColor={isGrand ? 'rgba(238, 5, 242, 0.7)' : 'rgba(118, 48, 217, 0.35)'}
-                    className={`p-6 sm:p-8 rounded-3xl flex flex-col justify-between transition-colors relative overflow-hidden h-full ${
-                      isGrand
-                        ? 'bg-gradient-to-b from-aws-squidInk via-slate-950 to-slate-950 border-2 border-purple-500 shadow-2xl shadow-purple-900/30 lg:-translate-y-3'
-                        : 'bg-aws-card/85 border border-slate-700/60 hover:border-purple-500/40'
-                    }`}
+          {/* Right: Hairline Podium & Grants Rows */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="divide-y divide-white/10 border-y border-white/10">
+              {PRIZE_POOL_CARDS.slice(0, 3).map((item, idx) => {
+                const isFirst = idx === 0;
+                return (
+                  <div
+                    key={item.position}
+                    className={`py-5 px-3 transition-colors ${isFirst ? 'bg-amber-500/[0.04]' : ''}`}
                   >
-                  {isGrand && (
-                    <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-purple-700 to-purple-900 text-slate-950 font-mono font-black text-xs rounded-bl-2xl  shadow-md">
-                      Grand Champion
-                    </div>
-                  )}
-
-                  <div className="space-y-5">
-                    <div className="flex items-center gap-3.5">
-                      <div
-                        className={`w-14 h-14 rounded-2xl flex items-center justify-center relative overflow-hidden ${
-                          isGrand
-                            ? 'bg-purple-950/60 text-purple-400 border border-purple-500/40 p-2 shadow-lg shadow-purple-900/30'
-                            : 'bg-white/5 text-slate-300 border border-white/10'
-                        }`}
-                      >
-                        {isGrand ? (
-                          <Image
-                            src="/assets/achievement.png"
-                            alt="Grand Championship"
-                            fill
-                            className="object-contain p-1"
-                          />
-                        ) : (
-                          <Trophy className="w-7 h-7 text-purple-300" />
-                        )}
-                      </div>
-                      <div>
-                        <span role="status" className="text-xs font-mono text-purple-300 font-semibold block">
-                          {item.badge}
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2.5">
+                        <span
+                          className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono text-xs font-bold ${
+                            isFirst
+                              ? 'bg-amber-400 text-slate-950'
+                              : 'bg-white/10 text-white'
+                          }`}
+                        >
+                          0{idx + 1}
                         </span>
-                        <h3 className="text-xl font-display font-bold text-white">
-                          {item.position.split('—')[0]}
+                        <h3 className="font-display font-bold text-lg text-white">
+                          {item.position}
                         </h3>
                       </div>
+                      <span className={`text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full border ${
+                        isFirst
+                          ? 'border-amber-400/40 bg-amber-400/10 text-amber-300'
+                          : 'border-white/15 bg-white/5 text-slate-300'
+                      }`}>
+                        {item.badge}
+                      </span>
                     </div>
 
-                    
-
-                    {/* Perks & Benefits Checklist */}
-                    <ul className="space-y-3 text-sm sm:text-base text-slate-200 pt-1">
-                      {item.perks.map((perk, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2
-                            className={`w-4 h-4 shrink-0 mt-0.5 ${
-                              isGrand ? 'text-purple-400' : 'text-emerald-400'
-                            }`}
-                          />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {item.perks.map((perk) => (
+                        <div key={perk} className="flex items-start gap-2 text-xs sm:text-sm text-slate-300">
+                          <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${isFirst ? 'text-amber-400' : 'text-emerald-400'}`} />
                           <span>{perk}</span>
-                        </li>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
+                );
+              })}
+            </div>
 
-                  {/* Footer Tag */}
-                  <div className="pt-4 mt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-slate-400">
-                    <span>Rank 0{idx + 1}</span>
-                    <span className="text-emerald-400 font-semibold">Official Award Conferral</span>
-                  </div>
-                </SpotlightCard>
-                </motion.div>
-              </ScrollReveal>
-            );
-          })}
-        </div>
-
-        {/* Extended Honors & Opportunities Matrix */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {/* Card 1: VC Incubation & Angel Pitching */}
-          <ScrollReveal direction="up" distance={20} delay={0.2} className="h-full">
-            <div className="p-6 rounded-2xl bg-aws-card/75 border border-purple-500/20 hover:border-purple-500/40 transition-colors flex flex-col justify-between h-full">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-purple-300 font-bold ">
-                    Startup Accelerator
-                  </span>
-                  <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
-                    Top Teams
-                  </span>
-                </div>
-                <h4 className="text-lg font-display font-bold text-white">
-                  VC Incubation & Angel Pitching
-                </h4>
-                <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-                  Direct fast-track pitching sessions with angel networks, venture capitalists, and institutional accelerators to transition hackathon prototypes into production startups.
+            {/* Compact Additional Honors Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+              <div className="p-4 rounded-xl bg-[#0d0d13] border border-white/10 space-y-1">
+                <span className="font-mono text-purple-300 font-bold block">Startup Fast-Track</span>
+                <p className="text-slate-400 leading-relaxed">
+                  VC &amp; angel Demo Day introductions for finalist prototypes ready to spin out.
                 </p>
               </div>
-              <div className="pt-3 mt-4 border-t border-white/5 font-mono text-xs text-purple-300 font-bold">
-                Demo Day Fast-Track
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Card 2: Special Innovation & Diversity Honors */}
-          <ScrollReveal direction="up" distance={20} delay={0.3} className="h-full">
-            <div className="p-6 rounded-2xl bg-aws-card/75 border border-purple-500/20 hover:border-purple-500/40 transition-colors flex flex-col justify-between h-full">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-purple-300 font-bold ">
-                    Special Category Honors
-                  </span>
-                  <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/30">
-                    Excellence
-                  </span>
-                </div>
-                <h4 className="text-lg font-display font-bold text-white">
-                  Special Innovation & Diversity
-                </h4>
-                <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-                  Dedicated citations for Best All-Women Engineering Team, Most Scalable Serverless Architecture, and Audience Favorite Project.
+              <div className="p-4 rounded-xl bg-[#0d0d13] border border-white/10 space-y-1">
+                <span className="font-mono text-emerald-400 font-bold block">Diversity &amp; Architecture</span>
+                <p className="text-slate-400 leading-relaxed">
+                  Special honors for Best All-Women Squad &amp; Most Scalable Serverless Design.
                 </p>
               </div>
-              <div className="pt-3 mt-4 border-t border-white/5 font-mono text-xs text-purple-300 font-bold">
-                Special Category Mementos
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Card 3: AWS Promotional Cloud Credits */}
-          <ScrollReveal direction="up" distance={20} delay={0.4} className="h-full">
-            <div className="p-6 rounded-2xl bg-aws-card/75 border border-purple-500/20 hover:border-purple-500/40 transition-colors flex flex-col justify-between h-full">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-sky-400 font-bold ">
-                    Cloud Infrastructure
-                  </span>
-                  <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-500/30">
-                    All Finalists
-                  </span>
-                </div>
-                <h4 className="text-lg font-display font-bold text-white">
-                  $50,000+ AWS Cloud Credits
-                </h4>
-                <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-                  All 100 on-campus finalist teams receive direct AWS Cloud Promotional credits to operate large language models, clusters, and databases.
+              <div className="p-4 rounded-xl bg-[#0d0d13] border border-white/10 space-y-1">
+                <span className="font-mono text-sky-400 font-bold block">All 100 Finalist Squads</span>
+                <p className="text-slate-400 leading-relaxed">
+                  $500–$5,000 in AWS Cloud Promotional Credits distributed to run Bedrock &amp; clusters.
                 </p>
               </div>
-              <div className="pt-3 mt-4 border-t border-white/5 font-mono text-xs text-sky-400 font-bold">
-                $500 to $5,000 Per Team
-              </div>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

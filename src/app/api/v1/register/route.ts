@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
-import { getCurrentStudentSession } from '@/lib/student_auth';
 import { sendTransactionalEmail, buildRegistrationConfirmationEmail } from '@/lib/email';
+import { isValidHttpUrl, safeParseJson } from '@/lib/http';
 
 export async function POST(req: NextRequest) {
   // Rate limit: 10 registrations per minute per IP
@@ -32,28 +32,34 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
   try {
-    const body = await req.json();
+    const body = parsed.data;
     const { 
       fullName, 
       email, 
       phone, 
       college, 
       institution,
+      collegeRegNo,
       department,
       yearOfStudy, 
-      githubUrl, 
+      githubUrl,
+      githubUsername,
       linkedinUrl, 
       preferredTrack, 
       teamStatus, 
       teamCode, 
-      meetupProfileUrl, 
+      meetupProfileUrl,
+      meetupVerified,
       awsBuilderCenterUrl,
       experienceLevel,
       tShirtSize 
     } = body;
 
-    if (!fullName || !email) {
+    if (!fullName || !email || typeof fullName !== 'string' || typeof email !== 'string') {
       return NextResponse.json({ 
         success: false, 
         error: 'Full name and email are mandatory fields.' 
@@ -61,23 +67,41 @@ export async function POST(req: NextRequest) {
     }
 
     const normEmail = email.trim().toLowerCase();
-    const instName = institution?.trim() || college?.trim() || 'SIST';
+    const instName = (typeof institution === 'string' && institution.trim()) || (typeof college === 'string' && college.trim()) || 'SIST';
+    const resolvedGithubUrl = (typeof githubUrl === 'string' && githubUrl.trim())
+      ? githubUrl.trim()
+      : (typeof githubUsername === 'string' && githubUsername.trim()
+          ? (githubUsername.trim().startsWith('http') ? githubUsername.trim() : `https://github.com/${githubUsername.trim().replace(/^@/, '')}`)
+          : '');
 
-    // Input length validation
+    // Input length & URL validation
     if (
       fullName.length > 150 ||
       email.length > 254 ||
-      (phone && phone.length > 50) ||
-      (instName && instName.length > 200) ||
-      (githubUrl && githubUrl.length > 300) ||
-      (linkedinUrl && linkedinUrl.length > 300) ||
-      (teamCode && teamCode.length > 50) ||
-      (meetupProfileUrl && meetupProfileUrl.length > 300) ||
-      (awsBuilderCenterUrl && awsBuilderCenterUrl.length > 300)
+      (phone && String(phone).length > 50) ||
+      (collegeRegNo && String(collegeRegNo).length > 50) ||
+      instName.length > 200 ||
+      resolvedGithubUrl.length > 300 ||
+      (linkedinUrl && String(linkedinUrl).length > 300) ||
+      (teamCode && String(teamCode).length > 50) ||
+      (meetupProfileUrl && String(meetupProfileUrl).length > 300) ||
+      (awsBuilderCenterUrl && String(awsBuilderCenterUrl).length > 300)
     ) {
       return NextResponse.json({
         success: false,
         error: 'One or more fields exceed maximum allowed character length.'
+      }, { status: 400 });
+    }
+
+    if (
+      (resolvedGithubUrl && !isValidHttpUrl(resolvedGithubUrl)) ||
+      (linkedinUrl && !isValidHttpUrl(String(linkedinUrl))) ||
+      (meetupProfileUrl && !isValidHttpUrl(String(meetupProfileUrl))) ||
+      (awsBuilderCenterUrl && !isValidHttpUrl(String(awsBuilderCenterUrl)))
+    ) {
+      return NextResponse.json({
+        success: false,
+        error: 'One or more profile links must be valid http:// or https:// URLs.'
       }, { status: 400 });
     }
 
@@ -91,60 +115,33 @@ export async function POST(req: NextRequest) {
     if (existingWaitlist) {
       return NextResponse.json({
         success: false,
-        error: 'This email is already registered on the KAIROS 2027 priority waitlist.',
+        error: 'This email is already registered on the KAIROS 2027 waitlist & registration list.',
         code: 'EMAIL_ALREADY_REGISTERED'
       }, { status: 409 });
     }
 
-    // 3. Persistent Student Profile Synchronization
-    const session = await getCurrentStudentSession();
-    if (session && session.email.toLowerCase() === normEmail) {
-      await db.updateStudentProfile(session.studentId, {
-        fullName: fullName.trim(),
-        phone: phone?.trim(),
-        institution: instName,
-        department: department || 'School of Computing',
-        yearOfStudy: yearOfStudy || '3rd Year',
-        githubUrl: githubUrl?.trim(),
-        linkedinUrl: linkedinUrl?.trim(),
-        tshirtSize: tShirtSize || 'L'
-      });
-    } else {
-      const existingStudent = await db.getStudentByEmail(normEmail);
-      if (existingStudent) {
-        await db.updateStudentProfile(existingStudent.id, {
-          fullName: fullName.trim(),
-          phone: phone?.trim(),
-          institution: instName,
-          department: department || 'School of Computing',
-          yearOfStudy: yearOfStudy || '3rd Year',
-          githubUrl: githubUrl?.trim(),
-          linkedinUrl: linkedinUrl?.trim(),
-          tshirtSize: tShirtSize || 'L'
-        });
-      }
-    }
-
-    // 4. Record Waitlist Entry with Correct Status Tracking
+    // 3. Record Waitlist Entry & Sync Unified Profile (upsertProfile runs atomically inside addWaitlistEntry)
     const result = await db.addWaitlistEntry({
       fullName: fullName.trim(),
       email: normEmail,
-      phone: phone?.trim() || '',
+      phone: phone ? String(phone).trim() : '',
       institution: instName,
       college: instName,
-      department: department || 'Computer Science & Engineering',
-      yearOfStudy: yearOfStudy || '3rd Year',
-      githubUrl: githubUrl?.trim() || '',
-      linkedinUrl: linkedinUrl?.trim() || '',
-      preferredTrack: preferredTrack || 'Agentic AI & Generative Intelligence',
-      teamStatus: teamStatus || 'looking_for_team',
-      teamCode: teamCode?.trim().toUpperCase(),
-      meetupProfileUrl: meetupProfileUrl?.trim() || '',
-      awsBuilderCenterUrl: awsBuilderCenterUrl?.trim() || '',
-      experienceLevel: experienceLevel || 'Intermediate',
-      tShirtSize: tShirtSize || 'L',
+      collegeRegNo: collegeRegNo ? String(collegeRegNo).trim() : undefined,
+      department: (typeof department === 'string' && department.trim()) || 'Computer Science & Engineering',
+      yearOfStudy: (typeof yearOfStudy === 'string' && yearOfStudy.trim()) || '3rd Year',
+      githubUrl: resolvedGithubUrl,
+      linkedinUrl: linkedinUrl ? String(linkedinUrl).trim() : '',
+      preferredTrack: (typeof preferredTrack === 'string' && preferredTrack.trim()) || 'Agentic AI & Generative Intelligence',
+      teamStatus: (typeof teamStatus === 'string' && teamStatus.trim()) || 'looking_for_team',
+      teamCode: teamCode ? String(teamCode).trim().toUpperCase() : undefined,
+      meetupProfileUrl: meetupProfileUrl ? String(meetupProfileUrl).trim() : '',
+      meetupRsvpVerified: Boolean(meetupVerified ?? Boolean(meetupProfileUrl)),
+      awsBuilderCenterUrl: awsBuilderCenterUrl ? String(awsBuilderCenterUrl).trim() : '',
+      experienceLevel: (typeof experienceLevel === 'string' && experienceLevel.trim()) || 'Intermediate',
+      tShirtSize: (typeof tShirtSize === 'string' && tShirtSize.trim()) || 'L',
       status: 'pending'
-    });
+    } as any);
 
     if (!result.success) {
       return NextResponse.json({

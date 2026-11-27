@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit, createRateLimitResponse } from '@/lib/ratelimit';
-import { getCurrentAdminSession } from '@/lib/auth';
+import { resolveAuthContext, hasPermission } from '@/lib/rbac';
+import { safeParseJson } from '@/lib/http';
 
 export async function GET() {
   const responses = await db.getCSAT();
@@ -18,7 +19,8 @@ export async function GET() {
   const detractors = validResponses.filter(r => r.npsScore <= 6).length;
   const nps = validCount > 0 ? Math.round(((promoters - detractors) / validCount) * 100) : 100;
 
-  const session = await getCurrentAdminSession();
+  const authCtx = await resolveAuthContext();
+  const canReadFull = hasPermission(authCtx.role, 'csat:read');
 
   return NextResponse.json({
     success: true,
@@ -28,8 +30,8 @@ export async function GET() {
       netPromoterScore: nps,
       promoterPercentage: validCount > 0 ? Math.round((promoters / validCount) * 100) : 100,
     },
-    // Redact raw internal IDs and unverified feedback for public consumers
-    responses: session 
+    // Redact raw internal IDs and unverified feedback for non-superadmin consumers
+    responses: canReadFull 
       ? responses 
       : responses.map(r => ({
           overallSatisfaction: r.overallSatisfaction,
@@ -47,8 +49,11 @@ export async function POST(req: NextRequest) {
     return createRateLimitResponse(rateLimitResult.resetAt, rateLimitResult.limit);
   }
 
+  const parsed = await safeParseJson(req);
+  if (!parsed.ok) return parsed.response;
+
   try {
-    const body = await req.json();
+    const body = parsed.data;
     const { 
       overallSatisfaction, 
       npsScore, 
