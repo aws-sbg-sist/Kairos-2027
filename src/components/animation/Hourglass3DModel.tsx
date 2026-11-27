@@ -28,9 +28,15 @@ export const Hourglass3DModel: React.FC<Hourglass3DModelProps> = ({ className = 
   const ringRotateY = useTransform(smoothX, [-180, 180], [18, -18]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    if (!finePointer.matches) return;
+
     const handleGlobalMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
+      // Skip unnecessary updates when far offscreen
+      if (rect.bottom < -120 || rect.top > window.innerHeight + 120) return;
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       const distX = Math.max(-250, Math.min(250, e.clientX - centerX));
@@ -39,22 +45,45 @@ export const Hourglass3DModel: React.FC<Hourglass3DModelProps> = ({ className = 
       mouseY.set(distY);
     };
 
-    const handleMouseLeave = () => {
+    const handleWindowBlur = () => {
       mouseX.set(0);
       mouseY.set(0);
       setIsHovered(false);
     };
 
-    window.addEventListener('mousemove', handleGlobalMouseMove);
+    window.addEventListener('mousemove', handleGlobalMouseMove, { passive: true });
+    window.addEventListener('blur', handleWindowBlur);
     return () => {
       window.removeEventListener('mousemove', handleGlobalMouseMove);
+      window.removeEventListener('blur', handleWindowBlur);
     };
   }, [mouseX, mouseY]);
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!containerRef.current || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const rect = containerRef.current.getBoundingClientRect();
+    const distX = Math.max(-220, Math.min(220, touch.clientX - (rect.left + rect.width / 2)));
+    const distY = Math.max(-220, Math.min(220, touch.clientY - (rect.top + rect.height / 2)));
+    mouseX.set(distX * 1.4);
+    mouseY.set(distY * 1.4);
+    setIsHovered(true);
+  };
+
+  const handleTouchEnd = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+    setIsHovered(false);
+  };
 
   return (
     <div
       ref={containerRef}
       onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      data-cursor-label="3D TILT"
       className={`relative flex items-center justify-center select-none ${className}`}
       style={{ perspective: 1000 }}
     >

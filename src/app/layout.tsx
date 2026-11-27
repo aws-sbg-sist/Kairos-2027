@@ -152,8 +152,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-gradient-to-r from-purple-700 to-purple-900 selection:text-white">
+      <body className="bg-aws-canvas text-aws-snow font-sans antialiased min-h-screen ambient-cosmic-bg selection:bg-cyber-magenta/40 selection:text-white">
         <ThemeProvider>
+          {/* Atmospheric Film Grain Texture */}
+          <div className="kairos-grain-overlay" aria-hidden="true" />
           {/* WCAG 2.4.1 Accessible Skip Navigation */}
           <a
             href="#main-content"
@@ -162,7 +164,7 @@ export default function RootLayout({
             Skip to main content
           </a>
           {children}
-          {/* Subtle Desktop Hardware-Accelerated Ambient Cursor Luminescence */}
+          {/* Theme-Matched Kairos Chrono-Reticle Custom Cursor & Quantum Trail */}
           <MagneticGlowCursor />
           {/* Global Mobile Quick Registration Dock & Keyboard Shortcuts HUD */}
           <MobileFloatingBar />

@@ -83,8 +83,19 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
     particlesRef.current = particles;
 
     let prevTime = performance.now();
+    let isInView = true;
+    let pausedAt = 0;
 
     const render = (time: number) => {
+      animFrameRef.current = 0;
+      if (!isInView || document.hidden) {
+        if (!pausedAt) pausedAt = time;
+        return;
+      }
+      if (pausedAt) {
+        startTimeRef.current += time - pausedAt;
+        pausedAt = 0;
+      }
       prevTime = time;
 
       // Calculate progress (0.0 to 1.0)
@@ -367,10 +378,30 @@ export const HourglassLiveSand: React.FC<HourglassLiveSandProps> = ({
       animFrameRef.current = requestAnimationFrame(render);
     };
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInView = entry.isIntersecting;
+        if (isInView && !animFrameRef.current && !document.hidden) {
+          animFrameRef.current = requestAnimationFrame(render);
+        }
+      },
+      { threshold: 0.01 }
+    );
+    observer.observe(canvas);
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && isInView && !animFrameRef.current) {
+        animFrameRef.current = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     animFrameRef.current = requestAnimationFrame(render);
 
     return () => {
-      cancelAnimationFrame(animFrameRef.current);
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
   }, []);
 

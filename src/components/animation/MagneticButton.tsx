@@ -29,8 +29,8 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
   const prefersReducedMotion = useReducedMotion();
 
   const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (prefersReducedMotion || !buttonRef.current) return;
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (e.pointerType !== 'mouse' || prefersReducedMotion || !buttonRef.current) return;
       const rect = buttonRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -45,7 +45,8 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
     [pullStrength, prefersReducedMotion]
   );
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
     if (soundFeedback) {
       sound?.playHover();
     }
@@ -72,20 +73,20 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
   return (
     <motion.div
       ref={buttonRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onPointerMove={handleMouseMove}
+      onPointerEnter={handleMouseEnter}
+      onPointerLeave={handleMouseLeave}
       onClick={handleClick}
       animate={{
         x: position.x,
         y: position.y,
       }}
       whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
-      whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
+      whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
       transition={{
         type: 'spring',
-        stiffness: 300,
-        damping: 20,
+        stiffness: 320,
+        damping: 22,
         mass: 0.4,
       }}
       className={`inline-block cursor-pointer select-none ${className}`}

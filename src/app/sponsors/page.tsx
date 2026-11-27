@@ -110,14 +110,16 @@ export default function SponsorsPage() {
               <a
                 href="/docs/KAIROS_2027_Sponsorship_Prospectus.pdf"
                 download="KAIROS_2027_Sponsorship_Prospectus.pdf"
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 via-purple-700 to-purple-900 text-white font-bold text-sm hover:brightness-110 transition shadow-lg shadow-purple-900/40"
+                data-cursor-label="PDF"
+                className="min-h-[48px] inline-flex items-center gap-2.5 px-6 py-3 rounded-xl btn-primary-themed text-white font-bold text-sm transition shadow-lg shadow-purple-900/40 shine-hover active:scale-[0.96]"
               >
                 <Download className="w-4 h-4" />
                 Download Sponsorship Prospectus (PDF)
               </a>
               <a
                 href="#inquiry-form"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-purple-500/50 text-slate-200 font-medium text-sm transition"
+                data-cursor-label="INQUIRE"
+                className="min-h-[48px] inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-purple-500/50 text-slate-200 font-medium text-sm transition shine-hover active:scale-[0.96]"
               >
                 <Send className="w-4 h-4 text-purple-400" />
                 Submit Sponsorship Inquiry
@@ -127,19 +129,19 @@ export default function SponsorsPage() {
 
           {/* ROI Pillars Grid */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-20">
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
-              <div className="w-10 h-10 rounded-xl bg-purple-950/60 flex items-center justify-center text-purple-400 mb-4">
+            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 cyber-edge-card group">
+              <div className="w-10 h-10 rounded-xl bg-purple-950/60 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
                 <Users className="w-5 h-5" />
               </div>
-              <div className="text-3xl font-black text-white font-mono mb-1">400 to 600</div>
+              <div className="text-3xl font-black text-white font-mono mb-1 tabular-nums">400 to 600</div>
               <div className="text-xs text-purple-400 font-semibold  mb-2">Vetted National Hackers</div>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Every contestant on campus has passed Phase 0 screening and a 3-day Round 1 technical defense with AWS Solutions Architects.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
-              <div className="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-400 mb-4">
+            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 cyber-edge-card group">
+              <div className="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-400 mb-4 group-hover:scale-110 transition-transform">
                 <Briefcase className="w-5 h-5" />
               </div>
               <div className="text-3xl font-black text-white font-mono mb-1">Opt-In</div>
@@ -149,19 +151,19 @@ export default function SponsorsPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-4">
+            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 cyber-edge-card group">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition-transform">
                 <Layers className="w-5 h-5" />
               </div>
-              <div className="text-3xl font-black text-white font-mono mb-1">48 Hours</div>
+              <div className="text-3xl font-black text-white font-mono mb-1 tabular-nums">48 Hours</div>
               <div className="text-xs text-emerald-400 font-semibold  mb-2">Direct API Integration</div>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Have hundreds of brilliant engineers build, test, and validate proof-of-concepts directly on your SDK, APIs, or cloud platforms.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-4">
+            <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 cyber-edge-card group">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <div className="text-3xl font-black text-white font-mono mb-1">Dual-Tier</div>
@@ -187,7 +189,7 @@ export default function SponsorsPage() {
               return (
                 <div
                   key={tier.id}
-                  className={`rounded-2xl p-7 transition flex flex-col justify-between border relative ${tier.id === 'title'
+                  className={`rounded-2xl p-7 transition flex flex-col justify-between border relative cyber-edge-card ${tier.id === 'title'
                       ? 'bg-gradient-to-b from-purple-950/30 via-slate-900 to-slate-950 border-purple-500 shadow-xl shadow-purple-900/30'
                       : tier.id === 'powered'
                         ? 'bg-slate-900/90 border-sky-500/50 shadow-xl shadow-sky-950'
@@ -236,16 +238,17 @@ export default function SponsorsPage() {
                   <div>
                     <button
                       type="button"
+                      data-cursor-label="SELECT"
                       onClick={() => handleTierSelect(tier.name, tier.amount)}
-                      className={`w-full py-3 px-4 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 ${tier.id === 'title'
-                          ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-white hover:from-purple-600 hover:to-purple-800'
+                      className={`w-full min-h-[46px] py-3 px-4 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2 shine-hover active:scale-[0.96] group ${tier.id === 'title'
+                          ? 'btn-primary-themed text-white'
                           : tier.id === 'powered'
                             ? 'bg-sky-500 text-white hover:bg-blue-600'
                             : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
                         }`}
                     >
-                      Select {tier.name.split(' ')[0]}
-                      <ArrowRight className="w-4 h-4" />
+                      <span>Select {tier.name.split(' ')[0]}</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>
                     <p className="text-[11px] text-center text-slate-400 mt-2">
                       Recommended for: {tier.recommendedFor}

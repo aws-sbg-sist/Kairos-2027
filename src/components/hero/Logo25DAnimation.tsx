@@ -189,6 +189,7 @@ export const Logo25DAnimation: React.FC = () => {
             ================================================================= */}
         <div
           onClick={handleFlip}
+          data-cursor-label="FLIP 180°"
           className="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center cursor-pointer group select-none"
           style={{
             transform: 'translateZ(45px)',
@@ -197,10 +198,18 @@ export const Logo25DAnimation: React.FC = () => {
         >
           {/* Logo Drop Shadow Projected Behind */}
           <div
-            className="absolute inset-0 rounded-full blur-2xl opacity-50 transition-[transform,opacity] duration-200 pointer-events-none"
+            className="absolute inset-0 rounded-full blur-2xl opacity-55 transition-[transform,opacity] duration-200 pointer-events-none"
             style={{
               background: 'radial-gradient(circle, var(--aws-orange) 0%, #7630d9 60%, transparent 100%)',
-              transform: `translate(${shadowX}px, ${shadowY}px) scale(0.9)`,
+              transform: `translate(${shadowX}px, ${shadowY}px) scale(0.92)`,
+            }}
+          />
+
+          {/* Interactive Specular Prism Glint tied to 2.5D Tilt */}
+          <div
+            className="absolute inset-4 rounded-full pointer-events-none opacity-0 group-hover:opacity-65 transition-opacity duration-300 mix-blend-screen"
+            style={{
+              background: `radial-gradient(circle at ${50 + tilt.y * 1.4}% ${50 - tilt.x * 1.4}%, rgba(255, 255, 255, 0.38) 0%, rgba(56, 189, 248, 0.14) 35%, transparent 70%)`,
             }}
           />
 

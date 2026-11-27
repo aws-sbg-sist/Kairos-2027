@@ -227,13 +227,17 @@ export const ScheduleSection: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {PRE_HACK_CLINICS.map((clinic) => (
-              <div
+              <SpotlightCard
                 key={clinic.id}
-                className="p-6 rounded-2xl bg-[#0d0d13] border border-white/10 flex flex-col justify-between space-y-4"
+                enableTilt={true}
+                maxTilt={4}
+                spotlightColor="rgba(56, 189, 248, 0.14)"
+                borderColor="rgba(56, 189, 248, 0.38)"
+                className="p-6 bg-[#0d0d13] border border-white/10 flex flex-col justify-between space-y-4 group"
               >
                 <div className="space-y-2.5">
                   <span className="text-[11px] font-mono text-sky-300 block">{clinic.timing}</span>
-                  <h4 className="text-base font-bold text-white leading-snug">{clinic.title}</h4>
+                  <h4 className="text-base font-bold text-white leading-snug group-hover:text-sky-200 transition-colors">{clinic.title}</h4>
                   <p className="text-xs text-slate-400 font-mono">{clinic.host}</p>
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{clinic.summary}</p>
                 </div>
@@ -242,7 +246,7 @@ export const ScheduleSection: React.FC = () => {
                     <a
                       href={clinic.ctaHref}
                       download="KAIROS_2027_Round0_Pitch_Template.pptx"
-                      className="text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5"
+                      className="min-h-[44px] text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5 link-underline-sweep"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>{clinic.ctaLabel}</span>
@@ -250,14 +254,14 @@ export const ScheduleSection: React.FC = () => {
                   ) : (
                     <Link
                       href={clinic.ctaHref}
-                      className="text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5"
+                      className="min-h-[44px] text-xs font-mono font-semibold text-purple-300 hover:text-white inline-flex items-center gap-1.5 group/cta link-underline-sweep"
                     >
                       <span>{clinic.ctaLabel}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3.5 h-3.5 group-hover/cta:translate-x-1 transition-transform" />
                     </Link>
                   )}
                 </div>
-              </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>

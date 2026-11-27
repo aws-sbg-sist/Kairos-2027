@@ -97,6 +97,8 @@ export const KairosChatbot: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [mobileDockActive, setMobileDockActive] = useState(false);
+  const [dockDismissed, setDockDismissed] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -106,8 +108,19 @@ export const KairosChatbot: React.FC = () => {
 
   useEffect(() => {
     const handleOpenEvent = () => setIsOpen(true);
+    const handleDockDismissed = () => setDockDismissed(true);
+    const handleScroll = () => {
+      setMobileDockActive(window.scrollY > 280);
+    };
+    handleScroll();
     window.addEventListener('open-kairos-chatbot', handleOpenEvent);
-    return () => window.removeEventListener('open-kairos-chatbot', handleOpenEvent);
+    window.addEventListener('kairos-dock-dismissed', handleDockDismissed);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('open-kairos-chatbot', handleOpenEvent);
+      window.removeEventListener('kairos-dock-dismissed', handleDockDismissed);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -187,18 +200,23 @@ export const KairosChatbot: React.FC = () => {
     <div
       className={
         isOpen
-          ? 'fixed inset-x-2 sm:inset-x-auto sm:right-5 bottom-[max(0.5rem,env(safe-area-inset-bottom))] sm:bottom-5 z-50 select-none font-ai flex justify-center sm:justify-end'
-          : 'fixed bottom-4 sm:bottom-5 right-3 sm:right-5 z-50 select-none font-ai'
+          ? 'fixed inset-x-2 sm:inset-x-auto sm:right-5 bottom-[max(0.5rem,env(safe-area-inset-bottom))] sm:bottom-5 z-[65] select-none font-ai flex justify-center sm:justify-end'
+          : `fixed ${
+              mobileDockActive && !dockDismissed
+                ? 'bottom-[max(5.5rem,calc(4.85rem+env(safe-area-inset-bottom)))]'
+                : 'bottom-[max(0.85rem,env(safe-area-inset-bottom))]'
+            } md:bottom-5 right-3 sm:right-5 z-[55] select-none font-ai transition-[bottom] duration-300 ease-out`
       }
     >
-      {/* Floating Trigger Button: Compact circular FAB on mobile, full pill on desktop */}
+      {/* Floating Trigger Button: Compact circular FAB cleanly cleared above mobile dock */}
       {!isOpen && (
         <button
+          data-cursor-label="ASK AI"
           onClick={() => {
             sound?.playClick();
             setIsOpen(true);
           }}
-          className="relative group flex items-center justify-center gap-2.5 p-3 sm:px-5 sm:py-3.5 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.97] transition-[transform,box-shadow] duration-200 border border-purple-400/40 font-ai"
+          className="relative group flex items-center justify-center gap-2.5 min-h-[46px] p-3 sm:px-5 sm:py-3.5 rounded-full btn-primary-themed text-white font-bold shadow-xl shadow-purple-900/50 hover:scale-105 active:scale-[0.96] transition-[transform,box-shadow] duration-200 border border-purple-400/45 font-ai shine-hover"
           aria-label="Open Kairos AI Chatbot"
         >
           <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 motion-safe:animate-pulse">

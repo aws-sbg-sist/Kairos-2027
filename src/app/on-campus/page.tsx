@@ -188,11 +188,12 @@ export default function OnCampusGuidePage() {
               {(['ground', 'first', 'second', 'top'] as const).map((floor) => (
                 <button
                   key={floor}
+                  type="button"
                   onClick={() => setSelectedFloor(floor)}
-                  className={`p-3 rounded-xl text-xs font-bold font-mono transition-colors  ${
+                  className={`min-h-[44px] p-3 rounded-xl text-xs font-bold font-mono capitalize transition-all active:scale-[0.96] ${
                     selectedFloor === floor
-                      ? 'bg-gradient-to-r from-purple-700 to-purple-900 text-white shadow-md'
-                      : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700/60'
+                      ? 'btn-primary-themed text-white shadow-md'
+                      : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700/60 hover:border-purple-500/40'
                   }`}
                 >
                   {floor} Floor

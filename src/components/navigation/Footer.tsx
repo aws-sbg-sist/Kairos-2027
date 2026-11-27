@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 href={EVENT_CONFIG.socialHandles.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[36px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+                className="min-h-[40px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-purple-500/45 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-all hover:-translate-y-0.5 shine-hover"
               >
                 Instagram <ExternalLink className="w-2.5 h-2.5 text-purple-400" />
               </a>
@@ -90,7 +90,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 href={EVENT_CONFIG.socialHandles.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[36px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+                className="min-h-[40px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-sky-500/45 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-all hover:-translate-y-0.5 shine-hover"
               >
                 LinkedIn <ExternalLink className="w-2.5 h-2.5 text-sky-400" />
               </a>
@@ -98,7 +98,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 href={EVENT_CONFIG.socialHandles.meetup}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[36px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+                className="min-h-[40px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-emerald-500/45 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-all hover:-translate-y-0.5 shine-hover"
               >
                 Meetup <ExternalLink className="w-2.5 h-2.5 text-emerald-400" />
               </a>
@@ -106,7 +106,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
                 href={EVENT_CONFIG.socialHandles.xUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-h-[36px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-colors"
+                className="min-h-[40px] px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-purple-400/45 text-slate-200 hover:text-white inline-flex items-center gap-1 transition-all hover:-translate-y-0.5 shine-hover"
               >
                 X <ExternalLink className="w-2.5 h-2.5 text-slate-400" />
               </a>
@@ -124,29 +124,29 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTerms }) => {
 
           {/* Column 2: Event Navigation */}
           <div>
-            <h4 className="text-xs font-mono  text-purple-300 font-semibold mb-4 flex items-center gap-1.5">
+            <h4 className="text-xs font-mono text-purple-300 font-semibold mb-4 flex items-center gap-1.5">
               <span>Main Journey</span>
             </h4>
-            <ul className="space-y-2 text-sm text-slate-300">
-              <li><Link href="/tracks" className="hover:text-white transition-colors">5 Enterprise Tracks</Link></li>
-              <li><Link href="/schedule" className="hover:text-white transition-colors">48-Hour Agenda</Link></li>
-              <li><Link href="/radar" className="hover:text-white transition-colors">Builder Radar</Link></li>
-              <li><Link href="/online-qualifier" className="hover:text-white transition-colors">Round 1 Online Qualifier</Link></li>
-              <li><Link href="/on-campus" className="hover:text-white transition-colors">Round 2 On-Campus Guide</Link></li>
-              <li><Link href="/leaderboard" className="hover:text-white transition-colors">Live Leaderboard &amp; Z-Score</Link></li>
-              <li><Link href="/stage" className="hover:text-white transition-colors">Auditorium Stage Screen</Link></li>
+            <ul className="space-y-2.5 text-sm text-slate-300">
+              <li><Link href="/tracks" className="hover:text-white transition-colors link-underline-sweep inline-block">5 Enterprise Tracks</Link></li>
+              <li><Link href="/schedule" className="hover:text-white transition-colors link-underline-sweep inline-block">48-Hour Agenda</Link></li>
+              <li><Link href="/radar" className="hover:text-white transition-colors link-underline-sweep inline-block">Builder Radar</Link></li>
+              <li><Link href="/online-qualifier" className="hover:text-white transition-colors link-underline-sweep inline-block">Round 1 Online Qualifier</Link></li>
+              <li><Link href="/on-campus" className="hover:text-white transition-colors link-underline-sweep inline-block">Round 2 On-Campus Guide</Link></li>
+              <li><Link href="/leaderboard" className="hover:text-white transition-colors link-underline-sweep inline-block">Live Leaderboard &amp; Z-Score</Link></li>
+              <li><Link href="/stage" className="hover:text-white transition-colors link-underline-sweep inline-block">Auditorium Stage Screen</Link></li>
             </ul>
           </div>
 
           {/* Column 3: Resources & Partnerships */}
           <div>
-            <h4 className="text-xs font-mono  text-purple-300 font-semibold mb-4">
-              Resources & Partnerships
+            <h4 className="text-xs font-mono text-purple-300 font-semibold mb-4">
+              Resources &amp; Partnerships
             </h4>
-            <ul className="space-y-2 text-sm text-slate-300">
-              <li><Link href="/resources" className="hover:text-white transition-colors text-sky-400">AWS SBG Learning Library</Link></li>
-              <li><Link href="/sponsors" className="hover:text-white transition-colors">Sponsorship Prospectus</Link></li>
-              <li><Link href="/rules" className="hover:text-white transition-colors">100% Student IP &amp; Rules</Link></li>
+            <ul className="space-y-2.5 text-sm text-slate-300">
+              <li><Link href="/resources" className="hover:text-white transition-colors text-sky-400 link-underline-sweep inline-block">AWS SBG Learning Library</Link></li>
+              <li><Link href="/sponsors" className="hover:text-white transition-colors link-underline-sweep inline-block">Sponsorship Prospectus</Link></li>
+              <li><Link href="/rules" className="hover:text-white transition-colors link-underline-sweep inline-block">100% Student IP &amp; Rules</Link></li>
               <li>
                 <a
                   href={EVENT_CONFIG.downloads.brochurePdf}
