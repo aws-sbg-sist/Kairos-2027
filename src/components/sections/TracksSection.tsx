@@ -87,7 +87,7 @@ export const TracksSection: React.FC<TracksSectionProps> = () => {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <div className="flex w-full flex-col sm:w-auto sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 min-w-0">
               <Link
                 href="/tracks"
                 data-cursor-label="BROWSE"
@@ -95,10 +95,10 @@ export const TracksSection: React.FC<TracksSectionProps> = () => {
                   sound?.playClick();
                   haptics?.medium();
                 }}
-                className="min-h-[44px] px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 flex items-center gap-2 active:scale-[0.96] shine-hover transition-transform group"
+                className="min-h-[44px] max-w-full px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white btn-primary-themed shadow-lg shadow-purple-900/30 inline-flex items-center justify-center gap-2 text-center active:scale-[0.96] shine-hover transition-transform group"
               >
                 <span>Browse All 15 Challenges</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/radar"
@@ -107,7 +107,7 @@ export const TracksSection: React.FC<TracksSectionProps> = () => {
                   sound?.playClick();
                   haptics?.light();
                 }}
-                className="min-h-[44px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-purple-500/45 flex items-center gap-1.5 transition-colors active:scale-[0.96] shine-hover"
+                className="min-h-[44px] max-w-full px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-purple-500/45 inline-flex items-center justify-center gap-1.5 text-center transition-colors active:scale-[0.96] shine-hover"
               >
                 <Radio className="w-3.5 h-3.5 text-purple-400" />
                 <span>Need Teammates?</span>
