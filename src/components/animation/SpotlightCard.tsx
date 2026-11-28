@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 export interface SpotlightCardProps {
   children: React.ReactNode;
   className?: string;
+  contentClassName?: string;
   spotlightColor?: string;
   borderColor?: string;
   enableTilt?: boolean;
@@ -18,6 +19,7 @@ export interface SpotlightCardProps {
 export const SpotlightCard: React.FC<SpotlightCardProps> = ({
   children,
   className = '',
+  contentClassName = '',
   spotlightColor = 'rgba(238, 5, 242, 0.16)',
   borderColor = 'rgba(238, 5, 242, 0.38)',
   enableTilt = true,
@@ -130,7 +132,7 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
       />
 
       {/* Card Body Content */}
-      <div className="relative z-20 h-full">{children}</div>
+      <div className={`relative z-20 h-full ${contentClassName}`}>{children}</div>
     </motion.div>
   );
 };

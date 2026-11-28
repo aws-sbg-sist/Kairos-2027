@@ -95,6 +95,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                   spotlightColor={isSelected ? 'rgba(238, 5, 242, 0.18)' : 'rgba(118, 48, 217, 0.14)'}
                   borderColor={isSelected ? 'rgba(238, 5, 242, 0.55)' : 'rgba(255, 255, 255, 0.16)'}
                   cursorLabel={isSelected ? 'ACTIVE' : 'SELECT'}
+                  contentClassName="flex flex-col justify-between"
                   onClick={() => {
                     sound?.playClick();
                     haptics?.light();
@@ -110,7 +111,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                     <motion.div
                       layoutId="pipeline-active-border"
                       transition={{ type: 'spring', stiffness: 320, damping: 28 }}
-                      className="pointer-events-none absolute top-0 inset-x-6 h-[2px] rounded-full bg-gradient-to-r from-cyber-magenta via-purple-400 to-sky-400"
+                      className="pointer-events-none absolute -top-6 inset-x-0 h-[2px] rounded-full bg-gradient-to-r from-cyber-magenta via-purple-400 to-sky-400"
                     />
                   )}
 
@@ -149,8 +150,8 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="pt-4 mt-5 border-t border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span className="text-slate-400 group-hover:text-slate-300 transition-colors">{stage.scale}</span>
+                  <div className="pt-4 mt-5 border-t border-white/10 flex items-center justify-between gap-2 text-xs font-mono">
+                    <span className="min-w-0 text-slate-400 group-hover:text-slate-300 transition-colors">{stage.scale}</span>
                     {idx === 0 && (
                       <Link
                         href="/register"
@@ -159,7 +160,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                           e.stopPropagation();
                           sound?.playClick();
                         }}
-                        className="min-h-[44px] px-2 text-white font-semibold hover:text-purple-300 inline-flex items-center gap-1 group/btn link-underline-sweep"
+                        className="min-h-[44px] px-2 shrink-0 whitespace-nowrap text-white font-semibold hover:text-purple-300 inline-flex items-center gap-1 group/btn link-underline-sweep"
                       >
                         <span>Apply Now</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
@@ -173,7 +174,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                           e.stopPropagation();
                           sound?.playClick();
                         }}
-                        className="min-h-[44px] px-2 text-slate-200 font-semibold hover:text-white inline-flex items-center gap-1 group/btn link-underline-sweep"
+                        className="min-h-[44px] px-2 shrink-0 whitespace-nowrap text-slate-200 font-semibold hover:text-white inline-flex items-center gap-1 group/btn link-underline-sweep"
                       >
                         <span>Qualifier Spec</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
@@ -187,7 +188,7 @@ export const DualPhasePipelineVisualizer: React.FC = () => {
                           e.stopPropagation();
                           sound?.playClick();
                         }}
-                        className="min-h-[44px] px-2 text-slate-200 font-semibold hover:text-white inline-flex items-center gap-1 group/btn link-underline-sweep"
+                        className="min-h-[44px] px-2 shrink-0 whitespace-nowrap text-slate-200 font-semibold hover:text-white inline-flex items-center gap-1 group/btn link-underline-sweep"
                       >
                         <span>Venue Guide</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
