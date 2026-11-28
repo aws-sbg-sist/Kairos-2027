@@ -165,7 +165,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
               <button
                 onClick={() => {
                   sound?.playHover();
-                  setMoreMenuOpen(!moreMenuOpen);
+                  setMoreMenuOpen(true);
                 }}
                 onMouseEnter={() => {
                   setHoveredHref('more');
@@ -185,30 +185,32 @@ export const Navbar: React.FC<NavbarProps> = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -6, scale: 0.97 }}
                     transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-                    className="absolute top-full right-0 mt-2 w-52 py-2 rounded-2xl bg-slate-950/95 border border-purple-500/25 shadow-2xl shadow-black/90 backdrop-blur-xl z-50 origin-top-right overflow-hidden"
+                    className="absolute top-full right-0 w-52 pt-2 z-50 origin-top-right"
                   >
-                    {secondaryNavLinks.map((subLink) => {
-                      const subActive = pathname === subLink.href;
-                      return (
-                        <Link
-                          key={subLink.label}
-                          href={subLink.href}
-                          onClick={() => {
-                            sound?.playClick();
-                            haptics?.light();
-                            setMoreMenuOpen(false);
-                          }}
-                          className={`flex items-center justify-between px-4 py-2.5 text-sm font-medium transition-colors group/sub ${
-                            subActive
-                              ? 'text-white bg-purple-950/60 border-l-2 border-purple-400'
-                              : 'text-slate-300 hover:text-white hover:bg-white/[0.06]'
-                          }`}
-                        >
-                          <span>{subLink.label}</span>
-                          <ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover/sub:text-purple-400 group-hover/sub:translate-x-0.5 group-hover/sub:-translate-y-0.5 transition-transform" />
-                        </Link>
-                      );
-                    })}
+                    <div className="py-2 rounded-2xl bg-slate-950/95 border border-purple-500/25 shadow-2xl shadow-black/90 backdrop-blur-xl overflow-hidden">
+                      {secondaryNavLinks.map((subLink) => {
+                        const subActive = pathname === subLink.href;
+                        return (
+                          <Link
+                            key={subLink.label}
+                            href={subLink.href}
+                            onClick={() => {
+                              sound?.playClick();
+                              haptics?.light();
+                              setMoreMenuOpen(false);
+                            }}
+                            className={`flex items-center justify-between px-4 py-2.5 text-sm font-medium transition-colors group/sub ${
+                              subActive
+                                ? 'text-white bg-purple-950/60 border-l-2 border-purple-400'
+                                : 'text-slate-300 hover:text-white hover:bg-white/[0.06]'
+                            }`}
+                          >
+                            <span>{subLink.label}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover/sub:text-purple-400 group-hover/sub:translate-x-0.5 group-hover/sub:-translate-y-0.5 transition-transform" />
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
