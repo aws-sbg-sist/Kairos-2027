@@ -11,17 +11,17 @@ import { LayeredParallax } from '@/components/animation/LayeredParallax';
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="relative pt-20 sm:pt-36 lg:pt-40 pb-12 sm:pb-16 overflow-hidden">
+    <section className="relative pt-20 sm:pt-28 pb-12 sm:pb-16 overflow-hidden">
       <LayeredParallax />
       <CosmicBackground particleCount={50} interactive={true} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7 min-w-0 space-y-4 sm:space-y-5 text-center lg:text-left">
+          <div className="lg:col-span-7 min-w-0 space-y-4 text-center lg:text-left">
             <p className="text-xs sm:text-sm font-mono text-purple-300">
               AWS Student Builder Group SIST · National Hackathon
             </p>
-            <div className="relative w-full max-w-[240px] sm:max-w-[300px] mx-auto lg:mx-0 h-16 sm:h-24">
+            <div className="relative w-full max-w-[240px] sm:max-w-[300px] mx-auto lg:mx-0 h-14 sm:h-16">
               <Image
                 src="/assets/kairos-wordmark.png"
                 alt="KAIROS 2027"
@@ -31,7 +31,7 @@ export const HeroSection: React.FC = () => {
                 className="object-contain object-center lg:object-left drop-shadow-2xl"
               />
             </div>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black tracking-tight text-white leading-[1.1]">
+            <h1 className="text-3xl sm:text-5xl font-display font-black tracking-tight text-white leading-[1.1]">
               Build your next big idea.<br />
               <span className="gradient-text-kairos">Live on AWS.</span>
             </h1>

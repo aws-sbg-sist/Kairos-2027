@@ -227,7 +227,7 @@ export const KairosChatbot: React.FC = () => {
               className="object-contain"
             />
           </div>
-          <span className="hidden sm:inline-block text-sm sm:text-base font-bold font-ai tracking-normal">
+          <span className="hidden 2xl:inline-block text-base font-bold font-ai tracking-normal">
             Ask Kairos AI
           </span>
           <span className="flex h-2.5 w-2.5 relative">
